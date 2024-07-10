@@ -5,7 +5,7 @@ function getWeather() {
 
     fetch(url)
         .then(response => {
-            if (response.ok) {                        
+            if (response.ok) {
                 console.log("API abgerufen")
                 return response.json();
             } else {
@@ -63,7 +63,7 @@ function getWeather() {
         })
 
         .catch(error => {
-            if (document.getElementById('stadtname').value == "") {       
+            if (document.getElementById('stadtname').value == "") {
                 console.log(error);
                 window.alert("Bitte geben sie einen Ort ein!");
             }
@@ -94,7 +94,7 @@ function getWeather5days() {
             const currentDate = new Date();
 
 
-            data.list.forEach(item => {                                  
+            data.list.forEach(item => {
                 const itemDate = new Date(item.dt * 1000);
                 const date = itemDate.toDateString();
 
@@ -110,7 +110,7 @@ function getWeather5days() {
 
                 const item = forecasts[date];
                 const { temp } = item.main;
-                const beschreibung = item.weather[0].description;                       
+                const beschreibung = item.weather[0].description;
                 const wetterAnzeigen = `${date}: ${beschreibung}, ${temp}°C `;
 
                 const wetterElement = document.createElement("p");
