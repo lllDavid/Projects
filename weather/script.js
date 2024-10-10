@@ -6,10 +6,10 @@ function getWeather() {
     fetch(url)
         .then(response => {
             if (response.ok) {
-                console.log("API abgerufen")
+                console.log("API abgerufen");
                 return response.json();
             } else {
-                console.log("API konnte nicht abgerufen werden")
+                console.log("API konnte nicht abgerufen werden");
                 throw new Error(`API request failed with status: ${response.status}`);
             }
         })
@@ -19,7 +19,6 @@ function getWeather() {
             const beschreibung = data.weather[0].description;
             const stadtName = data.name;
             const land = data.sys.country;
-
 
             switch (main) {
                 case "Snow":
@@ -46,7 +45,6 @@ function getWeather() {
                     document.getElementById("body").style.backgroundImage =
                         "url('https://mdbgo.io/ascensus/mdb-advanced/img/thunderstorm.gif')";
                     break;
-
             }
 
             const wetterAnzeigen = `Das aktuelle Wetter in: ${stadtName}, ${land}: ${beschreibung}, ${temp}°C (gefühlte ${feels_like}°C)`;
@@ -59,21 +57,18 @@ function getWeather() {
             document.getElementById("ausgabe").appendChild(wetterElement);
             document.getElementById("ausgabe").style.display = "block";
             document.getElementById("ausgabe2").style.display = "none";
-
         })
-
         .catch(error => {
             if (document.getElementById('stadtname').value == "") {
                 console.log(error);
                 window.alert("Bitte geben sie einen Ort ein!");
-            }
-            else {
+            } else {
                 window.alert("Bitte geben sie einen gültigen Ort ein!");
                 document.getElementById('stadtname').value = "";
             }
         });
-
 }
+
 function getWeather5days() {
     const stadt = document.getElementById("stadtname").value;
     const apiKey = "0e4194c846936b540bce21b6b2a47fb9";
@@ -82,17 +77,16 @@ function getWeather5days() {
     fetch(url)
         .then(response => {
             if (response.ok) {
-                console.log("API abgerufen")
+                console.log("API abgerufen");
                 return response.json();
             } else {
-                console.log("API konnte nicht abgerufen werden")
+                console.log("API konnte nicht abgerufen werden");
                 throw new Error(`API request failed with status: ${response.status}`);
             }
         })
         .then(data => {
             const forecasts = {};
             const currentDate = new Date();
-
 
             data.list.forEach(item => {
                 const itemDate = new Date(item.dt * 1000);
@@ -101,13 +95,11 @@ function getWeather5days() {
                 if (itemDate >= currentDate && !forecasts[date]) {
                     forecasts[date] = item;
                 }
-
             });
 
             document.getElementById("ausgabe2").textContent = '';
 
             for (const date in forecasts) {
-
                 const item = forecasts[date];
                 const { temp } = item.main;
                 const beschreibung = item.weather[0].description;
@@ -120,22 +112,18 @@ function getWeather5days() {
                 document.getElementById("ausgabe").style.display = "none";
                 document.getElementById("ausgabe2").style.display = "block";
             }
-
         })
         .catch(error => {
             if (document.getElementById('stadtname').value == "") {
                 console.log(error);
                 window.alert("Bitte geben sie einen Ort ein!");
-            }
-            else {
+            } else {
                 window.alert("Bitte geben sie einen gültigen Ort ein!");
                 document.getElementById('stadtname').value = "";
             }
         });
-};
-
+}
 
 function resetBackground() {
     document.getElementById("body").style.backgroundImage = "url('https://images.pexels.com/photos/1525041/pexels-photo-1525041.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')";
 }
-
