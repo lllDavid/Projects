@@ -1,4 +1,4 @@
-from pos_system.models import * 
+from ..models import user_model
 
 class UserController:
     def __init__(self):
@@ -10,7 +10,6 @@ class UserController:
             if field not in user_data:
                 raise ValueError(f"Missing required field: {field}")
         
-        # Create a new user from the provided data
         self.new_user = user_model.UserModel(**user_data)
         print("New user added successfully.")
 

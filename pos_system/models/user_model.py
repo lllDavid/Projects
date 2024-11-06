@@ -50,5 +50,4 @@ class UserModel:
             "full_name": self.get_full_name()
         }
 
-    def __repr__(self):
-        return f"UserModel(id={self.id}, full_name='{self.get_full_name()}')"
+    
