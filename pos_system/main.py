@@ -1,2 +1,0 @@
-class POSMain:
-    pass
