@@ -1,6 +1,6 @@
 from ..models import user_model
 
-class UserController:
+class User:
     def __init__(self):
         self.new_user = None
 
@@ -14,5 +14,5 @@ class UserController:
         print("New user added successfully.")
 
 
-user = UserController()
+user = User()
 user.add_new_user(id=1,first_name="www",last_name="www",street_address="street",city="city",state="state",zip_code=1234,country="GER")
