@@ -1,4 +1,4 @@
-import user_model
+import user
 import payment
 
 class Transaction:
