@@ -10,7 +10,7 @@ class Auth(Enum):
         try:
             return Auth(id)
         except ValueError:
-            print(f"No valid Auth ID")
+            print(f"No valid AuthModel ID")
 
     def assign_role(user_id):
         pass

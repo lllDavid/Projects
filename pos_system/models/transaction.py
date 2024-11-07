@@ -1,7 +1,7 @@
 import user_model
-import payment_model
+import payment
 
-class TransactionModel:
+class Transaction:
     def __init__(self, transaction_id=None, user_id=None, amount=None, status=None, payment_method=None, created_at=None):
         self.transaction_id = transaction_id
         self.user_id = user_id
