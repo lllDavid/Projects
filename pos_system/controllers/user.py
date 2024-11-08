@@ -1,4 +1,4 @@
-from ..models import user_model
+from ..models import user
 
 class User:
     def __init__(self):
@@ -10,7 +10,7 @@ class User:
             if field not in user_data:
                 raise ValueError(f"Missing required field: {field}")
         
-        self.new_user = user_model.UserModel(**user_data)
+        self.new_user = user.UserModel(**user_data)
         print("New user added successfully.")
 
 

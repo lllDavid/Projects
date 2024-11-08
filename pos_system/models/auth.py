@@ -14,5 +14,3 @@ class Auth(Enum):
 
     def assign_role(user_id):
         pass
-
-    methods = []

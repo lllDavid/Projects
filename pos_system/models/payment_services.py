@@ -1,6 +1,6 @@
 from enum import Enum
 
-class Payment_Services(Enum):
+class PaymentServices(Enum):
     PAYPAL = 1
     APPLE_PAY = 2
     GOOGLE_PAY = 3
@@ -10,7 +10,7 @@ class Payment_Services(Enum):
 
 def select_payment_service(payment_service_id):
     try:
-        return Payment_Services(payment_service_id)
+        return PaymentServices(payment_service_id)
     except ValueError:
         print(f"No valid Payment Service ID")
 
