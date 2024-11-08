@@ -54,7 +54,7 @@ def communicate_with_server(user_choice, ftp_choice, ftp_username=None, ftp_pass
     
     return response_message
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def main():
     response_message = ''
     
