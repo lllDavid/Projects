@@ -23,11 +23,11 @@ class Main:
         print(f"Status: {self.status}, Is Running: {self.is_running}")
         sys.exit()
 
-instance = Main(app_name=app.get_name(), app_version=app.get_version())
+main_instance = Main(app_name=app.app_instance.get_name(), app_version=app.app_instance.get_version())
 
 if __name__ == "__main__":
-    instance.starting_app()
+    main_instance.starting_app()
 
     print("Press 'Enter' to stop the app...")
     input()  
-    instance.stop_app() 
+    main_instance.stop_app() 
