@@ -11,17 +11,15 @@ class Main:
     status: str = "Offline"
 
     def starting_app(self) -> None:
-        """Starts the application and updates the status."""
         self.is_running = True
         self.status = "Online"
         print(f"{self.app_name} version {self.app_version} started at: {datetime.now():%Y-%m-%d %H:%M:%S}")
         print(f"Status: {self.status}, Is Running: {self.is_running}")
 
     def stop_app(self) -> None:
-        """Stops the application and updates the status."""
         self.is_running = False
         self.status = "Offline"
-        print(f"{self.app_name} stopped at: {datetime.now():%Y-%m-%d %H:%M:%S}")
+        print(f"{self.app_name} version {self.app_version} stopped at: {datetime.now():%Y-%m-%d %H:%M:%S}")
         print(f"Status: {self.status}, Is Running: {self.is_running}")
         sys.exit()
 
