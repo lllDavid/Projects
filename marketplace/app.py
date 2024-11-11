@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 @dataclass
 class App:
-    app_name:str = "POS_System"
+    app_name:str = "Marketplace"
     app_version:str = "1.0.0"
 
     def get_name(self) -> str:
