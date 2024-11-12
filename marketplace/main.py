@@ -1,8 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 from sys import exit
-import app
-from controllers.user import main
+import version
 
 @dataclass
 class Main:
@@ -24,10 +23,9 @@ class Main:
         print(f"Status: {self.status}, Is Running: {self.is_running}")
         exit()
 
-main_instance = Main(app_name=app.app_instance.get_name(), app_version=app.app_instance.get_version())
+main_instance = Main(app_name=version.version_instance.get_name(), app_version=version.version_instance.get_version())
 
 if __name__ == "__main__":
-    main()
     main_instance.starting_app()
 
     print("Press 'Enter' to stop the app...")

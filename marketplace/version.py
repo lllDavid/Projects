@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 @dataclass
-class App:
+class Version:
     app_name:str = "Marketplace"
     app_version:str = "1.0.0"
 
@@ -23,5 +23,5 @@ class App:
         self.app_version = version
         return version
     
-app_instance = App()
+version_instance = Version()
 

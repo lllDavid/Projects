@@ -16,12 +16,12 @@ def register():
         email=email,
         reset_email=reset_email,
         password_hash=hashed_password,
-        two_factor_enabled=True,
-        is_verified=True,
+        two_factor_enabled=False,
+        is_verified=False,
         is_banned=False,
         ban_reason="",
-        is_active=True,
-        login_count=5,
+        is_active=False,
+        login_count=0,
         failed_login_attempts=0, 
     )
 
