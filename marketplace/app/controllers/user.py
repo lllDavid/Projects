@@ -1,6 +1,6 @@
 from models.user import User
 
-def register():
+def register() -> None:
     username = str(input("Choose a username: "))
     password = str(input("Choose a password: "))
     email = str(input("Enter a e-mail address: "))
