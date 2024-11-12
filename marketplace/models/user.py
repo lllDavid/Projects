@@ -29,6 +29,16 @@ class User:
     def _is_valid_email(self, email: str) -> bool:
         email_regex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
         return match(email_regex, email) is not None
+    
+    @staticmethod
+    def hash_password(input_string: str) -> str:
+        hash_value = 7  
+        prime = 31  
+        
+        for char in input_string:
+            hash_value = (hash_value * prime + ord(char)) & 0xFFFFFFFF  
+
+        return format(hash_value, '08x')
 
     def reset_password(self, new_password_hash: str):
         self.password_hash = new_password_hash
