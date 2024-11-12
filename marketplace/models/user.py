@@ -57,7 +57,8 @@ class User:
         self.updated_at = datetime.now()
         print(f"User {self.username} has been banned. Reason: {self.ban_reason}")
 
-    def add_user(self,
+    @staticmethod
+    def add_user(
             id: int,
             ip_address: str,
             role: str,
