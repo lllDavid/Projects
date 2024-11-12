@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
+from sys import exit
 import app
-import sys
 
 @dataclass
 class Main:
@@ -21,7 +21,7 @@ class Main:
         self.status = "Offline"
         print(f"{self.app_name} version {self.app_version} stopped at: {datetime.now():%Y-%m-%d %H:%M:%S}")
         print(f"Status: {self.status}, Is Running: {self.is_running}")
-        sys.exit()
+        exit()
 
 main_instance = Main(app_name=app.app_instance.get_name(), app_version=app.app_instance.get_version())
 

@@ -1,18 +1,24 @@
-from ..models import user
-
-class User:
-    def __init__(self):
-        self.new_user = None
-
-    def add_new_user(self, **user_data):
-        required_fields = ["id", "first_name", "last_name", "street_address", "city", "state", "zip_code", "country"]
-        for field in required_fields:
-            if field not in user_data:
-                raise ValueError(f"Missing required field: {field}")
-        
-        self.new_user = user.UserModel(**user_data)
-        print("New user added successfully.")
+import models
+import models.user
+from datetime import datetime
 
 
-user = User()
-user.add_new_user(id=1,first_name="www",last_name="www",street_address="street",city="city",state="state",zip_code=1234,country="GER")
+models.user.User.add_user(
+    id=1,  # Corrected parameter name to 'id'
+    ip_address="192.168.0.1",
+    role="admin",
+    username="john_doe",
+    email="john_doe@example.com",
+    reset_email="reset_john_doe@example.com",
+    password_hash="hashed_password_12345",
+    two_factor_enabled=True,
+    is_verified=True,
+    is_banned=False,
+    ban_reason="",
+    is_active=True,
+    login_count=5,
+    failed_login_attempts=0,
+    last_login=datetime(2024, 11, 11, 14, 30),  # Correct datetime format
+    created_at=datetime(2024, 11, 10, 10, 0),  # Correct datetime format
+    updated_at=datetime(2024, 11, 11, 15, 0)  # Correct datetime format
+)

@@ -1,12 +1,12 @@
 from datetime import datetime
 from dataclasses import dataclass, field
-import re
+from re import match
 
 @dataclass
 class User:
     id: int
-    role: str
     ip_address: str
+    role: str
     username: str
     email: str
     reset_email: str
@@ -28,7 +28,7 @@ class User:
 
     def _is_valid_email(self, email: str) -> bool:
         email_regex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
-        return re.match(email_regex, email) is not None
+        return match(email_regex, email) is not None
 
     def reset_password(self, new_password_hash: str):
         self.password_hash = new_password_hash
@@ -57,6 +57,51 @@ class User:
         self.updated_at = datetime.now()
         print(f"User {self.username} has been banned. Reason: {self.ban_reason}")
 
+    def add_user(self,
+            id: int,
+            ip_address: str,
+            role: str,
+            username: str,
+            email: str,
+            reset_email: str,
+            password_hash: str,
+            two_factor_enabled: bool = False,
+            is_verified: bool = False,
+            is_banned: bool = False,
+            ban_reason: str = '',
+            is_active: bool = False,
+            login_count: int = 0,
+            failed_login_attempts: int = 0,
+            last_login: datetime = datetime.now(),
+            created_at: datetime = datetime.now(),
+            updated_at: datetime = datetime.now()        ) -> "User":
+    
+            user = User(
+                id=id,
+                ip_address=ip_address,
+                role=role,
+                username=username,
+                email=email,
+                reset_email=reset_email,
+                password_hash=password_hash,
+                two_factor_enabled=two_factor_enabled,
+                is_verified=is_verified,
+                is_banned=is_banned,
+                ban_reason=ban_reason,
+                is_active=is_active,
+                login_count=login_count,
+                failed_login_attempts=failed_login_attempts,
+                last_login=last_login,
+                created_at=created_at,
+                updated_at=updated_at
+            )
+            
+            print(f"User {user.username} added successfully!")
+            print(user)
+            
+            return user
+
+
     def verify_user(self):
         self.is_verified = True
         self.updated_at = datetime.now()
@@ -80,6 +125,3 @@ class User:
         self.two_factor_enabled = False
         self.updated_at = datetime.now()
         print(f"Two-factor authentication disabled for {self.username}")
-
-    def __str__(self):
-        return f"User(id={self.id}, username={self.username}, email={self.email}, is_active={self.is_active}, is_verified={self.is_verified})"
