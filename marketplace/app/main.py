@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from datetime import datetime
-from sys import exit
 import version
 
 @dataclass
@@ -9,27 +8,37 @@ class Main:
     app_version: str
     is_running: bool = False
     status: str = "Offline"
+    start_time: datetime = None
+    stop_time: datetime = None
 
-    def starting_app(self) -> None:
+    def start_app(self) -> datetime:
         self.is_running = True
         self.status = "Online"
-        print(f"{self.app_name} version {self.app_version} started at: {datetime.now():%Y-%m-%d %H:%M:%S}")
+        self.start_time = datetime.now()
+        print(f"{self.app_name} version {self.app_version} started at: {self.start_time}")
         print(f"Status: {self.status}, Is Running: {self.is_running}")
+        return self.start_time
 
-    def stop_app(self) -> None:
+    def stop_app(self) -> datetime:
         self.is_running = False
         self.status = "Offline"
-        print(f"{self.app_name} version {self.app_version} stopped at: {datetime.now():%Y-%m-%d %H:%M:%S}")
+        self.stop_time = datetime.now()
+        print(f"{self.app_name} version {self.app_version} stopped at: {self.stop_time}")
         print(f"Status: {self.status}, Is Running: {self.is_running}")
-        exit()
+        return self.stop_time
+
+    def total_runtime(self) -> str:
+        if self.start_time and self.stop_time:
+            runtime = self.stop_time - self.start_time
+            hours, remainder = divmod(runtime.seconds, 3600)
+            minutes, seconds = divmod(remainder, 60)
+            return f"Total runtime: {runtime.days} days, {hours} hours, {minutes} minutes, {seconds} seconds"
+        return "App has not been started and stopped properly."
 
 main_instance = Main(app_name=version.version_instance.get_name(), app_version=version.version_instance.get_version())
 
 if __name__ == "__main__":
-    main_instance.starting_app()
-
-    print("Press 'Enter' to stop the app...")
-    input()  
-    main_instance.stop_app() 
-
-
+    main_instance.start_app()
+    input("Press 'Enter' to stop the app...")
+    main_instance.stop_app()
+    print(main_instance.total_runtime())
