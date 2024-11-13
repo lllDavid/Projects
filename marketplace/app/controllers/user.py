@@ -26,3 +26,7 @@ def register() -> None:
     )
 
 register()
+
+
+def delete():
+    ...
