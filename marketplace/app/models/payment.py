@@ -1,15 +1,14 @@
-import user
-import transaction
+from dataclasses import dataclass
 from enum import Enum
 
+@dataclass
 class Payment:
-    def __init__(self, transaction_id=None, payment_service_id=None, amount=None, status=None):
-        self.transaction_id = transaction_id
-        self.payment_service_id = payment_service_id
-        self.amount = amount
-        self.status = status 
+    transaction_id: str 
+    payment_service_id: str 
+    amount: float 
+    status: str 
 
-    def new_transaction(self, amount, payment_service_id):
+    def new_transaction(self):
         pass
 
     def process_payment(self):

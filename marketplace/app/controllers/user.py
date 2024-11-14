@@ -33,4 +33,7 @@ def add_user_to_db(user: User):
 def delete_user_from_db(user: User):
     user_db.delete_user(user)
 
-user_db.get_all_users()
+def get_all_users_in_db():
+    user_db.get_all_users()
+
+register_user()
