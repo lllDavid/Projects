@@ -1,7 +1,9 @@
 from app.models.user import User
-from app.models.user_db import User_DB
+from app.models.user_db import UserDB
 
-def register() -> None:
+user_db = UserDB()
+
+def register_user():
     username = str(input("Choose a username: "))
     password = str(input("Choose a password: "))
     email = str(input("Enter an e-mail address: "))
@@ -27,13 +29,9 @@ def register() -> None:
     )
     add_user_to_db(user)
 
-user_db = User_DB()
-
 def add_user_to_db(user: User):
     user_db.add_user(user)
 
-def delete_user(user: User):
+def delete_user_from_db(user: User):
     user_db.delete_user(user)
 
-if __name__ == "__main__":
-    register()

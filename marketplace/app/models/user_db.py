@@ -2,7 +2,7 @@ import json
 from .user import User
 from datetime import datetime
 
-class User_DB:
+class UserDB:
     users: list[User] = []
 
     def __init__(self):
