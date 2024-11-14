@@ -23,5 +23,3 @@ class Version:
         self.app_version = version
         return version
     
-version_instance = Version()
-

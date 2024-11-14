@@ -1,6 +1,7 @@
-import json
 from datetime import datetime
 from .user import User
+from json import dump
+from json import load
 
 users = []
 
@@ -26,12 +27,12 @@ def save_users():
         users_data.append(user_data)
 
     with open("users.json", "w") as f:
-        json.dump(users_data, f)
+        dump(users_data, f)
 
 def load_users():
     try:
         with open("users.json", "r") as f:
-            users_data = json.load(f)
+            users_data = load(f)
             global users
             users = [User(**data) for data in users_data]
     except FileNotFoundError:

@@ -1,14 +1,15 @@
-import user
-import payment
+from dataclasses import dataclass
+from .user import User
+from .payment import Payment
 
+@dataclass
 class Transaction:
-    def __init__(self, transaction_id=None, user_id=None, amount=None, status=None, payment_method=None, created_at=None):
-        self.transaction_id = transaction_id
-        self.user_id = user_id
-        self.amount = amount
-        self.status = status  
-        self.payment_method = payment_method  
-        self.created_at = created_at 
+    transaction_id: str
+    user_id: str
+    amount: float
+    status: str
+    payment_method: str
+    created_at: str
 
     def create_transaction(self, user_id, amount, payment_method):
         pass

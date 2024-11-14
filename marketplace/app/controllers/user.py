@@ -1,5 +1,6 @@
 from app.models.user import User
 import app.models.user_db as user_db
+import app.models.roles as roles
 
 def register_user():
     username = str(input("Choose a username: "))
@@ -26,6 +27,7 @@ def register_user():
         failed_login_attempts=0, 
     )
     add_user_to_db(user)
+    get_user_role(user)
 
 def add_user_to_db(user: User):
     user_db.add_user(user)
@@ -36,4 +38,6 @@ def delete_user_from_db(user: User):
 def get_all_users_in_db():
     user_db.get_all_users()
 
+def get_user_role(user:User):
+    roles.get_role(user)
 register_user()

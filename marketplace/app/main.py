@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
-import version
+from version import Version
 
 @dataclass
 class Main:
@@ -35,7 +35,8 @@ class Main:
             return f"Total runtime: {runtime.days} days, {hours} hours, {minutes} minutes, {seconds} seconds"
         return "App has not been started and stopped properly."
 
-main_instance = Main(app_name=version.version_instance.get_name(), app_version=version.version_instance.get_version())
+version_instance = Version() # TODO: Change Version Class to just functions or return str
+main_instance = Main(app_name=version_instance.get_name(), app_version=version_instance.get_version())
 
 if __name__ == "__main__":
     main_instance.start_app()
