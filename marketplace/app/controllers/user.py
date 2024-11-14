@@ -40,4 +40,5 @@ def get_all_users_in_db():
 
 def get_user_role(user:User):
     roles.get_role(user)
+    
 register_user()
