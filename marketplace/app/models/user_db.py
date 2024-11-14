@@ -6,6 +6,7 @@ class User_DB:
     users: list[User] = []
 
     def __init__(self):
+        ...
        # self.load_users()
 
     def add_user(self, user: User):
