@@ -1,7 +1,5 @@
 from app.models.user import User
-from app.models.user_db import UserDB
-
-user_db = UserDB()
+import app.models.user_db as user_db
 
 def register_user():
     username = str(input("Choose a username: "))
@@ -35,3 +33,4 @@ def add_user_to_db(user: User):
 def delete_user_from_db(user: User):
     user_db.delete_user(user)
 
+user_db.get_all_users()
