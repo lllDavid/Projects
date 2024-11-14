@@ -9,11 +9,18 @@ class User_DB:
         ...
        # self.load_users()
 
+    def get_all_users(self):
+        print(f"All users: {self.users}")
+
     def add_user(self, user: User):
         self.users.append(user)
         self.save_users()
         print(f"User {user.username} added to User DB")
 
+    def delete_user(self, user:User):
+        self.users.remove(user)
+        print(f"User: {user} deleted from DB.")
+    
     def save_users(self):
         users_data = []
         for user in self.users:

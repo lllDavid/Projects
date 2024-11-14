@@ -26,11 +26,15 @@ def register() -> None:
         failed_login_attempts=0, 
     )
     add_user_to_db(user)
+    user_db.delete_user(user)
+    user_db.get_all_users()
 
 def add_user_to_db(user: User):
     user_db = User_DB()
     user_db.add_user(user)
     print(f"User {user.username} added to the database!")
+
+user_db = User_DB()
 
 if __name__ == "__main__":
     register()
