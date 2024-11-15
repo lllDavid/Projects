@@ -3,11 +3,6 @@ import app.models.user_db as user_db
 import app.models.roles as roles
 
 def register_user():
-    username = str(input("Choose a username: "))
-    password = str(input("Choose a password: "))
-    email = str(input("Enter an e-mail address: "))
-    reset_email = str(input("Enter a backup e-mail: "))
-
     hashed_password = User.hash_password(password)
 
     user = User.add_user(
@@ -29,6 +24,15 @@ def register_user():
     add_user_to_db(user)
     get_user_role(user)
 
+def get_user_input():
+    username = str(input("Choose a username: "))
+    password = str(input("Choose a password: "))
+    email = str(input("Enter an e-mail address: "))
+    reset_email = str(input("Enter a backup e-mail: "))
+
+def has_user_password(password:str):
+    ...
+
 def add_user_to_db(user: User):
     user_db.add_user(user)
 
@@ -41,4 +45,5 @@ def get_all_users_in_db():
 def get_user_role(user:User):
     roles.get_role(user)
     
-register_user()
+def main():
+    ...
