@@ -51,13 +51,10 @@ def get_user_role(user:User):
     roles.get_role(user)
     
 def main():
-    # Get user input
     user_input = get_user_input()
 
-    # Hash the password
     hashed_password = hash_user_password(user_input["password"])
 
-    # Register the user and create a User instance
     user = register_user(
         username=user_input["username"],
         email=user_input["email"],
@@ -65,13 +62,9 @@ def main():
         hashed_password=hashed_password
     )
 
-    # Add the user to the database
     add_user_to_db(user)
 
-    # Get and assign the user role (optional, if you need this step)
     get_user_role(user)
-
-    print(f"User {user.username} registered successfully!")
 
 if __name__ == "__main__":
     main()
