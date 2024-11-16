@@ -38,6 +38,9 @@ def hash_user_password(password:str):
     hashed_password = User.hash_password(password)
     return hashed_password
 
+def reset_user_password(user:User):
+    ...
+    
 def add_user_to_db(user: User):
     user_db.add_user(user)
 
