@@ -40,7 +40,13 @@ def hash_user_password(password:str):
 
 def reset_user_password(user:User):
     ...
-    
+
+def ban_user(user:User):
+    ...
+
+def verify_user(user:User):
+    ...
+
 def add_user_to_db(user: User):
     user_db.add_user(user)
 
