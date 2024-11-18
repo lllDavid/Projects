@@ -81,10 +81,10 @@ class User:
             conn.send(f"Failed to upload file: {str(e)}".encode())
             return None
     
-    def reset():
+    def reset(self):
         pass
 
-    def delete():
+    def delete(self):
         pass
 
 

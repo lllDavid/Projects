@@ -36,7 +36,7 @@ class Server:
                     case "3":
                         self.user_instance.run_image_recognition(conn)
                     case "4":
-                        self.user_instance.handle_user_contact_message(conn)
+                        self.user_instance.handle_user_contact_message(conn, addr)
 
             except Exception as e:
                 print(f"Error while handling client {addr}: {e}")
