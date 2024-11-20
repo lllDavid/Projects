@@ -1,12 +1,13 @@
 from app.models.user import User
-import app.models.user_db as user_db
+import app.databases.user_db as user_db
 import app.models.roles as roles
+from app.models.roles import Role
 
 def register_user(username:str, email:str, reset_email:str, hashed_password:str) -> User:
     user = User.add_user(
         id=1,  
         ip_address="127.0.0.1",
-        role="User",
+        role=Role.USER,
         username=username,
         email=email,
         reset_email=reset_email,
@@ -56,9 +57,6 @@ def delete_user_from_db(user: User):
 def get_all_users_from_db():
     user_db.get_all_users()
 
-def get_user_role(user:User):
-    roles.get_role(user)
-    
 def main():
     user_input = get_user_input()
 
@@ -72,8 +70,6 @@ def main():
     )
 
     add_user_to_db(user)
-
-    get_user_role(user)
 
 if __name__ == "__main__":
     main()

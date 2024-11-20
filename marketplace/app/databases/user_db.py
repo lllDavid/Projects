@@ -1,7 +1,8 @@
 from datetime import datetime
-from .user import User
+from ..models.user import User
 from json import dump
 from json import load
+from app.models.roles import Role
 
 users = []
 
@@ -21,14 +22,18 @@ def save_users():
     users_data = []
     for user in users:
         user_data = user.__dict__.copy()
+        
+        # Convert enum values to their name or value
         for key, value in user_data.items():
             if isinstance(value, datetime):
                 user_data[key] = value.isoformat()
+            elif isinstance(value, Role):
+                user_data[key] = value.name  # Use value.name to store the enum as a string, e.g. 'USER'
+
         users_data.append(user_data)
 
     with open("users.json", "w") as f:
-        dump(users_data, f)
-
+        dump(users_data, f, indent=4)  # Pretty print with indentation
 def load_users():
     try:
         with open("users.json", "r") as f:

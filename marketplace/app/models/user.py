@@ -1,12 +1,13 @@
 from datetime import datetime
 from dataclasses import dataclass, field
 from re import match
+from .roles import Role
 
 @dataclass
 class User:
     id: int
     ip_address: str
-    role: str
+    role: Role
     username: str
     email: str
     reset_email: str
@@ -71,7 +72,7 @@ class User:
     def add_user(
             id: int,
             ip_address: str,
-            role: str,
+            role: Role,
             username: str,
             email: str,
             reset_email: str,
