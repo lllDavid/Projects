@@ -1,75 +1,56 @@
-from app.models.user import User
-import app.databases.user_db as user_db
-import app.models.roles as roles
+from app.models.user import UserDetails, User, UserSecurity, UserStatus, UserLoginHistory
 from app.models.roles import Role
+from datetime import datetime
 
-def register_user(username:str, email:str, reset_email:str, hashed_password:str) -> User:
-    user = User.add_user(
-        id=1,  
-        ip_address="127.0.0.1",
-        role=Role.USER,
-        username=username,
-        email=email,
-        reset_email=reset_email,
-        password_hash=hashed_password,
+def create_user(username: str, email: str, password: str):
+    user = User(id=1, username=username, email=email, password=password) 
+
+    security = UserSecurity(
         two_factor_enabled=False,
-        is_verified=False,
+        password_hash=password,  
+        reset_email=email,
+        is_verified=False
+    )
+
+    status = UserStatus(
         is_banned=False,
         ban_reason="",
-        is_active=False,
-        login_count=0,
-        failed_login_attempts=0, 
+        is_active=True,
+        created_at=datetime.now(),
+        updated_at=datetime.now()
     )
-    return user
 
-def get_user_input() -> dict[str, str]:
-    username = str(input("Choose a username: "))
-    password = str(input("Choose a password: "))
-    email = str(input("Enter an e-mail address: "))
-    reset_email = str(input("Enter a backup e-mail: "))
+    login_history = UserLoginHistory(
+        login_count=0,
+        failed_login_attempts=0,
+        last_login=datetime.now()
+    )
+
+    user_details = UserDetails(
+        ip_address="",
+        role=Role.USER,
+        reset_email=email,
+        password_hash=password,  
+        security=security,
+        status=status,
+        login_history=login_history,
+        user=user
+    )
+    
+    print(f"Created user {username}")
+    return user_details
+
+def get_user_input():
+    username = str(input("Username: "))
+    email =  str(input("Email: "))
+    password = str(input("Password: "))
 
     return {
         "username": username,
-        "password": password,
         "email": email,
-        "reset_email": reset_email
+        "password": password
     }
 
-def hash_user_password(password:str):
-    hashed_password = User.hash_password(password)
-    return hashed_password
-
-def reset_user_password(user:User):
-    ...
-
-def ban_user(user:User):
-    ...
-
-def verify_user(user:User):
-    ...
-
-def add_user_to_db(user: User):
-    user_db.add_user(user)
-
-def delete_user_from_db(user: User):
-    user_db.delete_user(user)
-
-def get_all_users_from_db():
-    user_db.get_all_users()
-
-def main():
-    user_input = get_user_input()
-
-    hashed_password = hash_user_password(user_input["password"])
-
-    user = register_user(
-        username=user_input["username"],
-        email=user_input["email"],
-        reset_email=user_input["reset_email"],
-        hashed_password=hashed_password
-    )
-
-    add_user_to_db(user)
-
 if __name__ == "__main__":
-    main()
+    user_input = get_user_input()
+    user_details = create_user(user_input['username'], user_input['email'], user_input['password'])
