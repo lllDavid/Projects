@@ -37,13 +37,3 @@ class MarketData:
     price_change_24h: float
     circulating_supply: float
     max_supply: float
-
-@dataclass
-class TransactionDetails:
-    transaction_id: str
-    sender_address: str
-    receiver_address: str
-    amount: float
-    timestamp: datetime
-    transaction_fee: float
-    status: str
