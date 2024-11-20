@@ -4,7 +4,7 @@ from ..models.coin import Coin
 coins = []
 amount_of_coins_in_db = 1000
 
-def add_coin(coin: Coin):
+def save_coin(coin: Coin):
     coins.append(coin)
     print(f"Coin: {coin.name} added to Coin DB")
 

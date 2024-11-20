@@ -12,11 +12,11 @@ class Coin:
     last_updated: datetime
 
     def update_price(self, new_price: float):
-        self.price = new_price
-        self.last_updated = datetime.now()
-
-    def __str__(self):
-        return f"{self.name} ({self.symbol}) - {self.category} - {self.description}, ${self.price:.2f}"
+            self.price = new_price
+            self.last_updated = datetime.now()
+    
+def add_new_coin(coin:Coin):
+        print(f"Coin {coin.name} added.")
 
 @dataclass
 class CoinDetails:
@@ -28,9 +28,6 @@ class CoinDetails:
 
     def get_market_cap(self) -> float:
         return self.market_data.market_cap_usd
-
-    def __str__(self):
-        return f"Specifications: {self.specifications}, Market Data: {self.market_data}"
 
 @dataclass
 class CoinSpecifications:
@@ -50,8 +47,6 @@ class CoinSpecifications:
     def calculate_remaining_supply(self) -> float:
         return self.max_supply - self.circulating_supply
 
-    def __str__(self):
-        return f"Algorithm: {self.algorithm}, Consensus: {self.consensus_mechanism}, Block Time: {self.block_time}s"
 
 @dataclass
 class MarketData:
@@ -75,54 +70,3 @@ class MarketData:
         return f"Price: ${self.price_usd:.2f}, Market Cap: ${self.market_cap_usd:.2f}, 24h Volume: ${self.volume_24h_usd:.2f}"
 
 
-coin_specs = CoinSpecifications(
-    algorithm="SHA-256",
-    consensus_mechanism="Proof of Work",
-    block_time=10.0,
-    max_supply=21000000,
-    circulating_supply=19000000,
-    transaction_speed=7.0,
-    security_features="AES-256 encryption",
-    privacy_features="Optional privacy features"
-)
-
-market_data = MarketData(
-    price_usd=35000.00,
-    market_cap_usd=665000000000,
-    volume_24h_usd=50000000000,
-    high_24h_usd=36000.00,
-    low_24h_usd=34000.00,
-    price_change_24h=5.0,
-    circulating_supply=19000000,
-    max_supply=21000000
-)
-
-coin = Coin(
-    id=1,
-    name="Bitcoin",
-    symbol="BTC",
-    category="Cryptocurrency",
-    description="The first and most well-known cryptocurrency",
-    price=35000.00,
-    last_updated=datetime.now()
-)
-
-coin_details = CoinDetails(
-    specifications=coin_specs,
-    market_data=market_data
-)
-
-print(coin)
-print(coin_details)
-
-coin.update_price(35500.00)
-print(coin)
-
-coin_specs.update_supply(19100000, 21000000)
-print(coin_specs)
-
-market_data.update_price(35500.00)
-print(market_data)
-
-remaining_supply = coin_specs.calculate_remaining_supply()
-print(f"Remaining Supply: {remaining_supply}")
