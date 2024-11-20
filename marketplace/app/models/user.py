@@ -26,12 +26,12 @@ class User:
         if not self._is_valid_email(self.email):
             raise ValueError(f"Invalid email format: {self.email}")
 
-    def _is_valid_email(self, email: str) -> bool:
+    def _is_valid_email(self, email: str):
         email_regex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
         return match(email_regex, email) is not None
     
     @staticmethod
-    def hash_password(input_string: str) -> str:
+    def hash_password(input_string: str):
         hash_value = 7  
         prime = 31  
         
