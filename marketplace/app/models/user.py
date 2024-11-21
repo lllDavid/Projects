@@ -1,7 +1,6 @@
 from datetime import datetime
 from dataclasses import dataclass
 from .roles import Role
-from typing import Optional
 
 @dataclass
 class User:
