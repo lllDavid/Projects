@@ -34,8 +34,6 @@ class PaymentServices(Enum):
     APPLE_PAY = 2
     GOOGLE_PAY = 3
     AMAZON_PAY = 4
-    BITCOIN = 5
-    ETHEREUM = 6
 
 def select_payment_service(payment_service_id):
     try:

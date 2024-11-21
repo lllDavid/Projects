@@ -1,4 +1,7 @@
-from datetime import datetime
+from datetime import datetime, timedelta
+import random
+import string
+from hashlib import sha256 # Use own argon model
 from dataclasses import dataclass
 from .roles import Role
 
@@ -7,48 +10,80 @@ class User:
     id: int
     username: str
     email: str
-    password: str 
 
 @dataclass
 class UserSecurity:
-    two_factor_enabled: bool
-    two_factor_code:str
-    two_factor_code_expiry:datetime
     password_hash: str
-    reset_email: str
-    is_verified: bool
+    backup_codes: list[str]
+    seed_phrase_hash: str
+    passphrase_viewed: bool
+    passphrase_hash: str
+    two_factor_enabled: bool
+    two_factor_code: str
+    two_factor_code_expiry: datetime
 
     def enable_two_factor(self):
         self.two_factor_enabled = True
+        self.generate_two_factor_code()
 
     def disable_two_factor(self):
         self.two_factor_enabled = False
+        self.two_factor_code = ""
 
     def update_password(self, new_password_hash: str):
         self.password_hash = new_password_hash
 
-    def verify_account(self):
-        self.is_verified = True
-
     def reset_password(self):
         print("Password reset process initiated")
 
+    def generate_two_factor_code(self):
+        self.two_factor_code = ''.join(random.choices(string.digits, k=6))
+        self.two_factor_code_expiry = datetime.now() + timedelta(minutes=5)
+
+    def verify_two_factor_code(self, code: str) -> bool:
+        if self.two_factor_code == code and datetime.now() < self.two_factor_code_expiry:
+            return True
+        return False
+
+    def generate_backup_codes(self) -> list[str]:
+        self.backup_codes = [
+            ''.join(random.choices(string.ascii_uppercase + string.digits, k=8)) for _ in range(6)
+        ]
+        return self.backup_codes
+
+    def verify_backup_code(self, code: str) -> bool:
+        if code in self.backup_codes:
+            self.backup_codes.remove(code)
+            return True
+        return False
+
+    def generate_seed_phrase_hash(self, seed_phrase: str, passphrase: str = "") -> None:
+        combined = seed_phrase + passphrase
+        self.seed_phrase_hash = sha256(combined.encode('utf-8')).hexdigest()
+
+    def verify_seed_phrase(self, seed_phrase: str, passphrase: str = "") -> bool:
+        combined = seed_phrase + passphrase
+        return sha256(combined.encode('utf-8')).hexdigest() == self.seed_phrase_hash
+
 @dataclass
 class UserStatus:
+    is_online: bool
     is_banned: bool
     ban_reason: str
-    is_active: bool
+    ban_duration: int
     created_at: datetime
     updated_at: datetime
 
-    def ban(self, reason: str):
+    def ban(self, reason: str, duration: int = 0):
         self.is_banned = True
         self.ban_reason = reason
+        self.ban_duration = duration
         self.updated_at = datetime.now()
 
     def unban(self):
         self.is_banned = False
         self.ban_reason = ""
+        self.ban_duration = 0
         self.updated_at = datetime.now()
 
     def set_active(self, active: bool):
@@ -61,50 +96,51 @@ class UserStatus:
 
     def get_status(self) -> str:
         status = "Active" if self.is_active else "Inactive"
-        status += ", Banned" if self.is_banned else ""
+        if self.is_banned:
+            status += f", Banned: {self.ban_reason}"
         return status
 
 @dataclass
 class UserLoginHistory:
     login_count: int
     failed_login_attempts: int
-    last_login: datetime
+    last_failed_login: datetime = None
+    last_successful_login: datetime = None
 
     def record_login(self):
         self.login_count += 1
-        self.last_login = datetime.now()
+        self.last_successful_login = datetime.now()
 
     def record_failed_login(self):
         self.failed_login_attempts += 1
+        self.last_failed_login = datetime.now()
 
     def get_last_login(self) -> str:
-        return self.last_login.strftime('%Y-%m-%d %H:%M:%S') if self.last_login else "No logins yet"
+        return self.last_successful_login.strftime('%Y-%m-%d %H:%M:%S') if self.last_successful_login else "No logins yet"
 
 @dataclass
 class UserDetails:
-    ip_address: str
-    role: Role  
-    reset_email: str
-    password_hash: str
+    user: User
+    role: Role
     security: UserSecurity
     status: UserStatus
     login_history: UserLoginHistory
-    user: User  
+    created_at: datetime
+    updated_at: datetime
 
-    def set_reset_email(self, reset_email:str):
+    def set_reset_email(self, reset_email: str):
         self.reset_email = reset_email
 
     def update_ip_address(self, new_ip: str):
         self.ip_address = new_ip
 
     def update_password(self, new_password_hash: str):
-        self.password_hash = new_password_hash
         self.security.update_password(new_password_hash)
 
     def get_role(self) -> str:
         return str(self.role)
 
-    def set_status(self, is_active: bool, is_banned: bool, ban_reason:str):
+    def set_status(self, is_active: bool, is_banned: bool, ban_reason: str):
         self.status.set_active(is_active)
         if is_banned:
             self.status.ban(ban_reason)
@@ -119,7 +155,11 @@ class UserDetails:
             "status": self.status.get_status(),
             "last_login": self.login_history.get_last_login(),
             "account_age": self.status.get_account_age(),
-            "security_verified": self.security.is_verified
+            "two_factor_enabled": self.security.two_factor_enabled,
+            "passphrase_viewed": self.security.passphrase_viewed,
+            "failed_login_attempts": self.login_history.failed_login_attempts,
+            "account_creation_date": self.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+            "last_updated_date": self.updated_at.strftime('%Y-%m-%d %H:%M:%S'),
         }
 
     def reset_password(self):
