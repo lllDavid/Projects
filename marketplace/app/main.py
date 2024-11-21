@@ -1,6 +1,7 @@
+from app.controllers.user_creation import UserCreator
 from dataclasses import dataclass
 from datetime import datetime
-from version import Version
+from app.version import Version
 
 @dataclass
 class Main:
@@ -35,11 +36,43 @@ class Main:
             return f"Total runtime: {runtime.days} days, {hours} hours, {minutes} minutes, {seconds} seconds"
         return "App has not been started and stopped properly."
 
-version_instance = Version() # TODO: Change Version Class to just functions or return str
-main_instance = Main(app_name=version_instance.get_name(), app_version=version_instance.get_version())
+def get_user_input():
+    username = input("Username: ")
+    email = input("Email: ")
+    password = input("Password: ")
+    return {
+        "username": username,
+        "email": email,
+        "password": password
+    }
 
 if __name__ == "__main__":
+    # Initialize the application
+    version_instance = Version()  # Assuming Version has get_name() and get_version()
+    main_instance = Main(app_name=version_instance.get_name(), app_version=version_instance.get_version())
+
+    # Start the application
     main_instance.start_app()
+
+    # User creation workflow
+    user_creator = UserCreator()
+
+    while True:
+        user_data = get_user_input()
+
+        user_details = user_creator.create_and_save_user(
+            user_data['username'], 
+            user_data['email'], 
+            user_data['password']
+        )
+
+        if user_details:
+            print("User created successfully!")
+            break
+        else:
+            print("User creation failed due to validation errors. Please try again.")
+
+    # Stop the application
     input("Press 'Enter' to stop the app...")
     main_instance.stop_app()
     print(main_instance.total_runtime())
