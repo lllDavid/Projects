@@ -1,8 +1,8 @@
 from datetime import datetime
-from app.models.user import UserDetails, User, UserSecurity, UserStatus, UserLoginHistory
-from app.models.roles import Role
-from app.controllers.user_validation import validate_user_data
-from controllers.user_security import UserSecurityService
+from ..models.user import UserDetails, User, UserSecurity, UserStatus, UserLoginHistory
+from ..models.roles import Role
+from .user_validation import validate_user_data
+from .user_security import UserSecurityService
 
 class UserCreator:
     def __init__(self):
@@ -47,7 +47,7 @@ class UserCreator:
             user=user
         )
 
-    def create_and_save_user(self, username: str, email: str, password: str):
+    def create_and_save_user(self, username: str, email: str, password: str) -> UserDetails | None:
         try:
             validate_user_data(username, email, password)
 
@@ -59,3 +59,10 @@ class UserCreator:
         except ValueError as e:
             print(f"Error: {e}")
             return None
+
+    def get_user_input(self, username="David", email="david@gmail.com", password="123456") -> dict[str, str]:
+        return {
+            "username": username,
+            "email": email,
+            "password": password
+        }
