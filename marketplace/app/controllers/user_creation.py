@@ -10,9 +10,10 @@ class UserCreator:
 
     def initialize_user_status(self) -> UserStatus:
         return UserStatus(
+            is_online=True,
             is_banned=False,
             ban_reason="",
-            is_active=True,
+            ban_duration=0,
             created_at=datetime.now(),
             updated_at=datetime.now()
         )
@@ -21,7 +22,8 @@ class UserCreator:
         return UserLoginHistory(
             login_count=0,
             failed_login_attempts=0,
-            last_login=None
+            last_failed_login=None,
+            last_successful_login=None
         )
 
     def initialize_user_details(self, username: str, email: str, password: str) -> UserDetails:
@@ -31,13 +33,13 @@ class UserCreator:
         login_history = self.initialize_user_history()
 
         return UserDetails(
-            ip_address="",
+            user=user,
             role=Role.USER,
             security=security,
             status=status,
             login_history=login_history,
-            user=user
-            is_verified=verified
+            created_at=datetime.now(),
+            updated_at=datetime.now()
         )
 
     def create_and_save_user(self, username: str, email: str, password: str) -> UserDetails | None:

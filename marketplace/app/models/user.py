@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import random
 import string
+import hashlib
 from hashlib import sha256 # Use own argon model
 from dataclasses import dataclass
 from .roles import Role
@@ -10,6 +11,7 @@ class User:
     id: int
     username: str
     email: str
+    password:str
 
 @dataclass
 class UserSecurity:
@@ -29,6 +31,11 @@ class UserSecurity:
     def disable_two_factor(self):
         self.two_factor_enabled = False
         self.two_factor_code = ""
+
+    def hash_password(self, password:str):
+        sha256_hash = hashlib.sha256()
+        sha256_hash.update(password.encode('utf-8'))
+        return sha256_hash.hexdigest()
 
     def update_password(self, new_password_hash: str):
         self.password_hash = new_password_hash
