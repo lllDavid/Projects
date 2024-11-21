@@ -2,17 +2,11 @@ from datetime import datetime
 from ..models.user import UserDetails, User, UserSecurity, UserStatus, UserLoginHistory
 from ..models.roles import Role
 from .user_validation import validate_user_data
-from .user_security import UserSecurityService
 
 class UserCreator:
-    def __init__(self):
-        self.security_service = UserSecurityService()
-
     def create_user(self, username: str, email: str, password: str) -> User:
         return User(id=1, username=username, email=email, password=password) # Change ID to DB
 
-    def create_user_security(self, email: str, password: str) -> UserSecurity:
-        return self.security_service.create_security(email, password)
 
     def create_user_status(self) -> UserStatus:
         return UserStatus(
@@ -66,3 +60,4 @@ class UserCreator:
             "email": email,
             "password": password
         }
+    
