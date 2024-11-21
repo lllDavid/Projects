@@ -2,7 +2,6 @@ import hashlib
 import json
 from datetime import datetime
 
-# Block class to represent a single block in the blockchain
 class Block:
     def __init__(self, index, previous_hash, timestamp, data, hash):
         self.index = index
@@ -20,19 +19,16 @@ class Block:
             "hash": self.hash
         }
 
-# Blockchain class to manage the chain
 class Blockchain:
     def __init__(self):
         self.chain = []
         self.create_genesis_block()
 
     def create_genesis_block(self):
-        # Create the first block (genesis block)
         genesis_block = Block(0, "0", datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "Genesis Block", self.hash_block("0", "Genesis Block"))
         self.chain.append(genesis_block)
 
     def hash_block(self, previous_hash, data):
-        # Simple hash function to hash block data
         block_string = json.dumps({"previous_hash": previous_hash, "data": data}, sort_keys=True)
         return hashlib.sha256(block_string.encode()).hexdigest()
 

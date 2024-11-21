@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
+from chain import Blockchain
 
-class BlockchainVisualizer(tk.Tk):
+class Visualizer(tk.Tk):
     def __init__(self, blockchain):
         super().__init__()
         self.blockchain = blockchain
@@ -43,5 +44,5 @@ if __name__ == "__main__":
     blockchain.add_block("Second Block Data")
 
     # Initialize and start the visualizer
-    app = BlockchainVisualizer(blockchain)
+    app = Visualizer(blockchain)
     app.mainloop()
