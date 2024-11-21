@@ -10,6 +10,10 @@ class User:
     email: str
     password: str 
 
+def add_user(user:User):
+    print(f"New User added")
+    return user
+
 @dataclass
 class UserSecurity:
     two_factor_enabled: bool
