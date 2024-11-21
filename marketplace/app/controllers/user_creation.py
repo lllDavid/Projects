@@ -5,8 +5,18 @@ from .user_validation import validate_user_data
 
 class UserCreator:
     def create_user(self, username: str, email: str, password: str) -> User:
-        return User(id=1, username=username, email=email, password=password) # Change ID to DB
+        return User(id=1, username=username, email=email, password=password) 
 
+
+    def create_user_security(self):
+        return UserSecurity(
+            two_factor_enabled=False,
+            two_factor_code="",
+            two_factor_code_expiry=datetime.now(),
+            password_hash="",
+            reset_email="",
+            is_verified=False
+        )
 
     def create_user_status(self) -> UserStatus:
         return UserStatus(
@@ -26,7 +36,7 @@ class UserCreator:
 
     def create_user_details(self, username: str, email: str, password: str) -> UserDetails:
         user = self.create_user(username, email, password)
-        security = self.create_user_security(email, password)
+        security = self.create_user_security()
         status = self.create_user_status()
         login_history = self.create_user_login_history()
 
@@ -53,11 +63,3 @@ class UserCreator:
         except ValueError as e:
             print(f"Error: {e}")
             return None
-
-    def get_user_input(self, username="David", email="david@gmail.com", password="123456") -> dict[str, str]:
-        return {
-            "username": username,
-            "email": email,
-            "password": password
-        }
-    
