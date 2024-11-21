@@ -3,23 +3,12 @@ from app.models.user import UserDetails, User, UserSecurity, UserStatus, UserLog
 from app.models.roles import Role
 from datetime import datetime
 
-TEMP_EMAIL_DOMAINS = {
-    "tempmail.net", "10minutemail.com", "mailinator.com", 
-    "guerrillamail.com", "throwawaymail.com", "dispostable.com",
-    "maildrop.cc", "temp-mail.org", "getnada.com", "tempmailo.com",
-    "trashmail.com", "fakeinbox.com", "sharklasers.com"
-}
-
-def is_temp_email(email: str) -> bool:
-    domain = email.split('@')[-1].lower()
-    return domain in TEMP_EMAIL_DOMAINS
-
 def is_valid_email(email: str) -> bool:
     email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
     return bool(re.match(email_regex, email))
 
 def is_strong_password(password: str) -> bool:
-    return bool(re.match(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&][{20}],}$', password))
+    return bool(re.match(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{20,}$', password))
 
 def is_unique_user(username: str, email: str) -> bool:
     return not ("taken" in username or "taken" in email)
@@ -28,7 +17,6 @@ def get_user_input():
     username = input("Username: ")
     email = input("Email: ")
     password = input("Password: ")
-
     return {
         "username": username,
         "email": email,
@@ -84,25 +72,25 @@ def validate_user_data(username: str, email: str, password: str):
         raise ValueError("Invalid email format.")
 
     if not is_strong_password(password):
-        raise ValueError("Password must be at least 8 characters long, contain an uppercase letter, a number, and a special character.")
+        raise ValueError("Password must be at least 20 characters long, contain an uppercase letter, a number, and a special character.")
 
     if not is_unique_user(username, email):
         raise ValueError("Username or email is already taken.")
 
 def create_and_save_user():
-    try:
-        user_data = get_user_input()
+    while True:
+        try:
+            user_data = get_user_input()
 
-        validate_user_data(user_data['username'], user_data['email'], user_data['password'])
+            validate_user_data(user_data['username'], user_data['email'], user_data['password'])
 
-        user_details = create_user_details(user_data['username'], user_data['email'], user_data['password'])
+            user_details = create_user_details(user_data['username'], user_data['email'], user_data['password'])
 
-        print(f"Created user: {user_data['username']}")
-        return user_details
+            print(f"Created user: {user_data['username']}")
+            return user_details
 
-    except ValueError as e:
-        print(f"Error: {e}")
-        return None
+        except ValueError as e:
+            print(f"Error: {e}")
 
 if __name__ == "__main__":
     user_details = create_and_save_user()
