@@ -12,6 +12,8 @@ class User:
 @dataclass
 class UserSecurity:
     two_factor_enabled: bool
+    two_factor_code:str
+    two_factor_code_expiry:datetime
     password_hash: str
     reset_email: str
     is_verified: bool
