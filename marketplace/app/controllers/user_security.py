@@ -1,19 +1,29 @@
 import random
 import string
+from typing import List
 from datetime import datetime, timedelta
 from ..models.user import UserSecurity 
 
-def initialize_user_security() -> UserSecurity:
+# Updated function to accept values for user security
+def initialize_user_security(
+    password_hash: str,
+    backup_codes: List[str],
+    seed_phrase_hash: str,
+    passphrase_viewed: bool,
+    passphrase_hash: str,
+    two_factor_enabled: bool,
+    two_factor_code: str,
+    two_factor_code_expiry: datetime | None
+) -> UserSecurity:
     return UserSecurity(
-        password_hash="",
-        backup_codes=[],
-        seed_phrase_hash="",
-        passphrase_viewed=False,
-        passphrase_hash = "",
-        two_factor_enabled=False,
-        two_factor_code="",
-        two_factor_code_expiry=datetime.now()
-        
+        password_hash=password_hash,
+        backup_codes=backup_codes,
+        seed_phrase_hash=seed_phrase_hash,
+        passphrase_viewed=passphrase_viewed,
+        passphrase_hash=passphrase_hash,
+        two_factor_enabled=two_factor_enabled,
+        two_factor_code=two_factor_code,
+        two_factor_code_expiry=two_factor_code_expiry
     )
 
 def enable_two_factor(user: UserSecurity) -> bool:
@@ -42,6 +52,4 @@ def verify_two_factor_code(user: UserSecurity, code: str) -> bool:
 
 def generate_2fa_code():
     return ''.join(random.choices(string.digits, k=6))
-
-
 
