@@ -5,12 +5,15 @@ from ..models.user import UserSecurity
 
 def initialize_user_security() -> UserSecurity:
     return UserSecurity(
-        two_factor_enabled=False,
         password_hash="",
-        reset_email="",
+        backup_codes=[],
+        seed_phrase_hash="",
+        passphrase_viewed=False,
+        passphrase_hash = "",
+        two_factor_enabled=False,
         two_factor_code="",
-        two_factor_code_expiry=datetime.now(),
-        is_verified=False
+        two_factor_code_expiry=datetime.now()
+        
     )
 
 def enable_two_factor(user: UserSecurity) -> bool:
@@ -36,13 +39,6 @@ def verify_two_factor_code(user: UserSecurity, code: str) -> bool:
         return False  
 
     return user.two_factor_code == code
-
-def initiate_password_reset(user: UserSecurity, reset_email: str) -> bool:
-    user.reset_email = reset_email
-    return True
-
-def verify_reset_email(user: UserSecurity, reset_email: str) -> bool:
-    return user.reset_email == reset_email
 
 def generate_2fa_code():
     return ''.join(random.choices(string.digits, k=6))

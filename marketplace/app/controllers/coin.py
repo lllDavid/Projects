@@ -1,5 +1,5 @@
-from app.models.coin import Coin, add_new_coin
-import app.databases.coin_db as coin_db
+from ..models.coin import Coin, add_new_coin
+from ..databases import coin_db
 from datetime import datetime
 
 def create_new_coin(coin:Coin):

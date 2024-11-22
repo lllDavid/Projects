@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 import random
 import string
 import hashlib
-from hashlib import sha256 # Use own argon model
+from hashlib import sha256 # Use argon2id
 from dataclasses import dataclass
 from .roles import Role
 
