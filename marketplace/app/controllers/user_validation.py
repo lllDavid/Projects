@@ -5,7 +5,7 @@ def is_valid_email(email: str) -> bool:
     return bool(re.match(email_regex, email))
 
 def is_valid_password(password: str) -> bool:
-    return bool(re.match(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{20,}$', password))
+    return bool(re.match(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[\s\S]{20,}$', password))
 
 def is_unique_user(username: str) -> bool:
     return not ("taken" in username)
