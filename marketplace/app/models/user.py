@@ -1,10 +1,10 @@
 from datetime import datetime, timedelta
+from dataclasses import dataclass
+from .roles import Role
 import random
 import string
 import hashlib
-from hashlib import sha256 # Use argon2id
-from dataclasses import dataclass
-from .roles import Role
+
 
 @dataclass
 class User:
@@ -16,11 +16,8 @@ class User:
 @dataclass
 class UserSecurity:
     password_hash: str
-    backup_codes: list[str]
-    seed_phrase_hash: str
-    passphrase_viewed: bool
-    passphrase_hash: str
     two_factor_enabled: bool
+    two_factor_backup_codes: list[str]
     two_factor_code: str
     two_factor_code_expiry: datetime
 
@@ -53,24 +50,17 @@ class UserSecurity:
         return False
 
     def generate_backup_codes(self) -> list[str]:
-        self.backup_codes = [
+        self.two_factor_backup_codes = [
             ''.join(random.choices(string.ascii_uppercase + string.digits, k=8)) for _ in range(6)
         ]
-        return self.backup_codes
+        return self.two_factor_backup_codes
 
     def verify_backup_code(self, code: str) -> bool:
-        if code in self.backup_codes:
-            self.backup_codes.remove(code)
+        if code in self.two_factor_backup_codes:
+            self.two_factor_backup_codes.remove(code)
             return True
         return False
 
-    def generate_seed_phrase_hash(self, seed_phrase: str, passphrase: str = "") -> None:
-        combined = seed_phrase + passphrase
-        self.seed_phrase_hash = sha256(combined.encode('utf-8')).hexdigest()
-
-    def verify_seed_phrase(self, seed_phrase: str, passphrase: str = "") -> bool:
-        combined = seed_phrase + passphrase
-        return sha256(combined.encode('utf-8')).hexdigest() == self.seed_phrase_hash
 
 @dataclass
 class UserStatus:
@@ -163,7 +153,6 @@ class UserDetails:
             "last_login": self.login_history.get_last_login(),
             "account_age": self.status.get_account_age(),
             "two_factor_enabled": self.security.two_factor_enabled,
-            "passphrase_viewed": self.security.passphrase_viewed,
             "failed_login_attempts": self.login_history.failed_login_attempts,
             "account_creation_date": self.created_at.strftime('%Y-%m-%d %H:%M:%S'),
             "last_updated_date": self.updated_at.strftime('%Y-%m-%d %H:%M:%S'),
