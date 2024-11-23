@@ -72,11 +72,7 @@ def main():
     password = input("Enter a password: ")
     print(password)
     user_details = user_creator.create_and_save_user(username, email, password)
-
-    if user_details:
-        print(f"User {user_details.user.username} created successfully.")
-    else:
-        print("User creation failed.")
+    print(user_details)
 
 if __name__ == "__main__":
     main()
