@@ -5,7 +5,13 @@ def is_valid_email(email: str) -> bool:
     return bool(re.match(email_regex, email))
 
 def is_valid_password(password: str) -> bool:
-    return bool(re.match(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[\s\S]{20,}$', password))
+    password = password.strip()  # Strip leading and trailing spaces
+    return bool(re.match(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[\s\S]{30,}$', password))
+
+# Test the password
+print(is_valid_password("12345#Laaaaaaaaaaaaaaaaaaaa"))  # This should now return True
+
+
 
 def is_unique_user(username: str) -> bool:
     return not ("taken" in username)
