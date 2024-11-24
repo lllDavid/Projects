@@ -2,6 +2,7 @@ from datetime import datetime
 from ..models.roles import Role
 from ..models.user import User, UserDetails, UserSecurity, UserStatus, UserLoginHistory
 from .user_validation import validate_user_data
+from ..databases import user_db
 from .password_hashing import hash_password
 class UserCreator:
     def create_user(self, username: str, email: str, password: str) -> User:
@@ -57,7 +58,7 @@ class UserCreator:
             validate_user_data(username, email, password)
 
             user_details = self.initialize_user_details(username, email, password)
-            
+            user_db.add_user(user_details)
             return user_details
 
         except ValueError as e:
