@@ -67,12 +67,12 @@ class UserCreator:
 
 def main():
     user_creator = UserCreator()
+    
     username = input("Enter a username: ")
     email = input("Enter a email address: ")
     password = input("Enter a password: ")
-    print(password)
-    user_details = user_creator.create_and_save_user(username, email, password)
-    print(user_details)
+
+    user_creator.create_and_save_user(username, email, password)
 
 if __name__ == "__main__":
     main()

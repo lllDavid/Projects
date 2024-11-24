@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import List, Optional
+from .roles import Role
 
 @dataclass
 class User:
@@ -59,7 +60,7 @@ class UserLoginHistory:
 @dataclass
 class UserDetails:
     user: User
-    role: str 
+    role: Role 
     security: UserSecurity
     status: UserStatus
     login_history: UserLoginHistory
