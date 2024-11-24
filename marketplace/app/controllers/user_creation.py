@@ -2,14 +2,14 @@ from datetime import datetime
 from ..models.roles import Role
 from ..models.user import User, UserDetails, UserSecurity, UserStatus, UserLoginHistory
 from .user_validation import validate_user_data
-
+from .password_hashing import encrypt_data
 class UserCreator:
     def create_user(self, username: str, email: str, password: str) -> User:
         return User(id=1, username=username, email=email, password=password) 
     
-    def initialize_user_security(self) -> UserSecurity:
+    def initialize_user_security(self,password) -> UserSecurity:
         return UserSecurity(
-            password_hash = "",
+            password_hash = encrypt_data(),
             two_factor_enabled= False,
             two_factor_backup_codes= [],
             two_factor_code="",
@@ -67,7 +67,7 @@ class UserCreator:
 
 def main():
     user_creator = UserCreator()
-    
+
     username = input("Enter a username: ")
     email = input("Enter a email address: ")
     password = input("Enter a password: ")
