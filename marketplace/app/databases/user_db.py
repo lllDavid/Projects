@@ -1,5 +1,4 @@
 import mariadb
-from datetime import datetime
 
 # Connect to MariaDB
 conn = mariadb.connect(
@@ -14,9 +13,9 @@ conn = mariadb.connect(
 cursor = conn.cursor()
 
 # Example: Inserting a new user into the 'users' table
-def insert_user(username, email, password):
+def insert_user(username, email):
     query = "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)"
-    cursor.execute(query, (username, email, password))
+    cursor.execute(query, (username, email))
     conn.commit()  # Commit changes to the database
     print("User inserted successfully")
 
@@ -61,24 +60,6 @@ def get_user_login_history(user_id):
     cursor.execute(query, (user_id,))
     result = cursor.fetchone()
     print(f"User login history: {result}")
-
-# Example: Insert a new user
-insert_user("john_doe", "john.doe@example.com", "hashed_password")
-
-# Example: Insert a new role
-insert_role("Admin")
-
-# Example: Assign the 'Admin' role to a user (user_id = 1, role_id = 1)
-assign_role_to_user(1, 1)
-
-# Example: Insert security details for a user (user_id = 1)
-insert_user_security(1, "hashed_password", two_factor_enabled=True, two_factor_backup_codes="code1,code2,code3")
-
-# Example: Update a user's status (user_id = 1)
-update_user_status(1, is_online=True, is_banned=False)
-
-# Example: Get user login history (user_id = 1)
-get_user_login_history(1)
 
 # Close the cursor and connection after operations are complete
 cursor.close()
