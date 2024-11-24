@@ -4,7 +4,6 @@ def hash_password(password: str, time_cost: int = 2, memory_cost: int = 102400, 
     ph = PasswordHasher(time_cost=time_cost, memory_cost=memory_cost, parallelism=parallelism)
     
     hashed_password = ph.hash(password)
-    print(hashed_password)
     return hashed_password
 
 def verify_password(stored_hash: str, password: str):
