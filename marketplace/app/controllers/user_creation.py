@@ -2,14 +2,15 @@ from datetime import datetime
 from ..models.roles import Role
 from ..models.user import User, UserDetails, UserSecurity, UserStatus, UserLoginHistory
 from .user_validation import validate_user_data
-from .password_hashing import encrypt_data
+from .password_hashing import hash_password
 class UserCreator:
     def create_user(self, username: str, email: str, password: str) -> User:
+        print(f"User: {username} created")
         return User(id=1, username=username, email=email, password=password) 
     
     def initialize_user_security(self,password) -> UserSecurity:
         return UserSecurity(
-            password_hash = encrypt_data(),
+            password_hash = hash_password(password),
             two_factor_enabled= False,
             two_factor_backup_codes= [],
             two_factor_code="",
@@ -37,7 +38,7 @@ class UserCreator:
 
     def initialize_user_details(self, username: str, email: str, password: str) -> UserDetails:
         user = self.create_user(username, email, password)
-        security = self.initialize_user_security()
+        security = self.initialize_user_security(password)
         status = self.initialize_user_status()
         login_history = self.initialize_user_history()
 
@@ -56,8 +57,7 @@ class UserCreator:
             validate_user_data(username, email, password)
 
             user_details = self.initialize_user_details(username, email, password)
-
-            print(f"Created user: {username}")
+            
             return user_details
 
         except ValueError as e:
