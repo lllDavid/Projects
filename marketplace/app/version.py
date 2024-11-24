@@ -14,7 +14,7 @@ class Version:
         return version
     
     def update_name(self) -> str:
-        name = input("New version:")
+        name = input("New name:")
         self.app_name = name
         return name
     
