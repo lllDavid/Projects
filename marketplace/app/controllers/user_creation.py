@@ -59,7 +59,7 @@ class UserCreator:
             validate_user_data(username, email, password)
 
             user_details = self.initialize_user_details(username, email, password)
-            user_db.insert_user()
+            user_db.insert_user(user_details)
             return user_details
 
         except ValueError as e:

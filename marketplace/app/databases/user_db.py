@@ -1,5 +1,5 @@
 import mariadb
-
+from ..models.user import UserDetails
 # Connect to MariaDB
 conn = mariadb.connect(
     user="root",       # Your MariaDB username
@@ -9,58 +9,29 @@ conn = mariadb.connect(
     database="marketplace"  # The database you've created
 )
 
-# Create a cursor object to interact with the database
-cursor = conn.cursor()
+def insert_user(user_details: UserDetails):
+    # Example of inserting data into multiple tables
+    cursor = conn.cursor()
 
-# Example: Inserting a new user into the 'users' table
-def insert_user(username, email):
-    query = "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)"
-    cursor.execute(query, (username, email))
-    conn.commit()  # Commit changes to the database
-    print("User inserted successfully")
-
-# Example: Inserting a new role into the 'roles' table
-def insert_role(role_name):
-    query = "INSERT INTO roles (name) VALUES (%s)"
-    cursor.execute(query, (role_name,))
+    # Insert into users table
+    cursor.execute("INSERT INTO users (username, email, password) VALUES (%s, %s, %s)", 
+                   (user_details.user.username, user_details.user.email, user_details.user.password))
+    
+    # Assuming you have a way to get the user ID after insertion
+    user_id = cursor.lastrowid
+    
+    # Insert into user_security table
+    cursor.execute("INSERT INTO user_security (user_id, password_hash, two_factor_enabled) VALUES (%s, %s, %s)",
+                   (user_id, user_details.security.password_hash, user_details.security.two_factor_enabled))
+    
+    # Insert into user_status table
+    cursor.execute("INSERT INTO user_status (user_id, is_online, is_banned) VALUES (%s, %s, %s)", 
+                   (user_id, user_details.status.is_online, user_details.status.is_banned))
+    
+    # Insert into user_login_history table
+    cursor.execute("INSERT INTO user_login_history (user_id, login_count) VALUES (%s, %s)", 
+                   (user_id, user_details.login_history.login_count))
+    
     conn.commit()
-    print("Role inserted successfully")
-
-# Example: Assigning a role to a user (user_id and role_id are integers)
-def assign_role_to_user(user_id, role_id):
-    query = "INSERT INTO user_roles (user_id, role_id) VALUES (%s, %s)"
-    cursor.execute(query, (user_id, role_id))
-    conn.commit()
-    print("Role assigned to user successfully")
-
-# Example: Inserting user security details
-def insert_user_security(user_id, password_hash, two_factor_enabled=False, two_factor_backup_codes=None):
-    query = """
-    INSERT INTO user_security (user_id, password_hash, two_factor_enabled, two_factor_backup_codes)
-    VALUES (%s, %s, %s, %s)
-    """
-    cursor.execute(query, (user_id, password_hash, two_factor_enabled, two_factor_backup_codes))
-    conn.commit()
-    print("User security details inserted successfully")
-
-# Example: Updating user status (e.g., ban status)
-def update_user_status(user_id, is_online, is_banned, ban_reason="", ban_duration=0):
-    query = """
-    UPDATE user_status 
-    SET is_online = %s, is_banned = %s, ban_reason = %s, ban_duration = %s, updated_at = NOW() 
-    WHERE user_id = %s
-    """
-    cursor.execute(query, (is_online, is_banned, ban_reason, ban_duration, user_id))
-    conn.commit()
-    print("User status updated successfully")
-
-# Example: Retrieving user login history
-def get_user_login_history(user_id):
-    query = "SELECT * FROM user_login_history WHERE user_id = %s"
-    cursor.execute(query, (user_id,))
-    result = cursor.fetchone()
-    print(f"User login history: {result}")
-
-# Close the cursor and connection after operations are complete
-cursor.close()
-conn.close()
+    cursor.close()
+    print("User and associated details inserted into the database.")
