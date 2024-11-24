@@ -3,7 +3,7 @@ from ..databases import user_db
 from ..models.roles import Role
 from ..models.user import User, UserDetails, UserSecurity, UserStatus, UserLoginHistory
 from .user_validation import validate_user_data
-from ..password_hashing import hash_password
+from ..helpers.password_hashing import hash_password
 
 class UserCreator:
     def create_user(self, username: str, email: str, password: str) -> User:
