@@ -3,11 +3,11 @@ from datetime import datetime
 
 # Connect to MariaDB
 conn = mariadb.connect(
-    user="your_username",       # Your MariaDB username
-    password="your_password",   # Your MariaDB password
+    user="root",       # Your MariaDB username
+    password="root",   # Your MariaDB password
     host="localhost",           # Database server address (localhost if on the same machine)
     port=3306,                  # Port for MariaDB (default is 3306)
-    database="user_management"  # The database you've created
+    database="marketplace"  # The database you've created
 )
 
 # Create a cursor object to interact with the database

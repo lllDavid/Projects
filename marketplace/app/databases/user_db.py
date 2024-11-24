@@ -1,110 +1,85 @@
-import json
+import mariadb
 from datetime import datetime
-from app.models.roles import Role
-from app.models.user import User, UserSecurity, UserStatus, UserLoginHistory, UserDetails
 
-users = []
+# Connect to MariaDB
+conn = mariadb.connect(
+    user="root",       # Your MariaDB username
+    password="root",   # Your MariaDB password
+    host="localhost",           # Database server address (localhost if on the same machine)
+    port=3306,                  # Port for MariaDB (default is 3306)
+    database="marketplace"  # The database you've created
+)
 
-def convert_to_serializable(value):
-    """Convert non-serializable types (like datetime) into serializable forms."""
-    if isinstance(value, datetime):
-        return value.isoformat()  # Convert datetime to ISO format string
-    elif isinstance(value, Role):
-        return value.name  # Convert Role to its name (or another serializable attribute)
-    elif isinstance(value, User):
-        return value.to_dict()  # Convert User object to dict using to_dict() method
-    elif isinstance(value, UserSecurity):
-        return value.to_dict()  # Convert UserSecurity to dict
-    elif isinstance(value, UserStatus):  
-        # Convert all datetime attributes in UserStatus to isoformat
-        return value.to_dict()  # Using to_dict() for UserStatus
-    elif isinstance(value, UserLoginHistory):  
-        # Convert all datetime attributes in UserLoginHistory to isoformat
-        return value.to_dict()  # Using to_dict() for UserLoginHistory
-    elif isinstance(value, UserDetails):  
-        return value.to_dict()  # Using to_dict() for UserDetails
-    return value  # If it's not one of the custom objects, just return it as is
+# Create a cursor object to interact with the database
+cursor = conn.cursor()
 
-class User:
-    def __init__(self, username, email, password_hash):
-        self.username = username
-        self.email = email
-        self.password_hash = password_hash
-        self.created_at = datetime.now()
+# Example: Inserting a new user into the 'users' table
+def insert_user(username, email, password):
+    query = "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)"
+    cursor.execute(query, (username, email, password))
+    conn.commit()  # Commit changes to the database
+    print("User inserted successfully")
 
-    def to_dict(self):
-        return {
-            'username': self.username,
-            'email': self.email,
-            'password_hash': self.password_hash,
-            'created_at': self.created_at.isoformat(),  # Convert datetime to string
-        }
+# Example: Inserting a new role into the 'roles' table
+def insert_role(role_name):
+    query = "INSERT INTO roles (name) VALUES (%s)"
+    cursor.execute(query, (role_name,))
+    conn.commit()
+    print("Role inserted successfully")
 
-class UserStatus:
-    def __init__(self, status, last_updated):
-        self.status = status
-        self.last_updated = last_updated
+# Example: Assigning a role to a user (user_id and role_id are integers)
+def assign_role_to_user(user_id, role_id):
+    query = "INSERT INTO user_roles (user_id, role_id) VALUES (%s, %s)"
+    cursor.execute(query, (user_id, role_id))
+    conn.commit()
+    print("Role assigned to user successfully")
 
-    def to_dict(self):
-        return {
-            'status': self.status,
-            'last_updated': self.last_updated.isoformat(),  # Convert datetime to string
-        }
+# Example: Inserting user security details
+def insert_user_security(user_id, password_hash, two_factor_enabled=False, two_factor_backup_codes=None):
+    query = """
+    INSERT INTO user_security (user_id, password_hash, two_factor_enabled, two_factor_backup_codes)
+    VALUES (%s, %s, %s, %s)
+    """
+    cursor.execute(query, (user_id, password_hash, two_factor_enabled, two_factor_backup_codes))
+    conn.commit()
+    print("User security details inserted successfully")
 
-class UserLoginHistory:
-    def __init__(self, login_time, ip_address):
-        self.login_time = login_time
-        self.ip_address = ip_address
+# Example: Updating user status (e.g., ban status)
+def update_user_status(user_id, is_online, is_banned, ban_reason="", ban_duration=0):
+    query = """
+    UPDATE user_status 
+    SET is_online = %s, is_banned = %s, ban_reason = %s, ban_duration = %s, updated_at = NOW() 
+    WHERE user_id = %s
+    """
+    cursor.execute(query, (is_online, is_banned, ban_reason, ban_duration, user_id))
+    conn.commit()
+    print("User status updated successfully")
 
-    def to_dict(self):
-        return {
-            'login_time': self.login_time.isoformat(),  # Convert datetime to string
-            'ip_address': self.ip_address,
-        }
+# Example: Retrieving user login history
+def get_user_login_history(user_id):
+    query = "SELECT * FROM user_login_history WHERE user_id = %s"
+    cursor.execute(query, (user_id,))
+    result = cursor.fetchone()
+    print(f"User login history: {result}")
 
-class UserDetails:
-    def __init__(self, user, security, status, login_history):
-        self.user = user
-        self.security = security
-        self.status = status
-        self.login_history = login_history
+# Example: Insert a new user
+insert_user("john_doe", "john.doe@example.com", "hashed_password")
 
-    def to_dict(self):
-        return {
-            'user': self.user.to_dict(),  # Convert user to dict
-            'security': self.security.to_dict(),  # Convert security to dict
-            'status': self.status.to_dict(),  # Convert status to dict
-            'login_history': [login.to_dict() for login in self.login_history],  # Convert list of login history
-        }
+# Example: Insert a new role
+insert_role("Admin")
 
-def get_all_users():
-    print(f"All users: {users}")
+# Example: Assign the 'Admin' role to a user (user_id = 1, role_id = 1)
+assign_role_to_user(1, 1)
 
-def add_user(user_details: UserDetails):
-    users.append(user_details)
-    save_users()
-    print(f"User {user_details.user.username} added to User DB")
+# Example: Insert security details for a user (user_id = 1)
+insert_user_security(1, "hashed_password", two_factor_enabled=True, two_factor_backup_codes="code1,code2,code3")
 
-def delete_user(user_details: UserDetails):
-    users.remove(user_details)
-    print(f"User: {user_details.user.username} deleted from DB.")
+# Example: Update a user's status (user_id = 1)
+update_user_status(1, is_online=True, is_banned=False)
 
-def save_users():
-    users_data = []
-    for user in users:
-        # Recursively convert non-serializable values to serializable ones
-        user_data = convert_to_serializable(user.to_dict())  # Use to_dict() method for conversion
-        users_data.append(user_data)
+# Example: Get user login history (user_id = 1)
+get_user_login_history(1)
 
-    # Save to JSON file
-    with open("users.json", "w") as f:
-        json.dump(users_data, f, indent=4)
-
-def load_users():
-    try:
-        with open("users.json", "r") as f:
-            users_data = json.load(f)
-            global users
-            users = [UserDetails(**data) for data in users_data]
-    except FileNotFoundError:
-        users = []
+# Close the cursor and connection after operations are complete
+cursor.close()
+conn.close()
