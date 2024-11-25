@@ -5,13 +5,12 @@ from ..misc.roles import Role
 
 @dataclass
 class User:
-    id: int
     username: str
     email: str
     password: str
 
     def __str__(self):
-        return f"ID: {self.id}, Username: {self.username}, Email: {self.email}"
+        return f"Username: {self.username}, Email: {self.email}"
 
 
 @dataclass
