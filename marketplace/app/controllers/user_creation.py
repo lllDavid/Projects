@@ -7,7 +7,7 @@ from ..misc.password_hashing import hash_password
 
 class UserCreator:
     def create_user(self, username: str, email: str, password: str) -> User:
-        return User(id=1, username=username, email=email, password=password) 
+        return User(username=username, email=email, password=password) 
     
     def initialize_user_security(self,password) -> UserSecurity:
         return UserSecurity(
