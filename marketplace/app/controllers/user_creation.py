@@ -4,6 +4,7 @@ from ..misc.roles import Role
 from ..models.user import User, UserDetails, UserSecurity, UserStatus, UserLoginHistory
 from .user_validation import validate_user_data
 from ..misc.password_hashing import hash_password
+from ..misc.backupcodes_hashing import generate_backup_codes, hash_backup_codes
 
 class UserCreator:
     def create_user(self, username: str, email: str, password: str) -> User:
@@ -13,7 +14,8 @@ class UserCreator:
         return UserSecurity(
             password_hash = hash_password(password),
             two_factor_enabled= False,
-            two_factor_backup_codes= [],
+            two_factor_backup_codes= generate_backup_codes(),
+            hashed_two_factor_backup_codes= hash_backup_codes(generate_backup_codes()),
             two_factor_code="",
             two_factor_code_expiry=None
         )

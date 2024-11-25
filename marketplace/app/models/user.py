@@ -18,6 +18,7 @@ class UserSecurity:
     password_hash: str = ""
     two_factor_enabled: bool = False
     two_factor_backup_codes: List[str] = field(default_factory=list)
+    hashed_two_factor_backup_codes: List[str] = field(default_factory=list)
     two_factor_code: str = ""
     two_factor_code_expiry: Optional[datetime] = None
 
