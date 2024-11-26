@@ -5,31 +5,39 @@ class Role(Enum):
     SUPPORT = auto()
     ADMIN = auto()
 
-    def can_create_coin(self):
-        return self in {Role.ADMIN}
+class RolePermissions:
+    permissions = {
+        Role.ADMIN: {
+            'create_coin': True,
+            'edit_coin': True,
+            'delete_coin': True,
+            'create_user': True,
+            'edit_user': True,
+            'delete_user': True,
+        },
+        Role.SUPPORT: {
+            'create_coin': False,
+            'edit_coin': False,
+            'delete_coin': False,
+            'create_user': False,
+            'edit_user': True,
+            'delete_user': False,
+        },
+        Role.USER: {
+            'edit_user_profile': True,
+            'change_user_email': True,
+            'view_coins': True,
+            'delete_user': False,
+            'create_user': False,
+            'edit_user': False,
+            'delete_coin': False,
+            'create_coin': False,
+            'edit_coin': False,
+        },
+    }
 
-    def can_edit_coin(self):
-        return self in {Role.ADMIN}
+    @staticmethod
+    def can(role: Role, action: str) -> bool:
+        return RolePermissions.permissions.get(role, {}).get(action, False)
 
-    def can_delete_coin(self):
-        return self in {Role.ADMIN}
-    
-    def can_create_user(self):
-        return self in {Role.ADMIN}
-    
-    def can_edit_user(self):
-        return self in {Role.SUPPORT, Role.ADMIN}
-    
-    def can_delete_user(self):
-        return self in {Role.ADMIN}
 
-    def can_view(self):
-        return self in {Role.USER, Role.SUPPORT, Role.ADMIN}
-
-    def can_access_backup_codes(self):
-        # Only Admins can access or edit backup codes
-        return self == Role.ADMIN
-
-    def can_edit_backup_codes(self):
-        # Only Admins can edit backup codes
-        return self == Role.ADMIN
