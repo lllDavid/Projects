@@ -54,12 +54,16 @@ class UserCreator:
             updated_at=datetime.now()
         )
 
-    def create_and_save_user(self, username: str, email: str, password: str) -> UserDetails | None:
+    def create_and_save_user(self, username: str, email: str, password: str, creator_role: Role=Role.ADMIN) -> UserDetails | None:
         try:
+            if creator_role != Role.ADMIN:
+                print(f"Error: Only ADMIN can create new users. Current role: {creator_role}")
+                return None  
+
             validate_user_data(username, email, password)
 
             user_details = self.initialize_user_details(username, email, password)
-            print(f"User {username} created")
+            print(f"User {username} created successfully.")
             user_db.insert_user(user_details)
             return user_details
 
