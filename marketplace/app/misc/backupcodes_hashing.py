@@ -10,8 +10,5 @@ def generate_backup_codes(num_codes: int = 6) -> List[str]:
 def hash_backup_codes(backup_codes: List[str]) -> List[str]:
     return [ph.hash(code) for code in backup_codes]
 
-raw_codes = generate_backup_codes(num_codes=6)  
-hashed_codes = hash_backup_codes(raw_codes)  
 
-print("Raw Backup Codes:", raw_codes)
-print("Hashed Backup Codes:", hashed_codes)
+

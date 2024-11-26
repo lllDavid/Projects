@@ -1,6 +1,6 @@
 from datetime import datetime
 from ..databases import user_db
-from ..misc.roles import Role
+from ..misc.roles import Role, check_permission
 from ..models.user import User, UserDetails, UserSecurity, UserStatus, UserLoginHistory
 from .user_validation import validate_user_data
 from ..misc.password_hashing import hash_password
@@ -54,11 +54,9 @@ class UserCreator:
             updated_at=datetime.now()
         )
 
-    def create_and_save_user(self, username: str, email: str, password: str, creator_role: Role=Role.ADMIN) -> UserDetails | None:
+    def create_and_save_user(self, username: str, email: str, password: str, role:Role=Role.ADMIN) -> UserDetails | None:
         try:
-            if creator_role != Role.ADMIN:
-                print(f"Error: Only ADMIN can create new users. Current role: {creator_role}")
-                return None  
+            check_permission(role, required_role=Role.ADMIN)
 
             validate_user_data(username, email, password)
 

@@ -19,7 +19,7 @@ def insert_user(user_details: UserDetails):
     cursor.execute("INSERT INTO user_security (user_id, password_hash, two_factor_enabled) VALUES (%s, %s, %s)",
                    (user_id, user_details.security.password_hash, user_details.security.two_factor_enabled))
     
-    cursor.execute("INSERT INTO user_status (user_id, is_banned) VALUES (%s, %s, %s)", 
+    cursor.execute("INSERT INTO user_status (user_id, is_banned) VALUES (%s, %s)", 
                    (user_id, user_details.status.is_banned))
     
     cursor.execute("INSERT INTO user_login_history (user_id, login_count) VALUES (%s, %s)", 
