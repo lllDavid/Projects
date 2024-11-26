@@ -1,28 +1,25 @@
-from ..models.coin import Coin, add_new_coin
-from ..databases import coin_db
 from datetime import datetime
+from ..models.coin import Coin, add_new_coin
+from ..databases import coin_db 
 
-def create_new_coin(coin:Coin):
-    coin = Coin(id = coin.id, 
-                name = coin.name, 
-                symbol = coin.symbol, 
-                category = coin.category, 
-                description = coin.description, 
-                price = coin.price, 
-                last_updated = coin.last_updated)
-    return coin
+def create_new_coin(coin: Coin):
+    return coin  # Simply return the same coin object (or remove this function)
 
-coin1 = Coin(id=1, 
-             name="Bitcoin", 
-             symbol="BTC", 
-             category="Cryptocurrency",
-             description="A decentralized digital currency.", 
-             price=45000.75, 
-             last_updated=datetime.now())
+# Sample coin data
+coin1 = Coin(
+    id=1, 
+    name="Bitcoin", 
+    symbol="BTC", 
+    category="Cryptocurrency",
+    description="A decentralized digital currency.", 
+    price=45000.75, 
+    last_updated=datetime.now()
+)
 
-def add_coin_to_db(coin:Coin):
-    coin_db.save_coin(coin)
+# Function to insert the coin into the database
+def add_coin_to_db(coin: Coin):
+    coin_db.insert_coin(coin )  # Ensure insert_coin is correctly imported and works
 
 if __name__ == "__main__":
-    create_new_coin(coin1)
+    coin1 = create_new_coin(coin1)  # This step is now redundant but keeps the pattern you might want
     add_coin_to_db(coin1)
