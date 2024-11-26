@@ -50,5 +50,8 @@ def main():
         last_updated=datetime.now()
         )
     new_coin_specifications = coin_creator.initialize_coin_specifications()
-    new_coin_market_data = coin_creator.initialize_coin_market_data
+    new_coin_market_data = coin_creator.initialize_coin_market_data()
     coin_db.insert_coin(new_coin, new_coin_specifications, new_coin_market_data )
+
+if __name__ == "__main__":
+    main()
