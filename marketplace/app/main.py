@@ -6,25 +6,25 @@ from app.version import Version
 class Main:
     app_name: str
     app_version: str
-    is_running: bool = False
+    start_time: datetime 
+    stop_time: datetime 
+    running: bool = False
     status: str = "Offline"
-    start_time: datetime = None
-    stop_time: datetime = None
 
     def start_app(self) -> datetime:
-        self.is_running = True
+        self.running = True
         self.status = "Online"
         self.start_time = datetime.now()
         print(f"{self.app_name} version {self.app_version} started at: {self.start_time}")
-        print(f"Status: {self.status}, Is Running: {self.is_running}")
+        print(f"Status: {self.status}, Is Running: {self.running}")
         return self.start_time
 
     def stop_app(self) -> datetime:
-        self.is_running = False
+        self.running = False
         self.status = "Offline"
         self.stop_time = datetime.now()
         print(f"{self.app_name} version {self.app_version} stopped at: {self.stop_time}")
-        print(f"Status: {self.status}, Is Running: {self.is_running}")
+        print(f"Status: {self.status}, Is Running: {self.running}")
         return self.stop_time
 
     def total_runtime(self) -> str:
