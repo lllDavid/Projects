@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import List, Optional
-from ..misc.roles import Role
+from ..security.roles import Role
 
 @dataclass
 class User:
