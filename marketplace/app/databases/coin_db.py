@@ -1,7 +1,7 @@
-import mariadb
+from mariadb import connect
 from app.models.coin import Coin, CoinSpecifications, CoinMarketData
 
-conn = mariadb.connect(
+conn = connect(
     user="root",       
     password="root",   
     host="localhost",           

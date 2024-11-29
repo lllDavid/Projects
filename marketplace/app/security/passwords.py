@@ -6,11 +6,3 @@ def hash_password(password: str, time_cost: int = 2, memory_cost: int = 102400, 
     hashed_password = ph.hash(password)
     return hashed_password
 
-def verify_password(stored_hash: str, password: str):
-    ph = PasswordHasher()
-    try:
-        ph.verify(stored_hash, password)  
-        return True
-    except:
-        return False
-

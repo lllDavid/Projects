@@ -3,8 +3,8 @@ from app.databases import user_db
 from app.models.user import User, UserDetails, UserSecurity, UserStatus, UserLoginHistory
 from app.helpers.validation import validate_user_data
 from app.security.roles import Role, check_permission
-from Projects.marketplace.app.security.passwords import hash_password
-from Projects.marketplace.app.security.backupcodes import generate_backup_codes, hash_backup_codes
+from app.security.passwords import hash_password
+from app.security.backupcodes import generate_backup_codes, hash_backup_codes
 
 class UserCreator:
     def create_user(self, username: str, email: str, password: str) -> User:

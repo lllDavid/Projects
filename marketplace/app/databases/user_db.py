@@ -1,7 +1,7 @@
-import mariadb
+from mariadb import connect
 from app.models.user import UserDetails
 
-conn = mariadb.connect(
+conn = connect(
     user="root",       
     password="root",   
     host="localhost",           
@@ -60,7 +60,7 @@ def delete_user(user_id: int):
         conn.commit()
         print("User and associated data deleted successfully.")
     
-    except mariadb.Error as e:
+    except conn.Error as e:
         conn.rollback()
         print(f"Error occurred: {e}")
     
