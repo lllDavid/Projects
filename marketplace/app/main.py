@@ -1,15 +1,15 @@
 from dataclasses import dataclass
 from datetime import datetime
-from app.version import Version
+from version import Version
 
 @dataclass
 class Main:
     app_name: str
-    app_version: str
-    start_time: datetime 
-    stop_time: datetime 
+    app_version: str 
     running: bool = False
     status: str = "Offline"
+    start_time: datetime = None
+    stop_time: datetime = None
 
     def start_app(self) -> datetime:
         self.running = True
@@ -36,14 +36,14 @@ class Main:
         return "App has not been started and stopped properly."
 
 if __name__ == "__main__":
-    version_instance = Version()  
-    main_instance = Main(app_name=version_instance.get_name(), app_version=version_instance.get_version())
+    version = Version()  
+    main = Main(app_name=version.get_name(), app_version=version.get_version())
 
-    main_instance.start_app()
+    main.start_app()
     
     input("Press 'Enter' to stop the app...")
-    main_instance.stop_app()
-    print(main_instance.total_runtime())
+    main.stop_app()
+    print(main.total_runtime())
 
 
         
