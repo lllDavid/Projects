@@ -1,5 +1,5 @@
 import mariadb
-from ..models.coin import Coin, CoinSpecifications, CoinMarketData
+from app.models.coin import Coin, CoinSpecifications, CoinMarketData
 
 conn = mariadb.connect(
     user="root",       

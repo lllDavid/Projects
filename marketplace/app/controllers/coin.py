@@ -1,6 +1,6 @@
 from datetime import datetime
-from ..models.coin import Coin, CoinSpecifications, CoinMarketData, add_new_coin
-from ..databases import coin_db 
+from app.models.coin import Coin, CoinSpecifications, CoinMarketData, add_new_coin
+from app.databases import coin_db 
 
 class CoinCreator:
     def create_new_coin(self, id:int, name:str, symbol:str, category:str, description:str, price:float,last_updated:datetime) -> Coin:

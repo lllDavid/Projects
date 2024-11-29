@@ -1,5 +1,5 @@
 import mariadb
-from ..models.user import UserDetails
+from app.models.user import UserDetails
 
 conn = mariadb.connect(
     user="root",       
