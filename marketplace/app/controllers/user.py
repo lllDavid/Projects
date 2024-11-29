@@ -1,10 +1,10 @@
 from datetime import datetime
-from ..databases import user_db
-from ..security.roles import Role, check_permission
-from ..models.user import User, UserDetails, UserSecurity, UserStatus, UserLoginHistory
-from ..helpers.validation import validate_user_data
-from ..security.password_hashing import hash_password
-from ..security.backupcodes_hashing import generate_backup_codes, hash_backup_codes
+from app.databases import user_db
+from app.models.user import User, UserDetails, UserSecurity, UserStatus, UserLoginHistory
+from app.helpers.validation import validate_user_data
+from app.security.roles import Role, check_permission
+from app.security.password_hashing import hash_password
+from app.security.backupcodes_hashing import generate_backup_codes, hash_backup_codes
 
 class UserCreator:
     def create_user(self, username: str, email: str, password: str) -> User:
