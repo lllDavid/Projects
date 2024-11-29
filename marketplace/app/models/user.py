@@ -27,12 +27,12 @@ class UserSecurity:
 
 @dataclass
 class UserStatus:
-    is_online: bool = True
-    is_banned: bool = False
-    ban_reason: str = ""
-    ban_duration: int = 0  
-    created_at: datetime = field(default_factory=datetime.now)
-    updated_at: datetime = field(default_factory=datetime.now)
+    is_online: bool 
+    is_banned: bool 
+    ban_reason: str 
+    ban_duration: int    
+    created_at: datetime 
+    updated_at: datetime 
 
     def __str__(self):
         return (f"Online: {self.is_online}, "
@@ -45,10 +45,10 @@ class UserStatus:
 
 @dataclass
 class UserLoginHistory:
-    login_count: int = 0
-    failed_login_attempts: int = 0
-    last_failed_login: Optional[datetime] = None
-    last_successful_login: Optional[datetime] = None
+    login_count: int 
+    failed_login_attempts: int 
+    last_failed_login: Optional[datetime] 
+    last_successful_login: Optional[datetime]
 
     def __str__(self):
         return (f"Login Count: {self.login_count}, "
@@ -64,8 +64,8 @@ class UserDetails:
     security: UserSecurity
     status: UserStatus
     login_history: UserLoginHistory
-    created_at: datetime = field(default_factory=datetime.now)
-    updated_at: datetime = field(default_factory=datetime.now)
+    created_at: datetime 
+    updated_at: datetime 
 
     def __str__(self):
         return (f"User Details:\n"
