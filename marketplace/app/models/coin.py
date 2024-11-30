@@ -3,7 +3,6 @@ from datetime import datetime
 
 @dataclass
 class Coin:
-    id: int
     name: str
     symbol: str
     category: str

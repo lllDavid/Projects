@@ -13,11 +13,11 @@ class UserCreator:
     def initialize_user_security(self,password) -> UserSecurity:
         return UserSecurity(
             password_hash = hash_password(password),
-            two_factor_enabled= False,
-            two_factor_backup_codes= generate_backup_codes(),
-            hashed_two_factor_backup_codes= hash_backup_codes(generate_backup_codes()),
-            two_factor_code="",
-            two_factor_code_expiry=None
+            two_factor_enabled = False,
+            two_factor_backup_codes = generate_backup_codes(),
+            hashed_two_factor_backup_codes = hash_backup_codes(generate_backup_codes()),
+            two_factor_code = "",
+            two_factor_code_expiry = None
         )
   
     def initialize_user_status(self) -> UserStatus:

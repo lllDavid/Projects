@@ -1,11 +1,10 @@
 from datetime import datetime
+from app.databases import coin_db
 from app.models.coin import Coin, CoinSpecifications, CoinMarketData
-from app.databases import coin_db 
 
 class CoinCreator:
-    def create_new_coin(self, id:int, name:str, symbol:str, category:str, description:str, price:float,last_updated:datetime) -> Coin:
+    def create_new_coin(self, name:str, symbol:str, category:str, description:str, price:float,last_updated:datetime) -> Coin:
         return Coin(
-            id=id, 
             name=name, 
             symbol=symbol, 
             category=category,
@@ -40,8 +39,8 @@ class CoinCreator:
 
 def main():
     coin_creator = CoinCreator()
-    new_coin = coin_creator.create_new_coin(
-        id=1, 
+
+    coin = coin_creator.create_new_coin(
         name="Bitcoin", 
         symbol="BTC", 
         category="Cryptocurrency", 
@@ -49,9 +48,10 @@ def main():
         price=45000.75, 
         last_updated=datetime.now()
         )
-    new_coin_specifications = coin_creator.initialize_coin_specifications()
-    new_coin_market_data = coin_creator.initialize_coin_market_data()
-    coin_db.insert_coin(new_coin, new_coin_specifications, new_coin_market_data )
+    
+    coin_specifications = coin_creator.initialize_coin_specifications()
+    coin_market_data = coin_creator.initialize_coin_market_data()
+    coin_db.insert_coin(coin, coin_specifications, coin_market_data )
 
 if __name__ == "__main__":
     main()
