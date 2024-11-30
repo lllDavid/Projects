@@ -3,7 +3,6 @@ from datetime import datetime
 from typing import List
 from app.security.roles import Role
 
-
 @dataclass
 class User:
     username: str
