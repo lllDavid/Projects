@@ -28,11 +28,6 @@ class UserSecurity:
         self.two_factor_code_expiry = expiry_time
         print("Two-factor code updated.")
 
-    def update_backup_codes(self, new_backup_codes: List[str]):
-        self.two_factor_backup_codes = new_backup_codes
-        self.hashed_two_factor_backup_codes = [self.hash_code(code) for code in new_backup_codes]
-        print("Two-factor backup codes updated.")
-
     def generate_backup_codes(self, num_codes: int = 6) -> List[str]:
         """Generate a list of random backup codes."""
         return [str(randint(100000, 999999)) for _ in range(num_codes)]
