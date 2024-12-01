@@ -1,6 +1,10 @@
 from dataclasses import dataclass, field
 from datetime import datetime
-from app.models.user import User, 
+from app.models.user.user import User
+from app.models.user.user_security import UserSecurity
+from app.models.user.user_status import UserStatus
+from app.models.user.user_login_history import UserLoginHistory
+from app.security.roles import Role
 @dataclass
 class UserDetails:
     user: User
