@@ -57,10 +57,8 @@ class UserCreator:
             updated_at=datetime.now()
         )
 
-    def create_and_save_user(self, username: str, email: str, password: str, role:Role=Role.ADMIN) -> UserDetails | None:
+    def create_and_save_user(self, username: str, email: str, password: str) -> UserDetails | None:
         try:
-            check_permission(role, required_role=Role.ADMIN)
-
             validate_user_data(username, email, password)
 
             user_details = self.initialize_user_details(username, email, password)

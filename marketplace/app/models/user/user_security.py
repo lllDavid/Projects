@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from datetime import datetime
 from typing import List
+from random import randint
+from argon2 import PasswordHasher
 
 @dataclass
 class UserSecurity:
@@ -10,6 +12,8 @@ class UserSecurity:
     hashed_two_factor_backup_codes: List[str] 
     two_factor_code: str 
     two_factor_code_expiry: datetime
+
+    ph = PasswordHasher()
 
     def enable_two_factor(self):
         self.two_factor_enabled = True
@@ -28,9 +32,14 @@ class UserSecurity:
         self.two_factor_backup_codes = new_backup_codes
         self.hashed_two_factor_backup_codes = [self.hash_code(code) for code in new_backup_codes]
         print("Two-factor backup codes updated.")
-# TODO Backupcodes hash module here
-    def hash_code(self, code: str) -> str:
-        return f"hashed_{code}"
+
+    def generate_backup_codes(self, num_codes: int = 6) -> List[str]:
+        """Generate a list of random backup codes."""
+        return [str(randint(100000, 999999)) for _ in range(num_codes)]
+
+    def hash_backup_codes(self, backup_codes: List[str]) -> List[str]:
+        """Hash a list of backup codes using PasswordHasher."""
+        return [self.ph.hash(code) for code in backup_codes]
 
     def display_security_info(self):
         return (f"2FA Enabled: {self.two_factor_enabled}\n"
