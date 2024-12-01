@@ -1,10 +1,10 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime
 from app.models.user.user import User
 from app.models.user.user_security import UserSecurity
 from app.models.user.user_status import UserStatus
 from app.models.user.user_login_history import UserLoginHistory
-from app.security.roles import Role
+from app.helpers.roles import Role
 
 @dataclass
 class UserDetails:
@@ -15,12 +15,16 @@ class UserDetails:
     login_history: UserLoginHistory
     created_at: datetime 
     updated_at: datetime 
-    '''
-    def update_role(self, new_role: str):
+    
+    def update_user(self, new_user:User):
+        self.user = new_user
+        self.updated_at = datetime.now()
+
+    def update_role(self, new_role: Role):
         self.role = new_role
         self.updated_at = datetime.now()
         print(f"Role updated to {new_role}")
-    '''
+    
     def update_security(self, new_security: UserSecurity):
         self.security = new_security
         self.updated_at = datetime.now()

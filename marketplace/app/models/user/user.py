@@ -7,6 +7,10 @@ class User:
     email: str
     password: str
 
+    def update_username(self, new_username: str):
+        self.email = new_username
+        print(f"Email updated to {new_username}")
+
     def update_email(self, new_email: str):
         self.email = new_email
         print(f"Email updated to {new_email}")
