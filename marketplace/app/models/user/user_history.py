@@ -1,22 +1,24 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime
 
 @dataclass
-class UserLoginHistory:
-    login_count: int 
-    failed_login_attempts: int 
-    last_failed_login: datetime
+class UserHistory:
+    login_count: int  
     last_successful_login: datetime
+    last_failed_login: datetime
+    failed_login_attempts: int
+    created_at: datetime 
+    updated_at: datetime 
 
     def increment_login_count(self):
         self.login_count += 1
         print(f"Login count incremented. Current count: {self.login_count}")
 
-    def increment_failed_attempts(self):
+    def increment_failed_login_attempts(self):
         self.failed_login_attempts += 1
         print(f"Failed login attempts incremented. Current count: {self.failed_login_attempts}")
 
-    def reset_failed_attempts(self):
+    def reset_failed_login_attempts(self):
         self.failed_login_attempts = 0
         print("Failed login attempts reset.")
 

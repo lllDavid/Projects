@@ -7,8 +7,6 @@ class UserStatus:
     is_banned: bool 
     ban_reason: str 
     ban_duration: int    
-    created_at: datetime 
-    updated_at: datetime 
 
     def update_ban_status(self, is_banned: bool, reason: str, duration: int):
         self.is_banned = is_banned
@@ -26,14 +24,10 @@ class UserStatus:
         return (f"Online: {self.is_online}, "
                 f"Banned: {self.is_banned}, "
                 f"Ban Reason: {self.ban_reason}, "
-                f"Ban Duration: {self.ban_duration}, "
-                f"Created At: {self.created_at}, "
-                f"Updated At: {self.updated_at}")
+                f"Ban Duration: {self.ban_duration}, ")
 
     def __str__(self):
         return (f"Online: {self.is_online}, "
                 f"Banned: {self.is_banned}, "
                 f"Ban Reason: {self.ban_reason}, "
-                f"Ban Duration: {self.ban_duration}, "
-                f"Created At: {self.created_at}, "
-                f"Updated At: {self.updated_at}")
+                f"Ban Duration: {self.ban_duration}, ")

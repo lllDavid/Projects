@@ -4,11 +4,10 @@ from app.databases import user_db
 from app.models.user.user import User
 from app.models.user.user_security import UserSecurity
 from app.models.user.user_status import UserStatus
-from app.models.user.user_login_history import UserLoginHistory
+from app.models.user.user_history import UserHistory
 from app.models.user.user_details import UserDetails
 from app.utils.validation import validate_user_data
-from app.utils.backup_codes import generate_backup_codes, hash_backup_codes
-from app.utils.passwords import hash_password
+
 
 class UserCreator:
     def create_user(self, username: str, email: str, password: str) -> User:
@@ -16,12 +15,10 @@ class UserCreator:
     
     def initialize_user_security(self,password) -> UserSecurity:
         return UserSecurity(
-            password_hash = hash_password(password),
+            password_hash = UserSecurity.hash_password(password),
             two_factor_enabled = False,
-            two_factor_backup_codes = generate_backup_codes(),
-            hashed_two_factor_backup_codes = hash_backup_codes(generate_backup_codes()),
-            two_factor_code = "",
-            two_factor_code_expiry = None
+            two_factor_backup_codes = None,
+            two_factor_backup_codes_hash = None,
         )
   
     def initialize_user_status(self) -> UserStatus:
@@ -30,32 +27,30 @@ class UserCreator:
             is_banned=False,
             ban_reason="",
             ban_duration=0,
-            created_at=datetime.now(),
-            updated_at=datetime.now()
         )
 
-    def initialize_user_history(self) -> UserLoginHistory:
-        return UserLoginHistory(
+    def initialize_user_history(self) -> UserHistory:
+        return UserHistory(
             login_count=0,
-            failed_login_attempts=0,
+            last_successful_login=None,
             last_failed_login=None,
-            last_successful_login=None
+            failed_login_attempts=0,
+            created_at = datetime.now(),
+            updated_at= datetime.now()
         )
 
     def initialize_user_details(self, username: str, email: str, password: str) -> UserDetails:
         user = self.create_user(username, email, password)
         security = self.initialize_user_security(password)
         status = self.initialize_user_status()
-        login_history = self.initialize_user_history()
+        history = self.initialize_user_history()
 
         return UserDetails(
             user=user,
             role=Role.USER,
             security=security,
             status=status,
-            login_history=login_history,
-            created_at=datetime.now(),
-            updated_at=datetime.now()
+            history=history,
         )
 
     def create_and_save_user(self, username: str, email: str, password: str) -> UserDetails | None:
