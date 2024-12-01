@@ -64,7 +64,7 @@ def get_user(user_id: int):
             "user_id": user[0],
             "username": user[1],
             "email": user[2],
-            "role": Role(user[3])  # Convert role value to the corresponding Role enum
+            "role": Role(user[3]) 
         }
     return None
 
