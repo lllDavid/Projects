@@ -22,8 +22,8 @@ def insert_user(user_details: UserDetails):
     cursor.execute("INSERT INTO user_status (user_id, is_banned) VALUES (%s, %s)", 
                    (user_id, user_details.status.is_banned))
     
-    cursor.execute("INSERT INTO user_login_history (user_id, login_count) VALUES (%s, %s)", 
-                   (user_id, user_details.login_history.login_count))
+    cursor.execute("INSERT INTO user_history (user_id, login_count) VALUES (%s, %s)", 
+                   (user_id, user_details.history.login_count))
     
     conn.commit()
     cursor.close()
@@ -41,8 +41,8 @@ def update_user(user_id: int, user_details: UserDetails):
     cursor.execute("UPDATE user_status SET is_banned = %s WHERE user_id = %s", 
                    (user_details.status.is_banned, user_id))
     
-    cursor.execute("UPDATE user_login_history SET login_count = %s WHERE user_id = %s", 
-                   (user_details.login_history.login_count, user_id))
+    cursor.execute("UPDATE user_history SET login_count = %s WHERE user_id = %s", 
+                   (user_details.history.login_count, user_id))
 
     conn.commit()
     cursor.close()
@@ -52,7 +52,7 @@ def delete_user(user_id: int):
     cursor = conn.cursor()
 
     try:
-        cursor.execute("DELETE FROM user_login_history WHERE user_id = %s", (user_id,))
+        cursor.execute("DELETE FROM user_history WHERE user_id = %s", (user_id,))
         cursor.execute("DELETE FROM user_status WHERE user_id = %s", (user_id,))
         cursor.execute("DELETE FROM user_security WHERE user_id = %s", (user_id,))
         cursor.execute("DELETE FROM users WHERE user_id = %s", (user_id,))
