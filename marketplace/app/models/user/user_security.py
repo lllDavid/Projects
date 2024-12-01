@@ -3,12 +3,12 @@ from typing import List
 from random import randint
 from argon2 import PasswordHasher
 import pyotp
-import qrcode
 
 @dataclass
 class UserSecurity:
     password_hash: str
     two_factor_enabled: bool
+    two_factor_secret_key: str
     two_factor_backup_codes: List[str]
     two_factor_backup_codes_hash: List[str]
 
@@ -19,28 +19,18 @@ class UserSecurity:
         return hashed_password
 
     def verify_2fa_code(self, user_provided_code: str) -> bool:
-        """
-        Verifies the user-provided 2FA code using TOTP.
-        """
         if not self.two_factor_enabled:
-            return False  # 2FA not enabled for this user
+            return False  
         
         totp = pyotp.TOTP(self.secret_key)
         
-        # Verify if the provided code is valid within the acceptable time window
         return totp.verify(user_provided_code)
 
     def generate_secret_key(self):
-        """
-        Generates a new secret key for TOTP.
-        """
         totp = pyotp.TOTP(pyotp.random_base32())
         self.secret_key = totp.secret
 
     def display_qr_code(self, username: str):
-        """
-        Generates a provisioning URI for QR code to be scanned by the 2FA app.
-        """
         totp = pyotp.TOTP(self.secret_key)
         uri = totp.provisioning_uri(username, issuer_name="MyApp")
         print(f"Scan this QR code in your 2FA app: {uri}")

@@ -16,6 +16,7 @@ class UserCreator:
         return UserSecurity(
             password_hash=UserSecurity.hash_password(password),
             two_factor_enabled=False,
+            two_factor_secret_key=None,
             two_factor_backup_codes=None,
             two_factor_backup_codes_hash=None,
         )
