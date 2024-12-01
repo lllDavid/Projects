@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import List
 from app.security.roles import Role
+from argon2 import PasswordHasher
 
 @dataclass
 class User:
@@ -16,7 +17,13 @@ class User:
     def update_password(self, new_password: str):
         self.password = new_password
         print("Password updated.")
-# TODO Password hash module here
+
+    def hash_password(self, password: str, time_cost: int = 2, memory_cost: int = 102400, parallelism: int = 8):
+        ph = PasswordHasher(time_cost=time_cost, memory_cost=memory_cost, parallelism=parallelism)
+        
+        hashed_password = ph.hash(password)
+        return hashed_password
+
     def display_details(self):
         return (f"Username: {self.username}\n"
                 f"Email: {self.email}\n")
