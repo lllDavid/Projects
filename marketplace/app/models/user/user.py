@@ -15,7 +15,8 @@ class User:
         self.password = new_password
         print("Password updated.")
 
-    def hash_password(self, password: str, time_cost: int = 2, memory_cost: int = 102400, parallelism: int = 8):
+    @staticmethod
+    def hash_password(password: str, time_cost: int = 2, memory_cost: int = 102400, parallelism: int = 8):
         ph = PasswordHasher(time_cost=time_cost, memory_cost=memory_cost, parallelism=parallelism)
         
         hashed_password = ph.hash(password)
