@@ -1,10 +1,12 @@
 from dataclasses import dataclass
+from app.utils.roles import Role
 
 @dataclass
 class User:
     username: str
     email: str
     password: str
+    role: Role
 
     def update_username(self, new_username: str):
         self.email = new_username
@@ -18,12 +20,18 @@ class User:
         self.password = new_password
         print("Password updated.")
 
+    def update_role(self, new_role: Role):
+        self.role = new_role
+        print(f"Role updated to {new_role.name}")
+
     def display_details(self):
         return (f"Username: {self.username}\n"
-                f"Email: {self.email}\n")
+                f"Email: {self.email}\n"
+                f"Role: {self.role.name}\n")
 
     def __str__(self):
-        return f"Username: {self.username}, Email: {self.email}"
+        return f"Username: {self.username}, Email: {self.email}, Role: {self.role.name}"
+
 
 
 

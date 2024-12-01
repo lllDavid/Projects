@@ -9,8 +9,8 @@ from app.models.user.user_details import UserDetails
 from app.utils.validation import validate_user_data
 
 class UserCreator:
-    def create_user(self, username: str, email: str, password: str) -> User:
-        return User(username=username, email=email, password=password)
+    def create_user(self, username: str, email: str, password: str, role:Role) -> User:
+        return User(username=username, email=email, password=password, role=role)
 
     def create_user_security(self, password: str) -> UserSecurity:
         return UserSecurity(
@@ -40,7 +40,7 @@ class UserCreator:
         )
 
     def create_user_details(self, username: str, email: str, password: str) -> UserDetails:
-        user = self.create_user(username, email, password)
+        user = self.create_user(username, email, password, role=Role.USER)
         security = self.create_user_security(password)
         status = self.create_user_status()
         history = self.create_user_history()
