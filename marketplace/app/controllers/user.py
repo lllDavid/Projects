@@ -1,6 +1,6 @@
 from datetime import datetime
 from app.databases import user_db
-from app.models.user import User, UserDetails, UserSecurity, UserStatus, UserLoginHistory
+from Projects.marketplace.app.models.user.user import User, UserDetails, UserSecurity, UserStatus, UserLoginHistory
 from app.helpers.validation import validate_user_data
 from app.security.roles import Role, check_permission
 from app.security.backupcodes import generate_backup_codes, hash_backup_codes

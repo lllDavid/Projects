@@ -1,5 +1,5 @@
 from mariadb import connect
-from app.models.user import UserDetails
+from Projects.marketplace.app.models.user.user import UserDetails
 
 conn = connect(
     user="root",       

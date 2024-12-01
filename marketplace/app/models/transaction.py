@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
-from app.models.user import User
+from Projects.marketplace.app.models.user.user import User
 from app.models.payment import Payment
 
 @dataclass
