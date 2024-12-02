@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from marketplace.app.user import user_db
 from marketplace.app.user.user import User
 from marketplace.app.user.user_security import UserSecurity
