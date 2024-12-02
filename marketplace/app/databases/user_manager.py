@@ -1,9 +1,9 @@
 from mariadb import connect
 from app.models.user.user import User
-from app.models.user.user_security import UserSecurity
 from app.models.user.user_status import UserStatus
-from app.models.user.user_history import UserHistory
 from app.models.user.user_details import UserDetails
+from app.models.user.user_history import UserHistory
+from app.models.user.user_security import UserSecurity
 
 conn = connect(
     user="root",       
@@ -14,34 +14,29 @@ conn = connect(
 )
 
 class UserManager:
-    
     def get_user_by_username(self, username: str) -> UserDetails | None:
-        """Retrieve a user by their username"""
         cursor = conn.cursor()
         cursor.execute("SELECT user_id, username, email, role FROM users WHERE username = %s", (username,))
         user = cursor.fetchone()
         cursor.close()
 
         if user:
-            # Assuming you need to fetch user details, security, status, and history
-            user_details = self.get_user_details(user[0])  # Fetch details by user_id
+            user_details = self.get_user_details(user[0])
             return user_details
         return None
     
     def get_user_by_email(self, email: str) -> UserDetails | None:
-        """Retrieve a user by their email"""
         cursor = conn.cursor()
         cursor.execute("SELECT user_id, username, email, role FROM users WHERE email = %s", (email,))
         user = cursor.fetchone()
         cursor.close()
 
         if user:
-            user_details = self.get_user_details(user[0])  # Fetch details by user_id
+            user_details = self.get_user_details(user[0])
             return user_details
         return None
     
     def update_user_security(self, user_id: int, two_factor_enabled: bool, two_factor_secret_key: str) -> bool:
-        """Update the 2FA settings for a user"""
         cursor = conn.cursor()
         try:
             cursor.execute("UPDATE user_security SET two_factor_enabled = %s, two_factor_secret_key = %s WHERE user_id = %s",
@@ -56,7 +51,6 @@ class UserManager:
             return False
     
     def update_user_status(self, user_id: int, is_online: bool, is_banned: bool) -> bool:
-        """Update the user's status"""
         cursor = conn.cursor()
         try:
             cursor.execute("UPDATE user_status SET is_online = %s, is_banned = %s WHERE user_id = %s", 
@@ -71,7 +65,6 @@ class UserManager:
             return False
     
     def update_user_history(self, user_id: int, login_count: int) -> bool:
-        """Update the user's login history"""
         cursor = conn.cursor()
         try:
             cursor.execute("UPDATE user_history SET login_count = %s WHERE user_id = %s", 
@@ -86,13 +79,9 @@ class UserManager:
             return False
     
     def get_user_details(self, user_id: int) -> UserDetails | None:
-        """Fetch all the details related to a user from different tables"""
-        # Get the user details
         user = self.get_user(user_id)
         if not user:
             return None
-        
-        # Get the user's security, status, and history details
         security = self.get_user_security(user_id)
         if not security:
             return None
@@ -103,7 +92,6 @@ class UserManager:
         if not history:
             return None
         
-        # Create a UserDetails object with all the gathered data
         user_details = UserDetails(
             user=user, 
             security=security, 
@@ -114,18 +102,15 @@ class UserManager:
         return user_details
 
     def get_user(self, user_id: int):
-        """Fetch user basic details from the database"""
         cursor = conn.cursor()
         cursor.execute("SELECT user_id, username, email, role FROM users WHERE user_id = %s", (user_id,))
         user = cursor.fetchone()
         cursor.close()
         if user:
             return User(username=user[1], email=user[2], password=None, role=user[3])
-           
         return None
     
-    def get_user_security(self, user_id: int) :
-        """Fetch user security details from the database"""
+    def get_user_security(self, user_id: int):
         cursor = conn.cursor()
         cursor.execute("SELECT user_id, password_hash, two_factor_enabled, two_factor_secret_key, two_factor_backup_codes_hash FROM user_security WHERE user_id = %s", (user_id,))
         security = cursor.fetchone()
@@ -141,7 +126,6 @@ class UserManager:
         return None
 
     def get_user_status(self, user_id: int):
-        """Fetch user status details from the database"""
         cursor = conn.cursor()
         cursor.execute("SELECT user_id, is_banned, ban_reason, ban_duration FROM user_status WHERE user_id = %s", (user_id,))
         status = cursor.fetchone()
@@ -153,11 +137,9 @@ class UserManager:
             ban_reason=status[2],
             ban_duration=status[3],
         )
-           
         return None
 
     def get_user_history(self, user_id: int):
-        """Fetch user login history from the database"""
         cursor = conn.cursor()
         cursor.execute("SELECT user_id, login_count, last_successful_login, last_failed_login, failed_login_attempts, created_at, updated_at FROM user_history WHERE user_id = %s", (user_id,))
         history = cursor.fetchone()
