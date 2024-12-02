@@ -1,3 +1,4 @@
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from datetime import datetime
 from marketplace.app.user import user_db
 from marketplace.app.user.user import User
@@ -8,7 +9,13 @@ from marketplace.app.user.user_details import UserDetails
 from marketplace.utils.roles import Role
 from marketplace.utils.validation import validate_user_data
 
+# Define the Blueprint
+user_creator_bp = Blueprint('user_creator', __name__)
+
 class UserCreator:
+    def __init__(self):
+        pass
+
     def create_user(self, username: str, email: str, password: str, role: Role) -> User:
         return User(username=username, email=email, password=password, role=role)
 
@@ -59,16 +66,38 @@ class UserCreator:
             print(f"User {username} created successfully.")
             user_db.insert_user(user_details)
             return user_details
-
         except Exception as e:
             print(f"Error: {e}")
+            return None
 
-def main():
-    user_creator = UserCreator()
-    username = input("Enter a username: ")
-    email = input("Enter a email address: ")
-    password = input("Enter a password: ")
-    user_creator.create_and_save_user(username, email, password)
+# Route to render the user creation form
+@user_creator_bp.route('/register', methods=['GET'])
+def create_user_form():
+    return render_template('register_user.html')  # Render the HTML template
 
-if __name__ == "__main__":
-    main()
+# Route to handle user creation form submission
+@user_creator_bp.route('/register', methods=['POST'])
+def create_user():
+    try:
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+
+        if not all([username, email, password]):
+            flash("All fields are required!", "error")
+            return redirect(url_for('user_creator.create_user_form'))
+
+        # Call UserCreator's create_and_save_user method
+        user_creator = UserCreator()
+        user_details = user_creator.create_and_save_user(username, email, password)
+
+        if user_details:
+            flash(f"User {username} created successfully!", "success")
+            return redirect(url_for('user_creator.create_user_form'))
+        else:
+            flash("Failed to create user", "error")
+            return redirect(url_for('user_creator.create_user_form'))
+
+    except Exception as e:
+        flash(f"Error: {str(e)}", "error")
+        return redirect(url_for('user_creator.create_user_form'))
