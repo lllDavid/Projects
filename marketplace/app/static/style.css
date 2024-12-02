@@ -1,0 +1,85 @@
+/* Global Styles */
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.container {
+    max-width: 600px;
+    margin-top: 50px;
+    padding: 20px;
+    background-color: #1f1f1f;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #ffffff;
+    font-size: 2.8rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #d1d1d1;
+}
+
+/* Make sure the text inside form fields is white */
+.form-control, .form-control:focus, input, textarea, select {
+    background-color: #333333;
+    color: #ffffff;  /* Ensures text inside the fields is white */
+    border: 1px solid #444444;
+}
+
+/* Placeholder styling */
+.form-control::placeholder {
+    color: #888888;  /* Light grey for placeholders */
+}
+
+/* Focused input field */
+.form-control:focus {
+    background-color: #444444;
+    border-color: #6c757d;
+    box-shadow: 0 0 0 0.25rem rgba(107, 114, 128, 0.25);
+}
+
+/* Centering buttons and stacking them vertically */
+.btn-container {
+    display: flex;
+    flex-direction: column;  /* Stack buttons vertically */
+    align-items: center;  /* Center buttons horizontally */
+    gap: 10px;  /* Adds spacing between the buttons */
+    margin-top: 20px;  /* Adds some space above the buttons */
+}
+
+.btn-primary {
+    font-size: large;
+}
+
+/* Button styles */
+.btn-primary, .btn-secondary {
+    background-color: #1f1f1f;
+    border: none;
+    font-weight: bold;
+    width: 150px; /* Set both buttons to have the same smaller width */
+    padding: 8px 12px; /* Adjust padding for better fit */
+    text-align: center; /* Center text inside button */
+    display: inline-block; /* Makes the button an inline block */
+}
+
+/* Primary button hover effect */
+.btn-primary:hover {
+    background-color: #343131;
+}
+
+/* Secondary button hover effect */
+.btn-secondary:hover {
+    background-color: #343131;
+}
+
+/* Horizontal rule styles */
+hr {
+    border-top: 1px solid #444444;
+    margin-top: 20px;
+}

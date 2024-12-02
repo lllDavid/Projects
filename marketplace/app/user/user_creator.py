@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from datetime import datetime
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from marketplace.app.user import user_db
 from marketplace.app.user.user import User
 from marketplace.app.user.user_security import UserSecurity
@@ -9,7 +9,6 @@ from marketplace.app.user.user_details import UserDetails
 from marketplace.utils.roles import Role
 from marketplace.utils.validation import validate_user_data
 
-# Define the Blueprint
 user_creator_bp = Blueprint('user_creator', __name__)
 
 class UserCreator:
@@ -70,12 +69,10 @@ class UserCreator:
             print(f"Error: {e}")
             return None
 
-# Route to render the user creation form
 @user_creator_bp.route('/register', methods=['GET'])
 def create_user_form():
-    return render_template('register_user.html')  # Render the HTML template
+    return render_template('register_user.html')  
 
-# Route to handle user creation form submission
 @user_creator_bp.route('/register', methods=['POST'])
 def create_user():
     try:
@@ -87,15 +84,12 @@ def create_user():
             flash("All fields are required!", "error")
             return redirect(url_for('user_creator.create_user_form'))
 
-        # Call UserCreator's create_and_save_user method
         user_creator = UserCreator()
         user_details = user_creator.create_and_save_user(username, email, password)
 
         if user_details:
-            flash(f"User {username} created successfully!", "success")
             return redirect(url_for('user_creator.create_user_form'))
         else:
-            flash("Failed to create user", "error")
             return redirect(url_for('user_creator.create_user_form'))
 
     except Exception as e:

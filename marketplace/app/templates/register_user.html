@@ -1,26 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create User</title>
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css">
+
+    <!-- Custom CSS (Linking to the external CSS file) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
     <div class="container">
-        <h1 class="my-4">Create a New User</h1>
-
-        <!-- Flash messages -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="alert alert-dismissible fade show" role="alert">
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }}">{{ message }}</div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
-
+        <h1 class="my-4">Register</h1>
+        
         <!-- User Creation Form -->
         <form action="{{ url_for('user_creator.create_user') }}" method="POST">
             <div class="mb-3">
@@ -28,21 +23,26 @@
                 <input type="text" class="form-control" id="username" name="username" required>
             </div>
             <div class="mb-3">
-                <label for="email" class="form-label">Email address</label>
+                <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" name="email" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
-            <button type="submit" class="btn btn-primary">Create User</button>
+
+            <!-- Wrap buttons in .btn-container -->
+            <div class="btn-container">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="{{ url_for('user_creator.create_user_form') }}" class="btn btn-secondary">Back</a>
+            </div>
         </form>
 
         <hr>
-        <a href="{{ url_for('user_creator.create_user_form') }}" class="btn btn-secondary">Back to User Creation</a>
     </div>
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
