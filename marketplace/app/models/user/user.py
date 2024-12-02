@@ -7,8 +7,7 @@ class User:
     email: str
     password: str
     role: Role
-  
-
+    
     def update_username(self, new_username: str):
         self.email = new_username
         print(f"Email updated to {new_username}")

@@ -6,7 +6,7 @@ from app import create_app
 @dataclass
 class Main:
     app_name: str
-    app_version: str 
+    app_version: str
     running: bool = False
     status: str = "Offline"
     start_time: datetime = None
@@ -14,10 +14,7 @@ class Main:
 
     def start_app(self) -> datetime:
         app = create_app()
-
-        if __name__ == '__main__':
-            app.run(debug=True, host='0.0.0.0', port=5000)
-
+        app.run(debug=True, host='0.0.0.0', port=5000)
         self.running = True
         self.status = "Online"
         self.start_time = datetime.now()
@@ -42,14 +39,9 @@ class Main:
         return "App has not been started and stopped properly."
 
 if __name__ == "__main__":
-    version = Version()  
+    version = Version()
     main = Main(app_name=version.get_name(), app_version=version.get_version())
-
     main.start_app()
-    
     input("Press 'Enter' to stop the app...")
     main.stop_app()
     print(main.total_runtime())
-
-
-        
