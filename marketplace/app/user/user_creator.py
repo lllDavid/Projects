@@ -1,12 +1,12 @@
 from datetime import datetime
-from app.utils.roles import Role
-from app.databases import user_db
-from app.models.user.user import User
-from app.models.user.user_security import UserSecurity
-from app.models.user.user_status import UserStatus
-from app.models.user.user_history import UserHistory
-from app.models.user.user_details import UserDetails
-from app.utils.validation import validate_user_data
+from app.user import user_db
+from app.user.user import User
+from app.user.user_security import UserSecurity
+from app.user.user_status import UserStatus
+from app.user.user_history import UserHistory
+from app.user.user_details import UserDetails
+from marketplace.utils.roles import Role
+from marketplace.utils.validation import validate_user_data
 
 class UserCreator:
     def create_user(self, username: str, email: str, password: str, role: Role) -> User:

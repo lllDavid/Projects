@@ -1,12 +1,13 @@
 from mariadb import connect
-from app.models.coin import Coin, CoinSpecifications, CoinMarketData
+from app.coin.coin import Coin, CoinSpecifications, CoinMarketData
+from marketplace.config import Config
 
 conn = connect(
-    user="root",       
-    password="root",   
-    host="localhost",           
-    port=3306,                   
-    database="marketplace"  
+    user=Config.DB_CONFIG["user"],
+    password=Config.DB_CONFIG["password"],
+    host=Config.DB_CONFIG["host"],
+    port=Config.DB_CONFIG["port"],
+    database=Config.DB_CONFIG["database"]
 )
 
 def insert_coin(coin: Coin, coin_specifications: CoinSpecifications, coin_market_data: CoinMarketData):

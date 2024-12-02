@@ -1,9 +1,11 @@
 from datetime import datetime
-from app.coin.coin_db import coin_db
-from app.models.coin.coin import Coin, CoinSpecifications, CoinMarketData
+from app.coin import coin_db
+from app.coin.coin import Coin
+from app.coin.coin_details import CoinDetails
+from app.coin.coin_market_data import CoinMarketData
 
 class CoinCreator:
-    def create_new_coin(self, name:str, symbol:str, category:str, description:str, price:float,last_updated:datetime) -> Coin:
+    def create_coin(self, name:str, symbol:str, category:str, description:str, price:float, last_updated:datetime) -> Coin:
         return Coin(
             name=name, 
             symbol=symbol, 
@@ -13,8 +15,8 @@ class CoinCreator:
             last_updated=last_updated
         )
     
-    def initialize_coin_specifications(self) -> CoinSpecifications:
-        return CoinSpecifications(
+    def create_coin_details(self) -> CoinDetails:
+        return CoinDetails(
             algorithm="SHA-256", 
             consensus_mechanism="Proof of Work", 
             block_time=10, 
@@ -25,7 +27,7 @@ class CoinCreator:
             privacy_features="Pseudonymous"
         )
     
-    def initialize_coin_market_data(self) -> CoinMarketData:
+    def create_coin_market_data(self) -> CoinMarketData:
         return CoinMarketData(
             price_usd=45000.75,
             market_cap_usd=855000000000,  
@@ -40,7 +42,7 @@ class CoinCreator:
 def main():
     coin_creator = CoinCreator()
 
-    coin = coin_creator.create_new_coin(
+    coin = coin_creator.create_coin(
         name="Bitcoin", 
         symbol="BTC", 
         category="Cryptocurrency", 
@@ -49,9 +51,9 @@ def main():
         last_updated=datetime.now()
         )
     
-    coin_specifications = coin_creator.initialize_coin_specifications()
-    coin_market_data = coin_creator.initialize_coin_market_data()
-    coin_db.insert_coin(coin, coin_specifications, coin_market_data )
+    coin_details = coin_creator.create_coin_details()
+    coin_market_data = coin_creator.create_coin_market_data()
+    coin_db.insert_coin(coin, coin_details, coin_market_data )
 
 if __name__ == "__main__":
     main()
