@@ -1,9 +1,10 @@
 from mariadb import connect
-from app.models.user.user import User
-from app.models.user.user_status import UserStatus
-from app.models.user.user_details import UserDetails
-from app.models.user.user_history import UserHistory
-from app.models.user.user_security import UserSecurity
+
+from marketplace.app.user.user import User
+from marketplace.app.user.user_status import UserStatus
+from marketplace.app.user.user_details import UserDetails
+from marketplace.app.user.user_history import UserHistory
+from marketplace.app.user.user_security import UserSecurity
 
 conn = connect(
     user="root",       

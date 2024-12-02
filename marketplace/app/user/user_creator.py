@@ -1,10 +1,11 @@
 from datetime import datetime
-from app.user import user_db
-from app.user.user import User
-from app.user.user_security import UserSecurity
-from app.user.user_status import UserStatus
-from app.user.user_history import UserHistory
-from app.user.user_details import UserDetails
+
+from marketplace.app.user import user_db
+from marketplace.app.user.user import User
+from marketplace.app.user.user_security import UserSecurity
+from marketplace.app.user.user_status import UserStatus
+from marketplace.app.user.user_history import UserHistory
+from marketplace.app.user.user_details import UserDetails
 from marketplace.utils.roles import Role
 from marketplace.utils.validation import validate_user_data
 

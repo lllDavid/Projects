@@ -1,8 +1,8 @@
 from datetime import datetime
-from app.coin import coin_db
-from app.coin.coin import Coin
-from app.coin.coin_details import CoinDetails
-from app.coin.coin_market_data import CoinMarketData
+from marketplace.app.coin import coin_db
+from marketplace.app.coin.coin import Coin
+from marketplace.app.coin.coin_details import CoinDetails
+from marketplace.app.coin.coin_market_data import CoinMarketData
 
 class CoinCreator:
     def create_coin(self, name:str, symbol:str, category:str, description:str, price:float, last_updated:datetime) -> Coin:

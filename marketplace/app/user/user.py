@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from app.utils.roles import Role
+from marketplace.utils.roles import Role
 
 @dataclass
 class User:

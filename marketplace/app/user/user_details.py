@@ -1,9 +1,9 @@
 from dataclasses import dataclass
-from app.models.user.user import User
-from app.utils.roles import Role
-from app.models.user.user_security import UserSecurity
-from app.models.user.user_status import UserStatus
-from app.models.user.user_history import UserHistory
+
+from marketplace.app.user.user import User
+from marketplace.app.user.user_security import UserSecurity
+from marketplace.app.user.user_status import UserStatus
+from marketplace.app.user.user_history import UserHistory
 
 @dataclass
 class UserDetails:

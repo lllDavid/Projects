@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from enum import Enum
+from enum import Enum, auto
 
 @dataclass
 class Payment:
@@ -7,9 +7,6 @@ class Payment:
     payment_service_id: str 
     amount: float 
     status: str 
-
-    def new_transaction(self):
-        pass
 
     def process_payment(self):
         pass
@@ -26,14 +23,11 @@ class Payment:
     def _call_refund_gateway(self):
         pass
 
-    def generate_transaction_id(self):
-        pass
-
 class PaymentServices(Enum):
-    PAYPAL = 1
-    APPLE_PAY = 2
-    GOOGLE_PAY = 3
-    AMAZON_PAY = 4
+    PAYPAL = auto()
+    APPLE_PAY = auto()
+    GOOGLE_PAY = auto()
+    AMAZON_PAY = auto()
 
 def select_payment_service(payment_service_id):
     try:
