@@ -1,4 +1,4 @@
-from flask import Flask
+'''from flask import Flask
 from .models import db
 from .controllers.user_controller import user_bp
 from .controllers.market_controller import market_bp
@@ -20,3 +20,4 @@ def create_app():
     
     # Return the created app
     return app
+'''

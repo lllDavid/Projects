@@ -7,6 +7,7 @@ class User:
     email: str
     password: str
     role: Role
+  
 
     def update_username(self, new_username: str):
         self.email = new_username
@@ -22,15 +23,17 @@ class User:
 
     def update_role(self, new_role: Role):
         self.role = new_role
-        print(f"Role updated to {new_role.name}")
+        print(f"Role updated to {new_role}")
 
     def display_details(self):
         return (f"Username: {self.username}\n"
                 f"Email: {self.email}\n"
-                f"Role: {self.role.name}\n")
+                f"Role: {self.role}\n")
 
     def __str__(self):
-        return f"Username: {self.username}, Email: {self.email}, Role: {self.role.name}"
+        return f"Username: {self.username}, Email: {self.email}, Role: {self.role}"
+
+    
 
 
 

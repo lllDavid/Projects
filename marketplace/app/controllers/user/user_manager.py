@@ -1,6 +1,9 @@
 from mariadb import connect
+from app.models.user.user import User
+from app.models.user.user_security import UserSecurity
+from app.models.user.user_status import UserStatus
+from app.models.user.user_history import UserHistory
 from app.models.user.user_details import UserDetails
-from app.utils.roles import Role
 
 conn = connect(
     user="root",       
@@ -91,8 +94,14 @@ class UserManager:
         
         # Get the user's security, status, and history details
         security = self.get_user_security(user_id)
+        if not security:
+            return None
         status = self.get_user_status(user_id)
+        if not status:
+            return None
         history = self.get_user_history(user_id)
+        if not history:
+            return None
         
         # Create a UserDetails object with all the gathered data
         user_details = UserDetails(
@@ -111,55 +120,59 @@ class UserManager:
         user = cursor.fetchone()
         cursor.close()
         if user:
-            return {
-                "user_id": user[0],
-                "username": user[1],
-                "email": user[2],
-                "role": Role(user[3]) 
-            }
+            return User(username=user[1], email=user[2], password=None, role=user[3])
+           
         return None
     
-    def get_user_security(self, user_id: int):
+    def get_user_security(self, user_id: int) :
         """Fetch user security details from the database"""
         cursor = conn.cursor()
-        cursor.execute("SELECT password_hash, two_factor_enabled, two_factor_secret_key FROM user_security WHERE user_id = %s", (user_id,))
+        cursor.execute("SELECT user_id, password_hash, two_factor_enabled, two_factor_secret_key, two_factor_backup_codes_hash FROM user_security WHERE user_id = %s", (user_id,))
         security = cursor.fetchone()
         cursor.close()
         if security:
-            return {
-                "password_hash": security[0],
-                "two_factor_enabled": security[1],
-                "two_factor_secret_key": security[2]
-            }
+           return UserSecurity(
+            password_hash=security[1],
+            two_factor_enabled=security[2],
+            two_factor_secret_key=security[3],
+            two_factor_backup_codes=None,
+            two_factor_backup_codes_hash=security[4],
+        )
         return None
 
     def get_user_status(self, user_id: int):
         """Fetch user status details from the database"""
         cursor = conn.cursor()
-        cursor.execute("SELECT is_banned, ban_reason, ban_duration FROM user_status WHERE user_id = %s", (user_id,))
+        cursor.execute("SELECT user_id, is_banned, ban_reason, ban_duration FROM user_status WHERE user_id = %s", (user_id,))
         status = cursor.fetchone()
         cursor.close()
         if status:
-            return {
-                "is_banned": status[0],
-                "ban_reason": status[1],
-                "ban_duration": status[2]
-            }
+            return UserStatus(
+            is_online=None,
+            is_banned=status[1],
+            ban_reason=status[2],
+            ban_duration=status[3],
+        )
+           
         return None
 
     def get_user_history(self, user_id: int):
         """Fetch user login history from the database"""
         cursor = conn.cursor()
-        cursor.execute("SELECT login_count, last_successful_login, last_failed_login, failed_login_attempts, created_at, updated_at FROM user_history WHERE user_id = %s", (user_id,))
+        cursor.execute("SELECT user_id, login_count, last_successful_login, last_failed_login, failed_login_attempts, created_at, updated_at FROM user_history WHERE user_id = %s", (user_id,))
         history = cursor.fetchone()
         cursor.close()
         if history:
-            return {
-                "login_count": history[0],
-                "last_successful_login": history[1],
-                "last_failed_login": history[2],
-                "failed_login_attempts": history[3],
-                "created_at": history[4],
-                "updated_at": history[5]
-            }
+           return UserHistory(
+            login_count=history[1],
+            last_successful_login=history[2],
+            last_failed_login=history[3],
+            failed_login_attempts=history[4],
+            created_at=history[5],
+            updated_at=history[6],
+        )
         return None
+
+if __name__ == "__main__":
+    user_manager = UserManager()
+    print(user_manager.get_user_details(1))

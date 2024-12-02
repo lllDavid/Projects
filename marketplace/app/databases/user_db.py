@@ -1,6 +1,5 @@
 from mariadb import connect
 from app.models.user.user_details import UserDetails
-from app.utils.roles import Role
 
 conn = connect(
     user="root",       
