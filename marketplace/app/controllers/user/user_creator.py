@@ -47,7 +47,6 @@ class UserCreator:
 
         return UserDetails(
             user=user,
-            role=Role.USER,
             security=security,
             status=status,
             history=history,

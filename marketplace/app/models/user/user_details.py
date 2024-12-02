@@ -8,7 +8,6 @@ from app.models.user.user_history import UserHistory
 @dataclass
 class UserDetails:
     user: User
-    role: Role
     security: UserSecurity
     status: UserStatus
     history: UserHistory
@@ -17,10 +16,6 @@ class UserDetails:
         self.user = new_user
         print(f"User updated to {new_user}")
 
-    def update_role(self, new_role: Role):
-        self.role = new_role
-        print(f"Role updated to {new_role}")
-    
     def update_security(self, new_security: UserSecurity):
         self.security = new_security
         print("Security info updated.")
@@ -36,12 +31,11 @@ class UserDetails:
     def display_details(self):
         return (f"User Details:\n"
                 f"User: {self.user}\n"
-                f"Role: {self.role}\n"
                 f"Security: {self.security}\n"
                 f"Status: {self.status}\n"
                 f"Login History: {self.history}\n")
 
     def __str__(self):
-        return (f"User: {self.user}, Role: {self.role}, Security: {self.security}, "
+        return (f"User: {self.user}, Security: {self.security}, "
                 f"Status: {self.status}, Login History: {self.history}")
 

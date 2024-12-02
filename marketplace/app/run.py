@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 from version import Version
+from app import create_app
 
 @dataclass
 class Main:
@@ -12,6 +13,11 @@ class Main:
     stop_time: datetime = None
 
     def start_app(self) -> datetime:
+        app = create_app()
+
+        if __name__ == '__main__':
+            app.run(debug=True, host='0.0.0.0', port=5000)
+
         self.running = True
         self.status = "Online"
         self.start_time = datetime.now()
