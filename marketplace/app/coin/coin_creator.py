@@ -1,5 +1,5 @@
 from datetime import datetime
-from app.databases import coin_db
+from app.coin.coin_db import coin_db
 from app.models.coin.coin import Coin, CoinSpecifications, CoinMarketData
 
 class CoinCreator:
