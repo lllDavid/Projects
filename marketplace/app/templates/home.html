@@ -9,14 +9,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css">
 
     <!-- Custom CSS (Linking to the external CSS file) -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
 </head>
 
 <body>
-    <div class="container">
-        <h1 class="my-4">Marketplace</h1>
-        <h2 class="my-4">Buy and trade 100+ cryptocurrencies</h2>
+    <div class="slogan-container">
+        <div class="slogan-content">
+            <h1 class="my-4">Marketplace</h1>
+            <h2 class="my-4">Trade 100+ Cryptocurrencies with Ease</h2>
+        </div>
     </div>
+
+    <div class="signup-container">
+        <div class="signup-content">
+            <button>Sign up</button>
+        </div>
+    </div>
+
+  
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>
