@@ -7,7 +7,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}">
 </head>
 <body>
     <div class="slogan-container">
@@ -28,6 +28,13 @@
             <a href="{{ url_for('login') }}" class="btn-login">Login</a>
         </div>
     </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <a href="{{ url_for('about') }}">About</a> | 
+        <a href="{{ url_for('services') }}">Services</a> | 
+        <a href="{{ url_for('legal') }}">Legal</a>
+    </footer>
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>

@@ -69,11 +69,11 @@ class UserCreator:
             print(f"Error: {e}")
             return None
 
-@user_creator_bp.route('/register', methods=['GET'])
+@user_creator_bp.route('/signup', methods=['GET'])
 def create_user_form():
-    return render_template('register_user.html')  
+    return render_template('signup.html')
 
-@user_creator_bp.route('/register', methods=['POST'])
+@user_creator_bp.route('/signup', methods=['POST'])
 def create_user():
     try:
         username = request.form['username']
@@ -82,16 +82,18 @@ def create_user():
 
         if not all([username, email, password]):
             flash("All fields are required!", "error")
-            return redirect(url_for('user_creator.create_user_form'))
+            return redirect(url_for('user_creator.create_user_form'))  
 
         user_creator = UserCreator()
         user_details = user_creator.create_and_save_user(username, email, password)
 
         if user_details:
-            return redirect(url_for('user_creator.create_user_form'))
+            flash("User created successfully!", "success")
+            return redirect(url_for('home'))  
         else:
-            return redirect(url_for('user_creator.create_user_form'))
+            flash("Something went wrong. Please try again.", "error")
+            return redirect(url_for('user_creator.create_user_form'))  
 
     except Exception as e:
         flash(f"Error: {str(e)}", "error")
-        return redirect(url_for('user_creator.create_user_form'))
+        return redirect(url_for('user_creator.create_user_form'))  
