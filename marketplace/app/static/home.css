@@ -40,36 +40,39 @@ h2 {
 
 /* Styling the signup button container */
 .signup-container {
-    position: fixed;   /* Make it fixed at the top-right corner */
-    top: 10px;         /* Adjust top space */
-    right: 10px;       /* Adjust right space */
+    position: fixed;
+    top: 15px;
+    right: 115px;
 }
 
-.signup-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.login-container {
+    position: fixed;
+    top: 15px;
+    right: 10px;
 }
 
-.btn-signup {
-    padding: 10px 20px;
-    font-size: 1.2rem;
-    background-color: #008CBA;  /* A nice blue color */
-    color: white;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Subtle shadow */
-    transition: background-color 0.3s, box-shadow 0.3s;
+.btn-signup, .btn-login {
+    padding: 8px 15px;
+    font-size: 1.1rem;
+    background-color: #181717;  
+    color: #fff;
+    border: 2px solid #444444;  /* Thin border for subtle definition */
+    border-radius: 4px;         /* Slight rounding of corners */
+    text-transform: uppercase;  /* Makes the button text all caps */
+    font-weight: 600;           /* Slightly bold text */
+    box-shadow: none;           /* Remove strong shadows for a flat look */
+    transition: all 0.3s ease;
 }
 
-.btn-signup:hover {
-    background-color: #007B9E; /* Slightly darker shade on hover */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow on hover */
+.btn-signup:hover, .btn-login:hover {
+    background-color: #444444;  /* Slightly lighter shade on hover */
+    border-color: #555555;      /* Subtle border color change on hover */
+    color: #fff;                /* Keep the text white */
 }
 
 @media (max-width: 768px) {
     .signup-container {
-        top: 20px; /* Move the button down on smaller screens */
+        top: 20px;   /* Adjusted position for smaller screens */
         right: 20px;
     }
 }

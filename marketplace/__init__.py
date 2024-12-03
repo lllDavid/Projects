@@ -8,10 +8,13 @@ def create_app() -> Flask:
     def home():
         return render_template('home.html')
     
-    # Redirect root ("/") to "/home"
     @app.route('/')
     def index():
         return redirect(url_for('home'))
+    
+    @app.route('/signup')
+    def signup():
+        return render_template('sign-up-form.html')
 
     app.register_blueprint(user_creator_bp)
     app.config['SECRET_KEY'] = 'secret_key' 
