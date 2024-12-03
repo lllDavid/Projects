@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-
 from marketplace.app.user.user import User
 from marketplace.app.user.user_security import UserSecurity
 from marketplace.app.user.user_status import UserStatus

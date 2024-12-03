@@ -1,5 +1,4 @@
 from mariadb import connect
-
 from marketplace.app.user.user_details import UserDetails
 
 conn = connect(

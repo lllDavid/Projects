@@ -1,5 +1,4 @@
 from mariadb import connect
-
 from marketplace.app.user.user import User
 from marketplace.app.user.user_status import UserStatus
 from marketplace.app.user.user_details import UserDetails

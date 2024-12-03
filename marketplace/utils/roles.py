@@ -1,9 +1,9 @@
 from enum import Enum, auto
 
 class Role(Enum):
-    USER = 1
-    SUPPORT = 2
-    ADMIN = 3
+    USER = auto()
+    SUPPORT = auto()
+    ADMIN = auto()
 
 def check_permission(role: Role, required_role: Role):
     if role == required_role or role == Role.ADMIN:

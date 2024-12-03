@@ -5,18 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create User</title>
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css">
-
-    <!-- Custom CSS (Linking to the external CSS file) -->
     <link rel="stylesheet" href="{{ url_for('static', filename='signup.css') }}">
 </head>
 
 <body>
     <div class="container">
         <h1 class="my-4">Register</h1>
-        
-        <!-- User Creation Form -->
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="alert alert-dismissible fade show" role="alert">
+            {% for category, message in messages %}
+            <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
         <form action="{{ url_for('user_creator.create_user') }}" method="POST">
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
@@ -31,18 +39,12 @@
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
 
-            <!-- Wrap buttons in .btn-container -->
             <div class="btn-container">
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <a href="{{ url_for('user_creator.create_user_form') }}" class="btn btn-secondary">Back</a>
             </div>
         </form>
-
         <hr>
     </div>
-
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
