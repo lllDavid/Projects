@@ -62,7 +62,7 @@ class UserCreator:
             print(f"User {username} created successfully.")
             user_db.insert_user(user_details)
             return user_details
-        except Exception as e:
+        except ValueError as e:
             print(f"Error: {e}")
             return None
 
