@@ -1,7 +1,9 @@
 /* General Body Styling */
 body {
-    background-color: #121212; /* Dark background */
-    color: #e0e0e0; /* Light text */
+    background-color: #121212;
+    /* Dark background */
+    color: #e0e0e0;
+    /* Light text */
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
@@ -9,12 +11,15 @@ body {
 
 /* Navbar Styling */
 .navbar {
-    background-color: #1e1e1e; /* Dark Navbar */
-    position: fixed; /* Fix the navbar to the top */
+    background-color: #1e1e1e;
+    /* Dark Navbar */
+    position: fixed;
+    /* Fix the navbar to the top */
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1050; /* Ensures the navbar is above the content */
+    z-index: 1050;
+    /* Ensures the navbar is above the content */
     padding: 10px 20px;
 }
 
@@ -43,7 +48,8 @@ body {
 
 /* Adjust spacing for content below the fixed navbar */
 .container {
-    padding-top: 80px; /* Adjust for fixed navbar height */
+    padding-top: 80px;
+    /* Adjust for fixed navbar height */
 }
 
 /* Card Header Styling */
@@ -55,7 +61,8 @@ body {
 }
 
 /* Table Styling */
-.coin-table th, .coin-table td {
+.coin-table th,
+.coin-table td {
     text-align: center;
     vertical-align: middle;
 }
@@ -77,7 +84,7 @@ body {
 
 .coin-logo {
     width: 20px;
-    height:auto;
+    height: auto;
     padding-top: 10px;
     padding-bottom: 10px;
     margin-right: 10px;
