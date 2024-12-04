@@ -70,27 +70,46 @@ class UserCreator:
 def create_user_form():
     return render_template('signup.html')
 
+from flask import request, flash, redirect, url_for
+from werkzeug.exceptions import BadRequest
+
 @user_creator_blueprint.route('/signup', methods=['POST'])
 def create_user():
     try:
+        # Get form data
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
 
+        # Ensure all fields are provided
         if not all([username, email, password]):
             flash("All fields are required!", "error")
             return redirect(url_for('user_creator.create_user_form'))  
 
+        # Create UserCreator instance and attempt to create user
         user_creator = UserCreator()
         user_details = user_creator.create_and_save_user(username, email, password)
 
+        # Handle success
         if user_details:
             flash("User created successfully!", "success")
             return redirect(url_for('home'))  
         else:
-            flash("Something went wrong. Please try again.", "error")
+            if not username or len(username) < 4:
+                raise BadRequest("Username must be at least 4 characters long.")
             return redirect(url_for('user_creator.create_user_form'))  
 
+    except ValueError as ve:
+        # Handle validation errors (e.g., invalid username, email, or password format)
+        flash(f"Validation Error: {str(ve)}", "error")
+        return redirect(url_for('user_creator.create_user_form'))
+
+    except BadRequest as br:
+        # Handle bad requests, like missing form data or invalid content
+        flash(f"Bad Request: {str(br)}", "error")
+        return redirect(url_for('user_creator.create_user_form'))
+
     except Exception as e:
-        flash(f"Error: {str(e)}", "error")
-        return redirect(url_for('user_creator.create_user_form'))  
+        # Catch all other unexpected errors
+        flash(f"An unexpected error occurred: {str(e)}", "error")
+        return redirect(url_for('user_creator.create_user_form'))
