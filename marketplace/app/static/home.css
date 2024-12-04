@@ -1,0 +1,104 @@
+/* General Body Styling */
+body {
+    background-color: #121212; /* Dark background */
+    color: #e0e0e0; /* Light text */
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar Styling */
+.navbar {
+    background-color: #1e1e1e; /* Dark Navbar */
+}
+
+.navbar a {
+    color: #e0e0e0 !important;
+    font-size: 1.1em;
+    padding: 10px 20px;
+}
+
+.navbar a:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+.navbar-toggler-icon {
+    background-color: #e0e0e0;
+}
+
+/* Card Header Styling */
+.card-header {
+    font-size: 1.2em;
+    font-weight: bold;
+    background-color: #1f1f1f;
+    color: #ffffff;
+}
+
+/* Table Styling */
+.coin-table th, .coin-table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.coin-table th {
+    background-color: #333;
+    color: white;
+}
+
+.coin-table td {
+    background-color: #222;
+    color: #e0e0e0;
+}
+
+.coin-name {
+    display: flex;
+    align-items: center;
+}
+
+/* Adjusted coin logo size */
+.coin-logo {
+    width: 15px; /* Smaller size */
+    height: 15px; /* Smaller size */
+    margin-right: 10px; /* Space between logo and text */
+}
+
+/* Chart Container */
+.chart-container {
+    position: relative;
+    height: 250px;
+}
+
+/* Modal Styling */
+.modal-content {
+    background-color: #333;
+    color: #e0e0e0;
+}
+
+.modal-header {
+    background-color: #444;
+    color: #e0e0e0;
+}
+
+.modal-body {
+    background-color: #333;
+}
+
+.modal-footer {
+    background-color: #444;
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: #1f80e2;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #155a8a;
+}
+
+/* Spacing for Container */
+.container {
+    padding-top: 50px;
+}

@@ -102,10 +102,8 @@ def create_user():
         user_details = user_creator.create_and_save_user(username, email, password)
 
         if user_details:
-            flash("User created successfully!", "success")
             return redirect(url_for('home'))  
         else:
-            flash("Something went wrong. Please try again.", "error")
             return redirect(url_for('user_creator.create_user_form'))  
 
     except BadRequest as br:
