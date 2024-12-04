@@ -8,7 +8,7 @@ from marketplace.app.user.user_status import UserStatus
 from marketplace.app.user.user_history import UserHistory
 from marketplace.app.user.user_details import UserDetails
 from marketplace.utils.roles import Role
-from marketplace.utils.validation import validate_user_data
+from marketplace.utils.validation import is_valid_email, is_valid_password, is_unique_user
 
 user_creator_blueprint = Blueprint('user_creator', __name__)
 
@@ -58,9 +58,7 @@ class UserCreator:
 
     def create_and_save_user(self, username: str, email: str, password: str) -> UserDetails | None:
         try:
-            validate_user_data(username, email, password)
             user_details = self.create_user_details(username, email, password)
-            print(f"User {username} created successfully.")
             user_db.insert_user(user_details)
             return user_details
         except ValueError as e:
@@ -70,10 +68,6 @@ class UserCreator:
 @user_creator_blueprint.route('/signup', methods=['GET'])
 def create_user_form():
     return render_template('signup.html')
-
-from flask import request, flash, redirect, url_for
-from werkzeug.exceptions import BadRequest
-from marketplace.utils.validation import is_valid_email, is_valid_password, is_unique_user
 
 @user_creator_blueprint.route('/signup', methods=['POST'])
 def create_user():
