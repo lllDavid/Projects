@@ -10,21 +10,40 @@ body {
 /* Navbar Styling */
 .navbar {
     background-color: #1e1e1e; /* Dark Navbar */
-}
-
-.navbar a {
-    color: #e0e0e0 !important;
-    font-size: 1.1em;
+    position: fixed; /* Fix the navbar to the top */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1050; /* Ensures the navbar is above the content */
     padding: 10px 20px;
 }
 
-.navbar a:hover {
+.navbar .navbar-brand {
+    color: #e0e0e0 !important;
+}
+
+.navbar .navbar-nav .nav-link {
+    color: #e0e0e0 !important;
+    font-size: 1.1em;
+}
+
+.navbar .navbar-nav .nav-link:hover {
     background-color: #333;
     color: #fff;
 }
 
 .navbar-toggler-icon {
     background-color: #e0e0e0;
+}
+
+/* Navbar Links on the Right */
+.navbar-nav.ml-auto {
+    margin-left: auto;
+}
+
+/* Adjust spacing for content below the fixed navbar */
+.container {
+    padding-top: 80px; /* Adjust for fixed navbar height */
 }
 
 /* Card Header Styling */
@@ -56,11 +75,12 @@ body {
     align-items: center;
 }
 
-/* Adjusted coin logo size */
 .coin-logo {
-    width: 15px; /* Smaller size */
-    height: 15px; /* Smaller size */
-    margin-right: 10px; /* Space between logo and text */
+    width: 20px;
+    height:auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-right: 10px;
 }
 
 /* Chart Container */
@@ -96,9 +116,4 @@ body {
 
 .btn-primary:hover {
     background-color: #155a8a;
-}
-
-/* Spacing for Container */
-.container {
-    padding-top: 50px;
 }

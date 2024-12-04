@@ -30,7 +30,8 @@ def create_app() -> Flask:
     
     @app.route('/home')
     def home():
-        return render_template('home.html')
+        username = "David"
+        return render_template('home.html',username=username)
 
     app.register_blueprint(user_creator_blueprint)
     app.config['SECRET_KEY'] = 'secret_key' 
