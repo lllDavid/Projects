@@ -1,35 +1,73 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from marketplace.utils.roles import Role  # Import the Role Enum or Class
-from marketplace.app.user.user import User  # Assuming User is in models.py
+from flask import Flask, render_template, request, redirect, url_for, session
+from marketplace.utils.roles import Role  # Assuming the Role class is available
+from dataclasses import dataclass
 
-# Define the user settings blueprint
-user_settings = Blueprint('user_settings', __name__, template_folder='app/templates')
+app = Flask(__name__)
+app.secret_key = 'your_secret_key'  # For session management, adjust as needed
 
-# Sample user object for testing (you'd typically fetch this from a database)
-user = User(username="testuser", email="test@example.com", password="password123", role=Role.USER)
-
-@user_settings.route('/settings', methods=['GET', 'POST'])
-def settings():
-    global user  # Use the global user object for this session (typically from the database)
+# Simulate a user for demonstration purposes
+@dataclass
+class User:
+    username: str
+    email: str
+    password: str
+    role: Role
     
+    def update_username(self, new_username: str):
+        self.username = new_username
+        print(f"Username updated to {new_username}")
+
+    def update_email(self, new_email: str):
+        self.email = new_email
+        print(f"Email updated to {new_email}")
+
+    def update_password(self, new_password: str):
+        self.password = new_password
+        print("Password updated.")
+
+    def update_role(self, new_role: Role):
+        self.role = new_role
+        print(f"Role updated to {new_role}")
+
+    def display_details(self):
+        return (f"Username: {self.username}\n"
+                f"Email: {self.email}\n"
+                f"Role: {self.role}\n")
+
+    def __str__(self):
+        return f"Username: {self.username}, Email: {self.email}, Role: {self.role}"
+
+# Simulating a user in a session
+user = User(username="john_doe", email="john@example.com", password="securepassword123", role=Role.ADMIN)
+
+@app.route('/settings', methods=['GET', 'POST'])
+def settings():
+    global user  # Use the global user object for demo
+
     if request.method == 'POST':
-        # Get data from the form
-        new_username = request.form.get('username')
-        new_email = request.form.get('email')
-        new_password = request.form.get('password')
-        new_role = request.form.get('role')
+        # Handle form data to update user details
+        username = request.form.get('username')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm-password')
 
-        # Update user information based on form submission
-        if new_username:
-            user.update_username(new_username)
-        if new_email:
-            user.update_email(new_email)
-        if new_password:
-            user.update_password(new_password)
-        if new_role:
-            user.update_role(Role[new_role.upper()])  # Assumes Role is an Enum
+        # Update username if provided
+        if username and username != user.username:
+            user.update_username(username)
 
-        flash("Settings updated successfully", 'success')
-        return redirect(url_for('user_settings.settings'))
+        # Update email if provided
+        if email and email != user.email:
+            user.update_email(email)
 
+        # Update password if provided
+        if password and password == confirm_password:
+            user.update_password(password)
+        
+        # Redirect to settings page after update
+        return redirect(url_for('settings'))
+
+    # Render settings page with user data
     return render_template('settings.html', user=user)
+
+if __name__ == "__main__":
+    app.run(debug=True)
