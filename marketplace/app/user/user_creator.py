@@ -1,5 +1,6 @@
 from datetime import datetime
 from flask import Blueprint, render_template, redirect, url_for, flash, request
+from werkzeug.exceptions import BadRequest
 from marketplace.app.user import user_db
 from marketplace.app.user.user import User
 from marketplace.app.user.user_security import UserSecurity
@@ -72,44 +73,46 @@ def create_user_form():
 
 from flask import request, flash, redirect, url_for
 from werkzeug.exceptions import BadRequest
+from marketplace.utils.validation import is_valid_email, is_valid_password, is_unique_user
 
 @user_creator_blueprint.route('/signup', methods=['POST'])
 def create_user():
     try:
-        # Get form data
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
 
-        # Ensure all fields are provided
         if not all([username, email, password]):
             flash("All fields are required!", "error")
-            return redirect(url_for('user_creator.create_user_form'))  
+            return redirect(url_for('user_creator.create_user_form'))
 
-        # Create UserCreator instance and attempt to create user
+        if not is_valid_email(email):
+            flash("Invalid email format.", "error")
+            return redirect(url_for('user_creator.create_user_form'))
+
+        if not is_valid_password(password):
+            flash("Password must be at least 30 characters long, contain an uppercase letter, a number, and a special character.", "error")
+            return redirect(url_for('user_creator.create_user_form'))
+
+        if not is_unique_user(username):
+            flash("Username already taken.", "error")
+            return redirect(url_for('user_creator.create_user_form'))
+
         user_creator = UserCreator()
         user_details = user_creator.create_and_save_user(username, email, password)
 
-        # Handle success
         if user_details:
             flash("User created successfully!", "success")
             return redirect(url_for('home'))  
         else:
-            if not username or len(username) < 4:
-                raise BadRequest("Username must be at least 4 characters long.")
+            flash("Something went wrong. Please try again.", "error")
             return redirect(url_for('user_creator.create_user_form'))  
 
-    except ValueError as ve:
-        # Handle validation errors (e.g., invalid username, email, or password format)
-        flash(f"Validation Error: {str(ve)}", "error")
-        return redirect(url_for('user_creator.create_user_form'))
-
     except BadRequest as br:
-        # Handle bad requests, like missing form data or invalid content
         flash(f"Bad Request: {str(br)}", "error")
         return redirect(url_for('user_creator.create_user_form'))
 
     except Exception as e:
-        # Catch all other unexpected errors
         flash(f"An unexpected error occurred: {str(e)}", "error")
         return redirect(url_for('user_creator.create_user_form'))
+
