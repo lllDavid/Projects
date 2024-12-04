@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User Settings</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: #e0e0e0;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #1e90ff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #444;
+            padding-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #fff;
+        }
+
+        nav a {
+            margin: 0 10px;
+            font-size: 1.1rem;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .settings-section {
+            background-color: #282828;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .settings-section h2 {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1.1rem;
+            color: #ddd;
+            margin-bottom: 8px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"],
+        .form-group input[type="url"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 1.1rem;
+        }
+
+        .form-group input[type="checkbox"] {
+            transform: scale(1.3);
+            margin-right: 10px;
+        }
+
+        .form-group input[type="checkbox"]:checked {
+            background-color: #1e90ff;
+        }
+
+        .btn-save, .btn-danger {
+            padding: 12px 25px;
+            background-color: #1e90ff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-save:hover, .btn-danger:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-danger {
+            background-color: #ff4c4c;
+        }
+
+        .btn-danger:hover {
+            background-color: #cc0000;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>User Settings</h1>
+            <nav>
+                <a href="/">Home</a> | 
+                <a href="/profile">Profile</a> | 
+                <a href="/logout">Logout</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="settings-section">
+                <h2>Account Information</h2>
+                <form action="/update-account" method="POST" id="account-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" value="john_doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" value="john@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">New Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter new password">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm new password">
+                    </div>
+                    <button type="submit" class="btn-save">Save Changes</button>
+                </form>
+            </section>
+
+            <section class="settings-section">
+                <h2>Notification Preferences</h2>
+                <form action="/update-notifications" method="POST" id="notification-form">
+                    <div class="form-group">
+                        <label for="email-notifications">Email Notifications</label>
+                        <input type="checkbox" id="email-notifications" name="email-notifications" checked>
+                    </div>
+                    <div class="form-group">
+                        <label for="sms-notifications">SMS Notifications</label>
+                        <input type="checkbox" id="sms-notifications" name="sms-notifications">
+                    </div>
+                    <div class="form-group">
+                        <label for="push-notifications">Push Notifications</label>
+                        <input type="checkbox" id="push-notifications" name="push-notifications">
+                    </div>
+                    <button type="submit" class="btn-save">Update Preferences</button>
+                </form>
+            </section>
+
+            <!-- New Crypto Exchange & Wallet Settings Section -->
+            <section class="settings-section">
+                <h2>Cryptocurrency Wallets</h2>
+                <form action="/update-wallet" method="POST" id="crypto-form">
+                    <div class="form-group">
+                        <label for="btc-wallet">Bitcoin Wallet Address (BTC)</label>
+                        <input type="text" id="btc-wallet" name="btc-wallet" placeholder="Enter your Bitcoin address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eth-wallet">Ethereum Wallet Address (ETH)</label>
+                        <input type="text" id="eth-wallet" name="eth-wallet" placeholder="Enter your Ethereum address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ltc-wallet">Litecoin Wallet Address (LTC)</label>
+                        <input type="text" id="ltc-wallet" name="ltc-wallet" placeholder="Enter your Litecoin address">
+                    </div>
+                    <div class="form-group">
+                        <label for="xrp-wallet">Ripple Wallet Address (XRP)</label>
+                        <input type="text" id="xrp-wallet" name="xrp-wallet" placeholder="Enter your Ripple address">
+                    </div>
+                    <button type="submit" class="btn-save">Save Wallet Addresses</button>
+                </form>
+            </section>
+
+            <section class="settings-section">
+                <h2>Account Management</h2>
+                <form action="/delete-account" method="POST" id="delete-account-form">
+                    <p>If you would like to delete your account, please do so below. This action is irreversible.</p>
+                    <button type="submit" class="btn-danger">Delete Account</button>
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 YourWebsite. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
