@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ url_for('static', filename='settings.css') }}">
-    <title>User Settings</title>
-   
+    <title>Settings</title>
+
 </head>
+
 <body>
     <div class="container">
         <header>
-            <h1>User Settings</h1>
+            <h1>Settings</h1>
             <nav>
-                <a href="/">Home</a> | 
-                <a href="/profile">Profile</a> | 
+                <a href="/">Home</a> |
+                <a href="/support">Support</a> |
                 <a href="/logout">Logout</a>
             </nav>
         </header>
 
         <main>
             <section class="settings-section">
-                <h2>Account Information</h2>
+                <h2>Account</h2>
                 <form action="/update-account" method="POST" id="account-form">
                     <div class="form-group">
                         <label for="username">Username</label>
@@ -37,14 +39,40 @@
                     </div>
                     <div class="form-group">
                         <label for="confirm-password">Confirm Password</label>
-                        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm new password">
+                        <input type="password" id="confirm-password" name="confirm-password"
+                            placeholder="Confirm new password">
                     </div>
                     <button type="submit" class="btn-save">Save Changes</button>
                 </form>
             </section>
 
             <section class="settings-section">
-                <h2>Notification Preferences</h2>
+                <h2>Wallets</h2>
+                <form action="/update-wallet" method="POST" id="crypto-form">
+                    <div class="form-group">
+                        <label for="btc-wallet">Bitcoin Wallet Address (BTC)</label>
+                        <input type="text" id="btc-wallet" name="btc-wallet" placeholder="Enter your Bitcoin address"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eth-wallet">Ethereum Wallet Address (ETH)</label>
+                        <input type="text" id="eth-wallet" name="eth-wallet" placeholder="Enter your Ethereum address"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ltc-wallet">Litecoin Wallet Address (LTC)</label>
+                        <input type="text" id="ltc-wallet" name="ltc-wallet" placeholder="Enter your Litecoin address">
+                    </div>
+                    <div class="form-group">
+                        <label for="xrp-wallet">Ripple Wallet Address (XRP)</label>
+                        <input type="text" id="xrp-wallet" name="xrp-wallet" placeholder="Enter your Ripple address">
+                    </div>
+                    <button type="submit" class="btn-save">Save Wallet Addresses</button>
+                </form>
+            </section>
+
+            <section class="settings-section">
+                <h2>Notifications</h2>
                 <form action="/update-notifications" method="POST" id="notification-form">
                     <div class="form-group">
                         <label for="email-notifications">Email Notifications</label>
@@ -62,30 +90,6 @@
                 </form>
             </section>
 
-            <!-- New Crypto Exchange & Wallet Settings Section -->
-            <section class="settings-section">
-                <h2>Cryptocurrency Wallets</h2>
-                <form action="/update-wallet" method="POST" id="crypto-form">
-                    <div class="form-group">
-                        <label for="btc-wallet">Bitcoin Wallet Address (BTC)</label>
-                        <input type="text" id="btc-wallet" name="btc-wallet" placeholder="Enter your Bitcoin address" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="eth-wallet">Ethereum Wallet Address (ETH)</label>
-                        <input type="text" id="eth-wallet" name="eth-wallet" placeholder="Enter your Ethereum address" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="ltc-wallet">Litecoin Wallet Address (LTC)</label>
-                        <input type="text" id="ltc-wallet" name="ltc-wallet" placeholder="Enter your Litecoin address">
-                    </div>
-                    <div class="form-group">
-                        <label for="xrp-wallet">Ripple Wallet Address (XRP)</label>
-                        <input type="text" id="xrp-wallet" name="xrp-wallet" placeholder="Enter your Ripple address">
-                    </div>
-                    <button type="submit" class="btn-save">Save Wallet Addresses</button>
-                </form>
-            </section>
-
             <section class="settings-section">
                 <h2>Account Management</h2>
                 <form action="/delete-account" method="POST" id="delete-account-form">
@@ -96,10 +100,9 @@
         </main>
 
         <footer>
-            <p>&copy; 2024 YourWebsite. All rights reserved.</p>
+            <p>&copy; 2024 Marketplace. All rights reserved.</p>
         </footer>
     </div>
-
-    <script src="script.js"></script>
 </body>
+
 </html>

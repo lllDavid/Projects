@@ -67,9 +67,9 @@ select {
 }
 
 .btn-primary:hover {
-    background-color: #121212;
+    background-color: #147a33;
     border-color: #444444;
-    transform: scale(1.3);
+    transform: scale(1.1);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }

@@ -32,6 +32,7 @@ header {
     margin-bottom: 40px;
     border-bottom: 2px solid #444;
     padding-bottom: 20px;
+    padding-left: 10px;
 }
 
 header h1 {
@@ -94,9 +95,10 @@ main {
     background-color: #1e90ff;
 }
 
-.btn-save, .btn-danger {
+.btn-save,
+.btn-danger {
     padding: 12px 25px;
-    background-color: #000;
+    background-color: #333;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -106,17 +108,19 @@ main {
     margin-top: 20px;
 }
 
-.btn-save:hover, .btn-danger:hover {
-    background-color: #333;
-    transform: scale(1.3);
+.btn-save:hover,
+.btn-danger:hover {
+    background-color: #147a33;
+    transform: scale(1.1);
 }
 
 .btn-danger {
-    background-color: #ff4c4c;
+    background-color: #d51919;
 }
 
 .btn-danger:hover {
-    background-color: #cc0000;
+    background-color: #f20808;
+    transform: scale(1.1);
 }
 
 footer {
