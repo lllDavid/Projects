@@ -36,6 +36,7 @@ def create_app() -> Flask:
     def home():
         return render_template('home.html', username=user.username)
 
+    user = User("David","email@www.de","L??=00djwjdiwjdwijdijdwijdiwjdßwe8idf09weif9d0fwu9wefeßwif9osieß0fiwßfie90wifßiewf",Role.USER)
     @app.route('/settings', methods=['GET', 'POST'])
     def settings():
         if request.method == 'POST':
@@ -47,7 +48,6 @@ def create_app() -> Flask:
             if username and username != user.username:
                 new_username =  user.update_username(username)
                 update_username_db(1, new_username)
-
 
             if email and email != user.email:
                 user.update_email(email)
