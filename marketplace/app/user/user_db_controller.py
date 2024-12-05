@@ -13,6 +13,17 @@ conn = connect(
     database="marketplace"  
 )
 
+def get_user_by_id(user_id: int) -> UserDetails | None:
+    cursor = conn.cursor()
+    cursor.execute("SELECT user_id, username, email, role FROM users WHERE username = %s", (username,))
+    user = cursor.fetchone()
+    cursor.close()
+
+    if user_id:
+        user_details = get_user_details(user[0])
+        return user_details
+    return None
+
 def get_user_by_username(username: str) -> UserDetails | None:
     cursor = conn.cursor()
     cursor.execute("SELECT user_id, username, email, role FROM users WHERE username = %s", (username,))
