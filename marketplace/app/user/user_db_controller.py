@@ -35,7 +35,9 @@ def get_user_by_email(email: str) -> UserDetails | None:
         return user_details
     return None
 
-def update_username_db(user_id: int, username: str):
+def update_username_db(user_id: int, username: str | None):
+    if username is None:
+        raise ValueError("Username cannot be None")
     cursor = conn.cursor()
     cursor.execute("UPDATE users SET username = %s WHERE user_id = %s", (username, user_id))
     conn.commit()
