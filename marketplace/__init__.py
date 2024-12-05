@@ -50,7 +50,7 @@ def create_app() -> Flask:
 
         if created_user:
             # Access the username through the User object
-            current_username = created_user.username
+            current_username = created_user.user.username
 
             if request.method == 'POST':
                 # Handle username update logic here (if any form is submitted)

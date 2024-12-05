@@ -20,7 +20,7 @@ def get_user_by_id(user_id: int) -> UserDetails | None:
     cursor.close()
 
     if user_id:
-        user_details = get_user_details(user[0])
+        user_details = get_user_details(user[1])
         return user_details
     return None
 
