@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from marketplace.app.user.user import User  
 from marketplace.utils.roles import Role 
 from marketplace.app.user.user_creator import user_creator_blueprint
@@ -34,31 +34,13 @@ def create_app() -> Flask:
 
     @app.route('/home')
     def home():
-        return render_template('home.html', username=user.username)
+        return render_template('home.html')
 
-    user = User("David","email@www.de","L??=00djwjdiwjdwijdijdwijdiwjdßwe8idf09weif9d0fwu9wefeßwif9osieß0fiwßfie90wifßiewf",Role.USER)
-    @app.route('/settings', methods=['GET', 'POST'])
+    @app.route('/settings')
     def settings():
-        if request.method == 'POST':
-            username = request.form.get('username')
-            email = request.form.get('email')
-            password = request.form.get('password')
-            confirm_password = request.form.get('confirm-password')
-
-            if username and username != user.username:
-                new_username =  user.update_username(username)
-                update_username_db(1, new_username)
-
-            if email and email != user.email:
-                user.update_email(email)
-
-            if password and password == confirm_password:
-                user.update_password(password)
-
-            return redirect(url_for('settings')) 
-
-        return render_template('settings.html', user=user)
-
+        return render_template('settings.html')
+    
+    
     app.register_blueprint(user_creator_blueprint)
 
     return app
