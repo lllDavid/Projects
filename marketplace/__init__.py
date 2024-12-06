@@ -35,8 +35,8 @@ def create_app() -> Flask:
             
             user = get_user_by_username(username)
             if user and UserSecurity.compare_password_hash(password, user.security.password_hash):
-                session['user_id'] = user.  # Store user ID in session
-                session['username'] = user.username  # Optionally, store username
+                # session['user_id'] = user.  # Store user ID in session
+                # session['username'] = user.username  # Optionally, store username
                 flash("Login successful", "success")
                 return redirect(url_for('home'))
             else:

@@ -24,7 +24,6 @@ class Main:
         Thread(target=self._run_app, daemon=True).start()
 
         print(f"{self.app_name} version {self.app_version} started at: {self.start_time}")
-        print(f"Status: {self.status}, Is Running: {self.running}")
         return self.start_time
 
     def stop_app(self) -> datetime:
@@ -32,7 +31,6 @@ class Main:
         self.status = "Offline"
         self.stop_time = datetime.now()
         print(f"{self.app_name} version {self.app_version} stopped at: {self.stop_time}")
-        print(f"Status: {self.status}, Is Running: {self.running}")
         return self.stop_time
 
     def total_runtime(self) -> str:
@@ -49,9 +47,9 @@ if __name__ == "__main__":
 
     try:
         main.start_app()
-        input("Press 'Enter' to stop the app...")
+        input()
     except KeyboardInterrupt:
-        print("Stopping app...")
+        print()
 
     main.stop_app()
     print(main.total_runtime())
