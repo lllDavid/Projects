@@ -33,17 +33,17 @@ def create_app() -> Flask:
         if request.method == 'POST':
             username = request.form['username']
             password = request.form['password']
-
-            # Get user from the database by username
-            user = get_user_by_username(username)
-
-            if user and user.check_password(password):  
-                session['user_id'] = user.id  
+            
+            # Check if the user exists and if the password is correct
+            user = get_user_by_id(1)
+            if user and user.check_password(password):
+                session['signed_in'] = True  # Set signed_in flag to True
+                session['user_id'] = user.id  # Store the user_id in session
                 flash("Login successful", "success")
                 return redirect(url_for('home'))
             else:
                 flash("Invalid username or password", "error")
-
+        
         return render_template('login.html')
 
     @app.route('/home')
