@@ -19,11 +19,8 @@ class UserSecurity:
         return hashed_password
     
     @staticmethod
-    def compare_passwords(user_entered_password_hash:str, password_in_db_hash:str):
-        if user_entered_password_hash == password_in_db_hash:
-            return True
-        else:
-            return False
+    def validate_password_hash(attempt_hash: str, db_hash: str) -> bool:
+        return attempt_hash == db_hash
 
     def verify_2fa_code(self, user_provided_code: str) -> bool:
         if not self.two_factor_enabled:
