@@ -17,6 +17,13 @@ class UserSecurity:
         ph = PasswordHasher(time_cost=time_cost, memory_cost=memory_cost, parallelism=parallelism)
         hashed_password = ph.hash(password)
         return hashed_password
+    
+    @staticmethod
+    def compare_passwords(user_entered_password_hash:str, password_in_db_hash:str):
+        if user_entered_password_hash == password_in_db_hash:
+            return True
+        else:
+            return False
 
     def verify_2fa_code(self, user_provided_code: str) -> bool:
         if not self.two_factor_enabled:
