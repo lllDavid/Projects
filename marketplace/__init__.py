@@ -35,9 +35,8 @@ def create_app() -> Flask:
             username = request.form['username']
             password = request.form['password']
             
-            
             user = get_user_by_username(username)
-            if user and UserSecurity.compare_password_hash(password, username ):
+            if user and UserSecurity.compare_password_hash(password, user.security.password_hash ):
                 session['signed_in'] = True  # Set signed_in flag to True
                # session['user_id'] = user.user.id  # Store the user_id in session
                 flash("Login successful", "success")

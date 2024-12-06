@@ -19,11 +19,13 @@ class UserSecurity:
         return hashed_password
     
     @staticmethod
-    def compare_password_hash(attempt_password: str, username: str) -> bool:
-        from marketplace.app.user.user_db_controller import get_password_hash
-        attempt_hash = UserSecurity.hash_password(attempt_password)
-        db_hash = get_password_hash(username)
-        return attempt_hash == db_hash
+    def compare_password_hash(attempt_password: str, db_hash: str) -> bool:
+        ph = PasswordHasher()
+        try:
+            ph.verify(db_hash, attempt_password)
+            return True
+        except:
+            return False
     
     def verify_2fa_code(self, user_provided_code: str) -> bool:
         if not self.two_factor_enabled:
