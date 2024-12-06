@@ -5,6 +5,8 @@ from marketplace.app.user.user_creator import user_creator_blueprint
 from marketplace.app.user.user_db_controller import get_user_by_username, update_username_db
 from marketplace.app.user.user_security import UserSecurity
 
+user_signed_in = False
+
 def create_app() -> Flask:
     app = Flask(__name__, static_folder='app/static', template_folder='app/templates/')
     app.config['SECRET_KEY'] = 'secret_key'  
@@ -37,8 +39,7 @@ def create_app() -> Flask:
             
             user = get_user_by_username(username)
             if user and UserSecurity.compare_password_hash(password, user.security.password_hash ):
-                session['signed_in'] = True  # Set signed_in flag to True
-               # session['user_id'] = user.user.id  # Store the user_id in session
+                user_signed_in = True
                 flash("Login successful", "success")
                 return redirect(url_for('home'))
             else:
@@ -52,29 +53,21 @@ def create_app() -> Flask:
 
     @app.route('/settings', methods=['GET', 'POST'])
     def settings():
-        if 'user_id' not in session:
+        if not user_signed_in:
             flash("You need to log in first.", "error")
             return redirect(url_for('login'))
 
-        # Get the user ID from session
-        user_id = session['user_id']
-
-        # Fetch user from the database by user ID
-        created_user = get_user_by_id(user_id)
-
-        if created_user:
+        if user_signed_in:
             # Access the username through the User object
-            current_username = created_user.user.username
+            current_username = get_user_by_username(username)
 
             if request.method == 'POST':
                 # Handle username update logic here (if any form is submitted)
                 new_username = request.form.get('new_username')
                 if new_username:
                     # Call a function to update the username in the database
-                    update_username_db(user_id, new_username)
+                    update_username_db(new_username)
                     flash("Username updated successfully.", "success")
-                    # Update the session username as well (optional)
-                    session['username'] = new_username  # If you store username in session
                 else:
                     flash("Username cannot be empty.", "error")
             
