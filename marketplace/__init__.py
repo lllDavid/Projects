@@ -1,15 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from marketplace.app.user.user import User  
-from marketplace.utils.roles import Role 
-from marketplace.app.user.user_creator import user_creator_blueprint
 from marketplace.app.user.user_db_controller import get_user_by_username, update_username_db
 from marketplace.app.user.user_security import UserSecurity
 
-user_signed_in = False
-
 def create_app() -> Flask:
     app = Flask(__name__, static_folder='app/static', template_folder='app/templates/')
-    app.config['SECRET_KEY'] = 'secret_key'  
+    app.config['SECRET_KEY'] = 'secret_key'
 
     @app.route('/')
     def index():
@@ -38,8 +34,9 @@ def create_app() -> Flask:
             password = request.form['password']
             
             user = get_user_by_username(username)
-            if user and UserSecurity.compare_password_hash(password, user.security.password_hash ):
-                user_signed_in = True
+            if user and UserSecurity.compare_password_hash(password, user.security.password_hash):
+                session['user_id'] = user.  # Store user ID in session
+                session['username'] = user.username  # Optionally, store username
                 flash("Login successful", "success")
                 return redirect(url_for('home'))
             else:
@@ -49,34 +46,28 @@ def create_app() -> Flask:
 
     @app.route('/home')
     def home():
+        if 'user_id' not in session:
+            flash("You need to log in first.", "error")
+            return redirect(url_for('login'))
         return render_template('home.html')
 
     @app.route('/settings', methods=['GET', 'POST'])
     def settings():
-        if not user_signed_in:
+        if 'user_id' not in session:
             flash("You need to log in first.", "error")
             return redirect(url_for('login'))
 
-        if user_signed_in:
-            # Access the username through the User object
-            current_username = get_user_by_username(username)
+        current_username = session.get('username')
 
-            if request.method == 'POST':
-                # Handle username update logic here (if any form is submitted)
-                new_username = request.form.get('new_username')
-                if new_username:
-                    # Call a function to update the username in the database
-                    update_username_db(new_username)
-                    flash("Username updated successfully.", "success")
-                else:
-                    flash("Username cannot be empty.", "error")
-            
-            return render_template('settings.html', username=current_username)
-        else:
-            flash("User not found.", "error")
-            return redirect(url_for('home'))
-
-    
-    app.register_blueprint(user_creator_blueprint)
+        if request.method == 'POST':
+            new_username = request.form.get('new_username')
+            if new_username:
+                update_username_db(session['user_id'], new_username)  # Update the username for the current user
+                session['username'] = new_username  # Update the session with the new username
+                flash("Username updated successfully.", "success")
+            else:
+                flash("Username cannot be empty.", "error")
+        
+        return render_template('settings.html', username=current_username)
 
     return app
