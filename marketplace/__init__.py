@@ -28,8 +28,22 @@ def create_app() -> Flask:
     def signup():
         return render_template('signup.html')
 
-    @app.route('/login')
+    @app.route('/login', methods=['GET', 'POST'])
     def login():
+        if request.method == 'POST':
+            username = request.form['username']
+            password = request.form['password']
+
+            # Get user from the database by username
+            user = get_user_by_username(username)
+
+            if user and user.check_password(password):  
+                session['user_id'] = user.id  
+                flash("Login successful", "success")
+                return redirect(url_for('home'))
+            else:
+                flash("Invalid username or password", "error")
+
         return render_template('login.html')
 
     @app.route('/home')
