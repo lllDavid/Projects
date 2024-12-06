@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import List
 from random import randint
 from argon2 import PasswordHasher
+from argon2.exceptions import VerificationError
 import pyotp
 
 @dataclass
@@ -24,7 +25,7 @@ class UserSecurity:
         try:
             ph.verify(db_hash, attempt_password)
             return True
-        except:
+        except VerificationError:
             return False
     
     def verify_2fa_code(self, user_provided_code: str) -> bool:
