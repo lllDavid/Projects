@@ -2,7 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from marketplace.app.user.user import User  
 from marketplace.utils.roles import Role 
 from marketplace.app.user.user_creator import user_creator_blueprint
-from marketplace.app.user.user_db_controller import get_user_by_id, update_username_db
+from marketplace.app.user.user_db_controller import get_user_by_username, update_username_db
+from marketplace.app.user.user_security import UserSecurity
 
 def create_app() -> Flask:
     app = Flask(__name__, static_folder='app/static', template_folder='app/templates/')
@@ -34,11 +35,11 @@ def create_app() -> Flask:
             username = request.form['username']
             password = request.form['password']
             
-            # Check if the user exists and if the password is correct
-            user = get_user_by_id(1)
-            if user and user.check_password(password):
+            
+            user = get_user_by_username(username)
+            if user and UserSecurity.compare_password_hash(password, username ):
                 session['signed_in'] = True  # Set signed_in flag to True
-                session['user_id'] = user.id  # Store the user_id in session
+               # session['user_id'] = user.user.id  # Store the user_id in session
                 flash("Login successful", "success")
                 return redirect(url_for('home'))
             else:

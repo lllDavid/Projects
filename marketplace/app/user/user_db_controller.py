@@ -172,3 +172,12 @@ def get_user_history(user_id: int):
             updated_at=history[6],
         )
     return None
+
+def get_password_hash(username: str) -> str | None:
+    cursor = conn.cursor()
+    cursor.execute("SELECT password_hash FROM user_security WHERE user_id = %s", (username,))
+    result = cursor.fetchone()
+    cursor.close()
+    if result:
+        return result[0] 
+    return None  
