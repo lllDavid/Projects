@@ -13,7 +13,7 @@ class UserSecurity:
     two_factor_backup_codes_hash: List[str]
 
     @staticmethod
-    def hash_password(password: str, time_cost: int = 2, memory_cost: int = 102400, parallelism: int = 8):
+    def hash_password(password: str, time_cost: int = 4, memory_cost: int = 102400, parallelism: int = 8):
         ph = PasswordHasher(time_cost=time_cost, memory_cost=memory_cost, parallelism=parallelism)
         hashed_password = ph.hash(password)
         return hashed_password
@@ -24,8 +24,7 @@ class UserSecurity:
         attempt_hash = UserSecurity.hash_password(attempt_password)
         db_hash = get_password_hash(username)
         return attempt_hash == db_hash
-
-
+    
     def verify_2fa_code(self, user_provided_code: str) -> bool:
         if not self.two_factor_enabled:
             return False  
