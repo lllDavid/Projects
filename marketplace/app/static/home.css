@@ -1,25 +1,18 @@
-/* General Body Styling */
 body {
     background-color: #121212;
-    /* Dark background */
     color: #e0e0e0;
-    /* Light text */
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
 }
 
-/* Navbar Styling */
 .navbar {
     background-color: #1e1e1e;
-    /* Dark Navbar */
     position: fixed;
-    /* Fix the navbar to the top */
     top: 0;
     left: 0;
     right: 0;
     z-index: 1050;
-    /* Ensures the navbar is above the content */
     padding: 10px 20px;
 }
 
@@ -41,18 +34,14 @@ body {
     background-color: #e0e0e0;
 }
 
-/* Navbar Links on the Right */
 .navbar-nav.ml-auto {
     margin-left: auto;
 }
 
-/* Adjust spacing for content below the fixed navbar */
 .container {
     padding-top: 80px;
-    /* Adjust for fixed navbar height */
 }
 
-/* Card Header Styling */
 .card-header {
     font-size: 1.2em;
     font-weight: bold;
@@ -60,7 +49,6 @@ body {
     color: #ffffff;
 }
 
-/* Table Styling */
 .coin-table th,
 .coin-table td {
     text-align: center;
@@ -90,13 +78,11 @@ body {
     margin-right: 10px;
 }
 
-/* Chart Container */
 .chart-container {
     position: relative;
     height: 250px;
 }
 
-/* Modal Styling */
 .modal-content {
     background-color: #333;
     color: #e0e0e0;
@@ -115,7 +101,6 @@ body {
     background-color: #444;
 }
 
-/* Button Styling */
 .btn-primary {
     background-color: #1f80e2;
     border: none;
