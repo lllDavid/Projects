@@ -47,7 +47,7 @@ def create_app() -> Flask:
     @app.route('/home')
     def home():
         if 'user_id' not in session:
-            flash("You need to log in first.", "error")
+            flash("You need to log in.", "error")
             return redirect(url_for('login'))
         return render_template('home.html')
 
