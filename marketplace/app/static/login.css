@@ -1,9 +1,7 @@
-/* Dark and Classy Styles */
-
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #121212;  /* Dark background for the entire page */
-    color: #e0e0e0;  /* Light text color for contrast */
+    background-color: #121212;  
+    color: #e0e0e0;  
     margin: 0;
     display: flex;
     justify-content: center;
@@ -12,10 +10,10 @@ body {
 }
 
 .container {
-    background-color: #1e1e1e; /* Darker background for the login box */
+    background-color: #1e1e1e; 
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* Soft shadow for depth */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); 
     width: 350px;
     text-align: center;
     border: 1px solid #333;
@@ -42,7 +40,7 @@ label {
 input {
     width: 100%;
     padding: 12px;
-    background-color: #333;  /* Dark background for inputs */
+    background-color: #333;  
     color: #fff;
     border: 1px solid #444;
     border-radius: 8px;
@@ -52,15 +50,15 @@ input {
 }
 
 input:focus {
-    border-color: #4CAF50;  /* Green border on focus */
-    background-color: #444; /* Lighter background on focus */
+    border-color: #4CAF50;  
+    background-color: #444; 
     outline: none;
 }
 
 button {
     width: 150px;
     padding: 14px;
-    background-color: #121212;  /* Elegant green for the button */
+    background-color: #121212;  
     color: white;
     font-size: 1.1rem;
     border: none;
@@ -71,11 +69,11 @@ button {
 
 button:hover {
     background-color: #45a049;
-    transform: scale(1.1)  /* Slightly darker green on hover */
+    transform: scale(1.1)  
 }
 
 button:active {
-    background-color: #388e3c;  /* Darker green when clicked */
+    background-color: #388e3c;  
 }
 
 p {
@@ -92,7 +90,7 @@ a {
 }
 
 a:hover {
-    color: #80e27e;  /* Lighter green on hover for links */
+    color: #80e27e;  
 }
 
 ul {
@@ -102,8 +100,8 @@ ul {
 }
 
 ul li {
-    background-color: #ffcccb;  /* Soft red background for error messages */
-    color: #721c24;  /* Dark red text for error */
+    background-color: #ffcccb;  
+    color: #721c24;  
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 8px;
@@ -111,13 +109,11 @@ ul li {
     text-align: center;
 }
 
-/* Style for Flash Success Message */
 ul li.success {
     background-color: #d4edda;
     color: #155724;
 }
 
-/* Style for Flash Error Message */
 ul li.error {
     background-color: #f8d7da;
     color: #721c24;
