@@ -85,7 +85,7 @@ def create_user():
             return redirect(url_for('user_creator.create_user_form'))
 
         if not is_valid_password(password):
-            flash("Password must be at least 30 characters long, contain an uppercase letter, a number, and a special character.", "error")
+            flash("Password must be between 30 and 64 characters, contain an uppercase letter, a number, and a special character.", "error")
             return redirect(url_for('user_creator.create_user_form'))
 
         if not is_unique_user(username):
