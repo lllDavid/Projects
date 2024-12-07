@@ -34,7 +34,7 @@ def create_app() -> Flask:
             password = request.form['password']
             
             user = get_user_by_username(username)
-            if user and UserSecurity.compare_password_hash(password, user.security.password_hash):
+            if user and UserSecurity.validate_password_hash(password, user.security.password_hash):
                 flash("Login successful", "success")
                 return redirect(url_for('home'))
             else:
