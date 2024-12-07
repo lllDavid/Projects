@@ -3,7 +3,7 @@ from typing import List
 from random import randint
 from argon2 import PasswordHasher
 from argon2.exceptions import VerificationError
-import pyotp
+from pyotp import TOTP, random_base32
 
 @dataclass
 class UserSecurity:
@@ -32,16 +32,16 @@ class UserSecurity:
         if not self.two_factor_enabled:
             return False  
         
-        totp = pyotp.TOTP(self.secret_key)
+        totp = TOTP(self.secret_key)
         
         return totp.verify(user_provided_code)
 
     def generate_secret_key(self):
-        totp = pyotp.TOTP(pyotp.random_base32())
+        totp = TOTP(random_base32())
         self.secret_key = totp.secret
 
     def display_qr_code(self, username: str):
-        totp = pyotp.TOTP(self.secret_key)
+        totp = TOTP(self.secret_key)
         uri = totp.provisioning_uri(username, issuer_name="MyApp")
         print(f"Scan this QR code in your 2FA app: {uri}")
 
