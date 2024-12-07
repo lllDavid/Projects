@@ -10,7 +10,6 @@
     <div class="container">
         <h2>Login</h2>
 
-        <!-- Display error messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 <ul>
@@ -21,7 +20,6 @@
             {% endif %}
         {% endwith %}
 
-        <!-- Login Form -->
         <form action="{{ url_for('login') }}" method="POST">
             <div class="form-group">
                 <label for="username">Username</label>
