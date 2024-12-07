@@ -1,5 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
-from marketplace.app.user.user import User  
+from flask import Flask, render_template, redirect, url_for, flash, session, request 
 from marketplace.app.user.user_db_controller import get_user_by_username, update_username_db
 from marketplace.app.user.user_security import UserSecurity
 

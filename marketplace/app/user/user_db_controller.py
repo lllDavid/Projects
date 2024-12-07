@@ -1,4 +1,5 @@
 from mariadb import connect
+from marketplace.config import Config
 from marketplace.app.user.user import User
 from marketplace.app.user.user_status import UserStatus
 from marketplace.app.user.user_details import UserDetails
@@ -6,16 +7,16 @@ from marketplace.app.user.user_history import UserHistory
 from marketplace.app.user.user_security import UserSecurity
 
 conn = connect(
-    user="root",       
-    password="root",   
-    host="localhost",           
-    port=3306,                  
-    database="marketplace"  
+    user=Config.DB_CONFIG["user"],       
+    password=Config.DB_CONFIG["password"],   
+    host=Config.DB_CONFIG["host"],           
+    port=Config.DB_CONFIG["port"],                  
+    database=Config.DB_CONFIG["database"]  
 )
 
 def get_user_by_id(user_id: int) -> UserDetails | None:
     cursor = conn.cursor()
-    cursor.execute("SELECT user_id, username, email, role FROM users WHERE username = %s", (username,))
+    cursor.execute("SELECT user_id, username, email, role FROM users WHERE user_id = %s", (user_id,))
     user = cursor.fetchone()
     cursor.close()
 
@@ -45,14 +46,6 @@ def get_user_by_email(email: str) -> UserDetails | None:
         user_details = get_user_details(user[0])
         return user_details
     return None
-
-def update_username_db(username: str | None):
-    if username is None:
-        raise ValueError("Username cannot be None")
-    cursor = conn.cursor()
-    cursor.execute("UPDATE users SET username = %s WHERE user_id = %s", (username))
-    conn.commit()
-    cursor.close()
 
 def update_user_security(user_id: int, two_factor_enabled: bool, two_factor_secret_key: str) -> bool:
     cursor = conn.cursor()
