@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 from typing import List
 from random import randint
+from pyotp import TOTP, random_base32
 from argon2 import PasswordHasher
 from argon2.exceptions import VerificationError
-from pyotp import TOTP, random_base32
 
 @dataclass
 class UserSecurity:
@@ -20,7 +20,7 @@ class UserSecurity:
         return hashed_password
     
     @staticmethod
-    def compare_password_hash(attempt_password: str, db_hash: str) -> bool:
+    def validate_password_hash(attempt_password: str, db_hash: str) -> bool:
         ph = PasswordHasher()
         try:
             ph.verify(db_hash, attempt_password)
