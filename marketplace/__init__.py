@@ -60,8 +60,8 @@ def create_app() -> Flask:
         if request.method == 'POST':
             new_username = request.form.get('new_username')
             if new_username:
-                update_username_db(session['user_id'], new_username)  # Update the username for the current user
-                session['username'] = new_username  # Update the session with the new username
+                update_username_db(session['user_id'], new_username)  
+                session['username'] = new_username  
                 flash("Username updated successfully.", "success")
             else:
                 flash("Username cannot be empty.", "error")
