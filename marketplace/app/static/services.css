@@ -1,91 +1,47 @@
-/* General body styles */
 body {
     background: #121212;
     color: #EAEAEA;
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    position: relative;
 }
 
-/* Container for the content */
 .container {
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;
     text-align: center;
-    flex: 1;
-    transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-}
-
-/* Main heading */
-h1,
-h2 {
-    color: #FFF;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
 h1 {
-    font-size: 3em;
+    font-size: 3.5em;
     margin-bottom: 40px;
 }
 
+h1,
 h2 {
-    font-size: 2em;
-    margin-bottom: 20px;
+    color: #FFF;
 }
 
-/* Paragraph and list items */
 p,
 ul {
     line-height: 1.6;
     font-size: 1.1em;
     margin: 20px auto;
     max-width: 800px;
-    text-align: left;
 }
 
 ul {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
 }
 
 ul li {
-    background: #1e1e1e;
+    background: #121212;
     margin: 10px 0;
     padding: 15px;
     border-radius: 10px;
-    border: 1px solid #444;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    transition: background 0.3s, transform 0.3s, box-shadow 0.3s, opacity 0.3s;
-    opacity: 1; /* Set full opacity for all items initially */
+    border: none;
 }
 
-/* Hover effect for individual list item */
-ul li:hover {
-    background: #333;
-    transform: translateY(-3px) scale(1.1); /* Grow and move the hovered item */
-    box-shadow: 0 0 15px rgba(231, 228, 228, 0.6); /* Glowing effect */
-    opacity: 1; /* Ensure the hovered item is fully visible */
-}
-
-/* Faded effect for non-hovered list items only when hovering over an item */
-ul li:hover ~ li {
-    opacity: 0.5; /* Fade out all other items when one is hovered */
-}
-
-/* Underline <strong> tags only inside the currently hovered list item */
-ul li:hover strong {
-    text-decoration: underline;
-    font-size: 1.2rem;
-}
-
-
-/* Footer */
 footer {
     background: #121212;
     color: #D1D1D1;
