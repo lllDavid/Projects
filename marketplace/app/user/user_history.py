@@ -4,17 +4,19 @@ from datetime import datetime
 @dataclass
 class UserHistory:
     login_count: int  
-    last_successful_login: datetime
-    last_failed_login: datetime
-    failed_login_attempts: int
-    created_at: datetime 
-    updated_at: datetime 
+    last_successful_login: datetime | None = None
+    last_failed_login: datetime | None = None
+    failed_login_attempts: int | None = None
+    created_at: datetime | None = None
+    updated_at: datetime | None = None
 
     def increment_login_count(self):
         self.login_count += 1
         print(f"Login count incremented. Current count: {self.login_count}")
 
     def increment_failed_login_attempts(self):
+        if self.failed_login_attempts is None:
+            self.failed_login_attempts = 0
         self.failed_login_attempts += 1
         print(f"Failed login attempts incremented. Current count: {self.failed_login_attempts}")
 

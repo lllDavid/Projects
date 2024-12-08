@@ -1,0 +1,82 @@
+/* General body styles */
+body {
+    background-color: #121212;
+    color: #EAEAEA;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container for the content */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Main heading */
+h1 {
+    font-size: 3em;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+}
+
+/* Subheading */
+h2 {
+    font-size: 2em;
+    color: #FFFFFF;
+    margin-bottom: 15px;
+}
+
+/* Paragraph and list items */
+p, ul {
+    line-height: 1.6;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    text-align: left;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+/* List styles */
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+ul li {
+    background: #333333;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+ul li strong {
+    color: #FFFFFF;
+}
+
+/* Strong text emphasis */
+strong {
+    color: #FFFFFF;
+}
+
+/* Add hover effect for list items */
+ul li:hover {
+    background-color: #444444;
+}
+
+/* Add spacing around the container */
+.container {
+    padding: 40px;
+}
+
+/* Link styling (if any links are added) */
+a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

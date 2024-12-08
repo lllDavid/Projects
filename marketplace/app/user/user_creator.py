@@ -10,7 +10,7 @@ from marketplace.app.user.user_details import UserDetails
 from marketplace.utils.roles import Role
 from marketplace.utils.validation import is_valid_email, is_valid_password, is_unique_user
 
-user_creator_blueprint = Blueprint('user_creator', __name__)
+user_creator = Blueprint('user_creator', __name__)
 
 class UserCreator:
     def create_user(self, username: str, email: str, password: str, role: Role) -> User:
@@ -29,8 +29,8 @@ class UserCreator:
         return UserStatus(
             is_online=True,
             is_banned=False,
-            ban_reason="",
-            ban_duration=0,
+            ban_reason=None,
+            ban_duration=None,
         )
 
     def create_user_history(self) -> UserHistory:
@@ -38,7 +38,7 @@ class UserCreator:
             login_count=0,
             last_successful_login=None,
             last_failed_login=None,
-            failed_login_attempts=0,
+            failed_login_attempts=None,
             created_at=datetime.now(),
             updated_at=datetime.now(),
         )
@@ -65,11 +65,11 @@ class UserCreator:
             print(f"Error: {e}")
             return None
 
-@user_creator_blueprint.route('/signup', methods=['GET'])
+@user_creator.route('/signup', methods=['GET'])
 def create_user_form():
     return render_template('signup.html')
 
-@user_creator_blueprint.route('/signup', methods=['POST'])
+@user_creator.route('/signup', methods=['POST'])
 def create_user():
     try:
         username = request.form['username']

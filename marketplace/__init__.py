@@ -1,10 +1,13 @@
-from flask import Flask, render_template, redirect, url_for, flash, session, request 
-from marketplace.app.user.user_db_controller import get_user_by_username, update_username_db
+from flask import Flask, render_template, redirect, url_for, flash, session, request
+from marketplace.app.user.user_creator import user_creator
+from marketplace.app.user.user_db import update_user
+from marketplace.app.user.user_db_controller import get_user_by_username
 from marketplace.app.user.user_security import UserSecurity
 
 def create_app() -> Flask:
     app = Flask(__name__, static_folder='app/static', template_folder='app/templates/')
     app.config['SECRET_KEY'] = 'secret_key'
+    app.register_blueprint(user_creator, url_prefix='/user_creator')
 
     @app.route('/')
     def index():
@@ -43,28 +46,28 @@ def create_app() -> Flask:
 
     @app.route('/home')
     def home():
-        if 'user_id' not in session:
-            flash("You need to log in.", "error")
-            return redirect(url_for('login'))
         return render_template('home.html')
 
     @app.route('/settings', methods=['GET', 'POST'])
     def settings():
+        username = request.form['username']
+        current_user = get_user_by_username(username)
         if 'user_id' not in session:
             flash("You need to log in first.", "error")
             return redirect(url_for('login'))
 
-        current_username = session.get('username')
+        # current_username = session.get('username')
 
         if request.method == 'POST':
+            '''
             new_username = request.form.get('new_username')
             if new_username:
-                update_username_db(session['user_id'], new_username)  
+                update_user(session['user_id'], new_username)  
                 session['username'] = new_username  
                 flash("Username updated successfully.", "success")
             else:
                 flash("Username cannot be empty.", "error")
-        
-        return render_template('settings.html', username=current_username)
+            '''
+        return render_template('settings.html', username=username)
 
     return app

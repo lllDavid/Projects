@@ -5,8 +5,8 @@ from datetime import datetime
 class UserStatus:
     is_online: bool 
     is_banned: bool 
-    ban_reason: str 
-    ban_duration: int    
+    ban_reason: str | None = None
+    ban_duration: int | None = None    
 
     def update_ban_status(self, is_banned: bool, reason: str, duration: int):
         self.is_banned = is_banned
