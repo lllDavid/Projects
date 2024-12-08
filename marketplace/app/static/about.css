@@ -40,7 +40,6 @@ ul {
 }
 
 ul li {
-    background: #333333;
     margin: 10px 0;
     padding: 10px;
     border-radius: 5px;
@@ -50,13 +49,14 @@ ul li strong {
     color: #FFFFFF;
 }
 
+
+
+
 strong {
     color: #FFFFFF;
 }
 
-ul li:hover {
-    background-color: #444444;
-}
+
 
 .container {
     padding: 40px;
