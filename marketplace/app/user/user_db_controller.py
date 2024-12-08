@@ -14,15 +14,13 @@ conn = connect(
     database=Config.DB_CONFIG["database"]  
 )
 
-def get_user_by_id(user_id: int) -> UserDetails | None:
+def get_user_by_id(user_id: int) -> User | None:
     cursor = conn.cursor()
     cursor.execute("SELECT user_id, username, email, role FROM users WHERE user_id = %s", (user_id,))
     user = cursor.fetchone()
     cursor.close()
-
-    if user_id:
-        user_details = get_user_details(user[1])
-        return user_details
+    if user:
+        return User(username=user[1], email=user[2], password="", role=user[3])
     return None
 
 def get_user_by_username(username: str) -> UserDetails | None:
@@ -47,50 +45,8 @@ def get_user_by_email(email: str) -> UserDetails | None:
         return user_details
     return None
 
-def update_user_security(user_id: int, two_factor_enabled: bool, two_factor_secret_key: str) -> bool:
-    cursor = conn.cursor()
-    try:
-        cursor.execute("UPDATE user_security SET two_factor_enabled = %s, two_factor_secret_key = %s WHERE user_id = %s",
-                       (two_factor_enabled, two_factor_secret_key, user_id))
-        conn.commit()
-        cursor.close()
-        return True
-    except Exception as e:
-        conn.rollback()
-        print(f"Error updating user security: {e}")
-        cursor.close()
-        return False
-
-def update_user_status(user_id: int, is_online: bool, is_banned: bool) -> bool:
-    cursor = conn.cursor()
-    try:
-        cursor.execute("UPDATE user_status SET is_online = %s, is_banned = %s WHERE user_id = %s", 
-                       (is_online, is_banned, user_id))
-        conn.commit()
-        cursor.close()
-        return True
-    except Exception as e:
-        conn.rollback()
-        print(f"Error updating user status: {e}")
-        cursor.close()
-        return False
-
-def update_user_history(user_id: int, login_count: int) -> bool:
-    cursor = conn.cursor()
-    try:
-        cursor.execute("UPDATE user_history SET login_count = %s WHERE user_id = %s", 
-                       (login_count, user_id))
-        conn.commit()
-        cursor.close()
-        return True
-    except Exception as e:
-        conn.rollback()
-        print(f"Error updating user history: {e}")
-        cursor.close()
-        return False
-
 def get_user_details(user_id: int) -> UserDetails | None:
-    user = get_user(user_id)
+    user = get_user_by_id(user_id)
     if not user:
         return None
     security = get_user_security(user_id)
@@ -111,15 +67,6 @@ def get_user_details(user_id: int) -> UserDetails | None:
     )
     
     return user_details
-
-def get_user(user_id: int):
-    cursor = conn.cursor()
-    cursor.execute("SELECT user_id, username, email, role FROM users WHERE user_id = %s", (user_id,))
-    user = cursor.fetchone()
-    cursor.close()
-    if user:
-        return User(username=user[1], email=user[2], password=None, role=user[3])
-    return None
 
 def get_user_security(user_id: int):
     cursor = conn.cursor()
@@ -143,7 +90,7 @@ def get_user_status(user_id: int):
     cursor.close()
     if status:
         return UserStatus(
-            is_online=None,
+            is_online=False,
             is_banned=status[1],
             ban_reason=status[2],
             ban_duration=status[3],

@@ -25,13 +25,7 @@ body {
     text-align: center;
     color: #fff;
     transition: transform 0.4s ease, box-shadow 0.3s ease;
-    box-shadow: 0 0 15px 10px rgba(0, 255, 255, 0.3);
-}
-
-.slogan-content:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 15px 10px rgba(0, 255, 255, 1.0);
-
+    box-shadow: 0 0 12px 7px rgba(0, 255, 255, 0.5);
 }
 
 h1 {
@@ -74,7 +68,7 @@ h2 {
 .btn-signup:hover,
 .btn-login:hover {
     transform: scale(1.2);
-    box-shadow: 0px 0px 5px 0px rgba(0, 255, 255, 1.0);
+    text-decoration: underline;
 
 }
 

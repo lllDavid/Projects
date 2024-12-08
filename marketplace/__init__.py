@@ -56,10 +56,10 @@ def create_app() -> Flask:
             flash("You need to log in first.", "error")
             return redirect(url_for('login'))
 
-        # current_username = session.get('username')
+        current_username = session.get('username')
 
         if request.method == 'POST':
-            '''
+
             new_username = request.form.get('new_username')
             if new_username:
                 update_user(session['user_id'], new_username)  
@@ -67,7 +67,6 @@ def create_app() -> Flask:
                 flash("Username updated successfully.", "success")
             else:
                 flash("Username cannot be empty.", "error")
-            '''
         return render_template('settings.html', username=username)
 
     return app
