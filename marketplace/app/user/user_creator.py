@@ -36,9 +36,9 @@ class UserCreator:
     def create_user_history(self) -> UserHistory:
         return UserHistory(
             login_count=0,
-            last_successful_login=None,
+            failed_login_count=0,
+            last_login=None,
             last_failed_login=None,
-            failed_login_attempts=None,
             created_at=datetime.now(),
             updated_at=datetime.now(),
         )

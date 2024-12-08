@@ -152,15 +152,15 @@ def get_user_status(user_id: int):
 
 def get_user_history(user_id: int):
     cursor = conn.cursor()
-    cursor.execute("SELECT user_id, login_count, last_successful_login, last_failed_login, failed_login_attempts, created_at, updated_at FROM user_history WHERE user_id = %s", (user_id,))
+    cursor.execute("SELECT user_id, login_count, failed_login_count last_login, last_failed_login, created_at, updated_at FROM user_history WHERE user_id = %s", (user_id,))
     history = cursor.fetchone()
     cursor.close()
     if history:
         return UserHistory(
             login_count=history[1],
-            last_successful_login=history[2],
-            last_failed_login=history[3],
-            failed_login_attempts=history[4],
+            failed_login_count=history[2],
+            last_login=history[3],
+            last_failed_login=history[4],
             created_at=history[5],
             updated_at=history[6],
         )
