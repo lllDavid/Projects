@@ -58,28 +58,33 @@ def create_app() -> Flask:
         user_id = session['user_id']
         user = get_user_by_id(user_id)
         current_username = session.get('username')
-        
+
         if request.method == 'POST':
             new_username = request.form.get('username')
             new_email = request.form.get('email')
             new_password = request.form.get('password')
             confirm_password = request.form.get('confirm-password')
-            
+
             if new_password and new_password != confirm_password:
                 flash("Passwords do not match.", "error")
                 return redirect(url_for('settings'))
-            
+
+            # Update username, email, and/or password if there are any changes
             if new_username != user.username or new_email != user.email or new_password:
+                # Update the database with the new details
                 update_user(user_id, new_username)
-                
+
+                # If the username has changed, update the session too
                 if new_username != user.username:
                     session['username'] = new_username
+                
                 flash("Account details updated successfully.", "success")
             else:
                 flash("No changes detected.", "info")
-            
+
             return redirect(url_for('settings'))
-        
+
         return render_template('settings.html', username=current_username, user=user)
+
 
     return app

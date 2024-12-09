@@ -6,7 +6,6 @@ class User:
     id: int | None
     username: str
     email: str
-    password: str
     role: Role
     
     def update_username(self, new_username: str):
@@ -16,10 +15,6 @@ class User:
     def update_email(self, new_email: str):
         self.email = new_email
         print(f"Email updated to {new_email}")
-
-    def update_password(self, new_password: str):
-        self.password = new_password
-        print("Password updated.")
 
     def update_role(self, new_role: Role):
         self.role = new_role

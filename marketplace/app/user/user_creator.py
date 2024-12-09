@@ -13,8 +13,8 @@ from marketplace.utils.validation import is_valid_email, is_valid_password, is_u
 user_creator = Blueprint('user_creator', __name__)
 
 class UserCreator:
-    def create_user(self, username: str, email: str, password: str, role: Role) -> User:
-        return User(id=None, username=username, email=email, password=password, role=role)
+    def create_user(self, username: str, email: str, role: Role) -> User:
+        return User(id=None, username=username, email=email, role=role)
 
     def create_user_security(self, password: str) -> UserSecurity:
         return UserSecurity(
@@ -44,7 +44,7 @@ class UserCreator:
         )
 
     def create_user_details(self, username: str, email: str, password: str) -> UserDetails:
-        user = self.create_user(username, email, password, role=Role.USER)
+        user = self.create_user(username, email, role=Role.USER)
         user_security = self.create_user_security(password)
         user_status = self.create_user_status()
         user_history = self.create_user_history()

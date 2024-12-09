@@ -14,8 +14,8 @@ conn = connect(
 def insert_user(user_details: UserDetails):
     cursor = conn.cursor()
     try:
-        cursor.execute("INSERT INTO users (username, email, password, role) VALUES (%s, %s, %s, %s)", 
-                       (user_details.user.username, user_details.user.email, user_details.user.password, user_details.user.role.value))  
+        cursor.execute("INSERT INTO users (username, email, role) VALUES (%s, %s, %s)", 
+                       (user_details.user.username, user_details.user.email, user_details.user.role.value))  
         user_id = cursor.lastrowid 
         
         cursor.execute("INSERT INTO user_security (user_id, password_hash, two_factor_enabled, two_factor_secret_key) VALUES (%s, %s, %s, %s)",

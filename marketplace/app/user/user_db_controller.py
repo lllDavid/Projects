@@ -20,7 +20,7 @@ def get_user_by_id(user_id: int) -> User | None:
     user = cursor.fetchone()
     cursor.close()
     if user:
-        return User(id=user[0], username=user[1], email=user[2], password="", role=user[3])
+        return User(id=user[0], username=user[1], email=user[2], role=user[3])
     return None
 
 def get_user_by_username(username: str) -> UserDetails | None:
