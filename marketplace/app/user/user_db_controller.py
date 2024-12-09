@@ -104,12 +104,12 @@ def get_user_history(user_id: int):
     cursor.close()
     if history:
         return UserHistory(
-            login_count=history[1],
-            failed_login_count=history[2],
-            last_login=history[3],
-            last_failed_login=history[4],
-            created_at=history[5],
-            updated_at=history[6],
+            login_count=history[0],
+            failed_login_count=history[1],
+            last_login=history[2],
+            last_failed_login=history[3],
+            created_at=history[4],
+            updated_at=history[5],
         )
     return None
 
