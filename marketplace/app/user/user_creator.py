@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Blueprint, render_template, redirect, url_for, flash, request
+from flask import Blueprint, render_template, redirect, url_for, flash, request, session
 from werkzeug.exceptions import BadRequest
 from marketplace.app.user import user_db
 from marketplace.app.user.user import User
@@ -14,7 +14,7 @@ user_creator = Blueprint('user_creator', __name__)
 
 class UserCreator:
     def create_user(self, username: str, email: str, password: str, role: Role) -> User:
-        return User(username=username, email=email, password=password, role=role)
+        return User(id=None, username=username, email=email, password=password, role=role)
 
     def create_user_security(self, password: str) -> UserSecurity:
         return UserSecurity(
@@ -65,6 +65,7 @@ class UserCreator:
             print(f"Error: {e}")
             return None
 
+
 @user_creator.route('/signup', methods=['GET'])
 def create_user_form():
     return render_template('signup.html')
@@ -96,6 +97,7 @@ def create_user():
         user_details = user_creator.create_and_save_user(username, email, password)
 
         if user_details:
+            session["user_id"] = user_details.user.id
             return redirect(url_for('home'))  
         else:
             return redirect(url_for('user_creator.create_user_form'))  
