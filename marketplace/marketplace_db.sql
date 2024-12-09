@@ -9,7 +9,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE user_security (
-	id INT AUTO_INCREMENT PRIMARY KEY,
+	 id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT Null,
     password_hash VARCHAR(255),
     two_factor_enabled BOOLEAN,
