@@ -59,6 +59,48 @@ def update_user(user_id: int, user_details: UserDetails):
     finally:
         cursor.close()
 
+def update_user_security(user_id: int, two_factor_enabled: bool, two_factor_secret_key: str) -> bool:
+    cursor = conn.cursor()
+    try:
+        cursor.execute("UPDATE user_security SET two_factor_enabled = %s, two_factor_secret_key = %s WHERE user_id = %s",
+                       (two_factor_enabled, two_factor_secret_key, user_id))
+        conn.commit()
+        cursor.close()
+        return True
+    except Exception as e:
+        conn.rollback()
+        print(f"Error updating user security: {e}")
+        cursor.close()
+        return False
+
+def update_user_status(user_id: int, is_online: bool, is_banned: bool) -> bool:
+    cursor = conn.cursor()
+    try:
+        cursor.execute("UPDATE user_status SET is_online = %s, is_banned = %s WHERE user_id = %s", 
+                       (is_online, is_banned, user_id))
+        conn.commit()
+        cursor.close()
+        return True
+    except Exception as e:
+        conn.rollback()
+        print(f"Error updating user status: {e}")
+        cursor.close()
+        return False
+
+def update_user_history(user_id: int, login_count: int) -> bool:
+    cursor = conn.cursor()
+    try:
+        cursor.execute("UPDATE user_history SET login_count = %s WHERE user_id = %s", 
+                       (login_count, user_id))
+        conn.commit()
+        cursor.close()
+        return True
+    except Exception as e:
+        conn.rollback()
+        print(f"Error updating user history: {e}")
+        cursor.close()
+        return False
+
 def delete_user(user_id: int):
     cursor = conn.cursor()
     try:
