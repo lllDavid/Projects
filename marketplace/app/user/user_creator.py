@@ -45,15 +45,15 @@ class UserCreator:
 
     def create_user_details(self, username: str, email: str, password: str) -> UserDetails:
         user = self.create_user(username, email, password, role=Role.USER)
-        security = self.create_user_security(password)
-        status = self.create_user_status()
-        history = self.create_user_history()
+        user_security = self.create_user_security(password)
+        user_status = self.create_user_status()
+        user_history = self.create_user_history()
 
         return UserDetails(
             user=user,
-            security=security,
-            status=status,
-            history=history,
+            user_security=user_security,
+            user_status=user_status,
+            user_history=user_history,
         )
 
     def create_and_save_user(self, username: str, email: str, password: str) -> UserDetails | None:

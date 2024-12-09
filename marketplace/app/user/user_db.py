@@ -18,13 +18,13 @@ def insert_user(user_details: UserDetails):
         user_id = cursor.lastrowid
         
         cursor.execute("INSERT INTO user_security (user_id, password_hash, two_factor_enabled, two_factor_secret_key) VALUES (%s, %s, %s, %s)",
-                       (user_id, user_details.security.password_hash, user_details.security.two_factor_enabled, user_details.security.two_factor_secret_key))
+                       (user_id, user_details.user_security.password_hash, user_details.user_security.two_factor_enabled, user_details.user_security.two_factor_secret_key))
         
         cursor.execute("INSERT INTO user_status (user_id, is_banned, ban_reason, ban_duration) VALUES (%s, %s, %s, %s)", 
-                       (user_id, user_details.status.is_banned, user_details.status.ban_reason, user_details.status.ban_duration))
+                       (user_id, user_details.user_status.is_banned, user_details.user_status.ban_reason, user_details.user_status.ban_duration))
         
         cursor.execute("INSERT INTO user_history (user_id, login_count, failed_login_count, last_login, last_failed_login, created_at, updated_at) VALUES (%s, %s, %s, %s, %s, %s, %s)", 
-                       (user_id, user_details.history.login_count, user_details.history.failed_login_count, user_details.history.last_login, user_details.history.last_failed_login, user_details.history.created_at, user_details.history.updated_at))
+                       (user_id, user_details.user_history.login_count, user_details.user_history.failed_login_count, user_details.user_history.last_login, user_details.user_history.last_failed_login, user_details.user_history.created_at, user_details.user_history.updated_at))
 
         conn.commit()
         print("User and associated details inserted into the database.")
@@ -43,13 +43,13 @@ def update_user(user_id: int, user_details: UserDetails):
                        (user_details.user.username, user_details.user.email, user_details.user.password, user_details.user.role.value, user_id))  
         
         cursor.execute("UPDATE user_security SET password_hash = %s, two_factor_enabled = %s, two_factor_secret_key = %s WHERE user_id = %s",
-                       (user_details.security.password_hash, user_details.security.two_factor_enabled, user_details.security.two_factor_secret_key, user_id))
+                       (user_details.user_security.password_hash, user_details.user_security.two_factor_enabled, user_details.user_security.two_factor_secret_key, user_id))
         
         cursor.execute("UPDATE user_status SET is_banned = %s, ban_reason = %s, ban_duration = %s WHERE user_id = %s", 
-                       (user_details.status.is_banned, user_details.status.ban_reason, user_details.status.ban_duration, user_id))
+                       (user_details.user_status.is_banned, user_details.user_status.ban_reason, user_details.user_status.ban_duration, user_id))
         
         cursor.execute("UPDATE user_history SET login_count = %s, failed_login_count = %s, last_login = %s, last_failed_login = %s, updated_at = %s WHERE user_id = %s", 
-                       (user_details.history.login_count, user_details.history.failed_login_count, user_details.history.last_login, user_details.history.last_failed_login, user_details.history.updated_at, user_id))
+                       (user_details.user_history.login_count, user_details.user_history.failed_login_count, user_details.user_history.last_login, user_details.user_history.last_failed_login, user_details.user_history.updated_at, user_id))
 
         conn.commit()
         print("User details updated successfully.")
@@ -70,7 +70,7 @@ def update_user_security(user_id: int, two_factor_enabled: bool, two_factor_secr
         return True
     except Exception as e:
         conn.rollback()
-        print(f"Error updating user security: {e}")
+        print(f"Error updating user user_security: {e}")
         cursor.close()
         return False
 
@@ -84,7 +84,7 @@ def update_user_status(user_id: int, is_online: bool, is_banned: bool) -> bool:
         return True
     except Exception as e:
         conn.rollback()
-        print(f"Error updating user status: {e}")
+        print(f"Error updating user user_status: {e}")
         cursor.close()
         return False
 
@@ -98,7 +98,7 @@ def update_user_history(user_id: int, login_count: int) -> bool:
         return True
     except Exception as e:
         conn.rollback()
-        print(f"Error updating user history: {e}")
+        print(f"Error updating user user_history: {e}")
         cursor.close()
         return False
 
