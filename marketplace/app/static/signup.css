@@ -1,19 +1,25 @@
 body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #121212;
     color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
 .container {
-    max-width: 600px;
+    max-width: 500px;
     margin-top: 50px;
     padding: 20px;
     background-color: #121212;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 h1 {
-    color: #ffffff;
+    color: #fff;
     font-size: 2.8rem;
     font-weight: bold;
     text-align: center;
@@ -25,21 +31,20 @@ h1 {
 }
 
 .form-control,
-.form-control:focus,
 input,
 textarea,
 select {
-    background-color: #333333;
-    color: #ffffff;
-    border: 1px solid #444444;
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #444;
 }
 
 .form-control::placeholder {
-    color: #888888;
+    color: #888;
 }
 
 .form-control:focus {
-    background-color: #444444;
+    background-color: #444;
     border-color: #6c757d;
     box-shadow: 0 0 0 0.25rem rgba(107, 114, 128, 0.25);
 }
@@ -59,7 +64,6 @@ select {
     width: 150px;
     padding: 8px 12px;
     text-align: center;
-    display: inline-block;
     font-size: large;
     text-transform: uppercase;
     border-radius: 4px;
@@ -67,15 +71,14 @@ select {
 }
 
 .btn-primary:hover {
-    background-color: #147a33;
-    border-color: #444444;
+    background-color: #333;
+    border-color: #444;
     transform: scale(1.1);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 hr {
-    border-top: 1px solid #444444;
+    border-top: 1px solid #444;
     margin-top: 20px;
 }
 
