@@ -85,6 +85,10 @@ def create_app() -> Flask:
             return redirect(url_for('settings'))
 
         return render_template('settings.html', username=current_username, user=user)
+    
+    @app.route('/support')
+    def support():
+        return render_template('support.html')
 
 
     return app
