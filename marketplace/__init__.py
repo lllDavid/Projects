@@ -86,9 +86,20 @@ def create_app() -> Flask:
 
         return render_template('settings.html', username=current_username, user=user)
     
+    @app.route('/trade')
+    def trade():
+        return render_template('trade.html')
+    
+    @app.route('/portfolio')
+    def portfolio():
+        return render_template('portfolio.html')
+    
     @app.route('/support')
     def support():
         return render_template('support.html')
-
-
+    
+    @app.route('/logout')
+    def logout():
+        return render_template('logout.html')
+    
     return app
