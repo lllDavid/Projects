@@ -29,12 +29,12 @@ class UserSecurity:
             return False
     
     def verify_2fa_code(self, user_provided_code: str) -> bool:
-        if not self.two_factor_enabled:
-            return False  
+        if not self.two_factor_secret_key:
+            return False 
         
-        totp = TOTP(self.secret_key)
+        totp = TOTP(self.two_factor_secret_key)  
         
-        return totp.verify(user_provided_code)
+        return totp.verify(user_provided_code)  
 
     def generate_secret_key(self):
         totp = TOTP(random_base32())

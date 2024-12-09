@@ -68,7 +68,6 @@ def create_app() -> Flask:
     return app
 
 def handle_login(request):
-    """Handles login logic."""
     username = request.form['username']
     password = request.form['password']
     
@@ -84,7 +83,6 @@ def handle_login(request):
 
 
 def handle_logout():
-    """Handles logout logic."""
     session.pop('user_id', None)  
     session.pop('username', None)  
     flash("You have been logged out.", "success")
@@ -92,7 +90,6 @@ def handle_logout():
 
 
 def handle_settings(request):
-    """Handles user settings logic."""
     if 'user_id' not in session:
         flash("You need to log in first.", "error")
         return redirect(url_for('login'))

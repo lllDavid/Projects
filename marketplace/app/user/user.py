@@ -9,16 +9,16 @@ class User:
     role: Role
     
     def update_username(self, new_username: str):
-        self.email = new_username
-        print(f"Email updated to {new_username}")
+        self.username = new_username
+        print(f"Username changed to {new_username}")
 
     def update_email(self, new_email: str):
         self.email = new_email
-        print(f"Email updated to {new_email}")
+        print(f"Email changed to {new_email}")
 
     def update_role(self, new_role: Role):
         self.role = new_role
-        print(f"Role updated to {new_role}")
+        print(f"Role changed to {new_role}")
 
     def display_details(self):
         return (f"Username: {self.username}\n"

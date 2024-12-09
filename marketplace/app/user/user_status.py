@@ -13,12 +13,11 @@ class UserStatus:
         self.ban_reason = reason
         self.ban_duration = duration
         self.updated_at = datetime.now()
-        print(f"Ban status updated: {is_banned}, Reason: {reason}, Duration: {duration}")
+        print(f"User banned: {is_banned}, Reason: {reason}, Duration: {duration}")
 
     def update_online_status(self, is_online: bool):
         self.is_online = is_online
-        self.updated_at = datetime.now()
-        print(f"Online status updated to {is_online}.")
+        print(f"User Online: {is_online}.")
 
     def display_status(self):
         return (f"Online: {self.is_online}, "
