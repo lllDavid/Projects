@@ -3,6 +3,7 @@ from marketplace.utils.roles import Role
 
 @dataclass
 class User:
+    id: int 
     username: str
     email: str
     password: str

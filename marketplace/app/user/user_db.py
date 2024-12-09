@@ -28,6 +28,7 @@ def insert_user(user_details: UserDetails):
 
         conn.commit()
         print("User and associated details inserted into the database.")
+        user_details.user.id = user_id
         
     except conn.Error as e:
         conn.rollback()

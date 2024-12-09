@@ -38,6 +38,7 @@ def create_app() -> Flask:
             user = get_user_by_username(username)
             if user and UserSecurity.validate_password_hash(password, user.security.password_hash):
                 flash("Login successful", "success")
+                session["user_id"] = user.user.
                 return redirect(url_for('home'))
             else:
                 flash("Invalid username or password", "error")
