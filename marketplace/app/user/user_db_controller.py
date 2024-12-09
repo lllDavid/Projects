@@ -75,11 +75,11 @@ def get_user_security(user_id: int):
     cursor.close()
     if security:
         return UserSecurity(
-            password_hash=security[1],
-            two_factor_enabled=security[2],
-            two_factor_secret_key=security[3],
+            password_hash=security[0],
+            two_factor_enabled=security[1],
+            two_factor_secret_key=security[2],
             two_factor_backup_codes=None,
-            two_factor_backup_codes_hash=security[4],
+            two_factor_backup_codes_hash=security[3],
         )
     return None
 

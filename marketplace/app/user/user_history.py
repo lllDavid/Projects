@@ -3,9 +3,9 @@ from datetime import datetime
 
 @dataclass
 class UserHistory:
-    login_count: int  
-    failed_login_count: int = 0
+    login_count: int = 0
     last_login: datetime | None = None
+    failed_login_count: int = 0
     last_failed_login: datetime | None = None
     created_at: datetime | None = None
     updated_at: datetime | None = None

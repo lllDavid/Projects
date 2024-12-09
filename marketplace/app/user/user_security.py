@@ -57,9 +57,9 @@ class UserSecurity:
     def display_security_info(self):
         return (f"Password Hash: {self.password_hash}\n"
                 f"2FA Enabled: {self.two_factor_enabled}\n"
-                f"Hashed Backup Codes: {self.two_factor_backup_codes_hash}")
+                f"Hashed 2FA Backup Codes: {self.two_factor_backup_codes_hash}")
 
     def __str__(self):
         return (f"Password Hash: {self.password_hash}, "
                 f"2FA Enabled: {self.two_factor_enabled}, "
-                f"Hashed Backup Codes: {self.two_factor_backup_codes_hash}")
+                f"Hashed 2FA Backup Codes: {self.two_factor_backup_codes_hash}")

@@ -21,16 +21,15 @@ def insert_user(user_details: UserDetails):
         )  
         user_id = cursor.lastrowid 
         
-        # Serialize the lists into JSON strings before inserting
         two_factor_backup_codes_hash_json = json.dumps(user_details.user_security.two_factor_backup_codes_hash) if user_details.user_security.two_factor_backup_codes_hash else None
         
         cursor.execute(
-            "INSERT INTO user_security (user_id, password_hash, two_factor_enabled, two_factor_backup_codes_hash, two_factor_secret_key) VALUES (%s, %s, %s, %s, %s)",
+            "INSERT INTO user_security (user_id, password_hash, two_factor_enabled, two_factor_secret_key, two_factor_backup_codes_hash) VALUES (%s, %s, %s, %s, %s)",
             (user_id, 
              user_details.user_security.password_hash,  
              user_details.user_security.two_factor_enabled,
-             two_factor_backup_codes_hash_json,  # Store as JSON string
-             user_details.user_security.two_factor_secret_key)
+             user_details.user_security.two_factor_secret_key,
+             two_factor_backup_codes_hash_json)
         )
 
         cursor.execute(
@@ -39,11 +38,11 @@ def insert_user(user_details: UserDetails):
         )
         
         cursor.execute(
-            "INSERT INTO user_history (user_id, login_count, failed_login_count, last_login, last_failed_login, created_at, updated_at) VALUES (%s, %s, %s, %s, %s, %s, %s)", 
+            "INSERT INTO user_history (user_id, login_count, last_login, failed_login_count, last_failed_login, created_at, updated_at) VALUES (%s, %s, %s, %s, %s, %s, %s)", 
             (user_id, 
-             user_details.user_history.login_count, 
-             user_details.user_history.failed_login_count, 
-             user_details.user_history.last_login, 
+             user_details.user_history.login_count,
+             user_details.user_history.last_login,
+             user_details.user_history.failed_login_count,  
              user_details.user_history.last_failed_login, 
              user_details.user_history.created_at, 
              user_details.user_history.updated_at)
@@ -52,13 +51,8 @@ def insert_user(user_details: UserDetails):
         conn.commit()
         print("User and associated details inserted into the database.")
         user_details.user.id = user_id
-        return user_details
-    except Exception as e:
-        conn.rollback()
-        print(f"Error inserting user: {e}")
-        raise  # Re-raise the exception after rollback for handling elsewhere
-
-        
+        return user_details 
+    
     except conn.Error as e:
         conn.rollback()
         print(f"Error occurred: {e}")
