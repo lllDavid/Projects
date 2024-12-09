@@ -45,10 +45,12 @@ class UserSecurity:
         uri = totp.provisioning_uri(username, issuer_name="MyApp")
         print(f"Scan this QR code in your 2FA app: {uri}")
 
-    def generate_backup_codes(self, num_codes: int = 6) -> List[str]:
+    @staticmethod
+    def generate_backup_codes(num_codes: int = 6) -> List[str]:
         return [str(randint(100000, 999999)) for _ in range(num_codes)]
-
-    def hash_backup_codes(self, backup_codes: List[str]) -> List[str]:
+    
+    @staticmethod
+    def hash_backup_codes(backup_codes: List[str]) -> List[str]:
         ph = PasswordHasher()
         return [ph.hash(code) for code in backup_codes]
 

@@ -18,8 +18,8 @@ def insert_user(user_details: UserDetails):
                        (user_details.user.username, user_details.user.email, user_details.user.role.value))  
         user_id = cursor.lastrowid 
         
-        cursor.execute("INSERT INTO user_security (user_id, password_hash, two_factor_enabled, two_factor_secret_key) VALUES (%s, %s, %s, %s)",
-                       (user_id, user_details.user_security.password_hash, user_details.user_security.two_factor_enabled, user_details.user_security.two_factor_secret_key))
+        cursor.execute("INSERT INTO user_security (user_id, password_hash, two_factor_enabled, two_factor_backup_codes_hash, two_factor_secret_key) VALUES (%s, %s, %s, %s, %s)",
+                       (user_id, user_details.user_security.password_hash, user_details.user_security.two_factor_enabled, user_details.user_security.two_factor_backup_codes_hash, user_details.user_security.two_factor_secret_key))
         
         cursor.execute("INSERT INTO user_status (user_id, is_banned, ban_reason, ban_duration) VALUES (%s, %s, %s, %s)", 
                        (user_id, user_details.user_status.is_banned, user_details.user_status.ban_reason, user_details.user_status.ban_duration))
