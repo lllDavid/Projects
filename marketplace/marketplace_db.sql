@@ -9,13 +9,13 @@ CREATE TABLE users (
 );
 
 CREATE TABLE user_security (
-    user_id INT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT Null,
     password_hash VARCHAR(255),
     two_factor_enabled BOOLEAN,
     two_factor_backup_codes_hash JSON,
     two_factor_secret_key VARCHAR(255),
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
-    ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE user_status (
@@ -38,3 +38,5 @@ CREATE TABLE user_history (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
+
+

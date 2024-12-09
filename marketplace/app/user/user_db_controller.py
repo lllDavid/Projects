@@ -68,22 +68,22 @@ def get_user_details(user_id: int) -> UserDetails | None:
     
     return user_details
 
-def get_user_security(user_id: int):
+def get_user_security(user_id: int) -> UserSecurity | None:
     cursor = conn.cursor()
     cursor.execute("SELECT user_id, password_hash, two_factor_enabled, two_factor_secret_key, two_factor_backup_codes_hash FROM user_security WHERE user_id = %s", (user_id,))
     security = cursor.fetchone()
     cursor.close()
     if security:
         return UserSecurity(
-            password_hash=security[0],
-            two_factor_enabled=security[1],
-            two_factor_secret_key=security[2],
+            password_hash=security[1],
+            two_factor_enabled=security[2],
+            two_factor_secret_key=security[3],
             two_factor_backup_codes=None,
-            two_factor_backup_codes_hash=security[3],
+            two_factor_backup_codes_hash=security[4],
         )
     return None
 
-def get_user_status(user_id: int):
+def get_user_status(user_id: int) -> UserStatus | None:
     cursor = conn.cursor()
     cursor.execute("SELECT user_id, is_banned, ban_reason, ban_duration FROM user_status WHERE user_id = %s", (user_id,))
     status = cursor.fetchone()
@@ -91,15 +91,15 @@ def get_user_status(user_id: int):
     if status:
         return UserStatus(
             is_online=False,
-            is_banned=status[1],
-            ban_reason=status[2],
-            ban_duration=status[3],
+            is_banned=status[0],
+            ban_reason=status[1],
+            ban_duration=status[2],
         )
     return None
 
-def get_user_history(user_id: int):
+def get_user_history(user_id: int) -> UserHistory | None:
     cursor = conn.cursor()
-    cursor.execute("SELECT user_id, login_count, failed_login_count last_login, last_failed_login, created_at, updated_at FROM user_history WHERE user_id = %s", (user_id,))
+    cursor.execute("SELECT user_id, login_count, failed_login_count, last_login, last_failed_login, created_at, updated_at FROM user_history WHERE user_id = %s", (user_id,))
     history = cursor.fetchone()
     cursor.close()
     if history:
@@ -113,11 +113,3 @@ def get_user_history(user_id: int):
         )
     return None
 
-def get_password_hash(username: str) -> str | None:
-    cursor = conn.cursor()
-    cursor.execute("SELECT password_hash FROM user_security WHERE user_id = %s", (username,))
-    result = cursor.fetchone()
-    cursor.close()
-    if result:
-        return result[0] 
-    return None  
