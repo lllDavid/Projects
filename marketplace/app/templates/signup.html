@@ -27,17 +27,14 @@
 
         <form action="{{ url_for('user_creator.create_user') }}" method="POST">
             <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
                 <input type="text" class="form-control" id="username" name="username" placeholder="Enter a username"
                     required>
             </div>
             <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter a E-Mail Address"
                     required>
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Enter a password"
                     required>
             </div>
@@ -46,7 +43,9 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
-        <hr>
+        <footer>
+            <p>&copy; 2024 Marketplace. All rights reserved.</p>
+        </footer>
     </div>
 </body>
 
