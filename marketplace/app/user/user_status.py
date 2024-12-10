@@ -19,12 +19,6 @@ class UserStatus:
         self.is_online = is_online
         print(f"User Online: {is_online}.")
 
-    def display_status(self):
-        return (f"Online: {self.is_online}, "
-                f"Banned: {self.is_banned}, "
-                f"Ban Reason: {self.ban_reason}, "
-                f"Ban Duration: {self.ban_duration}, ")
-
     def __str__(self):
         return (f"Online: {self.is_online}, "
                 f"Banned: {self.is_banned}, "

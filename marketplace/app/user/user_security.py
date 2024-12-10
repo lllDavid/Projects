@@ -27,6 +27,15 @@ class UserSecurity:
         except VerificationError:
             return False
         
+    @staticmethod
+    def generate_backup_codes(num_codes: int = 6) -> set:
+        return {str(randint(100000, 999999)) for _ in range(num_codes)}
+    
+    @staticmethod
+    def hash_backup_codes(backup_codes: set) -> set:
+        ph = PasswordHasher()  
+        return {ph.hash(code) for code in backup_codes}
+        
     def generate_2fa_secret_key(self):
         totp = TOTP(random_base32())
         self.secret_key = totp.secret
@@ -43,21 +52,7 @@ class UserSecurity:
         totp = TOTP(self.two_factor_secret_key)  
         
         return totp.verify(user_provided_code)  
-
-    @staticmethod
-    def generate_backup_codes(num_codes: int = 6) -> set:
-        return {str(randint(100000, 999999)) for _ in range(num_codes)}
     
-    @staticmethod
-    def hash_backup_codes(backup_codes: set) -> set:
-        ph = PasswordHasher()  
-        return {ph.hash(code) for code in backup_codes}
-
-    def display_security_info(self):
-        return (f"Password Hash: {self.password_hash}\n"
-                f"2FA Enabled: {self.two_factor_enabled}\n"
-                f"Hashed 2FA Backup Codes: {self.two_factor_backup_codes_hash}")
-
     def __str__(self):
         return (f"Password Hash: {self.password_hash}, "
                 f"2FA Enabled: {self.two_factor_enabled}, "

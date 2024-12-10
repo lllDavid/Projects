@@ -30,12 +30,6 @@ class UserHistory:
         self.last_login = datetime.now()
         print(f"Last login: {self.last_login}")
 
-    def display_login_history(self):
-        return (f"Login count: {self.login_count}, "
-                f"Last login: {self.last_login}"
-                f"Failed login count: {self.failed_login_count}, "
-                f"Last failed login: {self.last_failed_login}, ")
-
     def __str__(self):
         return (f"Login count: {self.login_count}, "
                 f"Last login: {self.last_login}"

@@ -27,12 +27,12 @@ class CoinMarketData:
     def calculate_price_change_percentage(self):
         return ((self.price_usd - self.low_24h_usd) / self.low_24h_usd) * 100
 
-    def display_market_data(self):
-        return (f"Price: ${self.price_usd}\n"
-                f"Market Cap: ${self.market_cap_usd}\n"
-                f"24h Volume: ${self.volume_24h_usd}\n"
-                f"24h High: ${self.high_24h_usd}\n"
-                f"24h Low: ${self.low_24h_usd}\n"
-                f"Price Change (24h): {self.price_change_24h}%\n"
-                f"Circulating Supply: {self.circulating_supply}\n"
+    def __str__(self):
+        return (f"Price: ${self.price_usd}, "
+                f"Market Cap: ${self.market_cap_usd}, "
+                f"24h Volume: ${self.volume_24h_usd}, "
+                f"24h High: ${self.high_24h_usd}, "
+                f"24h Low: ${self.low_24h_usd}, "
+                f"Price Change (24h): {self.price_change_24h}%, "
+                f"Circulating Supply: {self.circulating_supply}, "
                 f"Max Supply: {self.max_supply}")

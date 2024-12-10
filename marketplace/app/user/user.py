@@ -20,12 +20,5 @@ class User:
         self.role = new_role
         print(f"Role changed to {new_role}")
 
-    def display_details(self):
-        return (
-            f"Username: {self.username}\n"
-            f"Email: {self.email}\n"
-            f"Role: {self.role}\n"
-        )
-
     def __str__(self):
         return f"Username: {self.username}, Email: {self.email}, Role: {self.role}"
