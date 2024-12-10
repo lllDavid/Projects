@@ -27,7 +27,16 @@ class UserSecurity:
             return True
         except VerificationError:
             return False
-    
+        
+    def generate_2fa_secret_key(self):
+        totp = TOTP(random_base32())
+        self.secret_key = totp.secret
+
+    def generate_2fa_qr_code(self, username: str):
+        totp = TOTP(self.secret_key)
+        uri = totp.provisioning_uri(username, issuer_name="Marketplace")
+        print(f"Scan this QR code in your 2FA app: {uri}")
+
     def verify_2fa_code(self, user_provided_code: str) -> bool:
         if not self.two_factor_secret_key:
             return False 
@@ -35,15 +44,6 @@ class UserSecurity:
         totp = TOTP(self.two_factor_secret_key)  
         
         return totp.verify(user_provided_code)  
-
-    def generate_secret_key(self):
-        totp = TOTP(random_base32())
-        self.secret_key = totp.secret
-
-    def display_qr_code(self, username: str):
-        totp = TOTP(self.secret_key)
-        uri = totp.provisioning_uri(username, issuer_name="MyApp")
-        print(f"Scan this QR code in your 2FA app: {uri}")
 
     @staticmethod
     def generate_backup_codes(num_codes: int = 6) -> List[str]:

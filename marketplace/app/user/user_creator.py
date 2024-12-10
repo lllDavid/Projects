@@ -1,6 +1,6 @@
 from datetime import datetime
-from flask import Blueprint, render_template, redirect, url_for, flash, request, session
 from werkzeug.exceptions import BadRequest
+from flask import Blueprint, render_template, redirect, url_for, flash, request, session
 from marketplace.app.user import user_db
 from marketplace.app.user.user import User
 from marketplace.app.user.user_security import UserSecurity
@@ -8,7 +8,7 @@ from marketplace.app.user.user_status import UserStatus
 from marketplace.app.user.user_history import UserHistory
 from marketplace.app.user.user_details import UserDetails
 from marketplace.utils.roles import Role
-from marketplace.utils.validation import is_valid_email, is_valid_password, is_unique_user
+from marketplace.utils.validation import validate_user_input
 
 user_creator = Blueprint('user_creator', __name__)
 
@@ -67,8 +67,7 @@ class UserCreator:
         except ValueError as e:
             print(f"Error: {e}")
             return None
-
-
+        
 @user_creator.route('/signup', methods=['GET'])
 def create_user_form():
     return render_template('signup.html')
@@ -80,36 +79,24 @@ def create_user():
         email = request.form['email']
         password = request.form['password']
 
-        if not all([username, email, password]):
-            flash("All fields are required!", "error")
+        if not validate_user_input(username, email, password):
             return redirect(url_for('user_creator.create_user_form'))
 
-        if not is_valid_email(email):
-            flash("Invalid email format.", "error")
-            return redirect(url_for('user_creator.create_user_form'))
-
-        if not is_valid_password(password):
-            flash("Password must be between 30 and 64 characters, contain an uppercase letter, a number, and a special character.", "error")
-            return redirect(url_for('user_creator.create_user_form'))
-
-        if not is_unique_user(username):
-            flash("Username already taken.", "error")
-            return redirect(url_for('user_creator.create_user_form'))
-
-        user_creator = UserCreator()
-        user_details = user_creator.create_and_save_user(username, email, password)
+        user_creator_instance = UserCreator()
+        user_details = user_creator_instance.create_and_save_user(username, email, password)
 
         if user_details:
             session["user_id"] = user_details.user.id
-            return redirect(url_for('home'))  
+            return redirect(url_for('home'))
         else:
-            return redirect(url_for('user_creator.create_user_form'))  
+            flash("Failed to create user.", "error")
+            return redirect(url_for('user_creator.create_user_form'))
 
     except BadRequest as br:
         flash(f"Bad Request: {str(br)}", "error")
         return redirect(url_for('user_creator.create_user_form'))
 
     except Exception as e:
-        flash(f"An unexpected error occurred: {str(e)}", "error")
+        flash(f"An error occurred: {str(e)}", "error")
         return redirect(url_for('user_creator.create_user_form'))
 

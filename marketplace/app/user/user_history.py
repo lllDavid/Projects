@@ -12,11 +12,11 @@ class UserHistory:
 
     def increment_login_count(self):
         self.login_count += 1
-        print(f"Current login count: {self.login_count}")
+        print(f"Login count: {self.login_count}")
 
     def increment_failed_login_count(self):
         self.failed_login_count += 1
-        print(f"Current failed login count: {self.failed_login_count}")
+        print(f"Failed login count: {self.failed_login_count}")
 
     def reset_failed_login_count(self):
         self.failed_login_count = 0
@@ -24,11 +24,11 @@ class UserHistory:
 
     def update_last_failed_login(self):
         self.last_failed_login = datetime.now()
-        print(f"Last failed login updated to {self.last_failed_login}")
+        print(f"Last failed login: {self.last_failed_login}")
 
     def update_last_login(self):
         self.last_login = datetime.now()
-        print(f"Last login updated to {self.last_login}")
+        print(f"Last login: {self.last_login}")
 
     def display_login_history(self):
         return (f"Login count: {self.login_count}, "
