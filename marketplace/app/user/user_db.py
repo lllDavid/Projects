@@ -20,9 +20,9 @@ def insert_user(user_details: UserDetails):
             (user_details.user.username, user_details.user.email, user_details.user.role.value)
         )  
         user_id = cursor.lastrowid 
-        
-        two_factor_backup_codes_hash_json = json.dumps(user_details.user_security.two_factor_backup_codes_hash) if user_details.user_security.two_factor_backup_codes_hash else None
-        
+        # Convert the set of hashed backup codes to a list before serializing to JSON for storage in the database
+        two_factor_backup_codes_hash_json = json.dumps(list(user_details.user_security.two_factor_backup_codes_hash)) if user_details.user_security.two_factor_backup_codes_hash else None
+
         cursor.execute(
             "INSERT INTO user_security (user_id, password_hash, two_factor_enabled, two_factor_secret_key, two_factor_backup_codes_hash) VALUES (%s, %s, %s, %s, %s)",
             (user_id, 

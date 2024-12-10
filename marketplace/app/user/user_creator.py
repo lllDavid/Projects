@@ -17,15 +17,15 @@ class UserCreator:
         return User(id=None, username=username, email=email, role=role)
 
     def create_user_security(self, password: str) -> UserSecurity:
-        #two_factor_backup_codes = UserSecurity.generate_backup_codes()
+        two_factor_backup_codes = UserSecurity.generate_backup_codes()
         return UserSecurity(
             password_hash=UserSecurity.hash_password(password),
             two_factor_enabled=False,
             two_factor_secret_key=None,
-            two_factor_backup_codes=None,
-            two_factor_backup_codes_hash=None
-            #two_factor_backup_codes=two_factor_backup_codes,
-            #two_factor_backup_codes_hash=UserSecurity.hash_backup_codes(two_factor_backup_codes)
+            #two_factor_backup_codes=None,
+            #two_factor_backup_codes_hash=None
+            two_factor_backup_codes=two_factor_backup_codes,
+            two_factor_backup_codes_hash=UserSecurity.hash_backup_codes(two_factor_backup_codes)
         )
 
     def create_user_status(self) -> UserStatus:
