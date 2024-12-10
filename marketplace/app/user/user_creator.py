@@ -87,6 +87,7 @@ def create_user():
 
         if user_details:
             session["user_id"] = user_details.user.id
+            session["username"] = username
             return redirect(url_for('home'))
         else:
             flash("Failed to create user.", "error")

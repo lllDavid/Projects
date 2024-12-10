@@ -110,7 +110,7 @@ main {
 
 .btn-save:hover,
 .btn-danger:hover {
-    background-color: #147a33;
+    background-color: #333;
     transform: scale(1.1);
 }
 
@@ -121,6 +121,18 @@ main {
 .btn-danger:hover {
     background-color: #f20808;
     transform: scale(1.1);
+}
+
+#wallet-type {
+    width: auto;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#save-wallet-button {
+    width: 180px;
 }
 
 footer {

@@ -8,7 +8,7 @@ def create_app() -> Flask:
     app = Flask(__name__, static_folder="app/static", template_folder="app/templates/")
     app.config["SECRET_KEY"] = "secret_key"
 
-    app.register_blueprint(user_creator, url_prefix="/user_creator")
+    app.register_blueprint(user_creator)
 
     # Register Routes
     @app.route("/")
@@ -48,6 +48,7 @@ def create_app() -> Flask:
     def home():
         current_username = session.get("username")
         return render_template("home.html", username=current_username)
+
 
     @app.route("/settings", methods=["GET", "POST"])
     def settings():

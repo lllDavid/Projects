@@ -46,47 +46,25 @@
                 </form>
             </section>
 
+
+
             <section class="settings-section">
                 <h2>Wallets</h2>
                 <form action="/update-wallet" method="POST" id="crypto-form">
                     <div class="form-group">
-                        <label for="btc-wallet">Bitcoin Wallet Address (BTC)</label>
-                        <input type="text" id="btc-wallet" name="btc-wallet" placeholder="Enter your Bitcoin address"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <label for="eth-wallet">Ethereum Wallet Address (ETH)</label>
-                        <input type="text" id="eth-wallet" name="eth-wallet" placeholder="Enter your Ethereum address"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <label for="ltc-wallet">Litecoin Wallet Address (LTC)</label>
-                        <input type="text" id="ltc-wallet" name="ltc-wallet" placeholder="Enter your Litecoin address">
-                    </div>
-                    <div class="form-group">
-                        <label for="xrp-wallet">Ripple Wallet Address (XRP)</label>
-                        <input type="text" id="xrp-wallet" name="xrp-wallet" placeholder="Enter your Ripple address">
-                    </div>
-                    <button type="submit" class="btn-save">Save Wallet Addresses</button>
-                </form>
-            </section>
 
-            <section class="settings-section">
-                <h2>Notifications</h2>
-                <form action="/update-notifications" method="POST" id="notification-form">
-                    <div class="form-group">
-                        <label for="email-notifications">Email Notifications</label>
-                        <input type="checkbox" id="email-notifications" name="email-notifications" checked>
+                        <select id="wallet-type" name="wallet-type" required>
+                            <option value="" disabled selected>Select Wallet Type</option>
+                            <option value="btc">Bitcoin (BTC)</option>
+                            <option value="eth">Ethereum (ETH)</option>
+                            <option value="ltc">Litecoin (LTC)</option>
+                        </select>
                     </div>
-                    <div class="form-group">
-                        <label for="sms-notifications">SMS Notifications</label>
-                        <input type="checkbox" id="sms-notifications" name="sms-notifications">
+
+                    <div class="form-group" id="wallet-address-container" style="display: none;">
                     </div>
-                    <div class="form-group">
-                        <label for="push-notifications">Push Notifications</label>
-                        <input type="checkbox" id="push-notifications" name="push-notifications">
-                    </div>
-                    <button type="submit" class="btn-save">Update Preferences</button>
+
+                    <button id="save-wallet-button" type="submit" class="btn-save">Save Wallet</button>
                 </form>
             </section>
 
@@ -104,5 +82,49 @@
         </footer>
     </div>
 </body>
+<script>
+    document.getElementById('wallet-type').addEventListener('change', function () {
+        const walletType = this.value;
+        const walletAddressContainer = document.getElementById('wallet-address-container');
+
+        walletAddressContainer.innerHTML = '';
+
+        if (walletType) {
+            let labelText = '';
+            let placeholderText = '';
+            let inputId = '';
+
+            if (walletType === 'btc') {
+                labelText = 'Bitcoin (BTC) Address';
+                placeholderText = 'Enter your Bitcoin address';
+                inputId = 'btc-wallet';
+            } else if (walletType === 'eth') {
+                labelText = 'Ethereum (ETH) Address';
+                placeholderText = 'Enter your Ethereum address';
+                inputId = 'eth-wallet';
+            } else if (walletType === 'ltc') {
+                labelText = 'Litecoin (LTC) Address';
+                placeholderText = 'Enter your Litecoin address';
+                inputId = 'ltc-wallet';
+            }
+
+            const label = document.createElement('label');
+            label.setAttribute('for', inputId);
+            label.textContent = labelText;
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.id = inputId;
+            input.name = `${walletType}-wallet`;
+            input.placeholder = placeholderText;
+            input.required = true;
+
+            walletAddressContainer.appendChild(label);
+            walletAddressContainer.appendChild(input);
+
+            walletAddressContainer.style.display = 'block';
+        }
+    });
+</script>
 
 </html>
