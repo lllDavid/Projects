@@ -80,8 +80,16 @@ body {
 
 .chart-container {
     position: relative;
-    height: 250px;
+    height: 40px; /* Same height as the table rows */
+    width: 100%;   /* Ensure it fits its container */
+    margin-bottom: 20px;
 }
+
+.chart-container canvas {
+    width: 100% !important;  /* Ensure it takes full width */
+    height: 100% !important; /* Adjusted to match the container height */
+}
+
 
 .modal-content {
     background-color: #333;

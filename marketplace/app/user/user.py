@@ -21,4 +21,4 @@ class User:
         print(f"Role changed to {new_role}")
 
     def __str__(self):
-        return f"Username: {self.username}, Email: {self.email}, Role: {self.role}"
+        return f"ID: {self.id}, Username: {self.username}, Email: {self.email}, Role: {self.role}"

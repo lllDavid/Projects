@@ -46,7 +46,8 @@ def create_app() -> Flask:
     # User Account Routes
     @app.route("/home")
     def home():
-        return render_template("home.html")
+        current_username = session.get("username")
+        return render_template("home.html", username=current_username)
 
     @app.route("/settings", methods=["GET", "POST"])
     def settings():
@@ -100,28 +101,28 @@ def handle_settings(request):
 
     user_id = session["user_id"]
     user = get_user_by_id(user_id)
+
+    # Ensure user exists
+    if not user:
+        flash("User not found.", "error")
+        return redirect(url_for("login"))
+
     current_username = session.get("username")
 
     if request.method == "POST":
         new_username = request.form.get("username")
-        new_email = request.form.get("email")
-        new_password = request.form.get("password")
-        confirm_password = request.form.get("confirm-password")
-
-        if new_password and new_password != confirm_password:
-            flash("Passwords do not match.", "error")
-            return redirect(url_for("settings"))
-
-        if new_username != user.username or new_email != user.email or new_password:
+    
+        if new_username != user.username:
             update_user(user_id, new_username)
-
-            if new_username != user.username:
-                session["username"] = new_username
+            session["username"] = new_username
 
             flash("Account details updated successfully.", "success")
         else:
             flash("No changes detected.", "info")
 
+        user = get_user_by_id(user_id) 
         return redirect(url_for("settings"))
 
     return render_template("settings.html", username=current_username, user=user)
+
+
