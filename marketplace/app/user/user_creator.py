@@ -88,7 +88,7 @@ def create_user():
         if user_details:
             session["user_id"] = user_details.user.id
             session["username"] = username
-            return redirect(url_for('home'))
+            return redirect(url_for('dashboard'))
         else:
             flash("Failed to create user.", "error")
             return redirect(url_for('user_creator.create_user_form'))

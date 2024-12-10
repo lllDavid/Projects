@@ -53,12 +53,12 @@ p.lead {
     border: none;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 160px;
 }
 
 .card-body {
     background-color: #1e1e1e;
     padding: 2rem;
-
 }
 
 .card-title {
@@ -113,4 +113,18 @@ button.btn-primary:hover {
     .card-body {
         padding: 1.5rem;
     }
+}
+
+footer {
+    background: #121212;
+    color: #D1D1D1;
+    border-top: 1px solid #444;
+    margin-top: auto;
+    /* Push the footer to the bottom */
+    padding: 20px 0;
+    padding-top: 50px;
+}
+
+footer p {
+    text-align: center;
 }
