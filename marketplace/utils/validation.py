@@ -1,7 +1,7 @@
 from re import match
 from flask import flash
 from mariadb import connect
-from marketplace.config import Config
+from marketplace.utils.config import Config
 
 
 conn = connect(

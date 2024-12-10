@@ -1,6 +1,6 @@
 import json
 from mariadb import connect
-from marketplace.config import Config
+from marketplace.utils.config import Config
 from marketplace.utils.roles import Role
 from marketplace.app.user.user_details import UserDetails
 

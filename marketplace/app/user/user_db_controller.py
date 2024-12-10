@@ -1,5 +1,5 @@
 from mariadb import connect
-from marketplace.config import Config
+from marketplace.utils.config import Config
 from marketplace.app.user.user import User
 from marketplace.app.user.user_status import UserStatus
 from marketplace.app.user.user_details import UserDetails

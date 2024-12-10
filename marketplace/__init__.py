@@ -75,7 +75,8 @@ def handle_login(request):
     if user and UserSecurity.validate_password_hash(password, user.user_security.password_hash):
         flash("Login successful", "success")
         session["user_id"] = user.user.id
-        session["username"] = user.user.username  
+        session["username"] = user.user.username
+        session.modified = True
         return redirect(url_for('home'))
     else:
         flash("Invalid username or password", "error")
