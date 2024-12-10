@@ -58,38 +58,25 @@ body {
 .coin-table th {
     background-color: #333;
     color: white;
+    border: none !important;
 }
 
 .coin-table td {
     background-color: #222;
     color: #e0e0e0;
+    border: none !important;
 }
 
-.coin-name {
-    display: flex;
-    align-items: center;
+.coin-column {
+    text-align: left;
+    padding-left: 10px;
 }
 
 .coin-logo {
-    width: 20px;
+    width: 24px;
     height: auto;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    margin-right: 10px;
+    margin-right: 8px;
 }
-
-.chart-container {
-    position: relative;
-    height: 40px; /* Same height as the table rows */
-    width: 100%;   /* Ensure it fits its container */
-    margin-bottom: 20px;
-}
-
-.chart-container canvas {
-    width: 100% !important;  /* Ensure it takes full width */
-    height: 100% !important; /* Adjusted to match the container height */
-}
-
 
 .modal-content {
     background-color: #333;
@@ -110,10 +97,12 @@ body {
 }
 
 .btn-primary {
-    background-color: #1f80e2;
+    background-color: #333;
     border: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-primary:hover {
-    background-color: #155a8a;
+    background-color: #333;
+    transform: scale(1.3);
 }

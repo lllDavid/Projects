@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-12 text-center">
                 <h1 class="display-4">Dashboard</h1>
-                <p class="lead">Top 100 Cryptocurrencies Performance</p>
+                <p class="lead">Top 10 Cryptocurrencies Performance</p>
             </div>
         </div>
 
@@ -31,9 +31,9 @@
                                 <th>#</th>
                                 <th>Coin</th>
                                 <th>Price (USD)</th>
-                                <th>24h Change</th>
-                                <th>7d Change</th>
-                                <th>1m Change</th>
+                                <th>24h%</th>
+                                <th>7d%</th>
+                                <th>1m%</th>
                                 <th>Chart</th>
                             </tr>
                         </thead>
@@ -50,12 +50,11 @@
                                 <td class="text-warning">+10%</td>
                                 <td class="text-danger">-5%</td>
                                 <td>
-                                    <div class="chart-container">
-                                    <canvas id="chart1"></canvas>
-                                    </div>
-                                    </td>
-                                    </tr>
+                                    <button class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#chartModal1">View Chart</button>
+                                </td>
                             </tr>
+
                             <tr>
                                 <td>2</td>
                                 <td class="coin-name">
@@ -200,22 +199,6 @@
                                         data-target="#chartModal10">View Chart</button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>11</td>
-                                <td class="coin-name">
-                                    <img src="https://cryptologos.cc/logos/vechain-vet-logo.png" alt="VeChain"
-                                        class="coin-logo">
-                                    VeChain (VET)
-                                </td>
-                                <td>$0.12</td>
-                                <td class="text-success">+0.8%</td>
-                                <td class="text-warning">+2%</td>
-                                <td class="text-danger">-1%</td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#chartModal11">View Chart</button>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
 
@@ -224,7 +207,7 @@
         </div>
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">{{ username }}</a>
+                <a class="navbar-brand">{{ username }}</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
