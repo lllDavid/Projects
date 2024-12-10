@@ -41,6 +41,19 @@ def is_unique_user(username: str) -> bool:
 
     return True
 
+def is_unique_email(email: str) -> bool:
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT 1 FROM users WHERE email = %s", (email,))
+    user = cursor.fetchone()
+    cursor.close()
+
+    if user:
+        return False
+
+    return True
+
+
 def validate_user_input(username, email, password):
     if not all([username, email, password]):
         flash("All fields are required!", "error")
@@ -56,6 +69,10 @@ def validate_user_input(username, email, password):
 
     if not is_unique_user(username):
         flash("Username already taken.", "error")
+        return False
+    
+    if not is_unique_email(email):
+        flash("Email already registered.", "error")
         return False
 
     return True

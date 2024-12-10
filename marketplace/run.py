@@ -39,7 +39,7 @@ class Main:
 
 if __name__ == "__main__":
     version = Version()
-    main = Main(app_name=version.get_name(), app_version=version.get_version())
+    main = Main(app_name=version.app_name, app_version=version.app_version)
 
     try:
         main.start_app()

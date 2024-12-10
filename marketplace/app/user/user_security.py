@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import List
 from random import randint
 from pyotp import TOTP, random_base32
 from argon2 import PasswordHasher
@@ -51,8 +50,8 @@ class UserSecurity:
     
     @staticmethod
     def hash_backup_codes(backup_codes: set) -> set:
-        ph = PasswordHasher()
-        return {(code, ph.hash(code)) for code in backup_codes}
+        ph = PasswordHasher()  
+        return {ph.hash(code) for code in backup_codes}
 
     def display_security_info(self):
         return (f"Password Hash: {self.password_hash}\n"

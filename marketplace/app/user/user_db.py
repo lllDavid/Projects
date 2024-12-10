@@ -19,8 +19,9 @@ def insert_user(user_details: UserDetails):
             "INSERT INTO users (username, email, role) VALUES (%s, %s, %s)", 
             (user_details.user.username, user_details.user.email, user_details.user.role.value)
         )  
-        user_id = cursor.lastrowid 
-        # Convert the set of hashed backup codes to a list before serializing to JSON for storage in the database
+        user_id = cursor.lastrowid  
+
+        # Convert set of hashed backup codes to a list before inserting into the database
         two_factor_backup_codes_hash_json = json.dumps(list(user_details.user_security.two_factor_backup_codes_hash)) if user_details.user_security.two_factor_backup_codes_hash else None
 
         cursor.execute(
@@ -36,7 +37,7 @@ def insert_user(user_details: UserDetails):
             "INSERT INTO user_status (user_id, is_banned, ban_reason, ban_duration) VALUES (%s, %s, %s, %s)", 
             (user_id, user_details.user_status.is_banned, user_details.user_status.ban_reason, user_details.user_status.ban_duration)
         )
-        
+
         cursor.execute(
             "INSERT INTO user_history (user_id, login_count, last_login, failed_login_count, last_failed_login, created_at, updated_at) VALUES (%s, %s, %s, %s, %s, %s, %s)", 
             (user_id, 
@@ -48,30 +49,30 @@ def insert_user(user_details: UserDetails):
              user_details.user_history.updated_at)
         )
 
-        conn.commit()
+        conn.commit()  
         print("User and associated details inserted into the database.")
-        user_details.user.id = user_id
-        return user_details 
+        user_details.user.id = user_id  
+        return user_details  
     
     except conn.Error as e:
-        conn.rollback()
+        conn.rollback()  
         print(f"Error occurred: {e}")
     finally:
-        cursor.close()
+        cursor.close()  
 
-def update_user(user_id: int, username:str):
+def update_user(user_id: int, username: str):
     cursor = conn.cursor()
     try:
         cursor.execute("UPDATE users SET username = %s WHERE user_id = %s", 
                        (username, user_id))  
-        conn.commit()
+        conn.commit() 
         print("User updated successfully.")
         
     except conn.Error as e:
-        conn.rollback()
+        conn.rollback() 
         print(f"Error occurred: {e}")
     finally:
-        cursor.close()
+        cursor.close()  
 
 def delete_user(user_id: int):
     cursor = conn.cursor()
@@ -81,11 +82,11 @@ def delete_user(user_id: int):
         cursor.execute("DELETE FROM user_security WHERE user_id = %s", (user_id,))
         cursor.execute("DELETE FROM users WHERE user_id = %s", (user_id,))
 
-        conn.commit()
+        conn.commit()  
         print("User and associated data deleted successfully.")
         
     except conn.Error as e:
-        conn.rollback()
+        conn.rollback()  
         print(f"Error occurred: {e}")
     finally:
-        cursor.close()
+        cursor.close()  
