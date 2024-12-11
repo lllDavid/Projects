@@ -7,6 +7,7 @@ This platform allows users to buy, sell, and exchange cryptocurrency in a secure
 - Integration with MariaDB for data storage
 - Real-time updates and transactions
 - Secure authentication (2FA via Authenticator App)
+- Secure password hashing (Argon2id)
 
 ---
 

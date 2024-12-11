@@ -1,32 +1,32 @@
 from setuptools import setup, find_packages
 
+def get_requirements(filename) -> list[str]:
+    with open(filename, 'r') as f:
+        return [line.strip() for line in f.readlines() if line.strip()]
+
 setup(
-    name="your_project_name",  # Replace with your project name
-    version="0.1.0",  # Initial version number
-    packages=find_packages(),  # Automatically find all packages in your project
-    include_package_data=True,  # Include non-Python files (e.g., static, templates)
-    install_requires=[
-        "Flask>=3.0.3",
-        "mariadb>=1.1.2",
-    ],  # List of dependencies (these will be installed with pip)
+    name="Marketplace",
+    version="1.0.0",
+    author="lllDavid",
+    author_email="your_email@example.com",
+    description="Crypto Marketplace",
+    packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'your_project_name=your_project_name.cli:main',  # If your project has command-line scripts
+            'your_project_name=your_project_name.cli:main',
         ],
     },
-    # Optional fields:
-    author="Your Name",
-    author_email="your_email@example.com",
-    description="A short description of your project",
-    long_description=open('README.md').read(),  # Optional, but helpful to add long description from README
-    long_description_content_type="text/markdown",  # If you're using markdown for the README
-    url="https://github.com/your_username/your_project",  # Replace with your project URL
+    long_description=open('README.md').read(),
+    long_description_content_type="text/markdown",
+    url="https://github.com/lllDavid/Crypto-Marketplace",
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.12",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires=">=3.12.8",  # Required Python version
-    keywords="flask mariadb marketplace",  # Optional keywords
+    include_package_data=True,
+    install_requires=get_requirements('requirements.txt'),
+    python_requires=">=3.12.8",
+    keywords="flask mariadb crypto marketplace",
 )
