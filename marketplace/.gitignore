@@ -64,8 +64,6 @@ instance/
 *.flaskenv
 
 # MariaDB-related 
-*.sql
-*.sql.gz
 migrations/
 
 # Temporary files
