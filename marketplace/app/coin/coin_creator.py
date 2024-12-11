@@ -1,8 +1,13 @@
 from datetime import datetime
+from werkzeug.exceptions import BadRequest
+from flask import Blueprint, render_template, redirect, url_for, flash, request, session
 from marketplace.app.coin import coin_db
 from marketplace.app.coin.coin import Coin
+from marketplace.app.coin.coin_specs import CoinSpecs
 from marketplace.app.coin.coin_details import CoinDetails
 from marketplace.app.coin.coin_market_data import CoinMarketData
+
+coin_creator = Blueprint('coin_creator', __name__)
 
 class CoinCreator:
     def create_coin(self, name:str, symbol:str, category:str, description:str, price:float, last_updated:datetime) -> Coin:
@@ -15,45 +20,37 @@ class CoinCreator:
             last_updated=last_updated
         )
     
-    def create_coin_details(self) -> CoinDetails:
-        return CoinDetails(
-            algorithm="SHA-256", 
-            consensus_mechanism="Proof of Work", 
-            block_time=10, 
-            max_supply=21000000, 
-            circulating_supply=19000000, 
-            transaction_speed=7, 
-            security_features="High cryptographic security", 
-            privacy_features="Pseudonymous"
+    def create_coin_specs(self, algorithm:str, consensus_mechanism:str, block_time:float, max_supply:float, circulating_supply:float, transaction_speed: float, security_features:str, privacy_features:str) -> CoinDetails:
+        return CoinSpecs(
+            algorithm=algorithm, 
+            consensus_mechanism=consensus_mechanism, 
+            block_time=block_time, 
+            max_supply=max_supply, 
+            circulating_supply=circulating_supply, 
+            transaction_speed=transaction_speed, 
+            security_features=security_features, 
+            privacy_features=privacy_features
         )
     
-    def create_coin_market_data(self) -> CoinMarketData:
+    def create_coin_market_data(self, price_usd:float, market_cap_usd:float, volume_24h_usd:float, high_24h_usd:float, low_24h_usd:float, price_change_24h:float, circulating_supply:float, max_supply:float) -> CoinMarketData:
         return CoinMarketData(
-            price_usd=45000.75,
-            market_cap_usd=855000000000,  
-            volume_24h_usd=3500000000,
-            high_24h_usd=46000.00,
-            low_24h_usd=44000.00,
-            price_change_24h=2.27,
-            circulating_supply=19000000,
-            max_supply=21000000
+            price_usd=price_usd,
+            market_cap_usd=market_cap_usd,  
+            volume_24h_usd=volume_24h_usd,
+            high_24h_usd=high_24h_usd,
+            low_24h_usd=low_24h_usd,
+            price_change_24h=price_change_24h,
+            circulating_supply=circulating_supply,
+            max_supply=max_supply
         )
 
-def main():
-    coin_creator = CoinCreator()
+    def create_coin_details(self):
+        coin = self.create_coin()
+        coin_specs = self.create_coin_specs()
+        coin_market_data = self.create_coin_market_data()
 
-    coin = coin_creator.create_coin(
-        name="Bitcoin", 
-        symbol="BTC", 
-        category="Cryptocurrency", 
-        description="A decentralized digital currency.", 
-        price=45000.75, 
-        last_updated=datetime.now()
-        )
+        return CoinDetails()
     
-    coin_details = coin_creator.create_coin_details()
-    coin_market_data = coin_creator.create_coin_market_data()
-    coin_db.insert_coin(coin, coin_details, coin_market_data )
+    def create_and_save_coin(self):
+        ...
 
-if __name__ == "__main__":
-    main()
