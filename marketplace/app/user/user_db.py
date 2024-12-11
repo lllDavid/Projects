@@ -1,6 +1,6 @@
 import json
 from mariadb import connect
-from marketplace.helpers.config import Config
+from marketplace.config import Config
 from marketplace.app.user.user_details import UserDetails
 
 conn = connect(

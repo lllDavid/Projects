@@ -5,7 +5,7 @@ from marketplace.app.user.user_db_controller import get_user_by_username, get_us
 from marketplace.app.user.user_security import UserSecurity
 
 def create_app() -> Flask:
-    app = Flask(__name__, static_folder="app/static", template_folder="app/templates/")
+    app = Flask(__name__, static_folder="static", template_folder="templates")
     app.config["SECRET_KEY"] = "secret_key"
 
     app.register_blueprint(user_creator)
@@ -103,7 +103,6 @@ def handle_settings(request):
     user_id = session["user_id"]
     user = get_user_by_id(user_id)
 
-    # Ensure user exists
     if not user:
         flash("User not found.", "error")
         return redirect(url_for("login"))
