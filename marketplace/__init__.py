@@ -44,10 +44,10 @@ def create_app() -> Flask:
         return handle_logout()
 
     # User Account Routes
-    @app.route("/dashboard")
-    def dashboard():
+    @app.route("/home")
+    def home():
         current_username = session.get("username")
-        return render_template("dashboard.html", username=current_username)
+        return render_template("home.html", username=current_username)
 
 
     @app.route("/settings", methods=["GET", "POST"])
@@ -82,7 +82,7 @@ def handle_login(request):
         session["user_id"] = user.user.id
         session["username"] = user.user.username
         session.modified = True
-        return redirect(url_for("dashboard"))
+        return redirect(url_for("home"))
     else:
         flash("Invalid username or password", "error")
         return redirect(url_for("login"))
