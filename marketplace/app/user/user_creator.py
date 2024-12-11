@@ -7,8 +7,8 @@ from marketplace.app.user.user_security import UserSecurity
 from marketplace.app.user.user_status import UserStatus
 from marketplace.app.user.user_history import UserHistory
 from marketplace.app.user.user_details import UserDetails
-from marketplace.utils.roles import Role
-from marketplace.utils.validation import validate_user_input
+from marketplace.helpers.roles import Role
+from marketplace.helpers.validation import validate_user_input
 
 user_creator = Blueprint('user_creator', __name__)
 

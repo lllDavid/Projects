@@ -1,0 +1,75 @@
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environment folders
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Python distribution folders
+build/
+dist/
+*.egg-info/
+
+# IDE/editor-specific files
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs
+*.log
+
+# Environment variable files
+.env
+.env.*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Test and coverage reports
+.coverage
+nosetests.xml
+coverage.xml
+*.cover
+
+# Database files
+*.sqlite3
+*.db
+*.db3
+
+# Sensitive files
+*.key
+*.pem
+*.p12
+*.crt
+*.pfx
+*.pub
+secrets.json
+config.json
+
+# Flask-specific
+instance/
+.webassets-cache
+*.flaskenv
+
+# MariaDB-related 
+*.sql
+*.sql.gz
+migrations/
+
+# Temporary files
+*.bak
+*.swp
+*.tmp
+*.~*

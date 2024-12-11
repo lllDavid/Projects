@@ -1,3 +1,2 @@
-Flask >= 3.0.3
-MariaDB >= 11.6.2
-Python >= 3.12.8
+Flask>=3.0.3
+mariadb>=1.1.2

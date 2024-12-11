@@ -2,7 +2,7 @@ from threading import Thread
 from datetime import datetime
 from dataclasses import dataclass
 from marketplace import create_app  
-from marketplace.utils.version import Version  
+from marketplace.helpers.version import Version  
 
 @dataclass
 class Main:
