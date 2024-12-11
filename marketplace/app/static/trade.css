@@ -101,6 +101,19 @@ button.btn-primary:hover {
     transform: scale(1.2);
 }
 
+footer {
+    background: #121212;
+    color: #D1D1D1;
+    border-top: 1px solid #444;
+    margin-top: auto;
+    padding: 20px 0;
+    padding-top: 50px;
+}
+
+footer p {
+    text-align: center;
+}
+
 @media (max-width: 768px) {
     .container {
         margin-top: 80px;
@@ -113,18 +126,4 @@ button.btn-primary:hover {
     .card-body {
         padding: 1.5rem;
     }
-}
-
-footer {
-    background: #121212;
-    color: #D1D1D1;
-    border-top: 1px solid #444;
-    margin-top: auto;
-    /* Push the footer to the bottom */
-    padding: 20px 0;
-    padding-top: 50px;
-}
-
-footer p {
-    text-align: center;
 }

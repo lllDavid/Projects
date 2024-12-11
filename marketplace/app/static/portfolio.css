@@ -34,6 +34,7 @@ body {
 .navbar-nav.ml-auto {
     margin-left: auto;
 }
+
 .container {
     padding-top: 80px;
 }
@@ -89,14 +90,6 @@ table td strong {
     font-weight: bold;
 }
 
-@media (max-width: 768px) {
-
-    table th,
-    table td {
-        font-size: 0.9rem;
-    }
-}
-
 footer {
     background: #121212;
     color: #D1D1D1;
@@ -108,4 +101,12 @@ footer {
 
 footer p {
     text-align: center;
+}
+
+@media (max-width: 768px) {
+
+    table th,
+    table td {
+        font-size: 0.9rem;
+    }
 }
