@@ -32,6 +32,8 @@ class UserHistory:
     
     def __str__(self):
         return (f"Login count: {self.login_count}, "
-                f"Last login: {self.last_login}"
+                f"Last login: {self.last_login}, "
                 f"Failed login count: {self.failed_login_count}, "
-                f"Last failed login: {self.last_failed_login}, ")
+                f"Last failed login: {self.last_failed_login}, "
+                f"Created at: {self.created_at}, "
+                f"Updated at: {self.updated_at}")
