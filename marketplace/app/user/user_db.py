@@ -7,6 +7,7 @@ from marketplace.app.user.user_status import UserStatus
 from marketplace.app.user.user_history import UserHistory
 from marketplace.app.user.user_profile import UserProfile
 from marketplace.app.user.user_security import UserSecurity
+from marketplace.app.user.user_fingerprint import UserFingerprint
 
 conn = connect(
     user=Config.DB_CONFIG["user"],       
@@ -16,6 +17,10 @@ conn = connect(
     database=Config.DB_CONFIG["database"]  
 )
 
+# --------------------------------------------------------------
+# Section 1: Insert, Delete, Update
+# --------------------------------------------------------------
+
 def insert_user(user: User):
     cursor = conn.cursor()
     try:
@@ -24,8 +29,7 @@ def insert_user(user: User):
             (user.user_profile.username, user.user_profile.email, user.user_profile.role.value)
         )  
         user_id = cursor.lastrowid  
-
-        # Convert set of hashed backup codes to a list before inserting into the database
+        
         two_factor_backup_codes_hash_json = dumps(list(user.user_security.two_factor_backup_codes_hash)) if user.user_security.two_factor_backup_codes_hash else None
 
         cursor.execute(
@@ -53,27 +57,45 @@ def insert_user(user: User):
              user.user_history.updated_at)
         )
 
+        cursor.execute(
+            "INSERT INTO user_fingerprint (user_id, username_history, email_address_history, mac_address, associated_ips, avg_login_frequency, avg_session_duration, geolocation_country, geolocation_city, geolocation_latitude, geolocation_longitude, browser_info, os_name, os_version, device_type, device_manufacturer, device_model, user_preferences, user_agent, device_id, screen_resolution, two_factor_enabled, transaction_history, vpn_usage, behavioral_biometrics) "
+            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+            (
+                user_id,
+                dumps(list(user.user_fingerprint.username_history)), 
+                dumps(list(user.user_fingerprint.email_address_history)),
+                user.user_fingerprint.mac_address,
+                dumps(user.user_fingerprint.associated_ips) if user.user_fingerprint.associated_ips else None,
+                dumps(user.user_fingerprint.avg_login_frequency) if user.user_fingerprint.avg_login_frequency else None,
+                dumps(user.user_fingerprint.avg_session_duration) if user.user_fingerprint.avg_session_duration else None,
+                user.user_fingerprint.geolocation_country,
+                user.user_fingerprint.geolocation_city,
+                user.user_fingerprint.geolocation_latitude,
+                user.user_fingerprint.geolocation_longitude,
+                user.user_fingerprint.browser_info,
+                user.user_fingerprint.os_name,
+                user.user_fingerprint.os_version,
+                user.user_fingerprint.device_type,
+                user.user_fingerprint.device_manufacturer,
+                user.user_fingerprint.device_model,
+                dumps(user.user_fingerprint.user_preferences) if user.user_fingerprint.user_preferences else None,
+                user.user_fingerprint.user_agent,
+                user.user_fingerprint.device_id,
+                user.user_fingerprint.screen_resolution,
+                user.user_fingerprint.two_factor_enabled,
+                dumps(user.user_fingerprint.transaction_history) if user.user_fingerprint.transaction_history else None,
+                user.user_fingerprint.vpn_usage,
+                dumps(user.user_fingerprint.behavioral_biometrics) if user.user_fingerprint.behavioral_biometrics else None
+            )
+        )
+
+
         conn.commit()  
-        print("User and associated details inserted into the database.")
+        print("User inserted into the database.")
         user.user_profile.id = user_id  
         return user  
-    
     except conn.Error as e:
         conn.rollback()  
-        print(f"Error occurred: {e}")
-    finally:
-        cursor.close()  
-
-def update_user(user_id: int, username: str):
-    cursor = conn.cursor()
-    try:
-        cursor.execute("UPDATE users SET username = %s WHERE user_id = %s", 
-                       (username, user_id))  
-        conn.commit() 
-        print("User updated successfully.")
-        
-    except conn.Error as e:
-        conn.rollback() 
         print(f"Error occurred: {e}")
     finally:
         cursor.close()  
@@ -87,13 +109,61 @@ def delete_user(user_id: int):
         cursor.execute("DELETE FROM users WHERE user_id = %s", (user_id,))
 
         conn.commit()  
-        print("User and associated data deleted successfully.")
-        
+        print("User deleted from database.")
     except conn.Error as e:
         conn.rollback()  
         print(f"Error occurred: {e}")
     finally:
         cursor.close()  
+
+def update_username(user_id: int, username: str):
+    cursor = conn.cursor()
+    try:
+        cursor.execute("UPDATE users SET username = %s WHERE user_id = %s", 
+                       (username, user_id))  
+        conn.commit() 
+        print("Username updated successfully.")
+    except conn.Error as e:
+        conn.rollback()  
+        print(f"Error occurred: {e}")
+    finally:
+        cursor.close()  
+
+def update_email(user_id: int, email: str):
+    cursor = conn.cursor()
+    try:
+        cursor.execute(
+            "UPDATE users SET email = %s WHERE user_id = %s", 
+            (email, user_id)
+        )
+        conn.commit() 
+        print("Email updated successfully.")
+    except conn.Error as e:
+        conn.rollback() 
+        print(f"Error occurred: {e}")
+    finally:
+        cursor.close() 
+
+def update_password(user_id: int, password: str):
+    cursor = conn.cursor()
+    try:
+        password_hash = UserSecurity.hash_password(password) 
+        
+        cursor.execute(
+            "UPDATE user_security SET password_hash = %s WHERE user_id = %s",
+            (password_hash, user_id)
+        )
+        conn.commit() 
+        print("Password updated successfully.")
+    except conn.Error as e:
+        conn.rollback() 
+        print(f"Error occurred: {e}")
+    finally:
+        cursor.close() 
+
+# --------------------------------------------------------------
+# Section 2: Get User By Methods
+# --------------------------------------------------------------
 
 def get_user_by_id(user_id: int) -> UserProfile | None:
     cursor = conn.cursor()
@@ -104,14 +174,14 @@ def get_user_by_id(user_id: int) -> UserProfile | None:
         return UserProfile(id=user[0], username=user[1], email=user[2], role=user[3])
     return None
 
-def get_user_by_username(username: str) -> User| None:
+def get_user_by_username(username: str) -> User | None:
     cursor = conn.cursor()
     cursor.execute("SELECT user_id, username, email, role FROM users WHERE username = %s", (username,))
     user = cursor.fetchone()
     cursor.close()
 
     if user:
-        user = get_user(user[0])
+        user = get_user(user[0]) 
         return user
     return None
 
@@ -122,9 +192,13 @@ def get_user_by_email(email: str) -> User | None:
     cursor.close()
 
     if user:
-        user = get_user(user[0])
+        user = get_user(user[0]) 
         return user
     return None
+
+# --------------------------------------------------------------
+# Section 3: Get User Components
+# --------------------------------------------------------------
 
 def get_user(user_id: int) -> User | None:
     user_profile = get_user_by_id(user_id)
@@ -142,16 +216,20 @@ def get_user(user_id: int) -> User | None:
     user_history = get_user_history(user_id)
     if not user_history:
         return None
+    
+    user_fingerprint = get_user_fingerprint(user_id)
+    if not user_fingerprint:
+        return None
 
     user = User(
         user_profile=user_profile, 
         user_security=user_security, 
         user_status=user_status, 
-        user_history=user_history
+        user_history=user_history,
+        user_fingerprint=user_fingerprint
     )
     
     return user
-
 
 def get_user_security(user_id: int) -> UserSecurity | None:
     cursor = conn.cursor()
@@ -198,3 +276,45 @@ def get_user_history(user_id: int) -> UserHistory | None:
         )
     return None
 
+def get_user_fingerprint(user_id: int) -> UserFingerprint | None:
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT user_id, username_history, email_address_history, mac_address, associated_ips, "
+        "avg_login_frequency, avg_session_duration, geolocation_country, geolocation_city, "
+        "geolocation_latitude, geolocation_longitude, browser_info, os_name, os_version, "
+        "device_type, device_manufacturer, device_model, user_preferences, user_agent, device_id, "
+        "screen_resolution, two_factor_enabled, transaction_history, vpn_usage, behavioral_biometrics "
+        "FROM user_fingerprint WHERE user_id = %s", 
+        (user_id,)
+    )
+    fingerprint = cursor.fetchone()
+    cursor.close()
+    
+    if fingerprint:
+        return UserFingerprint(
+            username_history=fingerprint[1],
+            email_address_history=fingerprint[2],
+            mac_address=fingerprint[3],
+            associated_ips=fingerprint[4],
+            avg_login_frequency=fingerprint[5],
+            avg_session_duration=fingerprint[6],
+            geolocation_country=fingerprint[7],
+            geolocation_city=fingerprint[8],
+            geolocation_latitude=fingerprint[9],
+            geolocation_longitude=fingerprint[10],
+            browser_info=fingerprint[11],
+            os_name=fingerprint[12],
+            os_version=fingerprint[13],
+            device_type=fingerprint[14],
+            device_manufacturer=fingerprint[15],
+            device_model=fingerprint[16],
+            user_preferences=fingerprint[17],
+            user_agent=fingerprint[18],
+            device_id=fingerprint[19],
+            screen_resolution=fingerprint[20],
+            two_factor_enabled=fingerprint[21],
+            transaction_history=fingerprint[22],
+            vpn_usage=fingerprint[23],
+            behavioral_biometrics=fingerprint[24]
+        )
+    return None
