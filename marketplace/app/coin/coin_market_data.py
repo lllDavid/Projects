@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 
-
 @dataclass
 class CoinMarketData:
     price_usd: float
@@ -14,9 +13,7 @@ class CoinMarketData:
 
     def update_price(self, new_price_usd: float):
         self.price_usd = new_price_usd
-        self.price_change_24h = (
-            (self.price_usd - self.low_24h_usd) / self.low_24h_usd
-        ) * 100
+        self.price_change_24h = ((self.price_usd - self.low_24h_usd) / self.low_24h_usd) * 100
 
     def get_24h_price_range(self) -> tuple:
         return (self.low_24h_usd, self.high_24h_usd)
@@ -31,13 +28,11 @@ class CoinMarketData:
         return ((self.price_usd - self.low_24h_usd) / self.low_24h_usd) * 100
 
     def __str__(self):
-        return (
-            f"Price: ${self.price_usd}, "
-            f"Market Cap: ${self.market_cap_usd}, "
-            f"24h Volume: ${self.volume_24h_usd}, "
-            f"24h High: ${self.high_24h_usd}, "
-            f"24h Low: ${self.low_24h_usd}, "
-            f"Price Change (24h): {self.price_change_24h}%, "
-            f"Circulating Supply: {self.circulating_supply}, "
-            f"Max Supply: {self.max_supply}"
-        )
+        return (f"Price: ${self.price_usd}, "
+                f"Market Cap: ${self.market_cap_usd}, "
+                f"24h Volume: ${self.volume_24h_usd}, "
+                f"24h High: ${self.high_24h_usd}, "
+                f"24h Low: ${self.low_24h_usd}, "
+                f"Price Change (24h): {self.price_change_24h}%, "
+                f"Circulating Supply: {self.circulating_supply}, "
+                f"Max Supply: {self.max_supply}")

@@ -8,14 +8,12 @@ conn = connect(
     password=Config.DB_CONFIG["password"],
     host=Config.DB_CONFIG["host"],
     port=Config.DB_CONFIG["port"],
-    database=Config.DB_CONFIG["database"],
+    database=Config.DB_CONFIG["database"]
 )
 
-
 def is_valid_email(email: str) -> bool:
-    email_regex = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+    email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
     return bool(match(email_regex, email))
-
 
 def is_valid_password(password: str) -> bool:
     password = password.strip()
@@ -23,13 +21,12 @@ def is_valid_password(password: str) -> bool:
     if len(password) > 40:
         return False
 
-    regex = r"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[\s\S]{30,}$"
+    regex = r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[\s\S]{30,}$'
 
     if not match(regex, password):
         return False
 
     return True
-
 
 def is_unique_user(username: str) -> bool:
     cursor = conn.cursor()
@@ -42,7 +39,6 @@ def is_unique_user(username: str) -> bool:
         return False
 
     return True
-
 
 def is_unique_email(email: str) -> bool:
     cursor = conn.cursor()
@@ -67,16 +63,13 @@ def validate_user_input(username, email, password):
         return False
 
     if not is_valid_password(password):
-        flash(
-            "Password must be between 30 and 40 characters, contain an uppercase letter, a number, and a special character.",
-            "error",
-        )
+        flash("Password must be between 30 and 40 characters, contain an uppercase letter, a number, and a special character.", "error")
         return False
 
     if not is_unique_user(username):
         flash("Username already taken.", "error")
         return False
-
+    
     if not is_unique_email(email):
         flash("Email already registered.", "error")
         return False

@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-
 @dataclass
 class Coin:
     name: str
@@ -32,11 +31,9 @@ class Coin:
         self.last_updated = datetime.now()
 
     def __str__(self):
-        return (
-            f"Name: {self.name}\n"
-            f"Symbol: {self.symbol}\n"
-            f"Category: {self.category}\n"
-            f"Description: {self.description}\n"
-            f"Price: ${self.price:,.2f}\n"
-            f"Last Updated: {self.last_updated}"
-        )
+        return (f"Name: {self.name}\n"
+                f"Symbol: {self.symbol}\n"
+                f"Category: {self.category}\n"
+                f"Description: {self.description}\n"
+                f"Price: ${self.price:,.2f}\n"
+                f"Last Updated: {self.last_updated}")

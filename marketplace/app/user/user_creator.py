@@ -11,8 +11,7 @@ from marketplace.app.user.user_security import UserSecurity
 from marketplace.app.user.user import User
 from marketplace.helpers.validation import validate_user_input
 
-user_creator = Blueprint("user_creator", __name__)
-
+user_creator = Blueprint('user_creator', __name__)
 
 class UserCreator:
     def create_user_profile(self, username: str, email: str, role: Role) -> UserProfile:
@@ -35,7 +34,7 @@ class UserCreator:
             created_at=datetime.now(),
             updated_at=datetime.now(),
         )
-
+    
     def create_user_security(self, password: str) -> UserSecurity:
         # two_factor_backup_codes = UserSecurity.generate_backup_codes()
         return UserSecurity(
@@ -43,7 +42,7 @@ class UserCreator:
             two_factor_enabled=False,
             two_factor_secret_key=None,
             two_factor_backup_codes=None,
-            two_factor_backup_codes_hash=None,
+            two_factor_backup_codes_hash=None
             # two_factor_backup_codes=two_factor_backup_codes,
             # two_factor_backup_codes_hash=UserSecurity.hash_backup_codes(two_factor_backup_codes)
         )
@@ -61,9 +60,7 @@ class UserCreator:
             user_history=user_history,
         )
 
-    def create_and_save_user(
-        self, username: str, email: str, password: str
-    ) -> User | None:
+    def create_and_save_user(self, username: str, email: str, password: str) -> User | None:
         try:
             user = self.create_user(username, email, password)
             user_db.insert_user(user)
@@ -71,22 +68,20 @@ class UserCreator:
         except ValueError as e:
             print(f"Error: {e}")
             return None
-
-
-@user_creator.route("/signup", methods=["GET"])
+        
+@user_creator.route('/signup', methods=['GET'])
 def create_user_form():
-    return render_template("signup.html")
+    return render_template('signup.html')
 
-
-@user_creator.route("/signup", methods=["POST"])
+@user_creator.route('/signup', methods=['POST'])
 def create_user():
     try:
-        username = request.form["username"]
-        email = request.form["email"]
-        password = request.form["password"]
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
 
         if not validate_user_input(username, email, password):
-            return redirect(url_for("user_creator.create_user_form"))
+            return redirect(url_for('user_creator.create_user_form'))
 
         user_creator = UserCreator()
         user = user_creator.create_and_save_user(username, email, password)
@@ -94,15 +89,16 @@ def create_user():
         if user:
             session["user_id"] = user.user_profile.id
             session["username"] = username
-            return redirect(url_for("home"))
+            return redirect(url_for('home'))
         else:
             flash("Failed to create user.", "error")
-            return redirect(url_for("user_creator.create_user_form"))
+            return redirect(url_for('user_creator.create_user_form'))
 
     except BadRequest as br:
         flash(f"Bad Request: {str(br)}", "error")
-        return redirect(url_for("user_creator.create_user_form"))
+        return redirect(url_for('user_creator.create_user_form'))
 
     except Exception as e:
         flash(f"An error occurred: {str(e)}", "error")
-        return redirect(url_for("user_creator.create_user_form"))
+        return redirect(url_for('user_creator.create_user_form'))
+

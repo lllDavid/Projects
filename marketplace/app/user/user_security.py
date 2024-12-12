@@ -4,7 +4,6 @@ from pyotp import TOTP, random_base32
 from argon2 import PasswordHasher
 from argon2.exceptions import VerificationError
 
-
 @dataclass
 class UserSecurity:
     password_hash: str
@@ -14,18 +13,11 @@ class UserSecurity:
     two_factor_backup_codes_hash: set | None = None
 
     @staticmethod
-    def hash_password(
-        password: str,
-        time_cost: int = 4,
-        memory_cost: int = 102400,
-        parallelism: int = 8,
-    ):
-        ph = PasswordHasher(
-            time_cost=time_cost, memory_cost=memory_cost, parallelism=parallelism
-        )
+    def hash_password(password: str, time_cost: int = 4, memory_cost: int = 102400, parallelism: int = 8):
+        ph = PasswordHasher(time_cost=time_cost, memory_cost=memory_cost, parallelism=parallelism)
         hashed_password = ph.hash(password)
         return hashed_password
-
+    
     @staticmethod
     def validate_password_hash(attempt_password: str, db_hash: str) -> bool:
         ph = PasswordHasher()
@@ -34,16 +26,16 @@ class UserSecurity:
             return True
         except VerificationError:
             return False
-
+        
     @staticmethod
     def generate_backup_codes(num_codes: int = 6) -> set:
         return {str(randint(100000, 999999)) for _ in range(num_codes)}
-
+    
     @staticmethod
     def hash_backup_codes(backup_codes: set) -> set:
-        ph = PasswordHasher()
+        ph = PasswordHasher()  
         return {ph.hash(code) for code in backup_codes}
-
+        
     def generate_2fa_secret_key(self):
         totp = TOTP(random_base32())
         self.secret_key = totp.secret
@@ -55,15 +47,13 @@ class UserSecurity:
 
     def verify_2fa_code(self, user_provided_code: str) -> bool:
         if not self.two_factor_secret_key:
-            return False
-
-        totp = TOTP(self.two_factor_secret_key)
-
-        return totp.verify(user_provided_code)
-
+            return False 
+        
+        totp = TOTP(self.two_factor_secret_key)  
+        
+        return totp.verify(user_provided_code)  
+    
     def __str__(self):
-        return (
-            f"Password Hash: {self.password_hash}, "
-            f"2FA Enabled: {self.two_factor_enabled}, "
-            f"Hashed 2FA Backup Codes: {self.two_factor_backup_codes_hash}"
-        )
+        return (f"Password Hash: {self.password_hash}, "
+                f"2FA Enabled: {self.two_factor_enabled}, "
+                f"Hashed 2FA Backup Codes: {self.two_factor_backup_codes_hash}")
