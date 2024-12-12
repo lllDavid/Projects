@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, flash, session, request
 from marketplace.app.user.user_creator import user_creator
 from marketplace.app.user.user_db import update_user
-from marketplace.app.user.user_db_controller import get_user_by_username, get_user_by_id
+from marketplace.app.user.user_db import get_user_by_username, get_user_by_id
 from marketplace.app.user.user_security import UserSecurity
 
 def create_app() -> Flask:
