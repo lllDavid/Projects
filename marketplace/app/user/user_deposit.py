@@ -22,10 +22,6 @@ class UserDeposit:
     def desposit_successful(self) -> bool:
         return self.status.lower() == 'completed'
 
-    def deposit_summary(self) -> str:
-        return (f"User ID: {self.user_id}, Amount: {self.amount}, Status: {self.status}, "
-                f"Deposit Date: {self.formatted_deposit_date()}")
-
     def formatted_deposit_date(self, date_format: str = "%Y-%m-%d %H:%M:%S") -> str:
         return self.deposit_date.strftime(date_format)
 
@@ -39,4 +35,5 @@ class UserDeposit:
         print("Deposit has been canceled. Amount is reset to 0.")
 
     def __str__(self) -> str:
-        return self.deposit_summary()
+        return (f"User ID: {self.user_id}, Amount: {self.amount}, Status: {self.status}, "
+                f"Deposit Date: {self.formatted_deposit_date()}")
