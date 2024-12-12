@@ -1,6 +1,5 @@
 from datetime import datetime
-from werkzeug.exceptions import BadRequest
-from flask import Blueprint, render_template, redirect, url_for, flash, request, session
+from flask import Blueprint
 
 from marketplace.app.coin import coin_db
 from marketplace.app.coin.coin import Coin
@@ -21,7 +20,7 @@ class CoinCreator:
             last_updated=last_updated
         )
     
-    def create_coin_specs(self, algorithm:str, consensus_mechanism:str, block_time:float, max_supply:float, circulating_supply:float, transaction_speed: float, security_features:str, privacy_features:str) -> CoinDetails:
+    def create_coin_specs(self, algorithm:str, consensus_mechanism:str, block_time:float, max_supply:float, circulating_supply:float, transaction_speed: float, security_features:str, privacy_features:str)  -> CoinSpecs:
         return CoinSpecs(
             algorithm=algorithm, 
             consensus_mechanism=consensus_mechanism, 
@@ -50,7 +49,7 @@ class CoinCreator:
         coin_specs = self.create_coin_specs()
         coin_market_data = self.create_coin_market_data()
 
-        return CoinDetails()
+        return CoinDetails(coin=coin, coin_specs=coin_specs, coin_market_data=coin_market_data)
     
     def create_and_save_coin(self):
         ...
