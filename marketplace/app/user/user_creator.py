@@ -1,6 +1,4 @@
 from datetime import datetime
-from werkzeug.exceptions import BadRequest
-from flask import Blueprint, render_template, redirect, url_for, flash, request, session
 
 from marketplace.helpers.roles import Role
 from marketplace.app.user import user_db
@@ -9,9 +7,6 @@ from marketplace.app.user.user_status import UserStatus
 from marketplace.app.user.user_history import UserHistory
 from marketplace.app.user.user_security import UserSecurity
 from marketplace.app.user.user import User
-from marketplace.helpers.validation import validate_user_input
-
-user_creator = Blueprint('user_creator', __name__)
 
 class UserCreator:
     def create_user_profile(self, username: str, email: str, role: Role) -> UserProfile:
@@ -57,53 +52,16 @@ class UserCreator:
             user_history=user_history,
         )
 
-    def create_and_save_user(self, username: str, email: str, password: str, retry_count: int = 3) -> User | None:
-        if retry_count <= 0:
-            print("Max retries reached. Could not create user.")
-            return None
-        
+    def create_and_save_user(self, username: str, email: str, password: str) -> User | None:
         try:
             user = self.create_user(username, email, password)
             user_db.insert_user(user)
             return user
         except ValueError as e:
             print(f"Error: {e}")
-            return self.create_and_save_user(username, email, password, retry_count - 1)  
+            return None 
         except Exception as e:
-            print(f"Unexpected error: {e}")
-            return self.create_and_save_user(username, email, password, retry_count - 1) 
+            print(f"Error: {e}")
+            return None
 
         
-@user_creator.route('/signup', methods=['GET'])
-def create_user_form():
-    return render_template('signup.html')
-
-@user_creator.route('/signup', methods=['POST'])
-def create_user():
-    try:
-        username = request.form['username']
-        email = request.form['email']
-        password = request.form['password']
-
-        if not validate_user_input(username, email, password):
-            return redirect(url_for('user_creator.create_user_form'))
-
-        user_creator = UserCreator()
-        user = user_creator.create_and_save_user(username, email, password)
-
-        if user:
-            session["user_id"] = user.user_profile.id
-            session["username"] = username
-            return redirect(url_for('home'))
-        else:
-            flash("Failed to create user.", "error")
-            return redirect(url_for('user_creator.create_user_form'))
-
-    except BadRequest as br:
-        flash(f"Bad Request: {str(br)}", "error")
-        return redirect(url_for('user_creator.create_user_form'))
-
-    except Exception as e:
-        flash(f"An error occurred: {str(e)}", "error")
-        return redirect(url_for('user_creator.create_user_form'))
-
