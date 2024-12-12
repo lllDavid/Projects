@@ -15,10 +15,14 @@ class UserCreator:
 
     def create_user_status(self) -> UserStatus:
         return UserStatus(
-            is_online=True,
+            is_online=False,
             is_banned=False,
+            is_inactive=True,
             ban_reason=None,
             ban_duration=None,
+            ban_type=None,
+            ban_start_time=None,
+            ban_end_time=None
         )
 
     def create_user_history(self) -> UserHistory:
