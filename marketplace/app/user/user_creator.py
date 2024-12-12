@@ -36,15 +36,12 @@ class UserCreator:
         )
     
     def create_user_security(self, password: str) -> UserSecurity:
-        # two_factor_backup_codes = UserSecurity.generate_backup_codes()
         return UserSecurity(
             password_hash=UserSecurity.hash_password(password),
             two_factor_enabled=False,
             two_factor_secret_key=None,
             two_factor_backup_codes=None,
             two_factor_backup_codes_hash=None
-            # two_factor_backup_codes=two_factor_backup_codes,
-            # two_factor_backup_codes_hash=UserSecurity.hash_backup_codes(two_factor_backup_codes)
         )
 
     def create_user(self, username: str, email: str, password: str) -> User:
@@ -60,14 +57,22 @@ class UserCreator:
             user_history=user_history,
         )
 
-    def create_and_save_user(self, username: str, email: str, password: str) -> User | None:
+    def create_and_save_user(self, username: str, email: str, password: str, retry_count: int = 3) -> User | None:
+        if retry_count <= 0:
+            print("Max retries reached. Could not create user.")
+            return None
+        
         try:
             user = self.create_user(username, email, password)
             user_db.insert_user(user)
             return user
         except ValueError as e:
             print(f"Error: {e}")
-            return None
+            return self.create_and_save_user(username, email, password, retry_count - 1)  
+        except Exception as e:
+            print(f"Unexpected error: {e}")
+            return self.create_and_save_user(username, email, password, retry_count - 1) 
+
         
 @user_creator.route('/signup', methods=['GET'])
 def create_user_form():
