@@ -3,7 +3,6 @@ from flask import flash
 from mariadb import connect
 from marketplace.config import Config
 
-
 conn = connect(
     user=Config.DB_CONFIG["user"],
     password=Config.DB_CONFIG["password"],

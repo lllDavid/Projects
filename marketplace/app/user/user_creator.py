@@ -1,13 +1,14 @@
 from datetime import datetime
 from werkzeug.exceptions import BadRequest
 from flask import Blueprint, render_template, redirect, url_for, flash, request, session
+
+from marketplace.helpers.roles import Role
 from marketplace.app.user import user_db
 from marketplace.app.user.user import User
-from marketplace.app.user.user_security import UserSecurity
 from marketplace.app.user.user_status import UserStatus
 from marketplace.app.user.user_history import UserHistory
+from marketplace.app.user.user_security import UserSecurity
 from marketplace.app.user.user_details import UserDetails
-from marketplace.helpers.roles import Role
 from marketplace.helpers.validation import validate_user_input
 
 user_creator = Blueprint('user_creator', __name__)
@@ -15,18 +16,6 @@ user_creator = Blueprint('user_creator', __name__)
 class UserCreator:
     def create_user(self, username: str, email: str, role: Role) -> User:
         return User(id=None, username=username, email=email, role=role)
-
-    def create_user_security(self, password: str) -> UserSecurity:
-        # two_factor_backup_codes = UserSecurity.generate_backup_codes()
-        return UserSecurity(
-            password_hash=UserSecurity.hash_password(password),
-            two_factor_enabled=False,
-            two_factor_secret_key=None,
-            two_factor_backup_codes=None,
-            two_factor_backup_codes_hash=None
-            # two_factor_backup_codes=two_factor_backup_codes,
-            # two_factor_backup_codes_hash=UserSecurity.hash_backup_codes(two_factor_backup_codes)
-        )
 
     def create_user_status(self) -> UserStatus:
         return UserStatus(
@@ -44,6 +33,18 @@ class UserCreator:
             last_failed_login=None,
             created_at=datetime.now(),
             updated_at=datetime.now(),
+        )
+    
+    def create_user_security(self, password: str) -> UserSecurity:
+        # two_factor_backup_codes = UserSecurity.generate_backup_codes()
+        return UserSecurity(
+            password_hash=UserSecurity.hash_password(password),
+            two_factor_enabled=False,
+            two_factor_secret_key=None,
+            two_factor_backup_codes=None,
+            two_factor_backup_codes_hash=None
+            # two_factor_backup_codes=two_factor_backup_codes,
+            # two_factor_backup_codes_hash=UserSecurity.hash_backup_codes(two_factor_backup_codes)
         )
 
     def create_user_details(self, username: str, email: str, password: str) -> UserDetails:

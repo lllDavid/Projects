@@ -1,15 +1,16 @@
 from dataclasses import dataclass
+
 from marketplace.app.user.user import User
-from marketplace.app.user.user_security import UserSecurity
 from marketplace.app.user.user_status import UserStatus
 from marketplace.app.user.user_history import UserHistory
+from marketplace.app.user.user_security import UserSecurity
 
 @dataclass
 class UserDetails:
     user: User
-    user_security: UserSecurity
     user_status: UserStatus
     user_history: UserHistory
+    user_security: UserSecurity
 
     def update_user(self, new_user: User):
         self.user = new_user
