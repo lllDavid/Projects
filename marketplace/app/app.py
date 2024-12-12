@@ -5,6 +5,7 @@ from marketplace.app.user.user_db import update_user
 from marketplace.app.user.user_db import get_user_by_username, get_user_by_id
 from marketplace.app.user.user_security import UserSecurity
 
+
 def create_app() -> Flask:
     app = Flask(__name__, static_folder="static", template_folder="templates")
     app.config["SECRET_KEY"] = "secret_key"
@@ -50,7 +51,6 @@ def create_app() -> Flask:
         current_username = session.get("username")
         return render_template("home.html", username=current_username)
 
-
     @app.route("/settings", methods=["GET", "POST"])
     def settings():
         return handle_settings(request)
@@ -80,8 +80,8 @@ def handle_login(request):
         password, user.user_security.password_hash
     ):
         flash("Login successful", "success")
-        session["user_id"] = user.user.id
-        session["username"] = user.user.username
+        session["user_id"] = user.user_profile.id
+        session["username"] = user.user_profile.username
         session.modified = True
         return redirect(url_for("home"))
     else:
@@ -112,7 +112,7 @@ def handle_settings(request):
 
     if request.method == "POST":
         new_username = request.form.get("username")
-    
+
         if new_username != user.username:
             update_user(user_id, new_username)
             session["username"] = new_username
@@ -121,9 +121,7 @@ def handle_settings(request):
         else:
             flash("No changes detected.", "info")
 
-        user = get_user_by_id(user_id) 
+        user = get_user_by_id(user_id)
         return redirect(url_for("settings"))
 
     return render_template("settings.html", username=current_username, user=user)
-
-

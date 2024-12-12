@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 
+
 @dataclass
 class UserHistory:
     login_count: int = 0
@@ -13,7 +14,7 @@ class UserHistory:
     def increment_login_count(self):
         self.login_count += 1
         print(f"Login count: {self.login_count}")
-    
+
     def update_last_login(self):
         self.last_login = datetime.now()
         print(f"Last login: {self.last_login}")
@@ -29,9 +30,11 @@ class UserHistory:
     def reset_failed_login_count(self):
         self.failed_login_count = 0
         print("Failed login count reset.")
-    
+
     def __str__(self):
-        return (f"Login count: {self.login_count}, "
-                f"Last login: {self.last_login}"
-                f"Failed login count: {self.failed_login_count}, "
-                f"Last failed login: {self.last_failed_login}, ")
+        return (
+            f"Login count: {self.login_count}, "
+            f"Last login: {self.last_login}"
+            f"Failed login count: {self.failed_login_count}, "
+            f"Last failed login: {self.last_failed_login}, "
+        )

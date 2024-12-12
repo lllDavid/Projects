@@ -5,6 +5,7 @@ from marketplace.app.user.user_status import UserStatus
 from marketplace.app.user.user_history import UserHistory
 from marketplace.app.user.user_security import UserSecurity
 
+
 @dataclass
 class User:
     user_profile: UserProfile
@@ -27,8 +28,9 @@ class User:
     def update_user_history(self, new_user_history: UserHistory):
         self.user_history = new_user_history
         print("User history updated.")
-    
-    def __str__(self):
-        return (f"User: {self.user_profile}, Security: {self.user_security}, "
-                f"Status: {self.user_status}, History: {self.user_history}")
 
+    def __str__(self):
+        return (
+            f"User: {self.user_profile}, Security: {self.user_security}, "
+            f"Status: {self.user_status}, History: {self.user_history}"
+        )

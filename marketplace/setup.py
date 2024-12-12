@@ -1,8 +1,10 @@
 from setuptools import setup, find_packages
 
+
 def get_requirements(filename) -> list[str]:
-    with open(filename, 'r') as f:
+    with open(filename, "r") as f:
         return [line.strip() for line in f.readlines() if line.strip()]
+
 
 setup(
     name="Marketplace",
@@ -12,11 +14,11 @@ setup(
     description="Crypto Marketplace",
     packages=find_packages(),
     entry_points={
-        'console_scripts': [
-            'your_project_name=your_project_name.cli:main',
+        "console_scripts": [
+            "your_project_name=your_project_name.cli:main",
         ],
     },
-    long_description=open('README.md').read(),
+    long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/lllDavid/Crypto-Marketplace",
     classifiers=[
@@ -26,7 +28,7 @@ setup(
         "Operating System :: OS Independent",
     ],
     include_package_data=True,
-    install_requires=get_requirements('requirements.txt'),
+    install_requires=get_requirements("requirements.txt"),
     python_requires=">=3.12.8",
     keywords="flask mariadb crypto marketplace",
 )

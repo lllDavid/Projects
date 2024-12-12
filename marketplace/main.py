@@ -2,8 +2,9 @@ from threading import Thread
 from datetime import datetime
 from dataclasses import dataclass
 
-from marketplace.app.app import create_app  
-from marketplace.helpers.version import Version  
+from marketplace.app.app import create_app
+from marketplace.helpers.version import Version
+
 
 @dataclass
 class Main:
@@ -15,19 +16,23 @@ class Main:
 
     def _run_app(self):
         app = create_app()
-        app.run(debug=True, host='0.0.0.0', port=5000, use_reloader=False)
+        app.run(debug=True, host="0.0.0.0", port=5000, use_reloader=False)
 
     def start_app(self) -> datetime:
         self.is_running = True
         self.start_time = datetime.now()
         Thread(target=self._run_app, daemon=True).start()
-        print(f"{self.app_name} version {self.app_version} started at: {self.start_time}")
+        print(
+            f"{self.app_name} version {self.app_version} started at: {self.start_time}"
+        )
         return self.start_time
 
     def stop_app(self) -> datetime:
         self.is_running = False
         self.stop_time = datetime.now()
-        print(f"{self.app_name} version {self.app_version} stopped at: {self.stop_time}")
+        print(
+            f"{self.app_name} version {self.app_version} stopped at: {self.stop_time}"
+        )
         return self.stop_time
 
     def calculate_runtime(self) -> str:
@@ -37,6 +42,7 @@ class Main:
             minutes, seconds = divmod(remainder, 60)
             return f"Total runtime: {runtime.days} days, {hours} hours, {minutes} minutes, {seconds} seconds"
         return "App has not been started and stopped properly."
+
 
 if __name__ == "__main__":
     version = Version()

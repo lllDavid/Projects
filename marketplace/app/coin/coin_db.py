@@ -10,6 +10,5 @@ conn = connect(
     password=Config.DB_CONFIG["password"],
     host=Config.DB_CONFIG["host"],
     port=Config.DB_CONFIG["port"],
-    database=Config.DB_CONFIG["database"]
+    database=Config.DB_CONFIG["database"],
 )
-

@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from marketplace.helpers.roles import Role
 
+
 @dataclass
 class UserProfile:
     id: int | None

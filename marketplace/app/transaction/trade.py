@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from marketplace.app.user.user_deposit import UserDeposit
 
+
 @dataclass
 class Trade:
     user_id: int
