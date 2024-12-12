@@ -1,24 +1,34 @@
 from dataclasses import dataclass
-from marketplace.helpers.roles import Role
+
+from marketplace.app.user.user_profile import UserProfile
+from marketplace.app.user.user_status import UserStatus
+from marketplace.app.user.user_history import UserHistory
+from marketplace.app.user.user_security import UserSecurity
 
 @dataclass
 class User:
-    id: int | None
-    username: str
-    email: str
-    role: Role
+    user_profile: UserProfile
+    user_status: UserStatus
+    user_history: UserHistory
+    user_security: UserSecurity
 
-    def update_username(self, new_username: str):
-        self.username = new_username
-        print(f"Username changed to {new_username}")
+    def update_user_profile(self, new_user_profile: UserProfile):
+        self.user_profile = new_user_profile
+        print(f"User profile updated.")
 
-    def update_email(self, new_email: str):
-        self.email = new_email
-        print(f"Email changed to {new_email}")
+    def update_user_security(self, new_user_security: UserSecurity):
+        self.user_security = new_user_security
+        print("Security info updated.")
 
-    def update_role(self, new_role: Role):
-        self.role = new_role
-        print(f"Role changed to {new_role}")
+    def update_user_status(self, new_user_status: UserStatus):
+        self.user_status = new_user_status
+        print("Status updated.")
 
+    def update_user_history(self, new_user_history: UserHistory):
+        self.user_history = new_user_history
+        print("User history updated.")
+    
     def __str__(self):
-        return f"ID: {self.id}, Username: {self.username}, Email: {self.email}, Role: {self.role}"
+        return (f"User: {self.user_profile}, Security: {self.user_security}, "
+                f"Status: {self.user_status}, History: {self.user_history}")
+

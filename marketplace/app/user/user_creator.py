@@ -4,18 +4,18 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request,
 
 from marketplace.helpers.roles import Role
 from marketplace.app.user import user_db
-from marketplace.app.user.user import User
+from marketplace.app.user.user_profile import UserProfile
 from marketplace.app.user.user_status import UserStatus
 from marketplace.app.user.user_history import UserHistory
 from marketplace.app.user.user_security import UserSecurity
-from marketplace.app.user.user_details import UserDetails
+from marketplace.app.user.user import User
 from marketplace.helpers.validation import validate_user_input
 
 user_creator = Blueprint('user_creator', __name__)
 
 class UserCreator:
-    def create_user(self, username: str, email: str, role: Role) -> User:
-        return User(id=None, username=username, email=email, role=role)
+    def create_user_profile(self, username: str, email: str, role: Role) -> UserProfile:
+        return UserProfile(id=None, username=username, email=email, role=role)
 
     def create_user_status(self) -> UserStatus:
         return UserStatus(
@@ -47,24 +47,24 @@ class UserCreator:
             # two_factor_backup_codes_hash=UserSecurity.hash_backup_codes(two_factor_backup_codes)
         )
 
-    def create_user_details(self, username: str, email: str, password: str) -> UserDetails:
-        user = self.create_user(username, email, role=Role.USER)
+    def create_user(self, username: str, email: str, password: str) -> User:
+        user_profile = self.create_user_profile(username, email, role=Role.USER)
         user_security = self.create_user_security(password)
         user_status = self.create_user_status()
         user_history = self.create_user_history()
 
-        return UserDetails(
-            user=user,
+        return User(
+            user_profile=user_profile,
             user_security=user_security,
             user_status=user_status,
             user_history=user_history,
         )
 
-    def create_and_save_user(self, username: str, email: str, password: str) -> UserDetails | None:
+    def create_and_save_user(self, username: str, email: str, password: str) -> User | None:
         try:
-            user_details = self.create_user_details(username, email, password)
-            user_db.insert_user(user_details)
-            return user_details
+            user = self.create_user(username, email, password)
+            user_db.insert_user(user)
+            return user
         except ValueError as e:
             print(f"Error: {e}")
             return None
@@ -83,11 +83,11 @@ def create_user():
         if not validate_user_input(username, email, password):
             return redirect(url_for('user_creator.create_user_form'))
 
-        user_creator_instance = UserCreator()
-        user_details = user_creator_instance.create_and_save_user(username, email, password)
+        user_creator = UserCreator()
+        user = user_creator.create_and_save_user(username, email, password)
 
-        if user_details:
-            session["user_id"] = user_details.user.id
+        if user:
+            session["user_id"] = user.user_profile.id
             session["username"] = username
             return redirect(url_for('home'))
         else:
