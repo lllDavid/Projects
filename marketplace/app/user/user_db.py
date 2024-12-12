@@ -103,10 +103,11 @@ def insert_user(user: User):
 def delete_user(user_id: int):
     cursor = conn.cursor()
     try:
-        cursor.execute("DELETE FROM user_history WHERE user_id = %s", (user_id,))
-        cursor.execute("DELETE FROM user_status WHERE user_id = %s", (user_id,))
-        cursor.execute("DELETE FROM user_security WHERE user_id = %s", (user_id,))
         cursor.execute("DELETE FROM users WHERE user_id = %s", (user_id,))
+        cursor.execute("DELETE FROM user_security WHERE user_id = %s", (user_id,))
+        cursor.execute("DELETE FROM user_status WHERE user_id = %s", (user_id,))
+        cursor.execute("DELETE FROM user_history WHERE user_id = %s", (user_id,))
+        cursor.execute("DELETE FROM user_fingerprint WHERE user_id = %s", (user_id,))
 
         conn.commit()  
         print("User deleted from database.")
@@ -162,7 +163,7 @@ def update_password(user_id: int, password: str):
         cursor.close() 
 
 # --------------------------------------------------------------
-# Section 2: Get User By Methods
+# Section 2: Get User By (Methods)
 # --------------------------------------------------------------
 
 def get_user_by_id(user_id: int) -> UserProfile | None:
@@ -197,53 +198,21 @@ def get_user_by_email(email: str) -> User | None:
     return None
 
 # --------------------------------------------------------------
-# Section 3: Get User Components
+# Section 3: Get User (Methods)
 # --------------------------------------------------------------
 
-def get_user(user_id: int) -> User | None:
-    user_profile = get_user_by_id(user_id)
-    if not user_profile:
-        return None
-
-    user_security = get_user_security(user_id)
-    if not user_security:
-        return None
-
-    user_status = get_user_status(user_id)
-    if not user_status:
-        return None
-
-    user_history = get_user_history(user_id)
-    if not user_history:
-        return None
-    
-    user_fingerprint = get_user_fingerprint(user_id)
-    if not user_fingerprint:
-        return None
-
-    user = User(
-        user_profile=user_profile, 
-        user_security=user_security, 
-        user_status=user_status, 
-        user_history=user_history,
-        user_fingerprint=user_fingerprint
-    )
-    
-    return user
-
-def get_user_security(user_id: int) -> UserSecurity | None:
+def get_user_profile(user_id: int) -> UserProfile | None:
     cursor = conn.cursor()
-    cursor.execute("SELECT user_id, password_hash, two_factor_enabled, two_factor_secret_key, two_factor_backup_codes_hash FROM user_security WHERE user_id = %s", (user_id,))
-    security = cursor.fetchone()
+    cursor.execute("SELECT user_id, first_name, last_name, email, profile_picture, bio, date_of_birth, gender FROM user_profile WHERE user_id = %s", (user_id,))
+    profile = cursor.fetchone()
     cursor.close()
-    if security:
-        return UserSecurity(
-            password_hash=security[1],
-            two_factor_enabled=security[2],
-            two_factor_secret_key=security[3],
-            two_factor_backup_codes=None,
-            two_factor_backup_codes_hash=security[4],
-        )
+    if profile:
+        return UserProfile(
+            id=profile[1],
+            username=profile[2],
+            email=profile[3],
+            role=profile[4]
+           )
     return None
 
 def get_user_status(user_id: int) -> UserStatus | None:
@@ -273,6 +242,21 @@ def get_user_history(user_id: int) -> UserHistory | None:
             last_failed_login=history[3],
             created_at=history[4],
             updated_at=history[5],
+        )
+    return None
+
+def get_user_security(user_id: int) -> UserSecurity | None:
+    cursor = conn.cursor()
+    cursor.execute("SELECT user_id, password_hash, two_factor_enabled, two_factor_secret_key, two_factor_backup_codes_hash FROM user_security WHERE user_id = %s", (user_id,))
+    security = cursor.fetchone()
+    cursor.close()
+    if security:
+        return UserSecurity(
+            password_hash=security[1],
+            two_factor_enabled=security[2],
+            two_factor_secret_key=security[3],
+            two_factor_backup_codes=None,
+            two_factor_backup_codes_hash=security[4],
         )
     return None
 
@@ -318,3 +302,34 @@ def get_user_fingerprint(user_id: int) -> UserFingerprint | None:
             behavioral_biometrics=fingerprint[24]
         )
     return None
+
+def get_user(user_id: int) -> User | None:
+    user_profile = get_user_by_id(user_id)
+    if not user_profile:
+        return None
+
+    user_security = get_user_security(user_id)
+    if not user_security:
+        return None
+
+    user_status = get_user_status(user_id)
+    if not user_status:
+        return None
+
+    user_history = get_user_history(user_id)
+    if not user_history:
+        return None
+    
+    user_fingerprint = get_user_fingerprint(user_id)
+    if not user_fingerprint:
+        return None
+
+    user = User(
+        user_profile=user_profile, 
+        user_security=user_security, 
+        user_status=user_status, 
+        user_history=user_history,
+        user_fingerprint=user_fingerprint
+    )
+    
+    return user
