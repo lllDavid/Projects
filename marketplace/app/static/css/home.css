@@ -28,18 +28,14 @@ body {
 
 .table thead {
     border-bottom: 2px solid #444;
-    
-}
 
+}
 
 .coin-table th {
     background-color: #121212;
     color: white;
     border: none !important;
     font-weight: 100;
-
-
-
 }
 
 .coin-table td {
@@ -47,8 +43,6 @@ body {
     color: #e0e0e0;
     border: none !important;
 }
-
-
 
 .coin-column {
     text-align: left;
@@ -62,7 +56,8 @@ body {
 }
 
 .coin-symbol {
-    margin-left: 10px;    color:rgb(88, 79, 79);
+    margin-left: 10px;
+    color: rgb(88, 79, 79);
 }
 
 .btn-primary {

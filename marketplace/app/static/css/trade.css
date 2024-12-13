@@ -17,11 +17,7 @@ body {
     text-decoration: underline;
 }
 
-h1.display-4 {
-    color: #e0e0e0;
-    font-weight: 300;
-    margin-bottom: 10px;
-}
+
 
 p.lead {
     color: #e0e0e0;

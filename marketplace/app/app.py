@@ -55,7 +55,11 @@ def create_app() -> Flask:
     def settings():
         return handle_settings(request)
 
-    # Dashboard Routes
+    # Home Routes
+    @app.route("/buy")
+    def buy():
+        return render_template("buy.html")
+    
     @app.route("/trade")
     def trade():
         return render_template("trade.html")
