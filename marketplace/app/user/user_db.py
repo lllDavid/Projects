@@ -1,5 +1,6 @@
 from json import dumps
 from mariadb import connect
+
 from marketplace.config import Config
 from marketplace.app.user.user import User
 from marketplace.app.user.user_status import UserStatus
