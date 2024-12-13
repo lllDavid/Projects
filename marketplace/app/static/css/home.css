@@ -2,23 +2,10 @@ body {
     background-color: #121212;
     color: #e0e0e0;
     font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    height: auto;
 }
 
 .navbar {
     background-color: #1e1e1e;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1050;
-    padding: 10px 20px;
-}
-
-.navbar .navbar-brand {
-    color: #e0e0e0 !important;
 }
 
 .navbar .navbar-nav .nav-link {
