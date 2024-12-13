@@ -9,16 +9,39 @@
 </head>
 
 <body>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('trade') }}">Trade</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('settings') }}">Settings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
   <div class="container">
     <h1>Trade</h1>
 
-    <!-- Buy/Sell Tabs -->
     <div class="tabs">
       <button class="tab-button active" onclick="showTab('buy')">Buy</button>
       <button class="tab-button" onclick="showTab('sell')">Sell</button>
     </div>
 
-    <!-- Buy Form -->
     <div class="form-container" id="buy-form">
       <h2>Buy</h2>
       <form action="submit-order.php" method="POST">
@@ -50,7 +73,6 @@
       </form>
     </div>
 
-    <!-- Sell Form -->
     <div class="form-container" id="sell-form" style="display: none;">
       <h2>Sell</h2>
       <form action="submit-order.php" method="POST">
@@ -74,7 +96,6 @@
   </div>
 
   <script>
-    // Switch between Buy and Sell tabs
     function showTab(tab) {
       if (tab === 'buy') {
         document.getElementById('buy-form').style.display = 'block';
@@ -89,10 +110,9 @@
       }
     }
 
-    // Example: Show total cost dynamically (for buy orders)
     document.getElementById('buy-amount').addEventListener('input', function () {
       const amount = parseFloat(this.value);
-      const price = 25000; // Example BTC price
+      const price = 25000;
       if (!isNaN(amount)) {
         const totalCost = amount * price;
         document.getElementById('total-cost').value = `$${totalCost.toFixed(2)}`;
@@ -101,7 +121,6 @@
       }
     });
 
-    // Toggle visibility of limit order field for Buy
     document.getElementById('payment-method').addEventListener('change', function () {
       if (this.value === 'fiat') {
         document.getElementById('buy-limit-container').style.display = 'none';

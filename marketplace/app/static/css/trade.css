@@ -13,6 +13,19 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+.navbar {
+    background-color: #1e1e1e;
+}
+
+.navbar .navbar-nav .nav-link {
+    color: #e0e0e0 !important;
+    font-size: 1.1em;
+}
+
+.nav-link:hover {
+    text-decoration: underline
+}
+
 h1,
 h2,
 label {
@@ -35,7 +48,7 @@ label {
 }
 
 .tab-button.active {
-    background-color: #333;
+    background-color: #0a740d;
     color: white;
 }
 
