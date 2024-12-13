@@ -1,94 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trade</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/trade.css') }}">
+    <title>Crypto Trade</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .trade-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .trade-section input,
+        .trade-section select,
+        .trade-section button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+        }
+        .trade-section input {
+            width: 45%;
+        }
+        .trade-section button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .trade-section button:hover {
+            background-color: #45a049;
+        }
+        .price-info {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .price-info p {
+            font-size: 18px;
+        }
+        .order-book {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        .order-book div {
+            width: 48%;
+        }
+        .order-book table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .order-book th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        .order-book th {
+            background-color: #f0f0f0;
+        }
+    </style>
 </head>
-
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('home') }}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('portfolio') }}">Portfolio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('settings') }}">Settings</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
-    <div class="container mt-5 pt-5">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h1 class="display-4">Trade</h1>
-                <p class="lead">Trade Cryptocurrencies</p>
-            </div>
-        </div>
+<div class="container">
+    <h1>Crypto Trade</h1>
 
-        <div class="row mt-4">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <form action="{{ url_for('trade') }}" method="POST">
-                            <div class="form-group">
-                                <label for="coinSelect">Select Cryptocurrency</label>
-                                <select class="form-control" id="coinSelect" name="coin">
-                                    <option value="BTC">Bitcoin (BTC)</option>
-                                    <option value="ETH">Ethereum (ETH)</option>
-                                    <option value="ADA">Cardano (ADA)</option>
-                                    <option value="SOL">Solana (SOL)</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="tradeType">Trade Type</label>
-                                <select class="form-control" id="tradeType" name="trade_type">
-                                    <option value="buy">Buy</option>
-                                    <option value="sell">Sell</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="amount">Amount</label>
-                                <input type="number" class="form-control" id="amount" name="amount" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="price">Price (USD)</label>
-                                <input type="number" class="form-control" id="price" name="price" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Execute Trade</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <footer>
-            <p>&copy; 2024 Marketplace. All rights reserved.</p>
-        </footer>
-
+    <!-- Current Price Info -->
+    <div class="price-info">
+        <p><strong>BTC/ETH</strong> - Current Price: <span id="currentPrice">0.075</span> ETH</p>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+    <!-- Trade Section (For trading crypto) -->
+    <div class="trade-section">
+        <div>
+            <label for="cryptoAmount">Amount to trade:</label>
+            <input type="number" id="cryptoAmount" placeholder="Amount to trade" min="0" step="any">
+        </div>
+        <div>
+            <label for="tradeAction">Order Type:</label>
+            <select id="orderType">
+                <option value="market">Market Order</option>
+                <option value="limit">Limit Order</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Submit Trade Button -->
+    <div class="trade-section">
+        <button id="tradeButton">Place Order</button>
+    </div>
+
+    <!-- Order Book: Buy Orders and Sell Orders -->
+    <div class="order-book">
+        <div>
+            <h3>Buy Orders</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Price (ETH)</th>
+                    </tr>
+                </thead>
+                <tbody id="buyOrders">
+                    <tr><td>1.5 BTC</td><td>0.074 ETH</td></tr>
+                    <tr><td>2.0 BTC</td><td>0.073 ETH</td></tr>
+                    <!-- These values should be dynamic based on market data -->
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h3>Sell Orders</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Price (ETH)</th>
+                    </tr>
+                </thead>
+                <tbody id="sellOrders">
+                    <tr><td>1.0 BTC</td><td>0.076 ETH</td></tr>
+                    <tr><td>0.5 BTC</td><td>0.078 ETH</td></tr>
+                    <!-- These values should be dynamic based on market data -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // JavaScript to handle the trade action (simplified for demonstration)
+    document.getElementById("tradeButton").addEventListener("click", function() {
+        let amount = document.getElementById("cryptoAmount").value;
+        let orderType = document.getElementById("orderType").value;
+        let currentPrice = document.getElementById("currentPrice").innerText;
+
+        if (amount && orderType) {
+            let tradeTime = new Date().toISOString().split('T').join(' ').split('.')[0]; // Current time
+            alert(`${orderType.charAt(0).toUpperCase() + orderType.slice(1)} Order Placed:\nAmount: ${amount} BTC\nPrice: ${currentPrice} ETH\nTime: ${tradeTime}`);
+        } else {
+            alert("Please enter valid values to complete the trade.");
+        }
+    });
+</script>
+
 </body>
-
-
 </html>
