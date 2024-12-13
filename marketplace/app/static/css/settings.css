@@ -31,13 +31,7 @@ body {
     color: #fff;
 }
 
-.navbar-toggler-icon {
-    background-color: #e0e0e0;
-}
 
-.navbar-nav.ml-auto {
-    margin-left: auto;
-}
 
 a {
     text-decoration: none;
@@ -82,7 +76,7 @@ main {
 }
 
 .settings-section {
-    background-color: #282828;
+    background-color: #121212;
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 30px;
@@ -111,7 +105,7 @@ main {
 .form-group input[type="url"] {
     width: 100%;
     padding: 10px;
-    background-color: #333;
+    background-color: #121212;
     border: 1px solid #444;
     border-radius: 4px;
     color: #fff;
