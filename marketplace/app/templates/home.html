@@ -8,7 +8,6 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -16,8 +15,8 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-12 text-center">
-                <h1 class="display-4">Home</h1>
-                <p class="lead">Top 10 Cryptocurrencies Performance</p>
+                <h1 class="display-4">Marketplace</h1>
+                <p class="lead">Top 100 Cryptocurrencies Performance</p>
             </div>
         </div>
 
@@ -56,12 +55,14 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Coin</th>
-                                <th>Price (USD)</th>
-                                <th>24h%</th>
-                                <th>7d%</th>
-                                <th>1m%</th>
-                                <th>Chart</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>1h %</th>
+                                <th>24h %</th>
+                                <th>7d %</th>
+                                <th>Market Cap</th>
+                                <th>Volume(24h)</th>
+                                <th>Circulating Supply</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -70,16 +71,15 @@
                                 <td class="coin-name">
                                     <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="Bitcoin"
                                         class="coin-logo">
-                                    Bitcoin (BTC)
+                                    Bitcoin <span class="coin-symbol">BTC</span>
                                 </td>
-                                <td>$50,000</td>
+                                <td>$50,293.49</td>
                                 <td class="text-success">+2.5%</td>
                                 <td class="text-warning">+10%</td>
                                 <td class="text-danger">-5%</td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#chartModal1">View Chart</button>
-                                </td>
+                                <td>$193,429,984,000.00</td>
+                                <td>$5,234,000,000.00</td>
+                                <td>19,000,182 BTC</td>
                             </tr>
 
                             <tr>
@@ -87,207 +87,148 @@
                                 <td class="coin-name">
                                     <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" alt="Ethereum"
                                         class="coin-logo">
-                                    Ethereum (ETH)
+                                    Ethereum <span class="coin-symbol">ETH</span>
                                 </td>
-                                <td>$4,000</td>
+                                <td>$4,182.76</td>
                                 <td class="text-success">+3.2%</td>
                                 <td class="text-warning">+8%</td>
                                 <td class="text-danger">-3%</td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#chartModal2">View Chart</button>
-                                </td>
+                                <td>$460,178,295,238.00</td>
+                                <td>$25,634,892,491.00</td>
+                                <td>120,194,364 ETH</td>
                             </tr>
                             <tr>
                                 <td>3</td>
                                 <td class="coin-name">
                                     <img src="https://cryptologos.cc/logos/cardano-ada-logo.png" alt="Cardano"
                                         class="coin-logo">
-                                    Cardano (ADA)
+                                    Cardano <span class="coin-symbol">ADA</span>
                                 </td>
                                 <td>$2.30</td>
                                 <td class="text-success">+1.8%</td>
                                 <td class="text-warning">+5%</td>
                                 <td class="text-danger">-2%</td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#chartModal3">View Chart</button>
-                                </td>
+                                <td>$75,102,458,302.00</td>
+                                <td>$1,024,193,481.00</td>
+                                <td>33,492,873,234 ADA</td>
                             </tr>
                             <tr>
                                 <td>4</td>
                                 <td class="coin-name">
                                     <img src="https://www.shutterstock.com/shutterstock/photos/2337233137/display_1500/stock-photo-indonesia-july-logo-of-the-rising-crypto-coin-xrp-ripple-2337233137.jpg"
                                         alt="Ripple" class="coin-logo">
-                                    Ripple (XRP)
+                                    Ripple <span class="coin-symbol">XRP</span>
                                 </td>
-                                <td>$1.00</td>
+                                <td>$1.02</td>
                                 <td class="text-success">+1.2%</td>
                                 <td class="text-warning">+3%</td>
                                 <td class="text-danger">-1%</td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#chartModal4">View Chart</button>
-                                </td>
+                                <td>$50,174,302,453.00</td>
+                                <td>$2,048,702,394.00</td>
+                                <td>50,234,567,982 XRP</td>
                             </tr>
                             <tr>
                                 <td>5</td>
                                 <td class="coin-name">
                                     <img src="https://cryptologos.cc/logos/solana-sol-logo.png" alt="Solana"
                                         class="coin-logo">
-                                    Solana (SOL)
+                                    Solana <span class="coin-symbol">SOL</span>
                                 </td>
-                                <td>$200</td>
+                                <td>$200.78</td>
                                 <td class="text-success">+5.5%</td>
                                 <td class="text-warning">+15%</td>
                                 <td class="text-danger">-8%</td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#chartModal5">View Chart</button>
-                                </td>
+                                <td>$70,142,682,000.00</td>
+                                <td>$4,003,194,000.00</td>
+                                <td>350,342,118 SOL</td>
                             </tr>
                             <tr>
                                 <td>6</td>
                                 <td class="coin-name">
                                     <img src="https://cryptologos.cc/logos/polkadot-new-dot-logo.png?v=040"
                                         alt="Polkadot" class="coin-logo">
-                                    Polkadot (DOT)
+                                    Polkadot <span class="coin-symbol">DOT</span>
                                 </td>
-                                <td>$40</td>
+                                <td>$40.92</td>
                                 <td class="text-success">+4.0%</td>
                                 <td class="text-warning">+12%</td>
                                 <td class="text-danger">-6%</td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#chartModal6">View Chart</button>
-                                </td>
+                                <td>$40,295,102,874.00</td>
+                                <td>$2,048,712,847.00</td>
+                                <td>1,024,392,235 DOT</td>
                             </tr>
                             <tr>
                                 <td>7</td>
                                 <td class="coin-name">
                                     <img src="https://cryptologos.cc/logos/chainlink-link-logo.png" alt="Chainlink"
                                         class="coin-logo">
-                                    Chainlink (LINK)
+                                    Chainlink <span class="coin-symbol">LINK</span>
                                 </td>
-                                <td>$30</td>
+                                <td>$31.45</td>
                                 <td class="text-success">+6.1%</td>
                                 <td class="text-warning">+18%</td>
                                 <td class="text-danger">-7%</td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#chartModal7">View Chart</button>
-                                </td>
+                                <td>$13,347,229,019.00</td>
+                                <td>$1,572,032,417.00</td>
+                                <td>450,382,714 LINK</td>
                             </tr>
                             <tr>
                                 <td>8</td>
                                 <td class="coin-name">
                                     <img src="https://cryptologos.cc/logos/avalanche-avax-logo.png" alt="Avalanche"
                                         class="coin-logo">
-                                    Avalanche (AVAX)
+                                    Avalanche <span class="coin-symbol">AVAX</span>
                                 </td>
-                                <td>$80</td>
+                                <td>$80.21</td>
                                 <td class="text-success">+2.0%</td>
                                 <td class="text-warning">+9%</td>
                                 <td class="text-danger">-4%</td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#chartModal8">View Chart</button>
-                                </td>
+                                <td>$22,391,540,421.00</td>
+                                <td>$1,063,402,703.00</td>
+                                <td>270,453,931 AVAX</td>
                             </tr>
                             <tr>
                                 <td>9</td>
                                 <td class="coin-name">
                                     <img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/terra-luna-7152209-5795365.png?f=webp&w=256"
                                         alt="Terra" class="coin-logo">
-                                    Terra (LUNA)
+                                    Terra <span class="coin-symbol">LUNA</span>
                                 </td>
-                                <td>$85</td>
+                                <td>$85.12</td>
                                 <td class="text-success">+3.0%</td>
                                 <td class="text-warning">+11%</td>
                                 <td class="text-danger">-2%</td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#chartModal9">View Chart</button>
-                                </td>
+                                <td>$10,478,029,493.00</td>
+                                <td>$2,086,702,943.00</td>
+                                <td>150,234,873 LUNA</td>
                             </tr>
                             <tr>
                                 <td>10</td>
                                 <td class="coin-name">
                                     <img src="https://cryptologos.cc/logos/litecoin-ltc-logo.png" alt="Litecoin"
                                         class="coin-logo">
-                                    Litecoin (LTC)
+                                    Litecoin <span class="coin-symbol">LTC</span>
                                 </td>
-                                <td>$200</td>
+                                <td>$200.78</td>
                                 <td class="text-success">+1.5%</td>
                                 <td class="text-warning">+7%</td>
                                 <td class="text-danger">-3%</td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#chartModal10">View Chart</button>
-                                </td>
+                                <td>$13,586,314,201.00</td>
+                                <td>$1,234,987,384.00</td>
+                                <td>70,453,812 LTC</td>
                             </tr>
                         </tbody>
                     </table>
-
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="chartModal1" tabindex="-1" role="dialog" aria-labelledby="chartModalLabel1"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="chartModalLabel1">Bitcoin (BTC) Price Chart</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="chart-container">
-                            <canvas id="chart1"></canvas>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
         <footer>
             <p>&copy; 2024 Marketplace. All rights reserved.</p>
         </footer>
-
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
-
-    <script>
-        const data = {
-            labels: ['1 Week Ago', '3 Days Ago', 'Yesterday', 'Today'],
-            datasets: [{
-                label: 'Bitcoin (BTC) Price',
-                data: [48000, 51000, 49500, 50000],
-                fill: false,
-                borderColor: 'rgb(255, 99, 132)',
-                tension: 0.1
-            }]
-        };
-
-        const ctx1 = document.getElementById('chart1').getContext('2d');
-        const chart1 = new Chart(ctx1, {
-            type: 'line',
-            data: data,
-            options: {
-                responsive: true,
-                scales: {
-                    x: { beginAtZero: true },
-                    y: { beginAtZero: true }
-                }
-            }
-        });
-
-    </script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
