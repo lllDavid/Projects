@@ -1,4 +1,4 @@
-from re import match, search
+from re import match
 from flask import flash
 from mariadb import connect
 from marketplace.config import Config
@@ -14,7 +14,7 @@ conn = connect(
 def is_unique_user_and_email(username: str, email: str):
     cursor = conn.cursor()
     cursor.execute(""" 
-        SELECT username, email FROM users WHERE username = %s OR email = %s """, (username, email))
+        SELECT username, email FROM user_profile WHERE username = %s OR email = %s """, (username, email))
     user = cursor.fetchone()
     cursor.close()
 

@@ -1,6 +1,5 @@
 from json import dumps
 from mariadb import connect
-
 from marketplace.config import Config
 from marketplace.app.user.user import User
 from marketplace.app.user.user_status import UserStatus
@@ -24,12 +23,14 @@ conn = connect(
 def insert_user(user: User):
     cursor = conn.cursor()
     try:
+        # Insert user profile
         cursor.execute(
-            "INSERT INTO users (username, email, role) VALUES (%s, %s, %s)", 
+            "INSERT INTO user_profile (username, email, role) VALUES (%s, %s, %s)", 
             (user.user_profile.username, user.user_profile.email, user.user_profile.role.value)
         )  
         user_id = cursor.lastrowid  
-        
+
+        # Insert user security
         two_factor_backup_codes_hash_json = dumps(list(user.user_security.two_factor_backup_codes_hash)) if user.user_security.two_factor_backup_codes_hash else None
 
         cursor.execute(
@@ -41,11 +42,13 @@ def insert_user(user: User):
              two_factor_backup_codes_hash_json)
         )
 
+        # Insert user status
         cursor.execute(
-            "INSERT INTO user_status (user_id, is_banned, ban_reason, ban_duration) VALUES (%s, %s, %s, %s)", 
-            (user_id, user.user_status.is_banned, user.user_status.ban_reason, user.user_status.ban_duration)
+            "INSERT INTO user_status (user_id, is_banned, is_inactive, ban_type, ban_reason, ban_duration, ban_start_time, ban_end_time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", 
+            (user_id, user.user_status.is_banned, user.user_status.is_inactive, user.user_status.ban_type, user.user_status.ban_reason, user.user_status.ban_duration, user.user_status.ban_start_time, user.user_status.ban_end_time)
         )
 
+        # Insert user history
         cursor.execute(
             "INSERT INTO user_history (user_id, login_count, last_login, failed_login_count, last_failed_login, created_at, updated_at) VALUES (%s, %s, %s, %s, %s, %s, %s)", 
             (user_id, 
@@ -57,6 +60,7 @@ def insert_user(user: User):
              user.user_history.updated_at)
         )
 
+        # Insert user fingerprint
         cursor.execute(
             "INSERT INTO user_fingerprint (user_id, username_history, email_address_history, mac_address, associated_ips, avg_login_frequency, avg_session_duration, geolocation_country, geolocation_city, geolocation_latitude, geolocation_longitude, browser_info, os_name, os_version, device_type, device_manufacturer, device_model, user_preferences, user_agent, device_id, screen_resolution, two_factor_enabled, transaction_history, vpn_usage, behavioral_biometrics) "
             "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
@@ -89,28 +93,11 @@ def insert_user(user: User):
             )
         )
 
-
         conn.commit()  
         print("User inserted into the database.")
         user.user_profile.id = user_id  
         return user  
-    except conn.Error as e:
-        conn.rollback()  
-        print(f"Error occurred: {e}")
-    finally:
-        cursor.close()  
 
-def delete_user(user_id: int):
-    cursor = conn.cursor()
-    try:
-        cursor.execute("DELETE FROM users WHERE user_id = %s", (user_id,))
-        cursor.execute("DELETE FROM user_security WHERE user_id = %s", (user_id,))
-        cursor.execute("DELETE FROM user_status WHERE user_id = %s", (user_id,))
-        cursor.execute("DELETE FROM user_history WHERE user_id = %s", (user_id,))
-        cursor.execute("DELETE FROM user_fingerprint WHERE user_id = %s", (user_id,))
-
-        conn.commit()  
-        print("User deleted from database.")
     except conn.Error as e:
         conn.rollback()  
         print(f"Error occurred: {e}")
@@ -120,7 +107,7 @@ def delete_user(user_id: int):
 def update_username(user_id: int, username: str):
     cursor = conn.cursor()
     try:
-        cursor.execute("UPDATE users SET username = %s WHERE user_id = %s", 
+        cursor.execute("UPDATE user_profile SET username = %s WHERE user_id = %s", 
                        (username, user_id))  
         conn.commit() 
         print("Username updated successfully.")
@@ -134,7 +121,7 @@ def update_email(user_id: int, email: str):
     cursor = conn.cursor()
     try:
         cursor.execute(
-            "UPDATE users SET email = %s WHERE user_id = %s", 
+            "UPDATE user_profile SET email = %s WHERE user_id = %s", 
             (email, user_id)
         )
         conn.commit() 
@@ -168,33 +155,31 @@ def update_password(user_id: int, password: str):
 
 def get_user_by_id(user_id: int) -> UserProfile | None:
     cursor = conn.cursor()
-    cursor.execute("SELECT user_id, username, email, role FROM users WHERE user_id = %s", (user_id,))
+    cursor.execute("SELECT user_id, username, email, role FROM user_profile WHERE user_id = %s", (user_id,))
     user = cursor.fetchone()
     cursor.close()
     if user:
-        return UserProfile(id=user[0], username=user[1], email=user[2], role=user[3])
+        return UserProfile(id=user[0], username=user[1], email=user[2], role=user[3])  
     return None
 
 def get_user_by_username(username: str) -> User | None:
     cursor = conn.cursor()
-    cursor.execute("SELECT user_id, username, email, role FROM users WHERE username = %s", (username,))
+    cursor.execute("SELECT user_id, username, email, role FROM user_profile WHERE username = %s", (username,))
     user = cursor.fetchone()
     cursor.close()
 
     if user:
-        user = get_user(user[0]) 
-        return user
+        return get_user(user[0]) 
     return None
 
 def get_user_by_email(email: str) -> User | None:
     cursor = conn.cursor()
-    cursor.execute("SELECT user_id, username, email, role FROM users WHERE email = %s", (email,))
+    cursor.execute("SELECT user_id, username, email, role FROM user_profile WHERE email = %s", (email,))
     user = cursor.fetchone()
     cursor.close()
 
     if user:
-        user = get_user(user[0]) 
-        return user
+        return get_user(user[0]) 
     return None
 
 # --------------------------------------------------------------
@@ -203,29 +188,33 @@ def get_user_by_email(email: str) -> User | None:
 
 def get_user_profile(user_id: int) -> UserProfile | None:
     cursor = conn.cursor()
-    cursor.execute("SELECT user_id, first_name, last_name, email, profile_picture, bio, date_of_birth, gender FROM user_profile WHERE user_id = %s", (user_id,))
+    cursor.execute("SELECT user_id, username, email, role FROM user_profile WHERE user_id = %s", (user_id,))
     profile = cursor.fetchone()
     cursor.close()
     if profile:
         return UserProfile(
-            id=profile[1],
-            username=profile[2],
-            email=profile[3],
-            role=profile[4]
-           )
+            id=profile[0],  
+            username=profile[1],
+            email=profile[2],
+            role=profile[3]
+        )
     return None
 
 def get_user_status(user_id: int) -> UserStatus | None:
     cursor = conn.cursor()
-    cursor.execute("SELECT user_id, is_banned, ban_reason, ban_duration FROM user_status WHERE user_id = %s", (user_id,))
+    cursor.execute("SELECT user_id, is_banned, is_inactive, ban_type, ban_reason, ban_duration, ban_start_time, ban_end_time FROM user_status WHERE user_id = %s", (user_id,))
     status = cursor.fetchone()
     cursor.close()
     if status:
         return UserStatus(
             is_online=False,
-            is_banned=status[0],
-            ban_reason=status[1],
-            ban_duration=status[2],
+            is_banned=status[1],
+            is_inactive=status[2],
+            ban_type=status[3],
+            ban_reason=status[4],
+            ban_duration=status[5],
+            ban_start_time=status[6],
+            ban_end_time=status[7]
         )
     return None
 
@@ -236,12 +225,12 @@ def get_user_history(user_id: int) -> UserHistory | None:
     cursor.close()
     if history:
         return UserHistory(
-            login_count=history[0],
-            failed_login_count=history[1],
-            last_login=history[2],
-            last_failed_login=history[3],
-            created_at=history[4],
-            updated_at=history[5],
+            login_count=history[1],
+            failed_login_count=history[2],
+            last_login=history[3],
+            last_failed_login=history[4],
+            created_at=history[5],
+            updated_at=history[6],
         )
     return None
 
@@ -255,7 +244,6 @@ def get_user_security(user_id: int) -> UserSecurity | None:
             password_hash=security[1],
             two_factor_enabled=security[2],
             two_factor_secret_key=security[3],
-            two_factor_backup_codes=None,
             two_factor_backup_codes_hash=security[4],
         )
     return None
@@ -304,7 +292,7 @@ def get_user_fingerprint(user_id: int) -> UserFingerprint | None:
     return None
 
 def get_user(user_id: int) -> User | None:
-    user_profile = get_user_by_id(user_id)
+    user_profile = get_user_profile(user_id)
     if not user_profile:
         return None
 

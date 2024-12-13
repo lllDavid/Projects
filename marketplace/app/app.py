@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, flash, session, request
 
 from marketplace.app.views import user_creator
-from marketplace.app.user.user_db import update_user
+from marketplace.app.user.user_db import update_username
 from marketplace.app.user.user_db import get_user_by_username, get_user_by_id
 from marketplace.app.user.user_security import UserSecurity
 
@@ -114,7 +114,7 @@ def handle_settings(request):
         new_username = request.form.get("username")
 
         if new_username != user.username:
-            update_user(user_id, new_username)
+            update_username(user_id, new_username)
             session["username"] = new_username
 
             flash("Account details updated successfully.", "success")

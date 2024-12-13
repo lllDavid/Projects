@@ -92,13 +92,11 @@ button.btn-primary {
     font-weight: 600;
     padding: 10px 20px;
     border: none;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 button.btn-primary:hover {
     color: white;
-    background-color: #333;
-    transform: scale(1.2);
+    background-color: #0a740d;
 }
 
 footer {

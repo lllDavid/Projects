@@ -74,13 +74,11 @@ select {
     font-size: large;
     text-transform: uppercase;
     border-radius: 4px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-primary:hover {
     text-decoration: underline;
     background-color: #121212;
-    transform: scale(1.2);
 }
 
 button:focus,

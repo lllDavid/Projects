@@ -4,7 +4,7 @@ from marketplace.app.user.user_profile import UserProfile
 from marketplace.app.user.user_status import UserStatus
 from marketplace.app.user.user_history import UserHistory
 from marketplace.app.user.user_security import UserSecurity
- from marketplace.app.user.user_fingerprint import UserFingerprint
+from marketplace.app.user.user_fingerprint import UserFingerprint
 
 @dataclass
 class User:

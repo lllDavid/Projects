@@ -141,8 +141,7 @@ button {
 }
 
 button:hover {
-    background-color: #147a33;
-    transform: scale(1.1);
+    background-color: #0a740d;
 }
 
 footer {
