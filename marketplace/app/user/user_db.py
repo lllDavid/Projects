@@ -24,14 +24,12 @@ conn = connect(
 def insert_user(user: User):
     cursor = conn.cursor()
     try:
-        # Insert user profile
         cursor.execute(
             "INSERT INTO user_profile (username, email, role) VALUES (%s, %s, %s)", 
             (user.user_profile.username, user.user_profile.email, user.user_profile.role.value)
         )  
         user_id = cursor.lastrowid  
 
-        # Insert user security
         two_factor_backup_codes_hash_json = dumps(list(user.user_security.two_factor_backup_codes_hash)) if user.user_security.two_factor_backup_codes_hash else None
 
         cursor.execute(
@@ -43,13 +41,11 @@ def insert_user(user: User):
              two_factor_backup_codes_hash_json)
         )
 
-        # Insert user status
         cursor.execute(
             "INSERT INTO user_status (user_id, is_banned, is_inactive, ban_type, ban_reason, ban_duration, ban_start_time, ban_end_time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", 
             (user_id, user.user_status.is_banned, user.user_status.is_inactive, user.user_status.ban_type, user.user_status.ban_reason, user.user_status.ban_duration, user.user_status.ban_start_time, user.user_status.ban_end_time)
         )
 
-        # Insert user history
         cursor.execute(
             "INSERT INTO user_history (user_id, login_count, last_login, failed_login_count, last_failed_login, created_at, updated_at) VALUES (%s, %s, %s, %s, %s, %s, %s)", 
             (user_id, 
@@ -61,7 +57,6 @@ def insert_user(user: User):
              user.user_history.updated_at)
         )
 
-        # Insert user fingerprint
         cursor.execute(
             "INSERT INTO user_fingerprint (user_id, username_history, email_address_history, mac_address, associated_ips, avg_login_frequency, avg_session_duration, geolocation_country, geolocation_city, geolocation_latitude, geolocation_longitude, browser_info, os_name, os_version, device_type, device_manufacturer, device_model, user_preferences, user_agent, device_id, screen_resolution, two_factor_enabled, transaction_history, vpn_usage, behavioral_biometrics) "
             "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
