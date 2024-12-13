@@ -1,20 +1,29 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #121212;
-    padding: 20px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align the content at the top */
+    align-items: center;
+    height: 100vh; /* Full viewport height */
 }
 
 .container {
     max-width: 600px;
-    margin: 0 auto;
     background-color: #121212;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 80px; /* Adjust this to match the height of the navbar */
 }
 
 .navbar {
-    background-color: #1e1e1e;
+    background-color: #191818;
 }
 
 .navbar .navbar-nav .nav-link {
@@ -23,18 +32,17 @@ body {
 }
 
 .nav-link:hover {
-    text-decoration: underline
+    text-decoration: underline;
 }
 
-h1,
-h2,
-label {
+h1, h2, label {
     color: white;
 }
 
 .tabs {
     display: flex;
     margin-bottom: 20px;
+    width: 100%; /* Ensure tabs take full width */
 }
 
 .tab-button {
@@ -45,6 +53,7 @@ label {
     border: none;
     cursor: pointer;
     font-weight: bold;
+    text-align: center; /* Center text inside the tab button */
 }
 
 .tab-button.active {
@@ -54,6 +63,7 @@ label {
 
 .form-container {
     display: block;
+    width: 100%; /* Ensure the form container takes full width */
 }
 
 label {
