@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from marketplace.helpers.roles import Role
-from marketplace.app.payment.fiat_wallet import FiatWallet
 
 @dataclass
 class UserProfile:

@@ -4,7 +4,7 @@ from marketplace.app.user.user import User
 
 @dataclass
 class FiatWallet:
-    user: int
+    user_id: int
     wallet_id: int
     bank_name: str
     account_number:str
