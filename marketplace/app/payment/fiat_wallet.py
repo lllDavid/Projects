@@ -6,14 +6,15 @@ from marketplace.app.user.user import User
 class FiatWallet:
     user: User
     bank_name: str
-    account_number:int
-    holder_name: str
+    account_number:str
+    account_holder: str
     routing_number:str
     iban: str | None
-    deposits: dict | None 
-    withdrawals: dict | None 
+    swift_bic: str | None
+    deposit_history: dict | None 
+    withdrawal_history: dict | None 
     account_status: str | None 
-    last_accessed: str | None 
+    last_accessed: datetime 
     encryption_key: str | None 
     
     
