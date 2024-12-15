@@ -1,11 +1,15 @@
 from dataclasses import dataclass
 from datetime import datetime
-from marketplace.app.user.user_deposit import UserDeposit
+
+from marketplace.app.payment.crypto_wallet import CryptoWallet
+from marketplace.app.payment.fiat_wallet import FiatWallet
 
 @dataclass
 class Purchase:
-    user_id: str
-    user_desposit: UserDeposit
+    user_id: int
+    purchase_id: int
+    crypto_wallet: CryptoWallet
+    fiat_wallet: FiatWallet
     transaction_id: str
     fiat_amount: float
     coin_name: str
