@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from marketplace.app.payment.crypto_wallet import CryptoWallet
-from marketplace.app.payment.fiat_wallet import FiatWallet
+from marketplace.app.wallets.crypto.wallet import CryptoWallet
+from marketplace.app.wallets.fiat.wallet import FiatWallet
 
 @dataclass
 class Trade:

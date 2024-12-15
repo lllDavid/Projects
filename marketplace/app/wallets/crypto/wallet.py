@@ -7,10 +7,10 @@ from marketplace.app.user.user import User
 class CryptoWallet:
     user_id: int
     wallet_id: int
-    coin_amount = dict | None
+    coin_amount = dict[str, float] | None
     total_coin_value = float | None
-    deposit_history: dict | None 
-    withdrawal_history: dict | None 
+    deposit_history: dict[str, float] | None 
+    withdrawal_history: dict[str, dict[str, str]] | None 
     account_status: str | None 
     last_accessed: datetime 
     encryption_key: str | None 
