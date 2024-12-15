@@ -1,18 +1,10 @@
-from flask import Flask, render_template, redirect, url_for, flash, session, request
-
-from marketplace.app.views import user_creator
-from marketplace.app.user.user_db import update_username
-from marketplace.app.user.user_db import get_user_by_username, get_user_by_id
+from flask import render_template, redirect, url_for, flash, session, request
+from marketplace.app.user.user_db import update_username, get_user_by_username, get_user_by_id
 from marketplace.app.user.user_security import UserSecurity
 
+def register_routes(app):
 
-def create_app() -> Flask:
-    app = Flask(__name__, static_folder="static", template_folder="templates")
-    app.config["SECRET_KEY"] = "secret_key"
-
-    app.register_blueprint(user_creator)
-
-    # Register Routes
+    # Home Routes
     @app.route("/")
     def index():
         return render_template("landing.html")
@@ -55,7 +47,7 @@ def create_app() -> Flask:
     def settings():
         return handle_settings(request)
 
-    # Home Routes
+    # Additional Routes
     @app.route("/trade")
     def trade():
         return render_template("trade.html")
@@ -68,9 +60,7 @@ def create_app() -> Flask:
     def support():
         return render_template("support.html")
 
-    return app
-
-
+# Request Handlers
 def handle_login(request):
     username = request.form["username"]
     password = request.form["password"]
@@ -88,13 +78,11 @@ def handle_login(request):
         flash("Invalid username or password", "error")
         return redirect(url_for("login"))
 
-
 def handle_logout():
     session.pop("user_id", None)
     session.pop("username", None)
     flash("You have been logged out.", "success")
     return redirect(url_for("index"))
-
 
 def handle_settings(request):
     if "user_id" not in session:
