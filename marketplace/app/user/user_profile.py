@@ -3,8 +3,8 @@ from marketplace.helpers.roles import Role
 
 @dataclass
 class UserProfile:
-    reference_account_id: int 
     id: int | None
+    fiat_wallet_id: int 
     username: str
     email: str
     role: Role
