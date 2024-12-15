@@ -20,21 +20,20 @@ body {
     text-align: center;
 }
 
-h1,
-h2 {
-    color: #FFF;
-}
-
 h1 {
     font-size: 3.5em;
     margin-bottom: 40px;
+}
+
+h1,
+h2 {
+    color: #FFF;
 }
 
 p,
 ul {
     line-height: 1.6;
     font-size: 1.1em;
-    margin: 20px auto;
     max-width: 800px;
 }
 
@@ -45,7 +44,6 @@ ul {
 
 ul li {
     background: #121212;
-    color: #EAEAEA;
     margin: 10px 0;
     padding: 15px;
     border-radius: 10px;

@@ -9,11 +9,6 @@ body {
 
 .navbar {
     background-color: #1e1e1e;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1050;
     padding: 10px 20px;
 }
 
@@ -30,8 +25,6 @@ body {
     background-color: #333;
     color: #fff;
 }
-
-
 
 a {
     text-decoration: none;
