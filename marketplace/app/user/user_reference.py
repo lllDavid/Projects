@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 from marketplace.app.user.user import User
 
 @dataclass
@@ -6,12 +7,12 @@ class ReferenceAccount:
     user: User
     account_number: str
     bank_name: str
-    iban: str | None = None
-    deposits: dict | None = None
-    withdrawals: dict | None = None  
-    account_status: str | None = None 
-    last_accessed: str | None = None
-    encryption_key: str | None = None  
+    iban: str | None
+    deposits: dict | None 
+    withdrawals: dict | None 
+    account_status: str | None 
+    last_accessed: str | None 
+    encryption_key: str | None 
     
     def link_account(self):
         """ Simulate linking the reference account to the platform """
@@ -19,7 +20,7 @@ class ReferenceAccount:
     
     def unlink_account(self):
         """ Simulate unlinking the reference account from the platform """
-        print(f"Reference account for {self.user.user_profile.update_username} unlinked successfully from the platform.")
+        print(f"Reference account for {self.user.user_profile.username} unlinked successfully from the platform.")
     
     def deposit(self, amount: float, currency: str = "USD"):
         """ Simulate depositing funds into the reference account """
@@ -42,13 +43,11 @@ class ReferenceAccount:
 
     def account_info(self):
         """ Display basic account information """
-        info = f"Account Holder: {self.user.name}\n" \
+        info = f"Account Holder: {self.user.user_profile.username}\n" \
                f"Bank: {self.bank_name}\n" \
                f"Account Number: {self.account_number}\n" \
                f"IBAN: {self.iban if self.iban else 'Not provided'}\n" \
                f"Account Status: {self.account_status}\n" \
-               f"Security Level: {self.security_level}\n" \
-               f"Two-Factor Enabled: {self.two_factor_enabled}\n" \
                f"Failed Attempts: {self.failed_attempts}\n" \
                f"Last Accessed: {self.last_accessed if self.last_accessed else 'Never'}"
         print(info)

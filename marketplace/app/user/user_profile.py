@@ -3,6 +3,7 @@ from marketplace.helpers.roles import Role
 
 @dataclass
 class UserProfile:
+    reference_account_id: int 
     id: int | None
     username: str
     email: str
