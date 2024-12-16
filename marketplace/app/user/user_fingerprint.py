@@ -2,30 +2,30 @@ from dataclasses import dataclass
 
 @dataclass
 class UserFingerprint:
-    username_history: set[str]  
-    email_address_history: set[str]  
+    username_history: set[str]
+    email_address_history: set[str]
     mac_address: str | None = None
     associated_ips: dict[str, int] | None = None
-    avg_login_frequency: dict[str, float] | None = None 
-    avg_session_duration: dict[str, float] | None = None 
+    device_id: str | None = None
+    device_type: str | None = None
+    device_manufacturer: str | None = None
+    device_model: str | None = None
+    screen_resolution: str | None = None
     geolocation_country: str | None = None
     geolocation_city: str | None = None
-    geolocation_latitude: float | None = None  
-    geolocation_longitude: float | None = None  
-    browser_info: str | None = None
-    os_name: str | None = None  
-    os_version: str | None = None  
-    device_type: str | None = None 
-    device_manufacturer: str | None = None 
-    device_model: str | None = None  
-    user_preferences: dict[str, str] | None = None  
-    user_agent: str | None = None
-    device_id: str | None = None  
-    screen_resolution: str | None = None  
-    two_factor_enabled: bool | None = None  
-    transaction_history: dict[str, float] | None = None  
-    vpn_usage: bool | None = None  
+    geolocation_latitude: float | None = None
+    geolocation_longitude: float | None = None
+    avg_login_frequency: dict[str, float] | None = None
+    avg_session_duration: dict[str, float] | None = None
     behavioral_biometrics: dict[str, float] | None = None
+    browser_info: str | None = None
+    os_name: str | None = None
+    os_version: str | None = None
+    vpn_usage: bool | None = None
+    user_preferences: dict[str, str] | None = None
+    user_agent: str | None = None
+    two_factor_enabled: bool | None = None
+    transaction_history: dict[str, float] | None = None
 
     def update_username_history(self, username: str):
         self.username_history.add(username)
