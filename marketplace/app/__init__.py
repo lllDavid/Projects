@@ -1,5 +1,5 @@
 from flask import Flask
-from marketplace.app.views.views import user_creator
+from marketplace.app.views.user_creator import user_creator
 from marketplace.app.routes.routes import register_routes
 
 def create_app() -> Flask:
