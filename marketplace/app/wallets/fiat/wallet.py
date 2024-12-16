@@ -36,7 +36,6 @@ class FiatWallet:
         return total_deposits - total_withdrawals
 
     def update_account_status(self, status: str) -> None:
-
         self.account_status = status
 
     def is_active(self) -> bool:
