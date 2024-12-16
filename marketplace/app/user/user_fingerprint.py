@@ -6,9 +6,9 @@ class UserFingerprint:
     username_history: Set[str]  
     email_address_history: Set[str]  
     mac_address: str | None = None
-    associated_ips: Dict[str, int] | None = None
-    avg_login_frequency: Dict[str, float] | None = None 
-    avg_session_duration: Dict[str, float] | None = None 
+    associated_ips: dict[str, int] | None = None
+    avg_login_frequency: dict[str, float] | None = None 
+    avg_session_duration: dict[str, float] | None = None 
     geolocation_country: str | None = None
     geolocation_city: str | None = None
     geolocation_latitude: float | None = None  
@@ -19,14 +19,14 @@ class UserFingerprint:
     device_type: str | None = None 
     device_manufacturer: str | None = None 
     device_model: str | None = None  
-    user_preferences: Dict[str, str] | None = None  
+    user_preferences: dict[str, str] | None = None  
     user_agent: str | None = None
     device_id: str | None = None  
     screen_resolution: str | None = None  
     two_factor_enabled: bool | None = None  
-    transaction_history: Dict[str, float] | None = None  
+    transaction_history: dict[str, float] | None = None  
     vpn_usage: bool | None = None  
-    behavioral_biometrics: Dict[str, float] | None = None
+    behavioral_biometrics: dict[str, float] | None = None
 
     def update_username_history(self, username: str):
         self.username_history.add(username)
@@ -95,7 +95,7 @@ class UserFingerprint:
     def update_vpn_usage(self, vpn_usage: bool):
         self.vpn_usage = vpn_usage
 
-    def update_behavioral_biometrics(self, biometrics: Dict[str, float]):
+    def update_behavioral_biometrics(self, biometrics: dict[str, float]):
         if self.behavioral_biometrics is None:
             self.behavioral_biometrics = {}
         self.behavioral_biometrics.update(biometrics)

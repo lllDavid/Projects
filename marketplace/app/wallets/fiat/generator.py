@@ -30,7 +30,6 @@ def generate_wallet() -> FiatWallet | None:
         }
 
         # Sample additional fields
-        account_status = "active"  # Could be 'active', 'inactive', etc.
         last_accessed = datetime(2024, 12, 15, 10, 30, 0)
         encryption_key = "3f7f84a2d4e0b64f2bc39a2fc8830d1d987e8d12a9d92562fb6ac2398e71c15b"
 
@@ -47,7 +46,6 @@ def generate_wallet() -> FiatWallet | None:
             wallet_balance=wallet_balance,
             deposit_history=deposit_history,
             withdrawal_history=withdrawal_history,
-            account_status=account_status,
             last_accessed=last_accessed,
             encryption_key=encryption_key
         )
@@ -56,4 +54,6 @@ def generate_wallet() -> FiatWallet | None:
 
 # Example usage
 generated_wallet = generate_wallet()
+if generated_wallet is not None:
+    print(generated_wallet.get_balance())
 print(generated_wallet)
