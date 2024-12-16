@@ -3,6 +3,7 @@ from mariadb import connect
 
 from marketplace.config import Config
 from marketplace.app.user.user import User
+from marketplace.app.user.user_bank import UserBank
 from marketplace.app.user.user_status import UserStatus
 from marketplace.app.user.user_history import UserHistory
 from marketplace.app.user.user_profile import UserProfile
@@ -33,28 +34,33 @@ def insert_user(user: User):
         two_factor_backup_codes_hash_json = dumps(list(user.user_security.two_factor_backup_codes_hash)) if user.user_security.two_factor_backup_codes_hash else None
 
         cursor.execute(
+                        "INSERT INTO user_bank (user_id, account_holder, account_number, routing_number, iban, swift_bic, date_linked) VALUES (%s, %s, %s, %s, %s, %s, %s)", 
+                        (user_id, user.user_bank.account_holder, user.user_bank.account_number, user.user_bank.routing_number, user.user_bank.iban, user.user_bank.swift_bic, user.user_bank.date_linked)
+                    )
+        
+        cursor.execute(
+                    "INSERT INTO user_status (user_id, is_banned, is_inactive, ban_type, ban_reason, ban_duration, ban_start_time, ban_end_time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", 
+                    (user_id, user.user_status.is_banned, user.user_status.is_inactive, user.user_status.ban_type, user.user_status.ban_reason, user.user_status.ban_duration, user.user_status.ban_start_time, user.user_status.ban_end_time)
+                )
+
+        cursor.execute(
+                    "INSERT INTO user_history (user_id, login_count, last_login, failed_login_count, last_failed_login, created_at, updated_at) VALUES (%s, %s, %s, %s, %s, %s, %s)", 
+                    (user_id, 
+                    user.user_history.login_count,
+                    user.user_history.last_login,
+                    user.user_history.failed_login_count,  
+                    user.user_history.last_failed_login, 
+                    user.user_history.created_at, 
+                    user.user_history.updated_at)
+                )
+
+        cursor.execute(
             "INSERT INTO user_security (user_id, password_hash, two_factor_enabled, two_factor_secret_key, two_factor_backup_codes_hash) VALUES (%s, %s, %s, %s, %s)",
             (user_id, 
              user.user_security.password_hash,  
              user.user_security.two_factor_enabled,
              user.user_security.two_factor_secret_key,
              two_factor_backup_codes_hash_json)
-        )
-
-        cursor.execute(
-            "INSERT INTO user_status (user_id, is_banned, is_inactive, ban_type, ban_reason, ban_duration, ban_start_time, ban_end_time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", 
-            (user_id, user.user_status.is_banned, user.user_status.is_inactive, user.user_status.ban_type, user.user_status.ban_reason, user.user_status.ban_duration, user.user_status.ban_start_time, user.user_status.ban_end_time)
-        )
-
-        cursor.execute(
-            "INSERT INTO user_history (user_id, login_count, last_login, failed_login_count, last_failed_login, created_at, updated_at) VALUES (%s, %s, %s, %s, %s, %s, %s)", 
-            (user_id, 
-             user.user_history.login_count,
-             user.user_history.last_login,
-             user.user_history.failed_login_count,  
-             user.user_history.last_failed_login, 
-             user.user_history.created_at, 
-             user.user_history.updated_at)
         )
 
         cursor.execute(
@@ -196,6 +202,22 @@ def get_user_profile(user_id: int) -> UserProfile | None:
         )
     return None
 
+def get_user_bank(user_id: int) -> UserBank | None:
+    cursor = conn.cursor()
+    cursor.execute("SELECT user_id, account_holder, account_number, routing_number, iban, swift_bic, date_linked = %s", (user_id,))
+    bank = cursor.fetchone()
+    cursor.close()
+    if bank:
+        return UserBank(
+        account_holder=bank[1],
+        account_number=bank[2],
+        routing_number=bank[3],
+        iban=bank[4],
+        swift_bic=bank[5],
+        date_linked=bank[6]
+        )
+    return None
+
 def get_user_status(user_id: int) -> UserStatus | None:
     cursor = conn.cursor()
     cursor.execute("SELECT user_id, is_banned, is_inactive, ban_type, ban_reason, ban_duration, ban_start_time, ban_end_time FROM user_status WHERE user_id = %s", (user_id,))
@@ -232,7 +254,7 @@ def get_user_history(user_id: int) -> UserHistory | None:
 
 def get_user_security(user_id: int) -> UserSecurity | None:
     cursor = conn.cursor()
-    cursor.execute("SELECT user_id, password_hash, two_factor_enabled, two_factor_secret_key, two_factor_backup_codes_hash FROM user_security WHERE user_id = %s", (user_id,))
+    cursor.execute("SELECT user_id, password_hash, two_factor_enabled, two_factor_secret_key, two_factor_backup_codes, two_factor_backup_codes_hash FROM user_security WHERE user_id = %s", (user_id,))
     security = cursor.fetchone()
     cursor.close()
     if security:
@@ -240,7 +262,8 @@ def get_user_security(user_id: int) -> UserSecurity | None:
             password_hash=security[1],
             two_factor_enabled=security[2],
             two_factor_secret_key=security[3],
-            two_factor_backup_codes_hash=security[4],
+            two_factor_backup_codes=security[4],
+            two_factor_backup_codes_hash=security[5],
         )
     return None
 
@@ -291,6 +314,10 @@ def get_user(user_id: int) -> User | None:
     user_profile = get_user_profile(user_id)
     if not user_profile:
         return None
+    
+    user_bank = get_user_bank(user_id)
+    if not user_bank:
+        return None
 
     user_security = get_user_security(user_id)
     if not user_security:
@@ -310,6 +337,7 @@ def get_user(user_id: int) -> User | None:
 
     user = User(
         user_profile=user_profile, 
+        user_bank=user_bank,
         user_security=user_security, 
         user_status=user_status, 
         user_history=user_history,
