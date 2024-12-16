@@ -46,21 +46,7 @@ class FiatWallet:
         return f"FiatWallet(wallet_id={self.wallet_id}, user_id={self.user.user_profile.id}, bank={self.bank_name}, balance={self.get_balance():.2f}, status={self.account_status})"
     
 
-from marketplace.app.user.user_db import get_user
-user = get_user(9)  # Assuming this fetches the full User object including fingerprint
-print(user)
-if user:  # Ensure the user is not None
-    wallet = FiatWallet(
-        user=user,
-        wallet_id=1001,
-        bank_name="Bank of Python",
-        iban=None,
-        swift_bic=None,
-        account_number="1234567890",
-        account_holder="John Doe",
-        routing_number="987654321"
-    )
-    print(wallet)
+
 
 
  

@@ -35,5 +35,5 @@ class User:
         
     def __str__(self):
         return (f"User: {self.user_profile}, Security: {self.user_security}, "
-                f"Status: {self.user_status}, History: {self.user_history}")
+                f"Status: {self.user_status}, History: {self.user_history}, UserFingerprint: {self.user_fingerprint}")
 
