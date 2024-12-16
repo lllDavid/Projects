@@ -11,11 +11,11 @@ from marketplace.app.user.user_security import UserSecurity
 from marketplace.app.user.user_fingerprint import UserFingerprint
 
 conn = connect(
-    user=Config.DB_CONFIG["user"],
-    password=Config.DB_CONFIG["password"],
-    host=Config.DB_CONFIG["host"],
-    port=Config.DB_CONFIG["port"],
-    database=Config.DB_CONFIG["database"]
+    user=Config.USER_DB_CONFIG["user"],
+    password=Config.USER_DB_CONFIG["password"],
+    host=Config.USER_DB_CONFIG["host"],
+    port=Config.USER_DB_CONFIG["port"],
+    database=Config.USER_DB_CONFIG["database"]
 )
 
 # --------------------------------------------------------------
@@ -35,7 +35,7 @@ def insert_user(user: User):
 
         cursor.execute(
             "INSERT INTO user_bank (user_id, bank_name, account_holder, account_number, routing_number, iban, swift_bic, date_linked) "
-            "VALUES (%s, %s, %s, %s, %s, %s, %s)",
+            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
             (user_id, user.user_bank.bank_name, user.user_bank.account_holder, user.user_bank.account_number,
              user.user_bank.routing_number, user.user_bank.iban, user.user_bank.swift_bic, user.user_bank.date_linked)
         )
@@ -111,10 +111,10 @@ def insert_user(user: User):
         cursor.close()
 
 
-def update_username(user_id: int, username: str):
+def update_username(id: int, username: str):
     cursor = conn.cursor()
     try:
-        cursor.execute("UPDATE user_profile SET username = %s WHERE user_id = %s", (username, user_id))
+        cursor.execute("UPDATE user_profile SET username = %s WHERE id = %s", (username, id))
         conn.commit()
         print("Username updated successfully.")
     except conn.Error as e:
@@ -124,10 +124,10 @@ def update_username(user_id: int, username: str):
         cursor.close()
 
 
-def update_email(user_id: int, email: str):
+def update_email(id: int, email: str):
     cursor = conn.cursor()
     try:
-        cursor.execute("UPDATE user_profile SET email = %s WHERE user_id = %s", (email, user_id))
+        cursor.execute("UPDATE user_profile SET email = %s WHERE id = %s", (email, id))
         conn.commit()
         print("Email updated successfully.")
     except conn.Error as e:
@@ -156,9 +156,9 @@ def update_password(user_id: int, password: str):
 # Section 2: Get User By (Methods)
 # --------------------------------------------------------------
 
-def get_user_by_id(user_id: int) -> UserProfile | None:
+def get_user_by_id(id: int) -> UserProfile | None:
     cursor = conn.cursor()
-    cursor.execute("SELECT user_id, username, email, role FROM user_profile WHERE user_id = %s", (user_id,))
+    cursor.execute("SELECT id, username, email, role FROM user_profile WHERE id = %s", (id,))
     user = cursor.fetchone()
     cursor.close()
     if user:
@@ -168,7 +168,7 @@ def get_user_by_id(user_id: int) -> UserProfile | None:
 
 def get_user_by_username(username: str) -> User | None:
     cursor = conn.cursor()
-    cursor.execute("SELECT user_id, username, email, role FROM user_profile WHERE username = %s", (username,))
+    cursor.execute("SELECT id, username, email, role FROM user_profile WHERE username = %s", (username,))
     user = cursor.fetchone()
     cursor.close()
 
@@ -179,7 +179,7 @@ def get_user_by_username(username: str) -> User | None:
 
 def get_user_by_email(email: str) -> User | None:
     cursor = conn.cursor()
-    cursor.execute("SELECT user_id, username, email, role FROM user_profile WHERE email = %s", (email,))
+    cursor.execute("SELECT id, username, email, role FROM user_profile WHERE email = %s", (email,))
     user = cursor.fetchone()
     cursor.close()
 
@@ -192,9 +192,9 @@ def get_user_by_email(email: str) -> User | None:
 # Section 3: Get User (Methods)
 # --------------------------------------------------------------
 
-def get_user_profile(user_id: int) -> UserProfile | None:
+def get_user_profile(id: int) -> UserProfile | None:
     cursor = conn.cursor()
-    cursor.execute("SELECT user_id, username, email, role FROM user_profile WHERE user_id = %s", (user_id,))
+    cursor.execute("SELECT id, username, email, role FROM user_profile WHERE id = %s", (id,))
     profile = cursor.fetchone()
     cursor.close()
     if profile:
@@ -205,7 +205,7 @@ def get_user_profile(user_id: int) -> UserProfile | None:
 def get_user_bank(user_id: int) -> UserBank | None:
     cursor = conn.cursor()
     cursor.execute(
-        "SELECT user_id, account_holder, account_number, routing_number, iban, swift_bic, date_linked FROM user_bank WHERE user_id = %s", 
+        "SELECT user_id, bank_name, account_holder, account_number, routing_number, iban, swift_bic, date_linked FROM user_bank WHERE user_id = %s", 
         (user_id,)
     )
     bank = cursor.fetchone()
@@ -269,7 +269,7 @@ def get_user_security(user_id: int) -> UserSecurity | None:
     cursor = conn.cursor()
     cursor.execute(
         "SELECT user_id, password_hash, two_factor_enabled, two_factor_secret_key, "
-        "two_factor_backup_codes, two_factor_backup_codes_hash FROM user_security WHERE user_id = %s", (user_id,)
+        "two_factor_backup_codes_hash FROM user_security WHERE user_id = %s", (user_id,)
     )
     security = cursor.fetchone()
     cursor.close()
@@ -278,8 +278,8 @@ def get_user_security(user_id: int) -> UserSecurity | None:
             password_hash=security[1],
             two_factor_enabled=security[2],
             two_factor_secret_key=security[3],
-            two_factor_backup_codes=security[4],
-            two_factor_backup_codes_hash=security[5]
+            two_factor_backup_codes=None,
+            two_factor_backup_codes_hash=security[4]
         )
     return None
 

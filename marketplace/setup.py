@@ -8,7 +8,7 @@ setup(
     name="Marketplace",
     version="1.0.0",
     author="lllDavid",
-    author_email="your_email@example.com",
+    author_email="lllDavid@protonmail.com",
     description="Crypto Marketplace",
     packages=find_packages(),
     entry_points={

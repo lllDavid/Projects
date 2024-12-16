@@ -1,10 +1,18 @@
 class Config:
-    DB_CONFIG = {
+    USER_DB_CONFIG = {
         "user": "root",
         "password": "root",
         "host": "localhost",
         "port": 3306,
-        "database": "marketplace"
+        "database": "marketplace_users"
+    }
+
+    COIN_DB_CONFIG = {
+        "user": "root",
+        "password": "root",
+        "host": "localhost",
+        "port": 3306,
+        "database": "marketplace_coins"
     }
 
     

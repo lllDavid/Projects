@@ -4,11 +4,11 @@ from mariadb import connect
 from marketplace.config import Config
 
 conn = connect(
-    user=Config.DB_CONFIG["user"],
-    password=Config.DB_CONFIG["password"],
-    host=Config.DB_CONFIG["host"],
-    port=Config.DB_CONFIG["port"],
-    database=Config.DB_CONFIG["database"]
+    user=Config.USER_DB_CONFIG["user"],
+    password=Config.USER_DB_CONFIG["password"],
+    host=Config.USER_DB_CONFIG["host"],
+    port=Config.USER_DB_CONFIG["port"],
+    database=Config.USER_DB_CONFIG["database"]
 )
 
 def is_unique_user_and_email(username: str, email: str):
