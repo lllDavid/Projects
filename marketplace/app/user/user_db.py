@@ -315,5 +315,5 @@ def get_user(user_id: int) -> User | None:
         user_history=user_history,
         user_fingerprint=user_fingerprint
     )
-    
+
     return user
