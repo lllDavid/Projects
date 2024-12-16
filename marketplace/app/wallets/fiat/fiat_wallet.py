@@ -8,12 +8,6 @@ class FiatWallet:
     user: User
     wallet_id: int | None
     wallet_balance: float | None
-    bank_name: str
-    account_number:str
-    account_holder: str
-    routing_number:str
-    iban: str | None
-    swift_bic: str | None
     last_accessed: datetime | None 
     encryption_key: str | None 
     deposit_history: dict[str, float] = field(default_factory=dict)
