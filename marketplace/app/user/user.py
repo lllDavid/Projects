@@ -20,9 +20,9 @@ class User:
         self.user_profile = new_user_profile
         print(f"User profile updated.")
 
-    def update_user_security(self, new_user_security: UserSecurity):
-        self.user_security = new_user_security
-        print("Security info updated.")
+    def update_user_bank(self, new_user_bank: UserBank):
+        self.user_bank = new_user_bank
+        print("Bank information updated.")
 
     def update_user_status(self, new_user_status: UserStatus):
         self.user_status = new_user_status
@@ -32,15 +32,15 @@ class User:
         self.user_history = new_user_history
         print("User history updated.")
     
+    def update_user_security(self, new_user_security: UserSecurity):
+        self.user_security = new_user_security
+        print("Security info updated.")
+
     def update_user_fingerprint(self, new_user_fingerprint: UserFingerprint):
         self.user_fingerprint = new_user_fingerprint
         print("User fingerprint updated.")
-    
-    def update_user_bank(self, new_user_bank: UserBank):
-        self.user_bank = new_user_bank
-        print("Bank information updated.")
 
     def __str__(self):
         return (f"User Profile: {self.user_profile}, Bank: {self.user_bank}, "
-                f"Security: {self.user_security}, Status: {self.user_status}, "
-                f"History: {self.user_history}, Fingerprint: {self.user_fingerprint}")
+                f"Status: {self.user_status}, History: {self.user_history}, "
+                f"Security: {self.user_security}, Fingerprint: {self.user_fingerprint}")

@@ -3,8 +3,8 @@ from datetime import datetime
 from marketplace.app.user import user_db
 from marketplace.helpers.roles import Role
 from marketplace.app.user.user import User
-from marketplace.app.user.user_bank import UserBank
 from marketplace.app.user.user_profile import UserProfile
+from marketplace.app.user.user_bank import UserBank
 from marketplace.app.user.user_status import UserStatus
 from marketplace.app.user.user_history import UserHistory
 from marketplace.app.user.user_security import UserSecurity
@@ -86,17 +86,17 @@ class UserCreator:
     def create_user(self, username: str, email: str, password: str) -> User:
         user_profile = self.create_user_profile(username, email, role=Role.USER)
         user_bank = self.create_user_bank()
-        user_security = self.create_user_security(password)
         user_status = self.create_user_status()
         user_history = self.create_user_history()
+        user_security = self.create_user_security(password)
         user_fingerprint = self.create_user_fingerprint()
 
         return User(
             user_profile=user_profile,
             user_bank = user_bank,
-            user_security=user_security,
             user_status=user_status,
             user_history=user_history,
+            user_security=user_security,
             user_fingerprint=user_fingerprint
         )
 
