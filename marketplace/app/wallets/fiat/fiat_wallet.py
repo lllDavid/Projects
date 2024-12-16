@@ -8,10 +8,10 @@ class FiatWallet:
     user: User
     wallet_id: int | None
     wallet_balance: float | None
-    last_accessed: datetime | None 
-    encryption_key: str | None 
     deposit_history: dict[str, float] = field(default_factory=dict)
     withdrawal_history: dict[str, dict[str, float]] = field(default_factory=dict)
+    last_accessed: datetime | None = None
+    encryption_key: str | None = None
 
     def add_deposit(self, date: str, amount: float) -> None:
         self.deposit_history[date] = self.deposit_history.get(date, 0) + amount

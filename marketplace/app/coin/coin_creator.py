@@ -1,13 +1,10 @@
 from datetime import datetime
-from flask import Blueprint
 
 from marketplace.app.coin import coin_db
 from marketplace.app.coin.coin import Coin
 from marketplace.app.coin.coin_specs import CoinSpecs
 from marketplace.app.coin.coin_details import CoinDetails
 from marketplace.app.coin.coin_market_data import CoinMarketData
-
-coin_creator = Blueprint('coin_creator', __name__)
 
 class CoinCreator:
     def create_coin(self, name:str, symbol:str, category:str, description:str, price:float, last_updated:datetime) -> Coin:

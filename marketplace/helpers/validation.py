@@ -25,37 +25,32 @@ def is_unique_user_and_email(username: str, email: str):
             return "email"
     return None
 
+from re import match
+
 def is_valid_username(username):
-    # 1. Check if username length is between 3 and 20 characters
     if len(username) < 3 or len(username) > 20:
         return "Username must be between 3 and 20 characters long."
-
-    if not match(r'^[A-Za-z0-9_-]+$', username):
-        return "Username can only contain letters, numbers, underscores, and hyphens."
     
-    # 3. Check if username has no leading or trailing whitespace
+    if not match(r'^[A-Za-z0-9_-]+$', username):
+        return "Username contains invalid characters."
+
     if username != username.strip():
         return "Username cannot have leading or trailing spaces."
-    
-    # 4. Check for reserved words
-    reserved_words = ['admin', 'root', 'superuser', 'shutdown', 'localhost']
+
+    reserved_words = ['admin', 'support', 'root', 'superuser', 'localhost']
     if username.lower() in reserved_words:
-        return "Username contains reserved or sensitive words."
-    # 5. Check for common database manipulation or SQL injection-related keywords
+        return "Username contains restricted terms."
+
     sql_keywords = ['select', 'insert', 'delete', 'drop', 'update', 'truncate', 'union', 'where', 'from', 'alter', 'join', 'drop']
     if any(keyword in username.lower() for keyword in sql_keywords):
-        return "Username contains database manipulation or SQL injection-related words."
+        return "Username contains restricted terms."
 
-    # 6. Check for common Linux commands or system-related terms
     linux_commands = ['ls', 'rm', 'cat', 'chmod', 'chown', 'touch', 'mkdir', 'rmdir', 'sudo', 'passwd', 'shutdown', 'reboot', 'halt', 'ping', 'ps', 'kill', 'ifconfig', 'df', 'mount']
     if any(command in username.lower() for command in linux_commands):
-        return "Username contains Linux commands or system-related terms."
-    
-    # 7. Check for periods not in the first or last position
-    if username.startswith('.') or username.endswith('.'):
-        return "Username cannot start or end with a period."
-    
+        return "Username contains restricted terms."
+
     return True
+
 
 def is_valid_email(email: str) -> bool:
     email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
