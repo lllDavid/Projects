@@ -13,8 +13,9 @@ class FiatWallet:
     routing_number:str
     iban: str | None
     swift_bic: str | None
+    wallet_balance: float | None
     deposit_history: dict[str, float] = field(default_factory=dict)
-    withdrawal_history: dict[str, dict[str, str]] = field(default_factory=dict)
+    withdrawal_history: dict[str, dict[str, float]] = field(default_factory=dict)
     account_status: str | None = None
     last_accessed: datetime | None = None
     encryption_key: str | None = None
@@ -25,15 +26,39 @@ class FiatWallet:
     def add_deposit(self, date: str, amount: float) -> None:
         self.deposit_history[date] = self.deposit_history.get(date, 0) + amount
 
-    def add_withdrawal(self, date: str, amount: float, method: str) -> None:
-        self.withdrawal_history.setdefault(date, {})[method] = f"${amount:.2f}"
+    def withdraw_to_bank(self, amount: float, date: str):
+        # Check if balance is sufficient
+        if self.wallet_balance is None or self.wallet_balance < amount:
+            return f"Insufficient funds to withdraw {amount}. Current balance: {self.wallet_balance}"
+
+        # Deduct the amount from the wallet balance
+        self.wallet_balance -= amount
+        
+        # Add the withdrawal to the withdrawal history
+        if date not in self.withdrawal_history:
+            self.withdrawal_history[date] = {}
+
+        self.withdrawal_history[date]['amount'] = amount
+        
+        
+        # Log the withdrawal
+        self.last_accessed = datetime.now()
+        
+        return f"Withdrawal of {amount} to account {self.account_number} completed on {date}. New balance: {self.wallet_balance}"
 
     def get_balance(self) -> float:
+        # Calculate total deposits (sum of deposit amounts)
         total_deposits = sum(self.deposit_history.values())
+
+        # Calculate total withdrawals (ensure we are summing float values)
         total_withdrawals = sum(
-            float(amount.split('$')[1]) for methods in self.withdrawal_history.values() for amount in methods.values()
+            float(amount) for methods in self.withdrawal_history.values() for amount in methods.values()
         )
+
+        # Return the balance
         return total_deposits - total_withdrawals
+
+
 
     def update_account_status(self, status: str) -> None:
         self.account_status = status
