@@ -13,10 +13,10 @@ class FiatWallet:
     routing_number:str
     iban: str | None
     swift_bic: str | None
-    deposit_history: dict | None 
-    withdrawal_history: dict | None 
+    deposit_history: dict[str, float] | None 
+    withdrawal_history: dict[str, dict[str, str]] | None 
     account_status: str | None 
-    last_accessed: datetime 
+    last_accessed: datetime | None
     encryption_key: str | None 
     
     
