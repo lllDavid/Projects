@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from marketplace.app.user.user_profile import UserProfile
+from marketplace.app.user.user_bank import UserBank
 from marketplace.app.user.user_status import UserStatus
 from marketplace.app.user.user_history import UserHistory
 from marketplace.app.user.user_security import UserSecurity
@@ -9,6 +10,7 @@ from marketplace.app.user.user_fingerprint import UserFingerprint
 @dataclass
 class User:
     user_profile: UserProfile
+    user_bank: UserBank
     user_status: UserStatus
     user_history: UserHistory
     user_security: UserSecurity
@@ -32,8 +34,13 @@ class User:
     
     def update_user_fingerprint(self, new_user_fingerprint: UserFingerprint):
         self.user_fingerprint = new_user_fingerprint
-        
-    def __str__(self):
-        return (f"User: {self.user_profile}, Security: {self.user_security}, "
-                f"Status: {self.user_status}, History: {self.user_history}, Fingerprint: {self.user_fingerprint}")
+        print("User fingerprint updated.")
+    
+    def update_user_bank(self, new_user_bank: UserBank):
+        self.user_bank = new_user_bank
+        print("Bank information updated.")
 
+    def __str__(self):
+        return (f"User Profile: {self.user_profile}, Bank: {self.user_bank}, "
+                f"Security: {self.user_security}, Status: {self.user_status}, "
+                f"History: {self.user_history}, Fingerprint: {self.user_fingerprint}")
