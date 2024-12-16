@@ -1,10 +1,9 @@
 from dataclasses import dataclass
-from typing import Dict, Set
 
 @dataclass
 class UserFingerprint:
-    username_history: Set[str]  
-    email_address_history: Set[str]  
+    username_history: set[str]  
+    email_address_history: set[str]  
     mac_address: str | None = None
     associated_ips: dict[str, int] | None = None
     avg_login_frequency: dict[str, float] | None = None 
