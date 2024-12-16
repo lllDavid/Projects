@@ -24,7 +24,7 @@ class FiatWallet:
         self.add_to_withdrawal_history(amount, date)
         self.update_last_accessed()
 
-        return f"Withdrawal of {amount} to account {self.account_number} completed on {date}. New balance: {self.wallet_balance}"
+        return f"Withdrawal of {amount} to account {self.user.user_bank.account_number} completed on {date}. New balance: {self.wallet_balance}"
 
     def has_sufficient_funds(self, amount: float) -> bool:
         return self.wallet_balance is not None and self.wallet_balance >= amount
@@ -53,7 +53,7 @@ class FiatWallet:
         self.last_accessed = datetime.now()
 
     def __str__(self) -> str:
-        return f"FiatWallet(wallet_id={self.wallet_id}, user_id={self.user.user_profile.id}, bank={self.bank_name}, balance={self.get_balance():.2f})"
+        return f"FiatWallet(wallet_id={self.wallet_id}, user_id={self.user.user_profile.id}, bank={self.user.user_bank.bank_name}, balance={self.get_balance():.2f})"
     
 
 

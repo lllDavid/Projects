@@ -3,6 +3,7 @@ from datetime import datetime
 
 @dataclass
 class UserBank:
+    bank_name: str | None
     account_holder: str | None
     account_number: str | None
     routing_number: str | None
