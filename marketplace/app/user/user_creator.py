@@ -48,7 +48,7 @@ class UserCreator:
         return UserFingerprint(
             username_history=set(),
             email_address_history=set(),
-            mac_address="fejwifjiwe",
+            mac_address=None,
             associated_ips=None,
             avg_login_frequency=None,
             avg_session_duration=None,
