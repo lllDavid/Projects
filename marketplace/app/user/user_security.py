@@ -8,9 +8,9 @@ from argon2.exceptions import VerificationError
 class UserSecurity:
     password_hash: str
     two_factor_enabled: bool
-    two_factor_secret_key: str | None = None
-    two_factor_backup_codes: set | None = None
-    two_factor_backup_codes_hash: set | None = None
+    two_factor_secret_key: str | None 
+    two_factor_backup_codes: set | None 
+    two_factor_backup_codes_hash: set | None 
 
     @staticmethod
     def hash_password(password: str, time_cost: int = 4, memory_cost: int = 102400, parallelism: int = 8):

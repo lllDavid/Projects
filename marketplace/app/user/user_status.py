@@ -6,11 +6,11 @@ class UserStatus:
     is_online: bool
     is_banned: bool
     is_inactive: bool
-    ban_type: str | None = None  
-    ban_reason: str | None = None
-    ban_duration: int | None = None
-    ban_start_time: datetime | None = None  
-    ban_end_time: datetime | None = None  
+    ban_type: str | None   
+    ban_reason: str | None 
+    ban_duration: int | None
+    ban_start_time: datetime | None 
+    ban_end_time: datetime | None   
 
     def update_ban_status(self, is_banned: bool, ban_type: str, ban_reason: str, ban_duration: int | None = None):
         self.is_banned = is_banned

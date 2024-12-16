@@ -6,7 +6,7 @@ from marketplace.app.user.user import User
 @dataclass
 class FiatWallet:
     user: User
-    wallet_id: int
+    wallet_id: int | None
     wallet_balance: float | None
     bank_name: str
     account_number:str
@@ -14,8 +14,8 @@ class FiatWallet:
     routing_number:str
     iban: str | None
     swift_bic: str | None
-    last_accessed: datetime | None = None
-    encryption_key: str | None = None
+    last_accessed: datetime | None 
+    encryption_key: str | None 
     deposit_history: dict[str, float] = field(default_factory=dict)
     withdrawal_history: dict[str, dict[str, float]] = field(default_factory=dict)
 
@@ -38,7 +38,7 @@ class FiatWallet:
     def update_balance(self, amount: float):
         if self.wallet_balance is None:
             raise ValueError("Wallet balance is None, cannot perform withdrawal.")
-        self.wallet_balance -= amount  #
+        self.wallet_balance -= amount  
 
 
     def add_to_withdrawal_history(self, amount: float, date: str):

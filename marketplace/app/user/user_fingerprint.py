@@ -4,28 +4,28 @@ from dataclasses import dataclass
 class UserFingerprint:
     username_history: set[str]
     email_address_history: set[str]
-    mac_address: str | None = None
-    associated_ips: dict[str, int] | None = None
-    device_id: str | None = None
-    device_type: str | None = None
-    device_manufacturer: str | None = None
-    device_model: str | None = None
-    screen_resolution: str | None = None
-    geolocation_country: str | None = None
-    geolocation_city: str | None = None
-    geolocation_latitude: float | None = None
-    geolocation_longitude: float | None = None
-    avg_login_frequency: dict[str, float] | None = None
-    avg_session_duration: dict[str, float] | None = None
-    behavioral_biometrics: dict[str, float] | None = None
-    browser_info: str | None = None
-    os_name: str | None = None
-    os_version: str | None = None
-    vpn_usage: bool | None = None
-    user_preferences: dict[str, str] | None = None
-    user_agent: str | None = None
-    two_factor_enabled: bool | None = None
-    transaction_history: dict[str, float] | None = None
+    mac_address: str | None 
+    associated_ips: dict[str, int] | None
+    device_id: str | None 
+    device_type: str | None
+    device_manufacturer: str | None 
+    device_model: str | None 
+    screen_resolution: str | None 
+    geolocation_country: str | None 
+    geolocation_city: str | None 
+    geolocation_latitude: float | None
+    geolocation_longitude: float | None 
+    avg_login_frequency: dict[str, float] | None
+    avg_session_duration: dict[str, float] | None 
+    behavioral_biometrics: dict[str, float] | None 
+    browser_info: str | None 
+    os_name: str | None 
+    os_version: str | None
+    vpn_usage: bool | None 
+    user_preferences: dict[str, str] | None 
+    user_agent: str | None 
+    two_factor_enabled: bool | None 
+    transaction_history: dict[str, float] | None 
 
     def update_username_history(self, username: str):
         self.username_history.add(username)
