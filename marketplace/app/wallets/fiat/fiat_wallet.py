@@ -1,7 +1,5 @@
 from dataclasses import dataclass, field
 from datetime import datetime
-
-from marketplace.app.user.user import User
 from marketplace.app.user.user_bank import UserBank
 
 @dataclass
@@ -35,8 +33,7 @@ class FiatWallet:
         if self.wallet_balance is None:
             raise ValueError("Wallet balance is None, cannot perform withdrawal.")
         self.wallet_balance -= amount
- 
-
+    
     def add_to_withdrawal_history(self, amount: float, date: str):
         self.withdrawal_history.setdefault(date, {})['amount'] = amount
 
