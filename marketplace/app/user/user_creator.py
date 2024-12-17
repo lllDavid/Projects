@@ -3,7 +3,6 @@ from datetime import datetime
 from marketplace.helpers.roles import Role
 from marketplace.app.user import user_db
 from marketplace.app.user.user import User
-from marketplace.app.user.user_profile import UserProfile
 from marketplace.app.user.user_bank import UserBank
 from marketplace.app.user.user_status import UserStatus
 from marketplace.app.user.user_history import UserHistory
@@ -11,9 +10,6 @@ from marketplace.app.user.user_security import UserSecurity
 from marketplace.app.user.user_fingerprint import UserFingerprint
 
 class UserCreator:
-    def create_user_profile(self, username: str, email: str, role: Role) -> UserProfile:
-        return UserProfile(id=None, username=username, email=email, role=role)
-    
     def create_user_bank(self) -> UserBank:
         return UserBank(
             bank_name=None,
@@ -86,7 +82,9 @@ class UserCreator:
 
     def create_user(self, username: str, email: str, password: str) -> User:
         try:
-            user_profile = self.create_user_profile(username, email, role=Role.USER)
+            username = username
+            email = email
+            role = Role.USER
             user_bank = self.create_user_bank()
             user_status = self.create_user_status()
             user_history = self.create_user_history()
@@ -94,7 +92,10 @@ class UserCreator:
             user_fingerprint = self.create_user_fingerprint()
 
             user = User(
-                user_profile=user_profile,
+                id=None,
+                username=username,
+                email=email,
+                role=role,
                 user_bank=user_bank,
                 user_status=user_status,
                 user_history=user_history,

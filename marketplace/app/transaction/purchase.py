@@ -19,7 +19,7 @@ class Purchase:
     status: str
     successful: bool
 
-    def user_purchase_coin(self, coin:Coin, amount:float):
+'''   def user_purchase_coin(self, coin:Coin, amount:float):
         if self.fiat_wallet:
             amount = self.fiat_amount
             self.fiat_wallet.add_deposit(date=datetime.now().strftime('%Y-%m-%d'), amount=amount)
@@ -27,3 +27,4 @@ class Purchase:
         if self.crypto_wallet:
             self.crypto_wallet.add_deposit(date=datetime.now().strftime('%Y-%m-%d'), amount=amount)
             
+'''

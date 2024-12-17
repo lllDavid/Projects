@@ -5,8 +5,6 @@ class CoinSpecs:
     algorithm: str
     consensus_mechanism: str
     block_time: float
-    max_supply: float
-    circulating_supply: float
     transaction_speed: float
     security_features: str
     privacy_features: str

@@ -18,7 +18,7 @@ def create_and_save_user(username, email, password):
     return user
 
 def set_user_session(user):
-    session["user_id"] = user.user_profile.id
+    session["user_id"] = user.id
     session["username"] = user.user_profile.username
 
 def handle_error(error):

@@ -101,7 +101,7 @@ def insert_user(user: User):
 
         conn.commit()  
         print("User inserted into the database.")
-        user.user_profile.id = user_id  
+        user.id = user_id  
         return user
 
     except conn.Error as e:
@@ -163,7 +163,7 @@ def get_user_by_id(id: int) -> UserProfile | None:
     user = cursor.fetchone()
     cursor.close()
     if user:
-        return UserProfile(id=user[0], username=user[1], email=user[2], role=user[3])
+        return UserProfile(username=user[1], email=user[2], role=user[3])
     return None
 
 
@@ -199,7 +199,7 @@ def get_user_profile(id: int) -> UserProfile | None:
     profile = cursor.fetchone()
     cursor.close()
     if profile:
-        return UserProfile(id=profile[0], username=profile[1], email=profile[2], role=profile[3])
+        return UserProfile(username=profile[1], email=profile[2], role=profile[3])
     return None
 
 
@@ -357,6 +357,7 @@ def get_user_from_db(user_id: int) -> User | None:
         return None
 
     user = User(
+        id = user_id,
         user_profile=user_profile,
         user_bank=user_bank,
         user_security=user_security,
