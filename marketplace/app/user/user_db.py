@@ -19,7 +19,7 @@ conn = connect(
 )
 
 # --------------------------------------------------------------
-# Section 1: Insert, Delete, Update
+# Section 1: Insert, Delete and Update User attributes
 # --------------------------------------------------------------
 
 def insert_user(user: User):
@@ -153,9 +153,10 @@ def update_password(user_id: int, password: str):
 
 
 # --------------------------------------------------------------
-# Section 2: Get User By (Methods)
+# Section 2: User Retrieval by Specific Criteria
 # --------------------------------------------------------------
 
+# Just retrieve the UserProfile if a Users ID attribute is needed
 def get_user_by_id(id: int) -> UserProfile | None:
     cursor = conn.cursor()
     cursor.execute("SELECT id, username, email, role FROM user_profile WHERE id = %s", (id,))
@@ -173,7 +174,7 @@ def get_user_by_username(username: str) -> User | None:
     cursor.close()
 
     if user:
-        return get_user(user[0])
+        return get_user_from_db(user[0])
     return None
 
 
@@ -184,12 +185,12 @@ def get_user_by_email(email: str) -> User | None:
     cursor.close()
 
     if user:
-        return get_user(user[0])
+        return get_user_from_db(user[0])
     return None
 
 
 # --------------------------------------------------------------
-# Section 3: Get User (Methods)
+# # Section 3: User Object Components by User ID
 # --------------------------------------------------------------
 
 def get_user_profile(id: int) -> UserProfile | None:
@@ -326,8 +327,11 @@ def get_user_fingerprint(user_id: int) -> UserFingerprint | None:
         )
     return None
 
+# --------------------------------------------------------------
+# Section 4: Complete User Retrieval
+# --------------------------------------------------------------
 
-def get_user(user_id: int) -> User | None:
+def get_user_from_db(user_id: int) -> User | None:
     user_profile = get_user_profile(user_id)
     if not user_profile:
         return None

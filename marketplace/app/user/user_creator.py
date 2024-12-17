@@ -111,5 +111,5 @@ class UserCreator:
         try:
             user_db.insert_user(user)  
         except Exception as e:
-            print(f"Error saving user: {e}")
+            print(f"Error: {e}")
             raise ValueError("User couldn't be saved to database.")
