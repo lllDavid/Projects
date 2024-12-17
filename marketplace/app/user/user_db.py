@@ -1,9 +1,9 @@
 from json import dumps
 from mariadb import connect
 
+from marketplace.helpers.roles import Role
 from marketplace.config import Config
 from marketplace.app.user.user import User
-from marketplace.app.user.user_profile import UserProfile
 from marketplace.app.user.user_bank import UserBank
 from marketplace.app.user.user_status import UserStatus
 from marketplace.app.user.user_history import UserHistory
@@ -26,9 +26,10 @@ def insert_user(user: User):
     cursor = conn.cursor()
     try:
         cursor.execute(
-            "INSERT INTO user_profile (username, email, role) VALUES (%s, %s, %s)",
-            (user.user_profile.username, user.user_profile.email, user.user_profile.role.value)
+            "INSERT INTO user (username, email, role) VALUES (%s, %s, %s)",
+            (user.username, user.email, user.role)
         )
+          
         user_id = cursor.lastrowid  
 
         two_factor_backup_codes_hash_json = dumps(list(user.user_security.two_factor_backup_codes_hash)) if user.user_security.two_factor_backup_codes_hash else None
@@ -114,7 +115,7 @@ def insert_user(user: User):
 def update_username(id: int, username: str):
     cursor = conn.cursor()
     try:
-        cursor.execute("UPDATE user_profile SET username = %s WHERE id = %s", (username, id))
+        cursor.execute("UPDATE user SET username = %s WHERE id = %s", (username, id))
         conn.commit()
         print("Username updated successfully.")
     except conn.Error as e:
@@ -127,7 +128,7 @@ def update_username(id: int, username: str):
 def update_email(id: int, email: str):
     cursor = conn.cursor()
     try:
-        cursor.execute("UPDATE user_profile SET email = %s WHERE id = %s", (email, id))
+        cursor.execute("UPDATE user SET email = %s WHERE id = %s", (email, id))
         conn.commit()
         print("Email updated successfully.")
     except conn.Error as e:
@@ -156,20 +157,19 @@ def update_password(user_id: int, password: str):
 # Section 2: User Retrieval by Specific Criteria
 # --------------------------------------------------------------
 
-# Just retrieve the UserProfile if a Users ID attribute is needed
-def get_user_by_id(id: int) -> UserProfile | None:
+def get_user_by_id(id: int) -> User | None:
     cursor = conn.cursor()
-    cursor.execute("SELECT id, username, email, role FROM user_profile WHERE id = %s", (id,))
+    cursor.execute("SELECT id, username, email, role FROM user WHERE id = %s", (id,))
     user = cursor.fetchone()
     cursor.close()
     if user:
-        return UserProfile(username=user[1], email=user[2], role=user[3])
+        return get_user_from_db(user[0])
     return None
 
 
 def get_user_by_username(username: str) -> User | None:
     cursor = conn.cursor()
-    cursor.execute("SELECT id, username, email, role FROM user_profile WHERE username = %s", (username,))
+    cursor.execute("SELECT id, username, email, role FROM user WHERE username = %s", (username,))
     user = cursor.fetchone()
     cursor.close()
 
@@ -180,7 +180,7 @@ def get_user_by_username(username: str) -> User | None:
 
 def get_user_by_email(email: str) -> User | None:
     cursor = conn.cursor()
-    cursor.execute("SELECT id, username, email, role FROM user_profile WHERE email = %s", (email,))
+    cursor.execute("SELECT id, username, email, role FROM user WHERE email = %s", (email,))
     user = cursor.fetchone()
     cursor.close()
 
@@ -190,16 +190,20 @@ def get_user_by_email(email: str) -> User | None:
 
 
 # --------------------------------------------------------------
-# # Section 3: User Object Components by User ID
+# Section 3: User Object Components by User ID
 # --------------------------------------------------------------
 
-def get_user_profile(id: int) -> UserProfile | None:
+# Fetch basic user details (username, email, and role)
+def get_user(user_id: int) -> tuple[str, str, Role] | None:
     cursor = conn.cursor()
-    cursor.execute("SELECT id, username, email, role FROM user_profile WHERE id = %s", (id,))
-    profile = cursor.fetchone()
+    cursor.execute(
+        "SELECT username, email, role FROM user WHERE id = %s",
+        (user_id,)
+    )
+    user_data = cursor.fetchone()
     cursor.close()
-    if profile:
-        return UserProfile(username=profile[1], email=profile[2], role=profile[3])
+    if user_data:
+        return user_data  # Return tuple of (username, email, role)
     return None
 
 
@@ -332,8 +336,9 @@ def get_user_fingerprint(user_id: int) -> UserFingerprint | None:
 # --------------------------------------------------------------
 
 def get_user_from_db(user_id: int) -> User | None:
-    user_profile = get_user_profile(user_id)
-    if not user_profile:
+
+    user_data = get_user(user_id)
+    if not user_data:
         return None
 
     user_bank = get_user_bank(user_id)
@@ -357,8 +362,10 @@ def get_user_from_db(user_id: int) -> User | None:
         return None
 
     user = User(
-        id = user_id,
-        user_profile=user_profile,
+        id=user_id,
+        username=user_data[0],
+        email=user_data[1],
+        role=user_data[2],
         user_bank=user_bank,
         user_security=user_security,
         user_status=user_status,

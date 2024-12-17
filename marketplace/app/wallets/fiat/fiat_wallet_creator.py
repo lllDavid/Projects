@@ -12,7 +12,7 @@ def create_fiat_wallet(user_id) -> FiatWallet | None:
         encryption_key = None
 
         wallet = FiatWallet(
-            user_id=user.user_profile.id,
+            user_id=user.id,
             user_bank=user.user_bank,
             wallet_id=wallet_id,
             wallet_balance=wallet_balance,

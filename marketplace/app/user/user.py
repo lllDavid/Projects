@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 
 from marketplace.helpers.roles import Role
-from marketplace.app.user.user_profile import UserProfile
 from marketplace.app.user.user_bank import UserBank
 from marketplace.app.user.user_status import UserStatus
 from marketplace.app.user.user_history import UserHistory
@@ -19,10 +18,6 @@ class User:
     user_history: UserHistory
     user_security: UserSecurity
     user_fingerprint: UserFingerprint
-
-    def update_user_profile(self, new_user_profile: UserProfile):
-        self.user_profile = new_user_profile
-        print(f"User profile updated.")
 
     def update_user_bank(self, new_user_bank: UserBank):
         self.user_bank = new_user_bank
@@ -45,6 +40,6 @@ class User:
         print("User fingerprint updated.")
 
     def __str__(self):
-        return (f"User ID: {self.id}, Profile: {self.user_profile}, Bank: {self.user_bank}, "
+        return (f"User ID: {self.id}, Bank: {self.user_bank}, "
                 f"Status: {self.user_status}, History: {self.user_history}, "
                 f"Security: {self.user_security}, Fingerprint: {self.user_fingerprint}")

@@ -14,7 +14,7 @@ conn = connect(
 def is_unique_user_and_email(username: str, email: str):
     cursor = conn.cursor()
     cursor.execute(""" 
-        SELECT username, email FROM user_profile WHERE username = %s OR email = %s """, (username, email))
+        SELECT username, email FROM user WHERE username = %s OR email = %s """, (username, email))
     user = cursor.fetchone()
     cursor.close()
 

@@ -19,7 +19,7 @@ def create_and_save_user(username, email, password):
 
 def set_user_session(user):
     session["user_id"] = user.id
-    session["username"] = user.user_profile.username
+    session["username"] = user.username
 
 def handle_error(error):
     flash(f"Error: {str(error)}", "error")
