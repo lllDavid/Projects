@@ -1,17 +1,35 @@
-- Add API for Crypto Market Data
+DONE:
+    - created user modules
+    - created coin modules
+    - created user sql structure
+    - created coin sql structure
+    - created flask views/routes
+    - created frontend static/templates
+    - designed frontend
+    - created wallets modules
+    - created transaction modules
+    
+    - implemented argon2id for password/backupcodes hashing
+    - 
 
-- Add Transaction Methods/Functionality
 
-- Add Payment Methods/Functionality
 
-- Add 2FA Functionality
+ TODO:
 
-- Add KYC 
+    - API for Crypto Market Data
 
-- Add AES256 encrypt
+    - Transaction Methods/Functionality
 
-- Check everything for exploits
+    - Payment Methods/Functionality
 
-- Add checks for input like rate limiter, add limiter for account login trys
+    - 2FA Functionality
 
- - Fees
+    - KYC 
+
+    - AES256 encrypt
+
+    - check for vulnerabilities
+
+    - input like rate limiter website, limiter for account logins
+
+    - fees for transactions
