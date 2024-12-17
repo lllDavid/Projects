@@ -3,7 +3,7 @@ from marketplace.app.user.user import User
 from marketplace.app.user.user_db import get_user
 
 def generate_wallet() -> FiatWallet | None:
-    user = get_user(2)
+    user = get_user(7)
     if user is not None:
         wallet_id = None
         wallet_balance = None
