@@ -27,3 +27,5 @@ def create_cryto_wallet(user_id) -> CryptoWallet | None:
         )
         
         return wallet
+    
+print(create_cryto_wallet(1))
