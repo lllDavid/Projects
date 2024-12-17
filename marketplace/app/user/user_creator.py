@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from marketplace.helpers.roles import Role
 from marketplace.app.user import user_db
 from marketplace.app.user.user import User
@@ -85,32 +84,31 @@ class UserCreator:
         )
 
     def create_user(self, username: str, email: str, password: str) -> User:
-        user_profile = self.create_user_profile(username, email, role=Role.USER)
-        user_bank = self.create_user_bank()
-        user_status = self.create_user_status()
-        user_history = self.create_user_history()
-        user_security = self.create_user_security(password)
-        user_fingerprint = self.create_user_fingerprint()
-
-        return User(
-            user_profile=user_profile,
-            user_bank = user_bank,
-            user_status=user_status,
-            user_history=user_history,
-            user_security=user_security,
-            user_fingerprint=user_fingerprint
-        )
-
-    def create_and_save_user(self, username: str, email: str, password: str) -> User | None:
         try:
-            user = self.create_user(username, email, password)
-            user_db.insert_user(user)
+            user_profile = self.create_user_profile(username, email, role=Role.USER)
+            user_bank = self.create_user_bank()
+            user_status = self.create_user_status()
+            user_history = self.create_user_history()
+            user_security = self.create_user_security(password)
+            user_fingerprint = self.create_user_fingerprint()
+
+            user = User(
+                user_profile=user_profile,
+                user_bank=user_bank,
+                user_status=user_status,
+                user_history=user_history,
+                user_security=user_security,
+                user_fingerprint=user_fingerprint
+            )
+            
             return user
-        except ValueError as e:
-            print(f"Error: {e}")
-            return None 
         except Exception as e:
             print(f"Error: {e}")
-            return None
-
-        
+            raise ValueError("User account couldn't be created")  
+    
+    def save_user(self, user):
+        try:
+            user_db.insert_user(user)  
+        except Exception as e:
+            print(f"Error saving user: {e}")
+            raise ValueError("User couldn't be saved to database.")
