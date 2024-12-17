@@ -30,7 +30,7 @@ class CryptoWallet:
         total_balance = coin_balance + (self.total_coin_value or 0)
         return total_deposits - total_withdrawals + total_balance
     
-    def update_last_accessed(self):sync
+    def update_last_accessed(self):
         self.last_accessed = datetime.now()
 
     def __str__(self) -> str:
