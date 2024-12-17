@@ -27,7 +27,7 @@ def insert_user(user: User):
     try:
         cursor.execute(
             "INSERT INTO user (username, email, role) VALUES (%s, %s, %s)",
-            (user.username, user.email, user.role)
+            (user.username, user.email, user.role.value)
         )
           
         user_id = cursor.lastrowid  
@@ -193,7 +193,6 @@ def get_user_by_email(email: str) -> User | None:
 # Section 3: User Object Components by User ID
 # --------------------------------------------------------------
 
-# Fetch basic user details (username, email, and role)
 def get_user(user_id: int) -> tuple[str, str, Role] | None:
     cursor = conn.cursor()
     cursor.execute(
@@ -202,9 +201,14 @@ def get_user(user_id: int) -> tuple[str, str, Role] | None:
     )
     user_data = cursor.fetchone()
     cursor.close()
+    
     if user_data:
-        return user_data  # Return tuple of (username, email, role)
+        username, email, role_str = user_data
+        # Convert the string to the Role enum
+        role = Role(role_str)
+        return username, email, role  # Return a tuple of (username, email, role)
     return None
+
 
 
 def get_user_bank(user_id: int) -> UserBank | None:

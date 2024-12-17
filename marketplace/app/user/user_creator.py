@@ -25,7 +25,7 @@ class UserCreator:
         return UserStatus(
             is_online=False,
             is_banned=False,
-            is_inactive=True,
+            is_inactive=False,
             ban_reason=None,
             ban_duration=None,
             ban_type=None,

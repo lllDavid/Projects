@@ -70,8 +70,8 @@ def handle_login(request):
         password, user.user_security.password_hash
     ):
         flash("Login successful", "success")
-        session["user_id"] = user.user_profile.id
-        session["username"] = user.user_profile.username
+        session["user_id"] = user.id
+        session["username"] = user.username
         session.modified = True
         return redirect(url_for("home"))
     else:
