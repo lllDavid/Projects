@@ -1,9 +1,10 @@
 from marketplace.app.wallets.crypto.crypto_wallet import CryptoWallet
 from marketplace.app.user.user_db import get_user_from_db
 
-def generate_cryto_wallet(user_id) -> CryptoWallet | None:
+def create_cryto_wallet(user_id) -> CryptoWallet | None:
     user = get_user_from_db(user_id)
     if user is not None:
+        wallet_id = None
         wallet_address=None
         coin_amount= {}
         total_coin_value= None
@@ -15,6 +16,7 @@ def generate_cryto_wallet(user_id) -> CryptoWallet | None:
         wallet = CryptoWallet(
             user_id= user.user_profile.id,
             user_bank = user.user_bank,
+            wallet_id=wallet_id,
             wallet_address=wallet_address,
             coin_amount=coin_amount,
             total_coin_value=total_coin_value,
@@ -22,7 +24,6 @@ def generate_cryto_wallet(user_id) -> CryptoWallet | None:
             withdrawal_history=withdrawal_history,
             last_accessed=last_accessed,
             encryption_key=encryption_key
-
         )
         
         return wallet

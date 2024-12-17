@@ -6,6 +6,7 @@ from marketplace.app.user.user_bank import UserBank
 class CryptoWallet:
     user_id: int | None
     user_bank: UserBank
+    wallet_id: int | None
     wallet_address: str | None
     coin_amount: dict[str, float] = field(default_factory=dict)
     total_coin_value: float | None = None
@@ -13,9 +14,6 @@ class CryptoWallet:
     encryption_key: str | None = None
     deposit_history: dict[str, float] = field(default_factory=dict)
     withdrawal_history: dict[str, dict[str, str]] = field(default_factory=dict)
-    
-    def update_last_accessed(self):
-        self.last_accessed = datetime.now()
 
     def add_deposit(self, date: str, amount: float) -> None:
         self.deposit_history[date] = self.deposit_history.get(date, 0) + amount
@@ -31,7 +29,10 @@ class CryptoWallet:
         coin_balance = sum(self.coin_amount.values()) if self.coin_amount else 0
         total_balance = coin_balance + (self.total_coin_value or 0)
         return total_deposits - total_withdrawals + total_balance
+    
+    def update_last_accessed(self):sync
+        self.last_accessed = datetime.now()
 
     def __str__(self) -> str:
         coin_summary = ", ".join(f"{coin}: {amount}" for coin, amount in self.coin_amount.items()) if self.coin_amount else "No coins"
-        return f"CryptoWallet(wallet_id={self.wallet_id}, user_id={self.user.user_profile.id}, coins={coin_summary}, balance={self.get_balance():.2f})"
+        return f"CryptoWallet(wallet_id={self.wallet_id}, user_id={self.user_id}, coins={coin_summary}, balance={self.get_balance():.2f})"
