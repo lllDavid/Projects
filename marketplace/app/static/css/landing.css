@@ -57,11 +57,12 @@ h2 {
     text-transform: uppercase;
     font-weight: 600;
     display: inline-block;
+    transition: transform 0.4s ease-out;
 }
 
 .btn-signup:hover,
 .btn-login:hover {
-    text-decoration: underline;
+    transform: scale(1.2);
 }
 
 footer {
@@ -76,10 +77,12 @@ footer a {
     color: #fff;
     text-decoration: none;
     padding: 0 15px;
+    transition: transform 0.4s ease-out;
+    display: inline-block;
 }
 
 footer a:hover {
-    text-decoration: underline;
+    transform: scale(1.2);
 }
 
 @media (max-width: 768px) {
