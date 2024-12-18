@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from marketplace.helpers.roles import Role
+
 from marketplace.app.user.user_bank import UserBank
 from marketplace.app.user.user_status import UserStatus
 from marketplace.app.user.user_history import UserHistory

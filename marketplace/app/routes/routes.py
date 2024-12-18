@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, flash, session, request
-from marketplace.app.user.user_db import update_username, get_user_by_username, get_user_by_id
+from marketplace.app.db.user_db import update_username, get_user_by_username, get_user_by_id
 from marketplace.app.user.user_security import UserSecurity
 
 def register_routes(app):

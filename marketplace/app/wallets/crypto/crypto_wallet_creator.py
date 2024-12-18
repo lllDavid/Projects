@@ -1,5 +1,5 @@
 from marketplace.app.wallets.crypto.crypto_wallet import CryptoWallet
-from marketplace.app.user.user_db import get_user_from_db
+from marketplace.app.db.user_db import get_user_from_db
 
 def create_cryto_wallet(user_id) -> CryptoWallet | None:
     user = get_user_from_db(user_id)

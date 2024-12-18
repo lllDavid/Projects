@@ -1,19 +1,3 @@
-DONE:
-    - created user modules
-    - created coin modules
-    - created user sql structure
-    - created coin sql structure
-    - created flask views/routes
-    - created frontend static/templates
-    - designed frontend
-    - created wallets modules
-    - created transaction modules
-    
-    - implemented argon2id for password/backupcodes hashing
-    - 
-
-
-
  TODO:
 
     - API for Crypto Market Data

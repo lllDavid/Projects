@@ -33,7 +33,6 @@ class UserStatus:
         ban_duration_display = self.ban_duration if self.ban_type == 'temporary' else 'N/A'
         print(f"User banned: {is_banned}, Reason: {ban_reason}, Type: {ban_type}, Duration: {ban_duration_display}")
 
-
     def update_online_status(self, is_online: bool):
         self.is_online = is_online
         print(f"User Online: {is_online}.")
