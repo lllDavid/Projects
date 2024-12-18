@@ -9,16 +9,14 @@ class CoinSpecs:
     transaction_speed: float
     security_features: str
     privacy_features: str
-    max_supply: float | None = None  # max_supply can be a float or None
-    genesis_block_date: str | None = None  # genesis_block_date can be a string or None
-    token_type: str | None = None  # token_type can be a string or None
-    governance_model: str | None = None  # governance_model can be a string or None
-    development_activity: str | None = None  # development_activity can be a string or None
-    hard_cap: float | None = None  # hard_cap can be a float or None
-    forking_coin: str | None = None  # forking_coin can be a string or None
-    economic_model: str | None = None  # economic_model can be a string or None
-
-    # Update methods (same as before, but also for the new fields)
+    max_supply: float | None = None  
+    genesis_block_date: str | None = None  
+    token_type: str | None = None  
+    governance_model: str | None = None  
+    development_activity: str | None = None  
+    hard_cap: float | None = None  
+    forking_coin: str | None = None  
+    economic_model: str | None = None  
 
     def update_algorithm(self, new_algorithm: str):
         self.algorithm = new_algorithm
