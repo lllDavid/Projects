@@ -11,10 +11,11 @@ body {
 .navbar .navbar-nav .nav-link {
     color: #e0e0e0 !important;
     font-size: 1.1em;
+    transition: transform 0.4s ease-out;
 }
 
 .nav-link:hover {
-    text-decoration: underline;
+    transform: scale(1.2);
 }
 
 .container {
