@@ -14,19 +14,30 @@ class CoinMarketData:
 
     def update_price(self, new_price_usd: float):
         self.price_usd = new_price_usd
-        self.price_change_24h = ((self.price_usd - self.low_24h_usd) / self.low_24h_usd) * 100
 
-    def get_24h_price_range(self) -> tuple:
-        return (self.low_24h_usd, self.high_24h_usd)
+    def update_market_cap(self, new_market_cap_usd: float):
+        self.market_cap_usd = new_market_cap_usd
 
-    def update_24h_volume(self, new_volume_24h: float):
-        self.volume_24h_usd = new_volume_24h
+    def update_volume_24h(self, new_volume_24h_usd: float):
+        self.volume_24h_usd = new_volume_24h_usd
 
-    def update_market_cap(self):
-        self.market_cap_usd = self.price_usd * self.circulating_supply
+    def update_high_24h(self, new_high_24h_usd: float):
+        self.high_24h_usd = new_high_24h_usd
 
-    def calculate_price_change_percentage(self):
-        return ((self.price_usd - self.low_24h_usd) / self.low_24h_usd) * 100
+    def update_low_24h(self, new_low_24h_usd: float):
+        self.low_24h_usd = new_low_24h_usd
+
+    def update_all_time_high(self, new_all_time_high: float):
+        self.all_time_high = new_all_time_high
+
+    def update_price_change_24h(self, new_price_change_24h: float):
+        self.price_change_24h = new_price_change_24h
+
+    def update_circulating_supply(self, new_circulating_supply: float):
+        self.circulating_supply = new_circulating_supply
+
+    def update_max_supply(self, new_max_supply: float):
+        self.max_supply = new_max_supply
 
     def __str__(self):
         return (f"Price: ${self.price_usd}, "
