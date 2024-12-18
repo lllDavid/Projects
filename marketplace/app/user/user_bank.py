@@ -33,6 +33,11 @@ class UserBank:
         self.date_linked = new_date_linked
 
     def __str__(self) -> str:
-        return (f"UserBank(bank_name={self.bank_name}, account_holder={self.account_holder}, "
-                f"account_number={self.account_number}, iban={self.iban}, swift_bic={self.swift_bic}, "
-                f"date_linked={self.date_linked})")
+        return (
+            f"Bank Name: {self.bank_name}, "
+            f"Account Holder: {self.account_holder}, "
+            f"Account Number: {self.account_number}, "
+            f"IBAN: {self.iban}, "
+            f"SWIFT/BIC: {self.swift_bic}, "
+            f"Date Linked: {self.date_linked}")
+
