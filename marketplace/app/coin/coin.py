@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from datetime import datetime
 
 from marketplace.config import Config
-from marketplace.app.coin.coin_profile import CoinProfile
 from marketplace.app.coin.coin_specs import CoinSpecs
 from marketplace.app.coin.coin_market_data import CoinMarketData
 

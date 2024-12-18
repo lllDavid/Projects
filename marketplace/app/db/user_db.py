@@ -204,9 +204,8 @@ def get_user(user_id: int) -> tuple[str, str, Role] | None:
     
     if user_data:
         username, email, role_str = user_data
-        # Convert the string to the Role enum
         role = Role(role_str)
-        return username, email, role  # Return a tuple of (username, email, role)
+        return username, email, role 
     return None
 
 

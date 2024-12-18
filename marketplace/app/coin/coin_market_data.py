@@ -7,6 +7,7 @@ class CoinMarketData:
     volume_24h_usd: float
     high_24h_usd: float
     low_24h_usd: float
+    all_time_high: float
     price_change_24h: float
     circulating_supply: float
     max_supply: float

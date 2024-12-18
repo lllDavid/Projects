@@ -4,6 +4,7 @@ from dataclasses import dataclass
 class CoinSpecs:
     algorithm: str
     consensus_mechanism: str
+    blockchain_network: str
     block_time: float
     transaction_speed: float
     security_features: str
