@@ -11,15 +11,11 @@ body {
 
 .container {
     flex-grow: 1;
+    /* Ensure the container grows to take available space */
     max-width: 900px;
     margin: auto;
     padding: 20px;
     text-align: center;
-}
-
-h1,
-h2 {
-    color: #FFF;
 }
 
 h1 {
@@ -27,30 +23,20 @@ h1 {
     margin-bottom: 40px;
 }
 
-p,
-ul {
+p {
     line-height: 1.6;
     font-size: 1.1em;
     max-width: 800px;
+    margin: 0 auto 30px;
+    /* Adjust margin for proper spacing */
 }
 
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-ul li {
-    background: #121212;
-    border-radius: 10px;
-}
-
-/* Styling for the contact form */
 form {
     display: flex;
-    flex-direction: column; /* Arrange form elements in a column */
+    flex-direction: column;
     align-items: center;
-    max-width: 600px; /* Max width for the form */
-    margin: 20px auto; /* Center form horizontally */
+    max-width: 600px;
+    margin: 20px auto;
 }
 
 form label {
@@ -61,9 +47,9 @@ form label {
 
 form input,
 form textarea {
-    width: 100%;
+    width: 70%;
     padding: 12px;
-    margin-bottom: 20px; /* Spacing between form fields */
+    margin-bottom: 20px;
     background-color: #2a2a2a;
     border: 1px solid #444;
     border-radius: 8px;
@@ -83,14 +69,11 @@ form button {
 }
 
 form button:hover {
-    background-color: #007BFF; /* Change color on hover */
+    background-color: #007BFF;
 }
 
-/* Footer */
 footer {
-    border-top: 1px solid #444;
     margin-top: auto;
-    padding: 20px 0;
     background: #121212;
     color: #D1D1D1;
     text-align: center;
