@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Contact Us</h1>
+        </header>
+
+        <section>
+            <h2>We'd Love to Hear From You!</h2>
+            <p>If you have any questions, comments, or feedback, feel free to reach out to us using the form below or
+                contact us through the provided details.</p>
+        </section>
+
+        <section>
+            <h2>Contact Form</h2>
+            <form action="your_form_handler_url" method="POST">
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Your Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Your Message:</label>
+                <textarea id="message" name="message" rows="6" required></textarea>
+
+                <button type="submit">Send Message</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Other Ways to Contact Us</h2>
+            <p>If you prefer, you can reach us through the following:</p>
+            <ul>
+                <li>Email: <a href="mailto:info@marketplace.com">info@marketplace.com</a></li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>&copy; 2024 Company Name. All rights reserved.</p>
+        </footer>
+    </div>
+
+</body>
+
+</html>

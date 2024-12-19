@@ -1,0 +1,97 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #121212;
+    color: #EAEAEA;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex-grow: 1;
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+}
+
+h1,
+h2 {
+    color: #FFF;
+}
+
+h1 {
+    font-size: 3.5em;
+    margin-bottom: 40px;
+}
+
+p,
+ul {
+    line-height: 1.6;
+    font-size: 1.1em;
+    max-width: 800px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    background: #121212;
+    border-radius: 10px;
+}
+
+/* Styling for the contact form */
+form {
+    display: flex;
+    flex-direction: column; /* Arrange form elements in a column */
+    align-items: center;
+    max-width: 600px; /* Max width for the form */
+    margin: 20px auto; /* Center form horizontally */
+}
+
+form label {
+    margin-bottom: 8px;
+    font-size: 1.1em;
+    color: #EAEAEA;
+}
+
+form input,
+form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px; /* Spacing between form fields */
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 8px;
+    color: #EAEAEA;
+    font-size: 1em;
+}
+
+form button {
+    background-color: #1E90FF;
+    color: #fff;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #007BFF; /* Change color on hover */
+}
+
+/* Footer */
+footer {
+    border-top: 1px solid #444;
+    margin-top: auto;
+    padding: 20px 0;
+    background: #121212;
+    color: #D1D1D1;
+    text-align: center;
+}
