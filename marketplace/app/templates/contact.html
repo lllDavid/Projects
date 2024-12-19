@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
+    <title>Contact</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
 </head>
 
@@ -12,32 +12,34 @@
     <div class="container">
         <header>
             <h1>Contact Us</h1>
+            <p>We'd love to hear from you! Please fill out the form below to get in touch.</p>
         </header>
 
         <section>
-            <p>If you have any questions, comments, or feedback, feel free to reach out to us using the form below </p>
-        </section>
-
-        <section>
             <form action="your_form_handler_url" method="POST">
-                <label for="name">Your Name:</label>
-                <input type="text" id="name" name="name" required>
+                <div class="form-group">
+                    <label for="name">Your Name:</label>
+                    <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                </div>
 
-                <label for="email">Your Email:</label>
-                <input type="email" id="email" name="email" required>
+                <div class="form-group">
+                    <label for="email">Your Email:</label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email">
+                </div>
 
-                <label for="message">Your Message:</label>
-                <textarea id="message" name="message" rows="6" required></textarea>
+                <div class="form-group">
+                    <label for="message">Your Message:</label>
+                    <textarea id="message" name="message" rows="6" required placeholder="Write your message here"></textarea>
+                </div>
 
-                <button type="submit">Send Message</button>
+                <button type="submit" class="btn-submit">Send Message</button>
             </form>
         </section>
 
-
-
     </div>
+
     <footer>
-        <p>&copy; 2024 Company Name. All rights reserved.</p>
+        <p>&copy; 2024 Marketplace. All rights reserved.</p>
     </footer>
 
 </body>

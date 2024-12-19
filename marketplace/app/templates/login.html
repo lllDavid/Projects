@@ -7,7 +7,6 @@
     <title>Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-
 </head>
 
 <body>
@@ -28,24 +27,22 @@
 
         <form action="{{ url_for('login') }}" method="POST">
             <div class="mb-3">
-
-                <input type="text" id="username" name="username" required placeholder="Username" class="form-control"
-                    autofocus>
+                <input type="text" id="username" name="username" required placeholder="Username" class="form-control" autofocus>
             </div>
 
             <div class="mb-3">
-                <input type="password" id="password" name="password" required placeholder="Password"
-                    class="form-control">
+                <input type="password" id="password" name="password" required placeholder="Password" class="form-control">
             </div>
+
+            <div class="mb-3 text-center">
+                <a href="" class="text-decoration-none">Forgot Password?</a>
+            </div>
+
 
             <div class="btn-container">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
-
-        <footer>
-            <p>&copy; 2024 Marketplace. All rights reserved.</p>
-        </footer>
     </div>
 
 </body>

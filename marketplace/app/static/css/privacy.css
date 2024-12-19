@@ -43,7 +43,8 @@ p {
     line-height: 1.6;
     font-size: 1.1em;
     max-width: 800px;
-    margin: 0 auto 30px;
+    margin: 0 auto 15px;
+    padding: 0; 
 }
 
 footer {
@@ -52,4 +53,3 @@ footer {
     color: #D1D1D1;
     text-align: center;
 }
-
