@@ -3,31 +3,28 @@ body {
     height: 100%;
     margin: 0;
     font-family: Arial, sans-serif;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
     background: #121212;
     color: #EAEAEA;
+    display: flex;
+    flex-direction: column;
 }
 
 .container {
     flex-grow: 1;
     max-width: 900px;
-    margin: 0 auto;
+    margin: auto;
     padding: 20px;
     text-align: center;
-}
-
-h1 {
-    font-size: 3.5em;
-    margin-bottom: 40px;
 }
 
 h1,
 h2 {
     color: #FFF;
+}
+
+h1 {
+    font-size: 3.5em;
+    margin-bottom: 40px;
 }
 
 p,
@@ -45,18 +42,13 @@ ul {
 ul li {
     background: #121212;
     border-radius: 10px;
-    border: none;
 }
 
 footer {
     border-top: 1px solid #444;
     margin-top: auto;
     padding: 20px 0;
-    background-color: #121212;
+    background: #121212;
     color: #D1D1D1;
-}
-
-footer p {
     text-align: center;
-    margin: 0;
 }

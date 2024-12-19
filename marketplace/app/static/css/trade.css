@@ -12,7 +12,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 80px; 
+    margin-top: 80px;
 }
 
 .navbar {
@@ -28,7 +28,9 @@ body {
     text-decoration: underline;
 }
 
-h1, h2, label {
+h1,
+h2,
+label {
     color: white;
 }
 
@@ -50,17 +52,17 @@ h1 {
     border: none;
     cursor: pointer;
     font-weight: bold;
-    text-align: center; 
+    text-align: center;
 }
 
 .tab-button.active {
-    background-color: #0a740d;
+    background-color: #333;
     color: white;
 }
 
 .form-container {
     display: block;
-    width: 100%; 
+    width: 100%;
 }
 
 label {
@@ -89,7 +91,7 @@ button {
 }
 
 .submit-button:hover {
-    background-color: #0a740d;
+    background-color: #053907;
 }
 
 #buy-limit-container {

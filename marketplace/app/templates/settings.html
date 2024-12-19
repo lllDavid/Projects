@@ -25,11 +25,11 @@
                 <form action="/settings" method="POST" id="account-form">
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input type="text" id="username" name="username" value="{{ user.username }}">
+                        <input type="text" id="username" name="username" placeholder="{{ user.username }}">
                     </div>
                     <div class="form-group">
                         <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" value="{{ user.email }}">
+                        <input type="email" id="email" name="email" placeholder="{{ user.email }}">
                     </div>
                     <div class="form-group">
                         <label for="password">New Password</label>
@@ -45,26 +45,27 @@
             </section>
 
 
+            <div class="dropdown-container">
+                <section class="settings-section">
+                    <h2>Wallets</h2>
+                    <form action="/update-wallet" method="POST" id="crypto-form">
+                        <div class="form-group">
 
-            <section class="settings-section">
-                <h2>Wallets</h2>
-                <form action="/update-wallet" method="POST" id="crypto-form">
-                    <div class="form-group">
+                            <select id="wallet-type" name="wallet-type" required>
+                                <option value="" disabled selected>Add Wallet</option>
+                                <option value="btc">Bitcoin (BTC)</option>
+                                <option value="eth">Ethereum (ETH)</option>
+                                <option value="ltc">Litecoin (LTC)</option>
+                            </select>
+                        </div>
 
-                        <select id="wallet-type" name="wallet-type" required>
-                            <option value="" disabled selected>Select Wallet Type</option>
-                            <option value="btc">Bitcoin (BTC)</option>
-                            <option value="eth">Ethereum (ETH)</option>
-                            <option value="ltc">Litecoin (LTC)</option>
-                        </select>
-                    </div>
+                        <div class="form-group" id="wallet-address-container" style="display: none;">
+                        </div>
 
-                    <div class="form-group" id="wallet-address-container" style="display: none;">
-                    </div>
-
-                    <button id="save-wallet-button" type="submit" class="btn-save">Save Wallet</button>
-                </form>
-            </section>
+                        <button id="save-wallet-button" type="submit" class="btn-save">Save Wallet</button>
+                    </form>
+                </section>
+            </div>
 
             <section class="settings-section">
                 <h2>Account Management</h2>
@@ -85,30 +86,22 @@
         const walletType = this.value;
         const walletAddressContainer = document.getElementById('wallet-address-container');
 
-        walletAddressContainer.innerHTML = '';
+        walletAddressContainer.innerHTML = ''; // Clear the previous content
 
         if (walletType) {
-            let labelText = '';
             let placeholderText = '';
             let inputId = '';
 
             if (walletType === 'btc') {
-                labelText = 'Bitcoin (BTC) Address';
                 placeholderText = 'Enter your Bitcoin address';
                 inputId = 'btc-wallet';
             } else if (walletType === 'eth') {
-                labelText = 'Ethereum (ETH) Address';
                 placeholderText = 'Enter your Ethereum address';
                 inputId = 'eth-wallet';
             } else if (walletType === 'ltc') {
-                labelText = 'Litecoin (LTC) Address';
                 placeholderText = 'Enter your Litecoin address';
                 inputId = 'ltc-wallet';
             }
-
-            const label = document.createElement('label');
-            label.setAttribute('for', inputId);
-            label.textContent = labelText;
 
             const input = document.createElement('input');
             input.type = 'text';
@@ -117,12 +110,11 @@
             input.placeholder = placeholderText;
             input.required = true;
 
-            walletAddressContainer.appendChild(label);
             walletAddressContainer.appendChild(input);
-
             walletAddressContainer.style.display = 'block';
         }
     });
+
 </script>
 
 </html>
