@@ -70,7 +70,8 @@ footer {
     padding: 5px;
 }
 
-footer a {
+footer a,
+p {
     color: #fff;
     text-decoration: none;
     margin: 10px;
@@ -79,6 +80,10 @@ footer a {
 
 footer a:hover {
     text-decoration: underline;
+}
+
+footer p {
+    opacity: 0.5;
 }
 
 @media (max-width: 768px) {
