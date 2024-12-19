@@ -9,17 +9,17 @@ def register_routes(app):
     def index():
         return render_template("landing.html")
 
-    @app.route("/about")
-    def about():
-        return render_template("about.html")
+    @app.route("/privacy_policy")
+    def privacy_policy():
+        return render_template("privacy_policy.html")
 
-    @app.route("/services")
-    def services():
-        return render_template("services.html")
+    @app.route("/terms")
+    def terms():
+        return render_template("terms.html")
 
-    @app.route("/legal")
-    def legal():
-        return render_template("legal.html")
+    @app.route("/contact")
+    def contact():
+        return render_template("contact.html")
 
     # Authentication Routes
     @app.route("/signup")

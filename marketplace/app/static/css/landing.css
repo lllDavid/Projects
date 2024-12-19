@@ -61,14 +61,14 @@ footer {
     background: #121212;
     color: #fff;
     text-align: center;
-    padding: 20px 0;
     margin-top: auto;
+    padding: 15px;
 }
 
 footer a {
     color: #fff;
     text-decoration: none;
-    padding: 0 15px;
+    margin: 5px;
     display: inline-block;
 }
 
