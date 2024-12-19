@@ -4,14 +4,10 @@ from marketplace.app.user.user_security import UserSecurity
 
 def register_routes(app):
 
-    # Home Routes
+    # Landing Routes
     @app.route("/")
     def index():
         return render_template("landing.html")
-
-    @app.route("/about")
-    def about():
-        return render_template("about.html")
 
     @app.route("/privacy")
     def privacy():
@@ -20,10 +16,6 @@ def register_routes(app):
     @app.route("/terms")
     def terms():
         return render_template("terms.html")
-    
-    @app.route("/contact")
-    def contact():
-        return render_template("contact.html")
 
     # Authentication Routes
     @app.route("/signup")
@@ -41,18 +33,13 @@ def register_routes(app):
     def logout():
         return handle_logout()
 
-    # User Account Routes
+    # Home Routes
     @app.route("/home")
     def home():
         current_username = session.get("username")
         return render_template("home.html", username=current_username)
-
-    @app.route("/settings", methods=["GET", "POST"])
-    def settings():
-        return handle_settings(request)
-
-    # Additional Routes
-    @app.route("/trade")
+    
+      @app.route("/trade")
     def trade():
         return render_template("trade.html")
 
@@ -60,6 +47,11 @@ def register_routes(app):
     def portfolio():
         return render_template("portfolio.html")
 
+    @app.route("/settings", methods=["GET", "POST"])
+    def settings():
+        return handle_settings(request)
+
+    # Additional Routes
     @app.route("/support")
     def support():
         return render_template("support.html")
