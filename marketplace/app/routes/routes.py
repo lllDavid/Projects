@@ -47,9 +47,9 @@ def register_routes(app):
     def trade():
         return render_template("trade.html")
 
-    @app.route("/portfolio")
-    def portfolio():
-        return render_template("portfolio.html")
+    @app.route("/wallet")
+    def wallet():
+        return render_template("wallet.html")
 
     @app.route("/settings", methods=["GET", "POST"])
     def settings():
