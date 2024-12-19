@@ -26,15 +26,12 @@
         </div>
     </div>
 
-    <footer class="footer">
-        <div class="container-fluid d-flex justify-content-between align-items-center px-4 py-3">
-            <p class="mb-0">&copy; 2024 Marketplace. All rights reserved.</p>
+    <footer>
+        <a>&copy; 2024 Marketplace.</a>
+        <a href="{{ url_for('terms') }}">Terms of Service</a>
+        <a href="{{ url_for('privacy') }}">Privacy</a>
+        <a href="{{ url_for('cookies') }}">Cookies</a>
 
-            <div>
-                <a href="{{ url_for('privacy') }}" class="me-3">Privacy Policy</a>
-                <a href="{{ url_for('terms') }}">Terms of Service</a>
-            </div>
-        </div>
     </footer>
 </body>
 
