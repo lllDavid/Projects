@@ -2,40 +2,19 @@ body {
     background-color: #121212;
     color: #e0e0e0;
     font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
     display: flex;
     flex-direction: column;
-    min-height: 100vh; 
-}
-
-.navbar {
-    background-color: #191818;
-}
-
-.navbar .navbar-nav .nav-link {
-    color: #e0e0e0 !important;
-    font-size: 1.1em;
-}
-
-.nav-link:hover {
-    text-decoration: underline;
+    min-height: 100vh;
+    font-size: 1rem;
 }
 
 .container {
     background-color: #121212;
-    flex: 1; 
-    padding-top: 80px;
-}
-
-.table {
-    margin-bottom: 70px;
-    border-radius: 5px;
-    width: 100%;
+    padding-top: 5rem;
 }
 
 .table thead {
-    border-bottom: 1px solid rgba(68, 68, 68, 0.7);
+    border-bottom: 0.1rem solid rgba(68, 68, 68, 0.7);
 }
 
 .coin-table th,
@@ -45,109 +24,22 @@ body {
     border: none !important;
 }
 
-.coin-table th {
-    font-weight: 100;
-}
-
 .coin-logo {
-    width: 24px;
-    height: auto;
-    margin-right: 8px;
+    width: 1.5rem;
+    margin-right: 0.5rem;
 }
 
 .coin-symbol {
-    margin-left: 10px;
+    margin-left: 0.625rem;
     color: rgb(88, 79, 79);
 }
 
 footer {
     text-align: center;
-    margin-top: auto; 
-    padding: 10px 0;
+    margin-top: auto;
+    padding: 1rem 0;
 }
 
 footer p {
     margin: 0;
-}
-
-@media (max-width: 1200px) {
-    .navbar .navbar-nav .nav-link {
-        font-size: 1em;
-    }
-}
-
-@media (max-width: 992px) {
-    .navbar {
-        padding: 10px;
-    }
-
-    .navbar .navbar-nav .nav-link {
-        font-size: 0.9em;
-    }
-
-    .container {
-        padding-top: 60px;
-    }
-
-    .coin-table th,
-    .coin-table td {
-        font-size: 0.9em;
-    }
-
-    .coin-logo {
-        width: 20px;
-    }
-}
-
-@media (max-width: 768px) {
-    .coin-table th,
-    .coin-table td {
-        font-size: 0.8em;
-    }
-
-    .coin-table thead {
-        display: none;
-    }
-
-    .coin-table tbody {
-        display: block;
-    }
-
-    .coin-table tr {
-        display: block;
-        margin-bottom: 15px;
-        border: 1px solid #444;
-        border-radius: 5px;
-        padding: 10px;
-    }
-
-    .coin-table td {
-        display: block;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-        padding-left: 35%;
-    }
-}
-
-@media (max-width: 576px) {
-    .navbar .navbar-nav .nav-link {
-        font-size: 0.9em;
-        padding: 5px;
-    }
-
-    h1 {
-        font-size: 2.5rem !important;
-    }
-
-    p {
-        font-size: 1.1rem !important;
-    }
-
-    .coin-logo {
-        width: 18px;
-    }
-
-    footer p {
-        font-size: 0.8em;
-    }
 }

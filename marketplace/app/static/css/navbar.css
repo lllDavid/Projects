@@ -1,0 +1,11 @@
+.navbar {
+    background-color: #191818;
+}
+
+.navbar .navbar-nav .nav-link {
+    font-size: 1.1em;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}

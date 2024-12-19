@@ -39,7 +39,7 @@ def register_routes(app):
         current_username = session.get("username")
         return render_template("home.html", username=current_username)
     
-      @app.route("/trade")
+    @app.route("/trade")
     def trade():
         return render_template("trade.html")
 
