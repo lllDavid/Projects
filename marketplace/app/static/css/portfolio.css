@@ -2,6 +2,10 @@ body {
     background-color: #121212;
     color: white;
     font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
 }
 
 .navbar {
@@ -19,6 +23,8 @@ body {
 
 .container {
     padding-top: 80px;
+    flex: 1;
+    /* This will make sure the container takes available space and pushes the footer down */
 }
 
 table {
@@ -69,12 +75,5 @@ table td strong {
 }
 
 footer {
-    border-top: 1px solid #444;
-    margin-top: auto;
-    padding: 20px 0;
-}
-
-footer p {
     text-align: center;
-    color: #e0e0e0;
 }

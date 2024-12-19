@@ -75,18 +75,17 @@
                 </form>
             </section>
         </main>
-
-        <footer>
-            <p>&copy; 2024 Marketplace. All rights reserved.</p>
-        </footer>
     </div>
+    <footer>
+        <p>&copy; 2024 Marketplace. All rights reserved.</p>
+    </footer>
 </body>
 <script>
     document.getElementById('wallet-type').addEventListener('change', function () {
         const walletType = this.value;
         const walletAddressContainer = document.getElementById('wallet-address-container');
 
-        walletAddressContainer.innerHTML = ''; // Clear the previous content
+        walletAddressContainer.innerHTML = ''; 
 
         if (walletType) {
             let placeholderText = '';
