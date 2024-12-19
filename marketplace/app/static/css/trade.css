@@ -18,19 +18,6 @@ body {
     margin-top: 80px;
 }
 
-.navbar {
-    background-color: #191818;
-}
-
-.navbar .navbar-nav .nav-link {
-    color: #e0e0e0 !important;
-    font-size: 1.1em;
-}
-
-.nav-link:hover {
-    text-decoration: underline;
-}
-
 h1,
 h2,
 label {

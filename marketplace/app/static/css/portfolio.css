@@ -8,23 +8,9 @@ body {
     margin: 0;
 }
 
-.navbar {
-    background-color: #191818;
-}
-
-.navbar .navbar-nav .nav-link {
-    color: #e0e0e0 !important;
-    font-size: 1.1em;
-}
-
-.nav-link:hover {
-    text-decoration: underline;
-}
-
 .container {
     padding-top: 80px;
     flex: 1;
-    /* This will make sure the container takes available space and pushes the footer down */
 }
 
 table {
