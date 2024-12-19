@@ -12,7 +12,7 @@ body {
 .container {
     flex-grow: 1;
     max-width: 900px;
-    margin: 0 auto;
+    margin: auto;
     padding: 20px;
     text-align: center;
 }
@@ -47,10 +47,12 @@ ul li {
 }
 
 footer {
-    border-top: 1px solid #444;
     margin-top: auto;
-    padding: 20px 0;
     background: #121212;
     color: #D1D1D1;
     text-align: center;
+    width: 100%; 
+    display: flex;
+    justify-content: center; 
+    padding: 10px 0;
 }
