@@ -5,12 +5,17 @@ body {
 }
 
 .navbar {
-    background-color: #191818;
+ 
 }
 
 .navbar .navbar-nav .nav-link {
     color: #e0e0e0 !important;
     font-size: 1.1em;
+    border-bottom: 1px solid rgba(68, 68, 68, 0.7);
+}
+
+.nav-link:hover{
+    text-decoration: underline;
 }
 
 .container {
@@ -23,8 +28,7 @@ body {
 }
 
 .table thead {
-    border-bottom: 2px solid #444;
-
+    border-bottom: 1px solid rgba(68, 68, 68, 0.7);
 }
 
 .coin-table th {
@@ -63,3 +67,4 @@ footer {
 footer p {
     text-align: center;
 }
+
