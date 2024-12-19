@@ -3,10 +3,10 @@ body {
     background-color: #121212;
     color: #e0e0e0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
 }
 
 .container {
@@ -65,7 +65,7 @@ select {
 
 .btn-primary {
     background-color: #121212;
-    border: 0.5px solid white;
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
     font-weight: bold;
     width: 150px;
     padding: 8px 12px;
@@ -98,11 +98,12 @@ hr {
 }
 
 footer {
+    margin-top: auto;
     background: #121212;
     color: #D1D1D1;
-    border-top: 1px solid #444;
-    margin-top: auto;
-    padding: 20px 0;
+    text-align: center;
+    padding: 1.5rem 0;
+    width: 100%;
 }
 
 footer p {

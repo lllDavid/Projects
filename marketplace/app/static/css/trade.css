@@ -59,8 +59,9 @@ h1 {
 }
 
 .tab-button.active {
-    background-color: #333;
+    background-color: #301bbb;
     color: white;
+    outline: none;
 }
 
 .form-container {
@@ -94,7 +95,7 @@ button {
 }
 
 .submit-button:hover {
-    background-color: #053907;
+    background-color: #0e6911;
 }
 
 #buy-limit-container {
