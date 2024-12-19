@@ -5,24 +5,14 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    font-size: 1rem;
 }
 
 .container {
-    background-color: #121212;
     padding-top: 5rem;
 }
 
 a:hover {
     text-decoration: underline;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 50px auto;
-    padding: 40px;
-    background-color: #121212;
-    border-radius: 8px;
 }
 
 .settings-section {
@@ -106,7 +96,6 @@ a:hover {
 #save-wallet-button {
     width: 165px;
 }
-
 
 footer {
     text-align: center;

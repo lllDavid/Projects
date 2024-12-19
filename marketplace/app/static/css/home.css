@@ -5,11 +5,9 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    font-size: 1rem;
 }
 
 .container {
-    background-color: #121212;
     padding-top: 5rem;
 }
 
@@ -37,9 +35,4 @@ body {
 footer {
     text-align: center;
     margin-top: auto;
-    padding: 1rem 0;
-}
-
-footer p {
-    margin: 0;
 }
