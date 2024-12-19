@@ -59,8 +59,7 @@ label {
 }
 
 input,
-select,
-button {
+select {
     width: 100%;
     padding: 10px;
     margin: 5px 0 15px;
@@ -76,6 +75,14 @@ button {
     cursor: pointer;
     font-weight: bold;
     margin-bottom: 40px;
+    padding: 10px;
+    margin: 5px 0 15px;
+    border-radius: 4px;
+}
+
+.submit-button-container {
+    display: flex;
+    justify-content: center;
 }
 
 .submit-button:hover {
