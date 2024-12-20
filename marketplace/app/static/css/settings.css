@@ -5,10 +5,15 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .container {
     padding-top: 5rem;
+    max-width: 37.5rem;
+    width: 100%;
 }
 
 a:hover {
@@ -17,24 +22,20 @@ a:hover {
 
 .settings-section {
     background-color: #121212;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 30px;
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+    margin-bottom: 1.875rem;
 }
 
 .settings-section h2 {
-    font-size: 1.8rem;
+    font-size: 3rem;
     color: #fff;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
 }
 
 .form-group {
-    margin-bottom: 20px;
-}
-
-.dropdown-container select {
-    -moz-appearance: none;
-    -webkit-appearance: none;
+    margin-bottom: 1.25rem;
+    text-align: center;
 }
 
 .dropdown-container select::-ms-expand {
@@ -43,34 +44,37 @@ a:hover {
 
 .form-group label {
     display: block;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     color: #ddd;
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
 }
 
 .form-group input[type="text"],
 .form-group input[type="email"],
 .form-group input[type="password"],
 .form-group input[type="url"] {
-    width: 60%;
-    padding: 10px;
+    width: 70%;
+    padding: 0.75rem;
     background-color: #121212;
-    border: 1px solid #444;
-    border-radius: 4px;
+    border: 0.0625rem solid #444;
+    border-radius: 0.25rem;
     color: #fff;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    margin: 0 auto;
+    display: block;
 }
 
 .btn-save,
 .btn-danger {
-    padding: 12px 25px;
+    padding: 0.875rem 1.875rem;
     background-color: #121212;
     color: #fff;
-    border: 0.5px solid rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
+    border: 0.03125rem solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.25rem;
     cursor: pointer;
-    font-size: 1.1rem;
-    margin-top: 20px;
+    font-size: 1.3rem;
+    margin-top: 1.25rem;
+    display: inline-block;
 }
 
 .btn-save:hover {
@@ -86,17 +90,35 @@ a:hover {
 }
 
 #wallet-type {
-    width: 165px;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    width: 45%;
+    padding: 0.75rem;
+    font-size: calc(0.8rem + 0.5vh);
+    border: 0.0625rem solid #ccc;
+    border-radius: 0.3125rem;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
 }
 
 #save-wallet-button {
-    width: 165px;
+    padding: 0.875rem 1.875rem;
+    background-color: #121212;
+    color: #fff;
+    border: 0.03125rem solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 1.3rem;
+    margin-top: 1.25rem;
+    display: inline-block;
+}
+
+#save-wallet-button:hover {
+    background-color: #0e6911;
 }
 
 footer {
     text-align: center;
+    margin-top: 3.125rem;
+    width: 100%;
+    font-size: 1.1rem;
 }
