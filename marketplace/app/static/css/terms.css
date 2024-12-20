@@ -5,6 +5,7 @@ body {
     font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
+    margin: 0;
 }
 
 .container {
@@ -19,19 +20,19 @@ h1 {
 
 h2 {
     font-size: 2.0rem;
+    margin: 2rem;
 }
 
-p,
+p {
+    margin-bottom: 1rem;
+}
+
 ul {
     font-size: 1.1rem;
     line-height: 1.6;
     max-width: 50%;
     margin: 0 auto 1rem;
     padding: 0;
-    margin-bottom: 4rem;
-}
-
-ul {
     list-style: none;
 }
 
