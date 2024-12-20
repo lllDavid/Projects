@@ -5,6 +5,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    margin: 0;
 }
 
 .container {
@@ -17,8 +18,8 @@ body {
 
 .coin-table th,
 .coin-table td {
-    background-color: inherit; /* Inherit from body background */
-    color: inherit; /* Inherit text color */
+    background-color: inherit;
+    color: inherit;
     border: none;
 }
 
@@ -29,10 +30,36 @@ body {
 
 .coin-symbol {
     margin-left: 0.625rem;
-    color: rgb(88, 79, 79); /* Specific styling for coin symbol */
+    color: rgb(88, 79, 79);
+}
+
+h2 {
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+select {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 5px;
+    background-color: #333333;
+    color: #e0e0e0;
+    border: 1px solid #444444;
+}
+
+select:focus {
+    outline: none;
+    border-color: #007bff;
 }
 
 footer {
     text-align: center;
     margin-top: auto;
+    padding: 1rem 0;
 }
+

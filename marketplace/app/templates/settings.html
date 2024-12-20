@@ -60,36 +60,15 @@
                     <input type="password" id="confirm-password" name="confirm-password"
                         placeholder="Confirm new password">
                 </div>
-                <button type="submit" class="btn-save">Save Changes</button>
+                <button id="save-wallet-button" type="submit" class="btn btn-primary">Save Changes</button>
             </form>
         </section>
-
-        <div class="dropdown-container">
-            <section class="settings-section">
-                <h2>Wallets</h2>
-                <form action="/update-wallet" method="POST" id="crypto-form">
-                    <div class="form-group">
-                        <select id="wallet-type" name="wallet-type" required>
-                            <option value="" disabled selected>Add Wallet</option>
-                            <option value="btc">Bitcoin (BTC)</option>
-                            <option value="eth">Ethereum (ETH)</option>
-                            <option value="ltc">Litecoin (LTC)</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group" id="wallet-address-container" style="display: none;">
-                    </div>
-
-                    <button id="save-wallet-button" type="submit" class="btn-save">Save Wallet</button>
-                </form>
-            </section>
-        </div>
 
         <section class="settings-section">
             <h2>Account Management</h2>
             <form action="/delete-account" method="POST" id="delete-account-form">
                 <p>If you would like to delete your account, please do so below. This action is irreversible.</p>
-                <button type="submit" class="btn-danger">Delete Account</button>
+                <button type="submit" class="btn btn-danger">Delete Account</button>
             </form>
         </section>
 
@@ -102,41 +81,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-
-    <script>
-        document.getElementById('wallet-type').addEventListener('change', function () {
-            const walletType = this.value;
-            const walletAddressContainer = document.getElementById('wallet-address-container');
-
-            walletAddressContainer.innerHTML = '';
-
-            if (walletType) {
-                let placeholderText = '';
-                let inputId = '';
-
-                if (walletType === 'btc') {
-                    placeholderText = 'Enter your Bitcoin address';
-                    inputId = 'btc-wallet';
-                } else if (walletType === 'eth') {
-                    placeholderText = 'Enter your Ethereum address';
-                    inputId = 'eth-wallet';
-                } else if (walletType === 'ltc') {
-                    placeholderText = 'Enter your Litecoin address';
-                    inputId = 'ltc-wallet';
-                }
-
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.id = inputId;
-                input.name = `${walletType}-wallet`;
-                input.placeholder = placeholderText;
-                input.required = true;
-
-                walletAddressContainer.appendChild(input);
-                walletAddressContainer.style.display = 'block';
-            }
-        });
-    </script>
 </body>
 
 </html>

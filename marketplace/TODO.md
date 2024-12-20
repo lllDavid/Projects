@@ -19,3 +19,10 @@
     - fees for transactions
 
     - encrypt password after input (signup, login--)
+
+
+    css
+
+    - home ajust table so its responsive
+    - wallet make container responsive
+    - settings / fine tuning 
