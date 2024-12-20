@@ -17,3 +17,5 @@
     - input like rate limiter website, limiter for account logins
 
     - fees for transactions
+
+    - encrypt password after input (signup, login--)
