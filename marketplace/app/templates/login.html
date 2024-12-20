@@ -11,7 +11,7 @@
 
 <body>
     <div class="container">
-        <h1 class="my-4 text-center">Login</h1>
+        <h1 class="text-center">Login</h1>
 
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -26,26 +26,26 @@
         {% endwith %}
 
         <form action="{{ url_for('login') }}" method="POST">
-            <div class="mb-3">
+            <div>
                 <input type="text" id="username" name="username" required placeholder="Username" class="form-control"
                     autofocus>
             </div>
 
-            <div class="mb-3">
+            <div>
                 <input type="password" id="password" name="password" required placeholder="Password"
                     class="form-control">
             </div>
 
-            <div class="mb-3 text-center">
+            <div class="text-center">
                 <a href="" class="text-decoration-none">Forgot Password?</a>
             </div>
-
 
             <div class="btn-container">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
     </div>
+
     <footer>
         <p>&copy; 2024 Marketplace. All rights reserved.</p>
     </footer>
