@@ -12,18 +12,14 @@
 <body>
     <div class="slogan-container">
         <div class="slogan-content">
-            <h1 class="my-4">Marketplace</h1>
-            <h2 class="my-4">Trade Cryptocurrencies with Ease</h2>
+            <h1>Marketplace</h1>
+            <h2>Trade Cryptocurrencies with Ease</h2>
         </div>
     </div>
 
     <div class="btn-container">
-        <div class="btn-button-container signup-container">
-            <a href="{{ url_for('signup') }}" class="btn-signup">Sign up</a>
-        </div>
-        <div class="btn-button-container login-container">
-            <a href="{{ url_for('login') }}" class="btn-login">Login</a>
-        </div>
+        <a href="{{ url_for('signup') }}" class="btn-signup">Sign up</a>
+        <a href="{{ url_for('login') }}" class="btn-login">Login</a>
     </div>
 
     <footer>
@@ -31,7 +27,6 @@
         <a href="{{ url_for('terms') }}">Terms of Service</a>
         <a href="{{ url_for('privacy') }}">Privacy</a>
         <a href="{{ url_for('cookies') }}">Cookies</a>
-
     </footer>
 </body>
 
