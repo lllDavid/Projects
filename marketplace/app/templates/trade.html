@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/trade.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/global//navbar.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/global/body.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/global/button.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/global/footer.css') }}">
 </head>
 
@@ -103,7 +104,7 @@
         <label for="sell-price">Sell Price (Optional, for limit order):</label>
         <input type="number" id="sell-price" name="sell_price" placeholder="Enter price for limit order (optional)">
         <div class="submit-button-container">
-          <button type="submit" id="sell-submit-button" class="btn btn-primary">Place Sell Order</button>
+          <button type="submit" id="sell-submit-button" class="btn btn-primary">Place Order</button>
         </div>
       </form>
     </div>

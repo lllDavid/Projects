@@ -240,25 +240,25 @@
             }
             return priceChange;
         }
-    
+
         // Function to update the table every second
         function updateTable() {
             // Select all the rows in the table body
             const rows = document.querySelectorAll('#coinTable tbody tr');
-    
+
             // Loop through each row and update each cell with a random value
             rows.forEach(row => {
                 const cells = row.querySelectorAll('td');
-                
+
                 cells.forEach((cell, index) => {
                     // Skip the first (coin name) and price column (index 1) by checking the index
                     if (index === 0 || index === 1 || index === 2) {
                         return; // Skip if the cell is for coin name or price
                     }
                     // Update other cells with random values up to 1,000,000
-                    cell.textContent = `$${Math.floor(Math.random() * 1000000)}`; 
+                    cell.textContent = `$${Math.floor(Math.random() * 1000000)}`;
                 });
-    
+
                 // Update the price column (index 2) by adding or subtracting a small random value
                 const priceCell = row.querySelectorAll('td')[2]; // Get the price cell
                 const currentPrice = parseFloat(priceCell.textContent.replace(/[^0-9.-]+/g, "")); // Get current price and remove non-numeric characters
@@ -266,14 +266,11 @@
                 priceCell.textContent = `$${(currentPrice + priceChange).toFixed(2)}`; // Update price cell
             });
         }
-    
+
         // Update the table every second
-        setInterval(updateTable, 3000);
+        setInterval(updateTable, 1500);
     </script>
-    
-    
-    
-        
+
 </body>
 
 </html>
