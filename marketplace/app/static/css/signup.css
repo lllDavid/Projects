@@ -1,16 +1,3 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #121212;
-    color: #e0e0e0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    position: relative;
-}
-
 .container {
     max-width: 31.25rem;
     margin-top: 3.125rem;
@@ -91,4 +78,3 @@ button:active {
 .alert {
     text-align: center;
 }
-
