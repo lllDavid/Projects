@@ -92,12 +92,3 @@ button:active {
     text-align: center;
 }
 
-footer {
-    background: #121212;
-    color: #D1D1D1;
-    text-align: center;
-    padding: 1.5rem 0;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}

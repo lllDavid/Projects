@@ -56,10 +56,3 @@ select:focus {
     outline: none;
     border-color: #007bff;
 }
-
-footer {
-    text-align: center;
-    margin-top: auto;
-    padding: 1rem 0;
-}
-
