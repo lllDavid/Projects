@@ -9,6 +9,8 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/support.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/global/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global/body.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global/footer.css') }}">
 </head>
 
 <body>
@@ -67,22 +69,26 @@
             <form action="submit_support_request.php" method="POST">
                 <div class="form-group mb-3">
                     <label for="name">Your Name:</label>
-                    <input type="text" id="name" name="name" required class="form-control" placeholder="Enter your full name">
+                    <input type="text" id="name" name="name" required class="form-control"
+                        placeholder="Enter your full name">
                 </div>
 
                 <div class="form-group mb-3">
                     <label for="email">Your Email:</label>
-                    <input type="email" id="email" name="email" required class="form-control" placeholder="Enter your email address">
+                    <input type="email" id="email" name="email" required class="form-control"
+                        placeholder="Enter your email address">
                 </div>
 
                 <div class="form-group mb-3">
                     <label for="subject">Subject:</label>
-                    <input type="text" id="subject" name="subject" required class="form-control" placeholder="Enter the subject of your issue">
+                    <input type="text" id="subject" name="subject" required class="form-control"
+                        placeholder="Enter the subject of your issue">
                 </div>
 
                 <div class="form-group mb-3">
                     <label for="message">Message:</label>
-                    <textarea id="message" name="message" required class="form-control" placeholder="Describe your issue or question"></textarea>
+                    <textarea id="message" name="message" required class="form-control"
+                        placeholder="Describe your issue or question"></textarea>
                 </div>
                 <div class="submit-button-container">
                     <button type="submit" class="btn btn-primary">Submit Request</button>
