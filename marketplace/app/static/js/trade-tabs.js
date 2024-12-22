@@ -1,0 +1,32 @@
+function showTab(tab) {
+    if (tab === 'buy') {
+        document.getElementById('buy-form').style.display = 'block';
+        document.getElementById('sell-form').style.display = 'none';
+        document.querySelector('.tab-button.active').classList.remove('active');
+        document.querySelector('.tab-button:nth-child(1)').classList.add('active');
+    } else {
+        document.getElementById('buy-form').style.display = 'none';
+        document.getElementById('sell-form').style.display = 'block';
+        document.querySelector('.tab-button.active').classList.remove('active');
+        document.querySelector('.tab-button:nth-child(2)').classList.add('active');
+    }
+}
+
+document.getElementById('buy-amount').addEventListener('input', function () {
+    const amount = parseFloat(this.value);
+    const price = 25000; 
+    if (!isNaN(amount)) {
+        const totalCost = amount * price;
+        document.getElementById('total-cost').value = `$${totalCost.toFixed(2)}`;
+    } else {
+        document.getElementById('total-cost').value = '';
+    }
+});
+
+document.getElementById('payment-method').addEventListener('change', function () {
+    if (this.value === 'fiat') {
+        document.getElementById('buy-limit-container').style.display = 'none';
+    } else {
+        document.getElementById('buy-limit-container').style.display = 'block';
+    }
+});

@@ -60,6 +60,16 @@ def register_routes(app):
     def support():
         return render_template("support.html")
 
+    # Trade Routes
+    @app.route("/submit_buy_order")
+    def submit_buy_order():
+        return render_template(trade.html)
+    
+    @app.route("/submit_sell_order")
+    def submit_sell_order():
+        return render_template(trade.html)
+    
+
 # Request Handlers
 def handle_login(request):
     username = request.form["username"]
