@@ -1,5 +1,10 @@
 .container {
     padding-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 .table thead {
@@ -22,4 +27,3 @@
     margin-left: 0.625rem;
     color: rgb(88, 79, 79);
 }
-
