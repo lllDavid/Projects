@@ -12,14 +12,7 @@ h1 {
     color: #fff;
     font-size: 2.8rem;
     font-weight: bold;
-    text-align: center;
     margin: 2rem;
-}
-
-.form-label {
-    font-weight: 500;
-    color: #d1d1d1;
-    margin-bottom: 0.625rem;
 }
 
 .form-control {
@@ -33,20 +26,9 @@ h1 {
 
 .form-control::placeholder {
     color: rgba(255, 255, 255, 0.6);
-    background-color: #121212;
 }
 
 .form-control:focus {
     color: rgba(255, 255, 255, 1.0);
     background-color: #121212;
-    border-color: #6c757d;
-    box-shadow: 0 0 0 0.25rem rgba(107, 114, 128, 0.25);
-}
-
-.btn-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.625rem;
-    margin-top: 1.25rem;
 }
