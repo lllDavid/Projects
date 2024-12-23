@@ -1,20 +1,7 @@
 .btn-primary {
-    background-color: #121212;
-    border: 0.031rem solid rgba(255, 255, 255, 0.2);
     width: 9.0rem;
     padding: 0.5rem 0.75rem;
     margin-bottom: 2.0rem;
     text-align: center;
-    font-size: 1.125rem;
-    border-radius: 0.45rem;
-}
-
-.btn-primary:hover {
-    background-color: #121212;
-    border: 0.031rem solid rgba(255, 255, 255, 0.2);
-}
-
-.btn-primary:active {
-    background-color: #121212 !important;
-    border: 0.031rem solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 0.5rem;
 }
