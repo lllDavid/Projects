@@ -41,7 +41,7 @@ def register_routes(app):
     @app.route("/home")
     def home():
         current_username = session.get("username")
-        return render_template("home.html", username=current_username)
+        return render_template("home.html")
     
     @app.route("/trade")
     def trade():

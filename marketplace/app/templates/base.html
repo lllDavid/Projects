@@ -32,25 +32,25 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'home' %}active{% endif %}" href="{{ url_for('home') }}">Home</a>
+                        <a class="nav-link" href="{{ url_for('home') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'trade' %}active{% endif %}" href="{{ url_for('trade') }}">Trade</a>
+                        <a class="nav-link" href="{{ url_for('trade') }}">Trade</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'wallet' %}active{% endif %}" href="{{ url_for('wallet') }}">Wallet</a>
+                        <a class="nav-link" href="{{ url_for('wallet') }}">Wallet</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'settings' %}active{% endif %}" href="{{ url_for('settings') }}">Settings</a>
+                        <a class="nav-link" href="{{ url_for('settings') }}">Settings</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'support' %}active{% endif %}" href="{{ url_for('support') }}">Help</a>
+                        <a class="nav-link" href="{{ url_for('support') }}">Help</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'logout' %}active{% endif %}" href="{{ url_for('logout') }}">Logout</a>
+                        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
                     </li>
                 </ul>
-                
+
             </div>
         </div>
     </nav>
