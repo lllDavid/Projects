@@ -3,28 +3,26 @@
 {% block title %}Trade{% endblock %}
 
 {% block stylesheets %}
-
 <link rel="stylesheet" href="{{ url_for('static', filename='css/trade.css') }}">
-
 {% endblock %}
 
 {% block content %}
 
-<div class="container">
-  <div class="h1">
+<div class="trade-container">
+  <div class="trade-header">
     <h1 class="display-4">Trade</h1>
     <p class="lead">Trade Cryptocurrencies</p>
   </div>
 
-  <div class="tabs">
+  <div class="row mt-4">
     <button class="tab-button active" onclick="showTab('buy')">Buy</button>
     <button class="tab-button" onclick="showTab('sell')">Sell</button>
   </div>
 
-  <div class="form-container" id="buy-form">
+  <div class="trade-form-container" id="buy-form">
     <h2>Buy</h2>
     <form action="{{ url_for('submit_buy_order') }}" method="POST">
-      <label for="buy-crypto">Select Coin:</label>
+      <label for="buy-crypto">Coin:</label>
       <select id="buy-crypto" name="crypto" required>
         <option value="BTC">Bitcoin (BTC)</option>
         <option value="ETH">Ethereum (ETH)</option>
@@ -54,10 +52,10 @@
     </form>
   </div>
 
-  <div class="form-container" id="sell-form" style="display: none;">
+  <div class="trade-form-container" id="sell-form" style="display: none;">
     <h2>Sell</h2>
     <form action="{{ url_for('submit_sell_order') }}" method="POST">
-      <label for="sell-crypto">Select Coin:</label>
+      <label for="sell-crypto">Coin:</label>
       <select id="sell-crypto" name="crypto" required>
         <option value="BTC">Bitcoin (BTC)</option>
         <option value="ETH">Ethereum (ETH)</option>
