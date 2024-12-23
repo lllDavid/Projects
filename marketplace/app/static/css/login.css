@@ -32,3 +32,7 @@ h1 {
     color: rgba(255, 255, 255, 1.0);
     background-color: #121212;
 }
+
+.btn-container {
+    margin-top: 1rem;
+}
