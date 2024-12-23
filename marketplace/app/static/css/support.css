@@ -2,16 +2,6 @@
     padding-top: 5rem;
 }
 
-a {
-    text-decoration: none;
-    color: #e0e0e0;
-    transition: color 0.3s;
-}
-
-a:hover {
-    color: #1e90ff;
-}
-
 .faq-section,
 .support-form-section {
     background-color: #121212;
@@ -73,4 +63,3 @@ a:hover {
     resize: vertical;
     min-height: 100px;
 }
-

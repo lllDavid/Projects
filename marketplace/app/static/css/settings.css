@@ -1,7 +1,8 @@
 .container {
-    padding-top: 5rem;
     max-width: 37.5rem;
-    width: 100%;
+    min-width: 18.75rem;
+    padding: 1.25rem;
+    margin-top: 6vh;
 }
 
 a:hover {
@@ -62,11 +63,4 @@ a:hover {
 
 .btn-danger:hover {
     background-color: #e60c0c;
-}
-
-footer {
-    text-align: center;
-    margin-top: 3.125rem;
-    width: 100%;
-    font-size: 1.1rem;
 }
