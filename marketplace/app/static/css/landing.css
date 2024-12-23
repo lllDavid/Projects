@@ -2,35 +2,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 65vh;
     position: relative;
+    top: 20vh;
 }
 
-.slogan-content {
-    width: 100%;
-    max-width: 37.5rem;
-    padding: 2.5rem;
-    background: #121212;
-    border-radius: 1.25rem;
-    text-align: center;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-}
-
-h1 {
-    font-family: 'Playfair Display', serif;
-    margin-bottom: 1.25rem;
-    font-size: calc(1.5rem + 4.8vw);
+h1 { font-family: 'Playfair Display', serif;
+    font-size: clamp(3.0rem, 5vw, 6rem);
+    /* Ensure the minimum font size stays reasonable */
 }
 
 h2 {
-    font-family: 'Lora', serif;
-    color: #b0b0b0;
-    font-size: calc(0.6rem + 1.1vw);
+    font-size: clamp(1rem, 1.4vw, 3rem);
+    font-family: 'Playfair Display', serif;
+    /* Adjust the scaling range */
 }
 
 .btn-container {
@@ -44,6 +28,8 @@ h2 {
 
 .btn-signup,
 .btn-login {
+    white-space: nowrap;
+    /* Prevents text from wrapping */
     text-decoration: none;
     background: #121212;
     color: #fff;
@@ -52,7 +38,7 @@ h2 {
     text-transform: uppercase;
     font-weight: bold;
     margin: 0.625rem;
-    font-size: 2vh;
+    font-size: clamp(0.8rem, 0.9vw, 1.5rem);
     opacity: 0.5;
 }
 
@@ -61,8 +47,9 @@ h2 {
     opacity: 1.0;
 }
 
-footer a {
+footer a,
+p {
     color: #ffffff;
     text-decoration: none;
-    margin: 0.5rem;
+    font-size: clamp(0.7rem, 0.85vw, 1.5rem);
 }
