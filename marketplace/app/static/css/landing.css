@@ -3,6 +3,7 @@
     justify-content: center;
     align-items: center;
     height: 65vh;
+    position: relative; /* This allows the absolute positioning of children elements */
 }
 
 .slogan-content {
@@ -33,10 +34,12 @@ h2 {
 }
 
 .btn-container {
-    position: fixed;
-    top: 1.9rem;
-    right: 1.9rem;
     display: flex;
+    justify-content: flex-end;  /* Align the buttons to the right */
+    align-items: center;
+    position: absolute; /* Now absolutely position the container */
+    top: 2rem;  /* This positions the buttons at the top of the container */
+    right: 2rem; /* This positions the buttons on the right */
 }
 
 .btn-signup,
