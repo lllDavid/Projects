@@ -1,3 +1,7 @@
+.container {
+    padding-top: 5rem;
+}
+
 .table {
     width: 100%;
     table-layout: auto;
@@ -29,10 +33,6 @@ th {
     width: 1.5rem;
     height: 1.5rem;
     margin-right: 0.7rem;
-}
-
-.container {
-    padding-top: 5rem;
 }
 
 .coin-symbol {

@@ -64,21 +64,6 @@ a:hover {
     background-color: #e60c0c;
 }
 
-#wallet-type {
-    width: 40%;
-    padding: 0.75rem;
-    font-size: calc(0.8rem + 0.5vh);
-    /* Find better solution for mobile view */
-    border: 0.0625rem solid #ccc;
-    border-radius: 0.3125rem;
-    margin: 0 auto;
-    display: block;
-}
-
-#save-wallet-button:hover {
-    background-color: #0e6911;
-}
-
 footer {
     text-align: center;
     margin-top: 3.125rem;
