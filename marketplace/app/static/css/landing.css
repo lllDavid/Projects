@@ -13,7 +13,7 @@ h1 {
 
 h2 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(1.2rem, 1.4vw, 3rem);
+    font-size: clamp(1.1rem, 1.4vw, 3rem);
 }
 
 .btn-container {
@@ -31,12 +31,10 @@ h2 {
     text-decoration: none;
     background: #121212;
     color: #fff;
-    border: none;
-    border-radius: 0.25rem;
     text-transform: uppercase;
     font-weight: bold;
-    margin: 0.625rem;
     font-size: clamp(1rem, 0.9vw, 1.5rem);
+    margin: 0.625rem;
     opacity: 0.5;
 }
 
@@ -46,8 +44,17 @@ h2 {
 }
 
 footer a,
-p {
+footer p {
     color: #ffffff;
     text-decoration: none;
     font-size: clamp(0.8rem, 0.8vw, 1.5rem);
+}
+
+footer p {
+    margin-bottom: 0.2rem;
+}
+
+
+footer a {
+    margin-right: 0.2rem;
 }

@@ -1,6 +1,7 @@
 .container {
     max-width: 31.25rem;
-    margin-top: 3.125rem;
+    min-width: 20rem;
+    margin-top: 3.25rem;
     padding: 1.25rem;
     background-color: #121212;
     border-radius: 0.75rem;
