@@ -24,7 +24,7 @@
 h1 {
     font-family: 'Playfair Display', serif;
     margin-bottom: 1.25rem;
-    font-size: 9.5vh;
+    font-size: calc(1.5rem + 5vw);
 }
 
 h2 {
