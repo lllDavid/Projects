@@ -74,12 +74,3 @@ a:hover {
     min-height: 100px;
 }
 
-button {
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    padding: 12px 20px;
-    border-radius: 4px;
-    margin: 5px 0 15px;
-}
