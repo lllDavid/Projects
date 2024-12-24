@@ -23,6 +23,3 @@
 
     css
 
-    - home ajust table so its responsive
-    - wallet make container responsive
-    - settings / fine tuning 
