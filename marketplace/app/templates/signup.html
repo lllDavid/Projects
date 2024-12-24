@@ -1,45 +1,49 @@
 {% extends "base.html" %}
 
-{% block title %}Signup{% endblock %}
-{% block navbar %}{% endblock %}
+{% block title %}Settings{% endblock %}
 
 {% block stylesheets %}
-
-<link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}">
-
+<link rel="stylesheet" href="{{ url_for('static', filename='css/settings.css') }}">
 {% endblock %}
 
 {% block content %}
 
 <div class="container">
-    <h1>Register</h1>
-
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <div class="alert alert-dismissible fade show" role="alert">
-        {% for category, message in messages %}
-        <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }}">
-            {{ message }}
-        </div>
-        {% endfor %}
+    <div class="h1">
+        <h1 class="display-4">Account</h1>
+        <p class="lead">Change account settings</p>
     </div>
-    {% endif %}
-    {% endwith %}
 
-    <form action="{{ url_for('user_creator.create_user') }}" method="POST">
-        <div>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
-        </div>
-        <div>
-            <input type="email" class="form-control" id="email" name="email" placeholder="E-Mail" required>
-        </div>
-        <div>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-        </div>
+    <section class="settings-section">
+        <form action="/settings" method="POST" id="account-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="{{ user.username }}">
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="{{ user.email }}">
+            </div>
+            <div class="form-group">
+                <label for="password">New Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter new password">
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm new password">
+            </div>
+            <button id="save-wallet-button" type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+    </section>
 
-        <div class="btn-container">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </form>
+    <section class="settings-section">
+        <h2>Account Management</h2>
+        <form action="/delete-account" method="POST" id="delete-account-form">
+            <p>If you would like to delete your account, please do so below. This action is irreversible.</p>
+            <button type="submit" class="btn btn-danger">Delete Account</button>
+        </form>
+    </section>
+
 </div>
+
 {% endblock %}

@@ -4,9 +4,7 @@
 {% block navbar %}{% endblock %}
 
 {% block stylesheets %}
-
 <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-
 {% endblock %}
 
 {% block content %}
@@ -14,21 +12,20 @@
     <h1 class="text-center">Login</h1>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <div class="alert alert-dismissible fade show" role="alert">
-        {% for category, message in messages %}
-        <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }}">
-            {{ message }}
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
+        {% if messages %}
+            <div class="alert alert-dismissible fade show" role="alert">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     {% endwith %}
 
     <form action="{{ url_for('login') }}" method="POST">
         <div>
-            <input type="text" id="username" name="username" required placeholder="Username" class="form-control"
-                autofocus>
+            <input type="text" id="username" name="username" required placeholder="Username" class="form-control" autofocus>
         </div>
 
         <div>
