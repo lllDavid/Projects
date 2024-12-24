@@ -21,5 +21,9 @@
     - encrypt password after input (signup, login--)
 
 
-    css
-
+    
+    - Forgot password send reset email
+    - home fetch market data api
+    - trade functionality
+    - wallet functionality
+    - support funtionality
