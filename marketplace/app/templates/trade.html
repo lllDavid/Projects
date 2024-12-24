@@ -3,13 +3,15 @@
 {% block title %}Trade{% endblock %}
 
 {% block stylesheets %}
+
 <link rel="stylesheet" href="{{ url_for('static', filename='css/trade.css') }}">
+
 {% endblock %}
 
 {% block content %}
 
-<div class="trade-container">
-  <div class="trade-header">
+<div class="container">
+  <div class="h1">
     <h1 class="display-4">Trade</h1>
     <p class="lead">Trade Cryptocurrencies</p>
   </div>
@@ -76,6 +78,8 @@
 </div>
 
 {% block additional_scripts %}
+
 <script src="{{ url_for('static', filename='js/trade-tabs.js') }}"></script>
+
 {% endblock %}
 {% endblock %}

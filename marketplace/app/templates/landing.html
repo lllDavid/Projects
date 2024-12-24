@@ -5,10 +5,14 @@
 {% block navbar %}{% endblock %}
 
 {% block stylesheets %}
+
 <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+
 {% endblock %}
 
+
 {% block content %}
+
 <div class="slogan-container">
     <div>
         <h1>Marketplace</h1>
@@ -20,10 +24,13 @@
     <a href="{{ url_for('signup') }}" class="btn-signup">Sign up</a>
     <a href="{{ url_for('login') }}" class="btn-login">Login</a>
 </div>
+
 {% endblock %}
 
 {% block landing_footer %}
+
 <a href="{{ url_for('terms') }}">Terms of Service</a>
 <a href="{{ url_for('privacy') }}">Privacy</a>
 <a href="{{ url_for('cookies') }}">Cookies</a>
+
 {% endblock %}
