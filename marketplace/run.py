@@ -1,9 +1,13 @@
 from threading import Thread
 from datetime import datetime
 from dataclasses import dataclass
+from decimal import getcontext
 
 from marketplace.app import create_app  
 from marketplace.helpers.version import Version  
+
+# Set global Decimal precision 
+getcontext().prec = 28
 
 @dataclass
 class Main:

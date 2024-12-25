@@ -11,11 +11,11 @@ class UserBank:
     swift_bic: str | None
     date_linked: datetime | None
 
-    def update_account_holder(self, new_holder: str) -> None:
-        self.account_holder = new_holder
-
     def update_bank_name(self, new_bank_name: str) -> None:
         self.bank_name = new_bank_name
+
+    def update_account_holder(self, new_holder: str) -> None:
+        self.account_holder = new_holder
 
     def update_account_number(self, new_account_number: str) -> None:
         self.account_number = new_account_number

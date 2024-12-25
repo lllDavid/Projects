@@ -1,9 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
-from decimal import Decimal, getcontext, ROUND_HALF_UP
-
-# Set global precision to 28 digits
-getcontext().prec = 28  
+from decimal import Decimal, ROUND_HALF_UP
 
 @dataclass
 class CoinMarketData:
