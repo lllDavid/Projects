@@ -29,6 +29,14 @@ class UserHistory:
     def reset_failed_login_count(self):
         self.failed_login_count = 0
         print("Failed login count reset.")
+
+    def initialize_created_at(self):
+        self.created_at = datetime.now()
+        print("Created at: ")
+
+    def update_updated_at(self):
+        self.updated_at = datetime.now()
+        print("Updated at: ")
     
     def __str__(self):
         return (f"Login count: {self.login_count}, "
