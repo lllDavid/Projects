@@ -1,7 +1,8 @@
 from datetime import datetime
 from decimal import Decimal
 
-from marketplace.app.db.coin_db import coin_db
+from marketplace.app.db import coin_db
+
 from marketplace.app.coin.coin import Coin
 from marketplace.app.coin.coin_specs import CoinSpecs
 from marketplace.app.coin.coin_market_data import CoinMarketData
@@ -77,22 +78,27 @@ class CoinCreator:
                     price: float, 
                     coin_specs: CoinSpecs, 
                     coin_market_data: CoinMarketData) -> Coin:
-        """
-        Create a Coin object, optionally attaching CoinSpecs and CoinMarketData.
-        """
-        return Coin(
-            id=None,
-            name=name, 
-            symbol=symbol, 
-            category=category,
-            description=description, 
-            price=price,
-            coin_specs=coin_specs,
-            coin_market_data=coin_market_data
-        )
+        try: 
+            coin = Coin(
+                id=None,
+                name=name, 
+                symbol=symbol, 
+                category=category,
+                description=description, 
+                price=price,
+                coin_specs=coin_specs,
+                coin_market_data=coin_market_data
+            )
+            return coin
+    
 
-    def save_coin(self, coin: Coin) -> None:
-        """
-        Persist the Coin object to the database.
-        """
-        coin_db.save(coin)
+        except Exception as e:
+                print(f"Error: {e}")
+                raise ValueError("Coin account couldn't be created")  
+    
+    def save_user(self, user):
+        try:
+            coin_db.insert_coin(coin)  
+        except Exception as e:
+            print(f"Error: {e}")
+            raise ValueError("Coin couldn't be saved to database.")
