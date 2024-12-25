@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from decimal import Decimal, ROUND_HALF_UP
 
 @dataclass
 class UserFingerprint:
@@ -26,7 +25,6 @@ class UserFingerprint:
     user_preferences: dict[str, str] | None 
     user_agent: str | None 
     two_factor_enabled: bool | None 
-    transaction_history: dict[str, Decimal] | None 
 
     def update_username_history(self, username: str):
         self.username_history.add(username)
@@ -87,12 +85,6 @@ class UserFingerprint:
     def update_two_factor_enabled(self, enabled: bool):
         self.two_factor_enabled = enabled
 
-    def update_transaction_history(self, transaction_id: str, amount: Decimal):
-        if self.transaction_history is None:
-            self.transaction_history = {}
-        amount = amount.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
-        self.transaction_history[transaction_id] = amount
-
     def update_vpn_usage(self, vpn_usage: bool):
         self.vpn_usage = vpn_usage
 
@@ -119,7 +111,6 @@ class UserFingerprint:
                 f"Device ID: {self.device_id}; "
                 f"Screen resolution: {self.screen_resolution}; "
                 f"Two-factor enabled: {self.two_factor_enabled}; "
-                f"Transaction history: {self.transaction_history}; "
                 f"VPN usage: {self.vpn_usage}; "
                 f"Behavioral biometrics: {self.behavioral_biometrics}")
 

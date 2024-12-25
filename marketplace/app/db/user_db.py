@@ -69,7 +69,7 @@ def insert_user(user: User):
             "associated_ips, avg_login_frequency, avg_session_duration, geolocation_country, geolocation_city, "
             "geolocation_latitude, geolocation_longitude, browser_info, os_name, os_version, device_type, "
             "device_manufacturer, device_model, user_preferences, user_agent, device_id, screen_resolution, "
-            "two_factor_enabled, transaction_history, vpn_usage, behavioral_biometrics) "
+            "two_factor_enabled, vpn_usage, behavioral_biometrics) "
             "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
             (
                 user_id,
@@ -94,7 +94,6 @@ def insert_user(user: User):
                 user.user_fingerprint.device_id,
                 user.user_fingerprint.screen_resolution,
                 user.user_fingerprint.two_factor_enabled,
-                dumps(user.user_fingerprint.transaction_history) if user.user_fingerprint.transaction_history else None,
                 user.user_fingerprint.vpn_usage,
                 dumps(user.user_fingerprint.behavioral_biometrics) if user.user_fingerprint.behavioral_biometrics else None
             )
@@ -257,7 +256,7 @@ def get_user_history(user_id: int) -> UserHistory | None:
     cursor = conn.cursor()
     cursor.execute(
         "SELECT user_id, login_count, failed_login_count, last_login, last_failed_login, "
-        "created_at, updated_at FROM user_history WHERE user_id = %s", (user_id,)
+        "created_at, updated_at, transaction_history FROM user_history WHERE user_id = %s", (user_id,)
     )
     history = cursor.fetchone()
     cursor.close()
@@ -268,7 +267,8 @@ def get_user_history(user_id: int) -> UserHistory | None:
             last_login=history[3],
             last_failed_login=history[4],
             created_at=history[5],
-            updated_at=history[6]
+            updated_at=history[6],
+            transaction_history=history[7]
         )
     return None
 
@@ -299,7 +299,7 @@ def get_user_fingerprint(user_id: int) -> UserFingerprint | None:
         "avg_login_frequency, avg_session_duration, geolocation_country, geolocation_city, "
         "geolocation_latitude, geolocation_longitude, browser_info, os_name, os_version, "
         "device_type, device_manufacturer, device_model, user_preferences, user_agent, device_id, "
-        "screen_resolution, two_factor_enabled, transaction_history, vpn_usage, behavioral_biometrics "
+        "screen_resolution, two_factor_enabled, vpn_usage, behavioral_biometrics "
         "FROM user_fingerprint WHERE user_id = %s", (user_id,)
     )
     fingerprint = cursor.fetchone()
@@ -328,7 +328,6 @@ def get_user_fingerprint(user_id: int) -> UserFingerprint | None:
             device_id=fingerprint[19],
             screen_resolution=fingerprint[20],
             two_factor_enabled=fingerprint[21],
-            transaction_history=fingerprint[22],
             vpn_usage=fingerprint[23],
             behavioral_biometrics=fingerprint[24]
         )

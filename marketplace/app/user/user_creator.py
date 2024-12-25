@@ -43,6 +43,7 @@ class UserCreator:
             last_failed_login=None,
             created_at=datetime.now(),
             updated_at=datetime.now(),
+            transaction_history=None,
         )
     
     def create_user_security(self, password: str) -> UserSecurity:
@@ -77,7 +78,6 @@ class UserCreator:
             device_id=None,
             screen_resolution=None,
             two_factor_enabled=None,
-            transaction_history=None,
             vpn_usage=None,
             behavioral_biometrics=None
         )

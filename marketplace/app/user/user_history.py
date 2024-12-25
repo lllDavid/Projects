@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
+from decimal import Decimal, ROUND_HALF_UP
 
 @dataclass
 class UserHistory:
@@ -9,6 +10,7 @@ class UserHistory:
     last_failed_login: datetime | None 
     created_at: datetime | None 
     updated_at: datetime | None 
+    transaction_history: dict[str, Decimal] | None 
 
     def increment_login_count(self):
         self.login_count += 1
@@ -35,6 +37,14 @@ class UserHistory:
 
     def update_updated_at(self):
         self.updated_at = datetime.now()
+
+    def update_transaction_history(self, transaction_id: str, amount: Decimal):
+        if self.transaction_history is None:
+            self.transaction_history = {}
+        amount = amount.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+        self.transaction_history[transaction_id] = amount
+        self.update_updated_at()
+
     
     def __str__(self):
         return (f"Login count: {self.login_count}, "
@@ -42,4 +52,5 @@ class UserHistory:
                 f"Failed login count: {self.failed_login_count}, "
                 f"Last failed login: {self.last_failed_login}, "
                 f"Created at: {self.created_at}, "
-                f"Updated at: {self.updated_at}")
+                f"Updated at: {self.updated_at}",
+                f"Transaction History: {self.transaction_history}")
