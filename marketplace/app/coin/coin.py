@@ -5,7 +5,7 @@ from marketplace.app.coin.coin_market_data import CoinMarketData
 
 @dataclass
 class Coin:
-    id: int
+    id: int | None 
     name: str
     symbol: str
     category: str

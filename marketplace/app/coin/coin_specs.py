@@ -8,14 +8,14 @@ class CoinSpecs:
     average_block_time: float
     security_features: str
     privacy_features: str
-    max_supply: float | None = None  
-    genesis_block_date: str | None = None  
-    token_type: str | None = None  
-    governance_model: str | None = None  
-    development_activity: str | None = None  
-    hard_cap: float | None = None  
-    forking_coin: str | None = None  
-    tokenomics: str | None = None  
+    max_supply: float | None 
+    genesis_block_date: str | None 
+    token_type: str | None 
+    governance_model: str | None   
+    development_activity: str | None 
+    hard_cap: float | None 
+    forking_coin: str | None 
+    tokenomics: str | None  
 
     def update_algorithm(self, new_algorithm: str):
         self.algorithm = new_algorithm
