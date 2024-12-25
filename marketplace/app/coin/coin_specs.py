@@ -6,7 +6,6 @@ class CoinSpecs:
     consensus_mechanism: str
     blockchain_network: str
     block_time: float
-    transaction_speed: float
     security_features: str
     privacy_features: str
     max_supply: float | None = None  
@@ -29,9 +28,6 @@ class CoinSpecs:
 
     def update_block_time(self, new_block_time: float):
         self.block_time = new_block_time
-
-    def update_transaction_speed(self, new_transaction_speed: float):
-        self.transaction_speed = new_transaction_speed
 
     def update_security_features(self, new_security_features: str):
         self.security_features = new_security_features
@@ -68,6 +64,5 @@ class CoinSpecs:
             return (f"Algorithm: {self.algorithm}\n"
                     f"Consensus Mechanism: {self.consensus_mechanism}\n"
                     f"Block Time: {self.block_time} seconds\n"
-                    f"Transaction Speed: {self.transaction_speed} transactions/second\n"
                     f"Security Features: {self.security_features}\n"
                     f"Privacy Features: {self.privacy_features}")

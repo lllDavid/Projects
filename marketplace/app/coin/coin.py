@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from datetime import datetime
 
 from marketplace.app.coin.coin_specs import CoinSpecs
 from marketplace.app.coin.coin_market_data import CoinMarketData
@@ -12,7 +11,6 @@ class Coin:
     category: str
     description: str
     price: float
-    last_updated: datetime | None
     coin_specs: CoinSpecs | None
     coin_market_data: CoinMarketData | None
 
@@ -31,20 +29,20 @@ class Coin:
     def update_price(self, new_price: float):
         self.price = new_price
 
-    def update_last_updated(self):
-        self.last_updated = datetime.now()
+    def update_coin_specs(self, new_coin_specs: CoinSpecs):
+        self.coin_specs = new_coin_specs
     
+    def update_coin_market_data(self, new_coin_market_data: CoinMarketData):
+        self.coin_market_data = new_coin_market_data
+
     def __str__(self):
-        return (f"Name: {self.name}\n"
+        return (f"ID: {self.id}\n"
+                f"Name: {self.name}\n"
                 f"Symbol: {self.symbol}\n"
                 f"Category: {self.category}\n"
                 f"Description: {self.description}\n"
                 f"Price: ${self.price:,.2f}\n"
-                f"Last Updated: {self.last_updated}")
+                f"Coin Specs: {self.coin_specs}\n"
+                f"Coin Market Data: {self.coin_market_data}")
 
-c1 = Coin(1,"bitcoin","btc", "coin", "coin",1.23,None,None,None)
-print(c1)
 
-c1.update_name("Litecoin")
-
-print(c1)
