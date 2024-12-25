@@ -36,3 +36,7 @@ h1 {
 .btn-container {
     margin-top: 1rem;
 }
+
+a {
+    text-decoration: none;
+}

@@ -63,11 +63,11 @@ def register_routes(app):
     # Trade Routes
     @app.route("/submit_buy_order")
     def submit_buy_order():
-        return render_template(trade.html)
+        return render_template("trade.html")
     
     @app.route("/submit_sell_order")
     def submit_sell_order():
-        return render_template(trade.html)
+        return render_template("trade.html")
     
 
 # Request Handlers

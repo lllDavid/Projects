@@ -9,23 +9,24 @@
 
 {% block content %}
 <div class="container">
-    <h1 class="text-center">Login</h1>
+    <h1>Login</h1>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <div class="alert alert-dismissible fade show" role="alert">
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
+    {% if messages %}
+    <div class="alert alert-dismissible fade show" role="alert">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
     {% endwith %}
 
     <form action="{{ url_for('login') }}" method="POST">
         <div>
-            <input type="text" id="username" name="username" required placeholder="Username" class="form-control" autofocus>
+            <input type="text" id="username" name="username" required placeholder="Username" class="form-control"
+                autofocus>
         </div>
 
         <div>
@@ -33,7 +34,7 @@
         </div>
 
         <div class="text-center">
-            <a href="" class="text-decoration-none">Forgot Password?</a>
+            <a href="">Forgot Password?</a>
         </div>
 
         <div class="btn-container">
