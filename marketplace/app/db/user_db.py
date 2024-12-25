@@ -34,6 +34,8 @@ def insert_user(user: User):
 
         two_factor_backup_codes_hash_json = dumps(list(user.user_security.two_factor_backup_codes_hash)) if user.user_security.two_factor_backup_codes_hash else None
 
+        user_transaction_history = dumps(list(user.user_history.transaction_history)) if user.user_history.transaction_history else None
+
         cursor.execute(
             "INSERT INTO user_bank (user_id, bank_name, account_holder, account_number, routing_number, iban, swift_bic, date_linked) "
             "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
@@ -51,10 +53,10 @@ def insert_user(user: User):
 
         cursor.execute(
             "INSERT INTO user_history (user_id, login_count, last_login, failed_login_count, last_failed_login, "
-            "created_at, updated_at) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+            "created_at, updated_at, transaction_history) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
             (user_id, user.user_history.login_count, user.user_history.last_login,
              user.user_history.failed_login_count, user.user_history.last_failed_login,
-             user.user_history.created_at, user.user_history.updated_at)
+             user.user_history.created_at, user.user_history.updated_at, user_transaction_history)
         )
 
         cursor.execute(
@@ -70,7 +72,7 @@ def insert_user(user: User):
             "geolocation_latitude, geolocation_longitude, browser_info, os_name, os_version, device_type, "
             "device_manufacturer, device_model, user_preferences, user_agent, device_id, screen_resolution, "
             "two_factor_enabled, vpn_usage, behavioral_biometrics) "
-            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
             (
                 user_id,
                 dumps(list(user.user_fingerprint.username_history)),
@@ -328,8 +330,8 @@ def get_user_fingerprint(user_id: int) -> UserFingerprint | None:
             device_id=fingerprint[19],
             screen_resolution=fingerprint[20],
             two_factor_enabled=fingerprint[21],
-            vpn_usage=fingerprint[23],
-            behavioral_biometrics=fingerprint[24]
+            vpn_usage=fingerprint[22],
+            behavioral_biometrics=fingerprint[23]
         )
     return None
 
@@ -376,3 +378,6 @@ def get_user_from_db(user_id: int) -> User | None:
     )
 
     return user
+
+
+get_user_by_id(3)

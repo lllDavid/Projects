@@ -52,5 +52,5 @@ class UserHistory:
                 f"Failed login count: {self.failed_login_count}, "
                 f"Last failed login: {self.last_failed_login}, "
                 f"Created at: {self.created_at}, "
-                f"Updated at: {self.updated_at}",
+                f"Updated at: {self.updated_at}, "
                 f"Transaction History: {self.transaction_history}")
