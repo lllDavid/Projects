@@ -5,7 +5,7 @@ class CoinSpecs:
     algorithm: str
     consensus_mechanism: str
     blockchain_network: str
-    block_time: float
+    average_block_time: float
     security_features: str
     privacy_features: str
     max_supply: float | None = None  
@@ -15,7 +15,7 @@ class CoinSpecs:
     development_activity: str | None = None  
     hard_cap: float | None = None  
     forking_coin: str | None = None  
-    economic_model: str | None = None  
+    tokenomics: str | None = None  
 
     def update_algorithm(self, new_algorithm: str):
         self.algorithm = new_algorithm
@@ -26,8 +26,8 @@ class CoinSpecs:
     def update_blockchain_network(self, new_blockchain_network: str):
         self.blockchain_network = new_blockchain_network
 
-    def update_block_time(self, new_block_time: float):
-        self.block_time = new_block_time
+    def update_average_block_time(self, new_average_block_time: float):
+        self.average_block_time = new_average_block_time
 
     def update_security_features(self, new_security_features: str):
         self.security_features = new_security_features
@@ -56,13 +56,12 @@ class CoinSpecs:
     def update_forking_coin(self, new_forking_coin: str):
         self.forking_coin = new_forking_coin
 
-    def update_economic_model(self, new_economic_model: str):
-        self.economic_model = new_economic_model
-
+    def update_tokenomics(self, new_tokenomics: str):
+        self.tokenomics = new_tokenomics
 
     def __str__(self):
             return (f"Algorithm: {self.algorithm}\n"
                     f"Consensus Mechanism: {self.consensus_mechanism}\n"
-                    f"Block Time: {self.block_time} seconds\n"
+                    f"Block Time: {self.average_block_time} seconds\n"
                     f"Security Features: {self.security_features}\n"
                     f"Privacy Features: {self.privacy_features}")
