@@ -22,7 +22,7 @@ conn = connect(
 # Section 1: Insert, Delete and Update User attributes
 # --------------------------------------------------------------
 
-def insert_user(user: User):
+def insert_user(user: User) -> User | None:
     cursor = conn.cursor()
     try:
         cursor.execute(
@@ -113,7 +113,7 @@ def insert_user(user: User):
         cursor.close()
 
 
-def update_username(id: int, username: str):
+def update_username(id: int, username: str) -> None:
     cursor = conn.cursor()
     try:
         cursor.execute("UPDATE user SET username = %s WHERE id = %s", (username, id))
@@ -126,7 +126,7 @@ def update_username(id: int, username: str):
         cursor.close()
 
 
-def update_email(id: int, email: str):
+def update_email(id: int, email: str) -> None:
     cursor = conn.cursor()
     try:
         cursor.execute("UPDATE user SET email = %s WHERE id = %s", (email, id))
@@ -139,7 +139,7 @@ def update_email(id: int, email: str):
         cursor.close()
 
 
-def update_password(user_id: int, password: str):
+def update_password(user_id: int, password: str) -> None:
     cursor = conn.cursor()
     try:
         password_hash = UserSecurity.hash_password(password)

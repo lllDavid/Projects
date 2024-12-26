@@ -25,6 +25,7 @@ def insert_coin(coin: Coin):
             "VALUES (%s, %s, %s, %s, %s)",
             (coin.name, coin.symbol, coin.category, coin.description, coin.price)
         )
+
         coin_id = cursor.lastrowid
 
         cursor.execute(
@@ -40,64 +41,24 @@ def insert_coin(coin: Coin):
             )
         )
 
-        conn.commit()
-        print("Coin inserted into the database.")
-        coin.id = coin_id
-        return coin
-    except conn.Error as e:
-        conn.rollback()
-        print(f"Error occurred: {e}")
-    finally:
-        cursor.close()
-
-
-def insert_coin_specs(coin.coin_specs: CoinSpecs):
-    cursor = conn.cursor()
-    try:
-        cursor.execute(
-            "INSERT INTO CoinSpecs (algorithm, consensus_mechanism, blockchain_network, average_block_time, "
-            "security_features, privacy_features, max_supply, genesis_block_date, token_type, governance_model, "
-            "development_activity, hard_cap, forking_coin, tokenomics) "
-            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-            (
-                coin.coin_specs.algorithm, coin.coin_specs.consensus_mechanism, coin.coin_specs.blockchain_network, coin.coin_specs.average_block_time,
-                coin.coin_specs.security_features, coin.coin_specs.privacy_features, coin.coin_specs.max_supply, coin.coin_specs.genesis_block_date,
-                coin.coin_specs.token_type, coin.coin_specs.governance_model, coin.coin_specs.development_activity, coin.coin_specs.hard_cap,
-                coin.coin_specs.forking_coin, coin.coin_specs.tokenomics
-            )
-        )
-        specs_id = cursor.lastrowid
-        conn.commit()
-        print("Coin specifications inserted into the database.")
-        coin.coin_specs.id = specs_id
-        return coin.coin_specs
-    except conn.Error as e:
-        conn.rollback()
-        print(f"Error occurred: {e}")
-    finally:
-        cursor.close()
-
-
-def insert_coin_market_data(market_data: CoinMarketData):
-    cursor = conn.cursor()
-    try:
         cursor.execute(
             "INSERT INTO CoinMarketData (rank, price_usd, market_cap_usd, volume_24h_usd, high_24h_usd, low_24h_usd, "
             "change_24h_percent, all_time_high, all_time_low, circulating_supply, max_supply, market_dominance, "
             "last_updated) "
             "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
             (
-                market_data.rank, market_data.price_usd, market_data.market_cap_usd, market_data.volume_24h_usd,
-                market_data.high_24h_usd, market_data.low_24h_usd, market_data.change_24h_percent,
-                market_data.all_time_high, market_data.all_time_low, market_data.circulating_supply,
-                market_data.max_supply, market_data.market_dominance, market_data.last_updated
+                coin.coin_market_data.rank, coin.coin_market_data.price_usd, coin.coin_market_data.market_cap_usd, coin.coin_market_data.volume_24h_usd,
+                coin.coin_market_data.high_24h_usd, coin.coin_market_data.low_24h_usd, coin.coin_market_data.change_24h_percent,
+                coin.coin_market_data.all_time_high, coin.coin_market_data.all_time_low, coin.coin_market_data.circulating_supply,
+                coin.coin_market_data.max_supply, coin.coin_market_data.market_dominance, coin.coin_market_data.last_updated
             )
         )
-        market_data_id = cursor.lastrowid
+
         conn.commit()
-        print("Coin market data inserted into the database.")
-        market_data.id = market_data_id
-        return market_data
+        print("Coin inserted into the database.")
+        coin.id = coin_id
+        return coin
+    
     except conn.Error as e:
         conn.rollback()
         print(f"Error occurred: {e}")
@@ -139,10 +100,10 @@ def get_coin_market_data_by_id(market_data_id: int) -> CoinMarketData | None:
         "all_time_high, all_time_low, circulating_supply, max_supply, market_dominance, last_updated "
         "FROM CoinMarketData WHERE id = %s", (market_data_id,)
     )
-    market_data = cursor.fetchone()
+    coin.coin_market_data = cursor.fetchone()
     cursor.close()
-    if market_data:
-        return CoinMarketData(*market_data[1:])
+    if coin.coin_market_data:
+        return CoinMarketData(*coin.coin_market_data[1:])
     return None
 
 # --------------------------------------------------------------
