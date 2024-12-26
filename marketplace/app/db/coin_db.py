@@ -105,6 +105,18 @@ def get_coin_by_name(name: str) -> Coin | None:
 # Section 3: Coin Object Components by Coin ID
 # --------------------------------------------------------------
 
+def get_coin(coin_id: int):
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, name, symbol, category, description, price FROM coin WHERE id = %s", (id,))
+    coin_data = cursor.fetchone()
+    cursor.close()
+    
+    if coin_data:
+        name, symbol, category, description, price = coin_data
+        return coin_data
+    return None
+
+
 def get_coin_specs(coin_id: int) -> CoinSpecs | None:
     cursor = conn.cursor()
     cursor.execute(
@@ -139,10 +151,9 @@ def get_coin_market_data(coin_id: int) -> CoinMarketData | None:
 
 def get_complete_coin(coin_id: int) -> Coin | None:
 
-    cursor = conn.cursor()
-    cursor.execute("SELECT id, name, symbol, category, description, price FROM coin WHERE id = %s", (coin_id,))
-    coin_data = cursor.fetchone()
-    cursor.close()
+    coin_data = get_coin(coin_id)
+    if not coin_data:
+        return None
 
     if not coin_data:
         return None

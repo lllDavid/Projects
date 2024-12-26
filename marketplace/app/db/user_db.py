@@ -365,7 +365,7 @@ def get_user_from_db(user_id: int) -> User | None:
     if not user_fingerprint:
         return None
 
-    user = User(
+    return User(
         id=user_id,
         username=user_data[0],
         email=user_data[1],
@@ -377,7 +377,7 @@ def get_user_from_db(user_id: int) -> User | None:
         user_fingerprint=user_fingerprint
     )
 
-    return user
+  
 
 
-get_user_by_id(3)
+

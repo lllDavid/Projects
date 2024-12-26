@@ -51,7 +51,6 @@ class CoinCreator:
                                 all_time_high: float, 
                                 all_time_low: float, 
                                 circulating_supply: float, 
-                                max_supply: float, 
                                 market_dominance: float, 
                                 last_updated: datetime) -> CoinMarketData:
         return CoinMarketData(
@@ -65,7 +64,6 @@ class CoinCreator:
             all_time_high=Decimal(all_time_high),
             all_time_low=Decimal(all_time_low),
             circulating_supply=Decimal(circulating_supply),
-            max_supply=Decimal(max_supply),
             market_dominance=Decimal(market_dominance),
             last_updated=last_updated
         )
@@ -96,7 +94,7 @@ class CoinCreator:
                 print(f"Error: {e}")
                 raise ValueError("Coin account couldn't be created")  
     
-    def save_user(self, user):
+    def save_user(self, coin):
         try:
             coin_db.insert_coin(coin)  
         except Exception as e:
