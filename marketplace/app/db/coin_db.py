@@ -21,11 +21,25 @@ def insert_coin(coin: Coin):
     cursor = conn.cursor()
     try:
         cursor.execute(
-            "INSERT INTO Coin (name, symbol, category, description, price, coin_specs_id, coin_market_data_id) "
-            "VALUES (%s, %s, %s, %s, %s, %s, %s)",
-            (coin.name, coin.symbol, coin.category, coin.description, coin.price, coin.coin_specs_id, coin.coin_market_data_id)
+            "INSERT INTO Coin (name, symbol, category, description, price) "
+            "VALUES (%s, %s, %s, %s, %s)",
+            (coin.name, coin.symbol, coin.category, coin.description, coin.price)
         )
         coin_id = cursor.lastrowid
+
+        cursor.execute(
+            "INSERT INTO CoinSpecs (algorithm, consensus_mechanism, blockchain_network, average_block_time, "
+            "security_features, privacy_features, max_supply, genesis_block_date, token_type, governance_model, "
+            "development_activity, hard_cap, forking_coin, tokenomics) "
+            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+            (
+                coin.coin_specs.algorithm, coin.coin_specs.consensus_mechanism, coin.coin_specs.blockchain_network, coin.coin_specs.average_block_time,
+                coin.coin_specs.security_features, coin.coin_specs.privacy_features, coin.coin_specs.max_supply, coin.coin_specs.genesis_block_date,
+                coin.coin_specs.token_type, coin.coin_specs.governance_model, coin.coin_specs.development_activity, coin.coin_specs.hard_cap,
+                coin.coin_specs.forking_coin, coin.coin_specs.tokenomics
+            )
+        )
+
         conn.commit()
         print("Coin inserted into the database.")
         coin.id = coin_id
@@ -37,7 +51,7 @@ def insert_coin(coin: Coin):
         cursor.close()
 
 
-def insert_coin_specs(specs: CoinSpecs):
+def insert_coin_specs(coin.coin_specs: CoinSpecs):
     cursor = conn.cursor()
     try:
         cursor.execute(
@@ -46,17 +60,17 @@ def insert_coin_specs(specs: CoinSpecs):
             "development_activity, hard_cap, forking_coin, tokenomics) "
             "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
             (
-                specs.algorithm, specs.consensus_mechanism, specs.blockchain_network, specs.average_block_time,
-                specs.security_features, specs.privacy_features, specs.max_supply, specs.genesis_block_date,
-                specs.token_type, specs.governance_model, specs.development_activity, specs.hard_cap,
-                specs.forking_coin, specs.tokenomics
+                coin.coin_specs.algorithm, coin.coin_specs.consensus_mechanism, coin.coin_specs.blockchain_network, coin.coin_specs.average_block_time,
+                coin.coin_specs.security_features, coin.coin_specs.privacy_features, coin.coin_specs.max_supply, coin.coin_specs.genesis_block_date,
+                coin.coin_specs.token_type, coin.coin_specs.governance_model, coin.coin_specs.development_activity, coin.coin_specs.hard_cap,
+                coin.coin_specs.forking_coin, coin.coin_specs.tokenomics
             )
         )
         specs_id = cursor.lastrowid
         conn.commit()
         print("Coin specifications inserted into the database.")
-        specs.id = specs_id
-        return specs
+        coin.coin_specs.id = specs_id
+        return coin.coin_specs
     except conn.Error as e:
         conn.rollback()
         print(f"Error occurred: {e}")
