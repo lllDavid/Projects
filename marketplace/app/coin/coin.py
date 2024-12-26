@@ -11,8 +11,8 @@ class Coin:
     category: str
     description: str
     price: float
-    coin_specs: CoinSpecs | None
-    coin_market_data: CoinMarketData | None
+    coin_specs: CoinSpecs 
+    coin_market_data: CoinMarketData 
 
     def update_name(self, new_name: str):
         self.name = new_name

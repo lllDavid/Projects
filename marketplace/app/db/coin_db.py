@@ -66,67 +66,97 @@ def insert_coin(coin: Coin) -> Coin | None:
         cursor.close()
 
 # --------------------------------------------------------------
-# Section 2: Retrieval by Specific Criteria
+# Section 2: Coin Retrieval by Specific Criteria
 # --------------------------------------------------------------
 
-def get_coin_by_id(coin_id: int) -> Coin | None:
+def get_coin_by_id(id: int) -> Coin | None:
     cursor = conn.cursor()
-    cursor.execute("SELECT id, name, symbol, category, description, price, coin_specs_id, coin_market_data_id FROM Coin WHERE id = %s", (coin_id,))
-    coin_data = cursor.fetchone()
+    cursor.execute("SELECT id, name, symbol, category, description, price FROM coin WHERE id = %s", (id,))
+    coin = cursor.fetchone()
     cursor.close()
-    if coin_data:
-        return get_complete_coin(coin_data[0])
+    if coin:
+        return get_complete_coin(coin[0])
     return None
 
 
-def get_coin_specs_by_id(specs_id: int) -> CoinSpecs | None:
+def get_coin_by_symbol(symbol: str) -> Coin | None:
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, name, symbol, category, description, price FROM coin WHERE symbol = %s", (symbol,))
+    coin = cursor.fetchone()
+    cursor.close()
+
+    if coin:
+        return get_complete_coin(coin[0])
+    return None
+
+
+def get_coin_by_name(name: str) -> Coin | None:
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, name, symbol, category, description, price FROM coin WHERE name = %s", (name,))
+    coin = cursor.fetchone()
+    cursor.close()
+
+    if coin:
+        return get_complete_coin(coin[0])
+    return None
+
+
+# --------------------------------------------------------------
+# Section 3: Coin Object Components by Coin ID
+# --------------------------------------------------------------
+
+def get_coin_specs(coin_id: int) -> CoinSpecs | None:
     cursor = conn.cursor()
     cursor.execute(
-        "SELECT id, algorithm, consensus_mechanism, blockchain_network, average_block_time, security_features, "
+        "SELECT algorithm, consensus_mechanism, blockchain_network, average_block_time, security_features, "
         "privacy_features, max_supply, genesis_block_date, token_type, governance_model, development_activity, "
-        "hard_cap, forking_coin, tokenomics FROM CoinSpecs WHERE id = %s", (specs_id,)
+        "hard_cap, forking_coin, tokenomics FROM coin_specs WHERE coin_id = %s", (coin_id,)
     )
-    specs_data = cursor.fetchone()
+    specs = cursor.fetchone()
     cursor.close()
-    if specs_data:
-        return CoinSpecs(*specs_data[1:])
+    if specs:
+        return CoinSpecs(*specs)
     return None
 
 
-def get_coin_market_data_by_id(market_data_id: int) -> CoinMarketData | None:
+def get_coin_market_data(coin_id: int) -> CoinMarketData | None:
     cursor = conn.cursor()
     cursor.execute(
-        "SELECT id, rank, price_usd, market_cap_usd, volume_24h_usd, high_24h_usd, low_24h_usd, change_24h_percent, "
-        "all_time_high, all_time_low, circulating_supply, max_supply, market_dominance, last_updated "
-        "FROM CoinMarketData WHERE id = %s", (market_data_id,)
+        "SELECT rank, price_usd, market_cap_usd, volume_24h_usd, high_24h_usd, low_24h_usd, change_24h_percent, "
+        "all_time_high, all_time_low, circulating_supply, market_dominance, last_updated "
+        "FROM coin_market_data WHERE coin_id = %s", (coin_id,)
     )
-    coin.coin_market_data = cursor.fetchone()
+    market_data = cursor.fetchone()
     cursor.close()
-    if coin.coin_market_data:
-        return CoinMarketData(*coin.coin_market_data[1:])
+    if market_data:
+        return CoinMarketData(*market_data)
     return None
 
+
 # --------------------------------------------------------------
-# Section 3: Complete Coin Retrieval
+# Section 4: Complete Coin Retrieval
 # --------------------------------------------------------------
 
 def get_complete_coin(coin_id: int) -> Coin | None:
+
     cursor = conn.cursor()
-    cursor.execute("SELECT id, name, symbol, category, description, price, coin_specs_id, coin_market_data_id FROM Coin WHERE id = %s", (coin_id,))
+    cursor.execute("SELECT id, name, symbol, category, description, price FROM coin WHERE id = %s", (coin_id,))
     coin_data = cursor.fetchone()
     cursor.close()
 
     if not coin_data:
         return None
 
-    coin_specs = get_coin_specs_by_id(coin_data[6])
-    coin_market_data = get_coin_market_data_by_id(coin_data[7])
+    coin_specs = get_coin_specs(coin_id)
+    if not coin_specs:
+        return None
 
-    if not coin_specs or not coin_market_data:
+    coin_market_data = get_coin_market_data(coin_id)
+    if not coin_market_data:
         return None
 
     return Coin(
-        id=coin_data[0],
+        id=coin_id,
         name=coin_data[1],
         symbol=coin_data[2],
         category=coin_data[3],
