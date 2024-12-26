@@ -2,7 +2,7 @@ CREATE DATABASE marketplace_coins;
 USE marketplace_coins;
 
 -- Table for storing basic coin specifications
-CREATE TABLE CoinSpecs (
+CREATE TABLE coin_specs (
     id INT AUTO_INCREMENT PRIMARY KEY,           -- Unique identifier for the coin specs
     algorithm VARCHAR(255),                     -- Algorithm used by the coin
     consensus_mechanism VARCHAR(255),           -- Consensus mechanism (e.g., PoW, PoS)
@@ -21,7 +21,7 @@ CREATE TABLE CoinSpecs (
 );
 
 -- Table for storing coin market data
-CREATE TABLE CoinMarketData (
+CREATE TABLE coin_market_data (
     id INT AUTO_INCREMENT PRIMARY KEY,           -- Unique identifier for the market data
     rank INT,                                    -- Rank of the coin in the market
     price_usd DECIMAL(20, 8),                    -- Current price in USD
@@ -38,7 +38,7 @@ CREATE TABLE CoinMarketData (
 );
 
 -- Table for storing coin information
-CREATE TABLE Coin (
+CREATE TABLE coin (
     id INT AUTO_INCREMENT PRIMARY KEY,           -- Unique identifier for the coin
     name VARCHAR(255),                           -- Name of the coin
     symbol VARCHAR(50),                          -- Symbol of the coin
@@ -47,6 +47,6 @@ CREATE TABLE Coin (
     price DECIMAL(20, 8),                        -- Current price of the coin
     coin_specs_id INT,                           -- Foreign key reference to CoinSpecs table
     coin_market_data_id INT,                     -- Foreign key reference to CoinMarketData table
-    FOREIGN KEY (coin_specs_id) REFERENCES CoinSpecs(id) ON DELETE CASCADE, -- Reference to CoinSpecs
-    FOREIGN KEY (coin_market_data_id) REFERENCES CoinMarketData(id) ON DELETE CASCADE -- Reference to CoinMarketData
+    FOREIGN KEY (coin_specs_id) REFERENCES coin_specs(id) ON DELETE CASCADE, -- Reference to CoinSpecs
+    FOREIGN KEY (coin_market_data_id) REFERENCES coin_market_data(id) ON DELETE CASCADE -- Reference to CoinMarketData
 );

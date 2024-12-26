@@ -21,7 +21,7 @@ def insert_coin(coin: Coin) -> Coin | None:
     cursor = conn.cursor()
     try:
         cursor.execute(
-            "INSERT INTO Coin (name, symbol, category, description, price) "
+            "INSERT INTO coin (name, symbol, category, description, price) "
             "VALUES (%s, %s, %s, %s, %s)",
             (coin.name, coin.symbol, coin.category, coin.description, coin.price)
         )
@@ -29,7 +29,7 @@ def insert_coin(coin: Coin) -> Coin | None:
         coin_id = cursor.lastrowid
 
         cursor.execute(
-            "INSERT INTO CoinSpecs (algorithm, consensus_mechanism, blockchain_network, average_block_time, "
+            "INSERT INTO coin_specs (algorithm, consensus_mechanism, blockchain_network, average_block_time, "
             "security_features, privacy_features, max_supply, genesis_block_date, token_type, governance_model, "
             "development_activity, hard_cap, forking_coin, tokenomics) "
             "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
@@ -42,7 +42,7 @@ def insert_coin(coin: Coin) -> Coin | None:
         )
 
         cursor.execute(
-            "INSERT INTO CoinMarketData (rank, price_usd, market_cap_usd, volume_24h_usd, high_24h_usd, low_24h_usd, "
+            "INSERT INTO coin_market_data (rank, price_usd, market_cap_usd, volume_24h_usd, high_24h_usd, low_24h_usd, "
             "change_24h_percent, all_time_high, all_time_low, circulating_supply, market_dominance, "
             "last_updated) "
             "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
