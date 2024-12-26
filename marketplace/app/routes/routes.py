@@ -40,10 +40,9 @@ def register_routes(app):
     # Home Routes
     @app.route("/home")
     def home():
-        current_username = session.get("username")
         return render_template("home.html")
     
-    @app.route("/trade")
+    @app.route("/trade", methods=["GET", "POST"])
     def trade():
         return render_template("trade.html")
 
