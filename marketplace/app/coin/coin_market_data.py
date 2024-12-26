@@ -11,12 +11,11 @@ class CoinMarketData:
     high_24h_usd: Decimal
     low_24h_usd: Decimal
     change_24h_percent: Decimal
-    all_time_high: Decimal
-    all_time_low: Decimal
+    all_time_high: Decimal | None
+    all_time_low: Decimal | None
     circulating_supply: Decimal
-    max_supply: Decimal
-    market_dominance: Decimal
-    last_updated: datetime
+    market_dominance: Decimal | None
+    last_updated: datetime | None
 
     def update_rank(self, new_rank: int):
         self.rank = new_rank
@@ -58,10 +57,6 @@ class CoinMarketData:
         self.circulating_supply = new_supply.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
         self.update_last_updated()
 
-    def update_max_supply(self, new_max_supply: Decimal):
-        self.max_supply = new_max_supply.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
-        self.update_last_updated()
-
     def update_market_dominance(self, new_dominance: Decimal):
         self.market_dominance = new_dominance.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
         self.update_last_updated()
@@ -81,7 +76,6 @@ class CoinMarketData:
             f"All Time High (USD): ${self.all_time_high:,.2f}, "
             f"All Time Low (USD): ${self.all_time_low:,.2f}, "
             f"Circulating Supply: {self.circulating_supply:,.0f}, "
-            f"Max Supply: {self.max_supply:,.0f}, "
             f"Market Dominance: {self.market_dominance:.2f}%, "
-            f"Last Updated: {self.last_updated.strftime('%Y-%m-%d %H:%M:%S')}"
+            f"Last Updated: {self.last_updated}"
         )

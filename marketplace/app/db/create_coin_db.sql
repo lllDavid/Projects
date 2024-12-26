@@ -33,7 +33,6 @@ CREATE TABLE CoinMarketData (
     all_time_high DECIMAL(20, 8),                -- All-time high price
     all_time_low DECIMAL(20, 8),                 -- All-time low price
     circulating_supply DECIMAL(20, 8),           -- Circulating supply of the coin
-    max_supply DECIMAL(20, 8),                   -- Maximum supply of the coin
     market_dominance DECIMAL(10, 4),             -- Market dominance percentage
     last_updated DATETIME                        -- Timestamp of the last update
 );

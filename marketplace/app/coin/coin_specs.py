@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 @dataclass
 class CoinSpecs:
-    algorithm: str
+    algorithm: str 
     consensus_mechanism: str
     blockchain_network: str
     average_block_time: float
