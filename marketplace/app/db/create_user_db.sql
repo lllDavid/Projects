@@ -1,93 +1,94 @@
 CREATE DATABASE marketplace_users;
 USE marketplace_users;
 
--- Create user_profile table
-CREATE TABLE user_profile (
-    id INT AUTO_INCREMENT PRIMARY KEY,  -- User ID (Primary Key)
-    username VARCHAR(255),              -- Username
-    email VARCHAR(255),                 -- Email
-    role ENUM('user', 'admin', 'moderator')  -- Role (Assuming role types)
+-- Table for storing basic user information
+CREATE TABLE user (
+    id INT AUTO_INCREMENT PRIMARY KEY,       -- Unique identifier for the user
+    username VARCHAR(255),                    -- User's username
+    email VARCHAR(255),                       -- User's email
+    role INT,                                 -- Role: 1=User, 2=Support, 3=Admin
+    CHECK (role IN (1, 2, 3))                 -- Validates that the role is 1, 2, or 3
 );
 
--- Create user_bank table
+-- Table for storing user's bank information
 CREATE TABLE user_bank (
-    id INT AUTO_INCREMENT PRIMARY KEY,  -- Bank ID (Primary Key)
-    user_id INT,                        -- Foreign Key to user_profile
-    bank_name VARCHAR(255),             -- Bank Name
-    account_holder VARCHAR(255),        -- Account Holder's Name
-    account_number VARCHAR(255),        -- Account Number
-    routing_number VARCHAR(255),        -- Routing Number
-    iban VARCHAR(255),                  -- IBAN
-    swift_bic VARCHAR(255),             -- SWIFT/BIC Code
-    date_linked DATE,                   -- Date when the account was linked
-    FOREIGN KEY (user_id) REFERENCES user_profile(id)
+    id INT AUTO_INCREMENT PRIMARY KEY,      -- Unique identifier for the bank record
+    user_id INT,                            -- Foreign key reference to the user table
+    bank_name VARCHAR(255),                 -- Bank name
+    account_holder VARCHAR(255),            -- Name of the account holder
+    account_number VARCHAR(50),             -- Bank account number
+    routing_number VARCHAR(50),             -- Routing number
+    iban VARCHAR(50),                       -- IBAN number
+    swift_bic VARCHAR(50),                  -- SWIFT/BIC code
+    date_linked TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- When the bank account was linked
+    FOREIGN KEY (user_id) REFERENCES user(id) -- Foreign key to user table
 );
 
--- Create user_status table
+-- Table for storing user's status information (ban, inactivity, etc.)
 CREATE TABLE user_status (
-    id INT AUTO_INCREMENT PRIMARY KEY,  -- Status ID (Primary Key)
-    user_id INT,                        -- Foreign Key to user_profile
-    is_banned BOOLEAN DEFAULT FALSE,    -- Is the user banned?
-    is_inactive BOOLEAN DEFAULT FALSE,  -- Is the user inactive?
-    ban_type ENUM('temporary', 'permanent') DEFAULT 'temporary',  -- Ban type
-    ban_reason TEXT,                    -- Reason for the ban
-    ban_duration INT,                   -- Duration of the ban in days (if applicable)
-    ban_start_time DATETIME,            -- When the ban started
-    ban_end_time DATETIME,              -- When the ban ends
-    FOREIGN KEY (user_id) REFERENCES user_profile(id)
+    id INT AUTO_INCREMENT PRIMARY KEY,      -- Unique identifier for the status record
+    user_id INT,                            -- Foreign key reference to the user table
+    is_banned BOOLEAN DEFAULT FALSE,        -- Whether the user is banned
+    is_inactive BOOLEAN DEFAULT FALSE,      -- Whether the user is inactive
+    ban_type VARCHAR(50),                   -- Type of ban (if any)
+    ban_reason TEXT,                        -- Reason for the ban
+    ban_duration INT,                       -- Duration of the ban (in seconds, or NULL for permanent)
+    ban_start_time TIMESTAMP,               -- When the ban started
+    ban_end_time TIMESTAMP,                 -- When the ban ends (if applicable)
+    FOREIGN KEY (user_id) REFERENCES user(id) -- Foreign key to user table
 );
 
--- Create user_history table
+-- Table for storing user's login history
 CREATE TABLE user_history (
-    id INT AUTO_INCREMENT PRIMARY KEY,  -- History ID (Primary Key)
-    user_id INT,                        -- Foreign Key to user_profile
-    login_count INT DEFAULT 0,          -- Login Count
-    last_login DATETIME,                -- Last login timestamp
-    failed_login_count INT DEFAULT 0,   -- Failed login attempts
-    last_failed_login DATETIME,         -- Last failed login timestamp
-    created_at DATETIME,                -- Account creation time
-    updated_at DATETIME,                -- Last account update time
-    FOREIGN KEY (user_id) REFERENCES user_profile(id)
+    id INT AUTO_INCREMENT PRIMARY KEY,      -- Unique identifier for the history record
+    user_id INT,                            -- Foreign key reference to the user table
+    login_count INT DEFAULT 0,              -- Number of times the user has logged in
+    last_login TIMESTAMP,                   -- Last login timestamp
+    failed_login_count INT DEFAULT 0,       -- Number of failed login attempts
+    last_failed_login TIMESTAMP,            -- Timestamp of the last failed login attempt
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- When the history record was created
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- When the record was last updated
+    transaction_history JSON,               -- User's transaction history (stored as JSON)
+    FOREIGN KEY (user_id) REFERENCES user(id) -- Foreign key to user table
 );
 
--- Create user_security table
+-- Table for storing user's security-related information (password hash, 2FA, etc.)
 CREATE TABLE user_security (
-    id INT AUTO_INCREMENT PRIMARY KEY,  -- Security ID (Primary Key)
-    user_id INT,                        -- Foreign Key to user_profile
-    password_hash VARCHAR(255),         -- Hashed password
-    two_factor_enabled BOOLEAN DEFAULT FALSE,  -- Whether 2FA is enabled
-    two_factor_secret_key VARCHAR(255), -- Secret key for 2FA (if enabled)
-    two_factor_backup_codes_hash JSON,  -- Backup codes for 2FA in JSON format
-    FOREIGN KEY (user_id) REFERENCES user_profile(id)
+    id INT AUTO_INCREMENT PRIMARY KEY,      -- Unique identifier for the security record
+    user_id INT,                            -- Foreign key reference to the user table
+    password_hash VARCHAR(255),             -- Password hash
+    two_factor_enabled BOOLEAN DEFAULT FALSE, -- Whether two-factor authentication is enabled
+    two_factor_secret_key VARCHAR(255),      -- Secret key for two-factor authentication
+    two_factor_backup_codes_hash JSON,      -- Backup codes for two-factor authentication, stored as JSON
+    FOREIGN KEY (user_id) REFERENCES user(id) -- Foreign key to user table
 );
 
--- Create user_fingerprint table
+-- Table for storing user's fingerprint data and other behavioral attributes
 CREATE TABLE user_fingerprint (
-    id INT AUTO_INCREMENT PRIMARY KEY,  -- Fingerprint ID (Primary Key)
-    user_id INT,                        -- Foreign Key to user_profile
-    username_history JSON,              -- Username history (in JSON format)
-    email_address_history JSON,         -- Email address history (in JSON format)
-    mac_address VARCHAR(255),           -- MAC Address
-    associated_ips JSON,                -- Associated IPs (in JSON format)
-    avg_login_frequency FLOAT,          -- Average login frequency
-    avg_session_duration FLOAT,         -- Average session duration
-    geolocation_country VARCHAR(255),   -- Country of user (geolocation)
-    geolocation_city VARCHAR(255),      -- City of user (geolocation)
-    geolocation_latitude FLOAT,         -- Latitude of user
-    geolocation_longitude FLOAT,        -- Longitude of user
-    browser_info VARCHAR(255),          -- Browser Information
-    os_name VARCHAR(255),               -- OS Name
-    os_version VARCHAR(255),            -- OS Version
-    device_type VARCHAR(255),           -- Device Type (mobile, desktop, etc.)
-    device_manufacturer VARCHAR(255),   -- Device Manufacturer
-    device_model VARCHAR(255),          -- Device Model
-    user_preferences JSON,              -- User preferences (in JSON format)
-    user_agent VARCHAR(255),            -- User Agent string
-    device_id VARCHAR(255),             -- Device ID
-    screen_resolution VARCHAR(255),     -- Screen resolution
-    two_factor_enabled BOOLEAN DEFAULT FALSE,  -- Whether 2FA is enabled
-    transaction_history JSON,           -- User's transaction history (in JSON format)
-    vpn_usage BOOLEAN DEFAULT FALSE,    -- Whether VPN usage is detected
-    behavioral_biometrics JSON,         -- Behavioral biometrics (in JSON format)
-    FOREIGN KEY (user_id) REFERENCES user_profile(id)
+    id INT AUTO_INCREMENT PRIMARY KEY,      -- Unique identifier for the fingerprint record
+    user_id INT,                            -- Foreign key reference to the user table
+    username_history JSON,                  -- List of previous usernames (stored as JSON)
+    email_address_history JSON,             -- List of previous email addresses (stored as JSON)
+    mac_address VARCHAR(50),                -- MAC address of the user's device
+    associated_ips JSON,                    -- List of IPs associated with the user (stored as JSON)
+    avg_login_frequency JSON,               -- Average login frequency data (stored as JSON)
+    avg_session_duration JSON,              -- Average session duration data (stored as JSON)
+    geolocation_country VARCHAR(255),       -- Country of the user (based on IP or other data)
+    geolocation_city VARCHAR(255),          -- City of the user (based on IP or other data)
+    geolocation_latitude DECIMAL(9, 6),     -- Latitude of the user (if available)
+    geolocation_longitude DECIMAL(9, 6),    -- Longitude of the user (if available)
+    browser_info VARCHAR(255),              -- Browser info (e.g., User-Agent string)
+    os_name VARCHAR(255),                   -- Operating system name (e.g., Windows, macOS)
+    os_version VARCHAR(50),                 -- Operating system version
+    device_type VARCHAR(50),                -- Type of device (e.g., desktop, mobile)
+    device_manufacturer VARCHAR(255),       -- Device manufacturer (e.g., Apple, Samsung)
+    device_model VARCHAR(255),              -- Device model (e.g., iPhone 13, Galaxy S21)
+    user_preferences JSON,                  -- User preferences (stored as JSON)
+    user_agent VARCHAR(255),                -- User-Agent string
+    device_id VARCHAR(50),                  -- Unique identifier for the device
+    screen_resolution VARCHAR(50),          -- Screen resolution of the user's device
+    two_factor_enabled BOOLEAN,             -- Whether two-factor is enabled for the user
+    vpn_usage BOOLEAN,                       -- Whether the user uses a VPN
+    behavioral_biometrics JSON,             -- Behavioral biometrics data (stored as JSON)
+    FOREIGN KEY (user_id) REFERENCES user(id) -- Foreign key to user table
 );
