@@ -49,8 +49,18 @@ def sell_coin():
 
         wallet.subtract_coin_amount(coin, amount)
 
+     # Flash a success message
+        flash(f'Successfully sold {amount} {coin}', 'success')
+
+        # Redirect back to the trade page after the purchase
+        return redirect(url_for('trade'))
+
+    except BadRequest as e:
+        flash(f'Invalid data: {e}', 'error')
+        return redirect(url_for('trade'))
+
     except Exception as e:
-        print(e)
-
-    return "Success"
-
+        # Log the exception for debugging purposes
+        print(f'Error during purchase: {e}')
+        flash('An error occurred during the purchase process. Please try again.', 'error')
+        return redirect(url_for('trade'))
