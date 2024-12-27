@@ -8,12 +8,12 @@ from marketplace.app.user.user_bank import UserBank
 
 crypto_sell = Blueprint('crypto_sell', __name__)
 
-@crypto_sell.route('/trade', methods=['GET'])
+@crypto_sell.route('/trade/sell', methods=['GET'])
 def create_trade_form():
     return render_template('trade.html')
 
-@crypto_sell.route('/trade', methods=['POST'])
-def sell_coin():
+@crypto_sell.route('/trade/sell', methods=['POST'])
+def sell_crypto():
     try:
         coin = request.form['coin-selection']
         amount = request.form['coin-amount']

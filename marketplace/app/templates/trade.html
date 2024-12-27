@@ -14,17 +14,17 @@
     <p class="lead">Trade Cryptocurrencies</p>
   </div>
   {% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
+  {% if messages %}
 
-<div class="alert alert-dismissible fade show" role="alert">
-  {% for category, message in messages %}
-  <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }}">
-    {{ message }}
+  <div class="alert alert-dismissible fade show" role="alert">
+    {% for category, message in messages %}
+    <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }}">
+      {{ message }}
+    </div>
+    {% endfor %}
   </div>
-  {% endfor %}
-</div>
-{% endif %}
-{% endwith %}
+  {% endif %}
+  {% endwith %}
 
   <div class="row mt-4">
     <button class="tab-button active" onclick="showTab('buy')">Buy</button>
@@ -33,7 +33,7 @@
 
   <div class="trade-form-container" id="buy-form">
     <h2>Buy</h2>
-    <form action="{{ url_for('user_purchase.purchase_coin') }}" method="POST">
+    <form action="{{ url_for('crypto_buy.buy_crypto') }}" method="POST">
       <label for="buy-crypto">Coin:</label>
       <select id="buy-crypto" name="coin-selection" required>
         <option value="BTC">Bitcoin (BTC)</option>
@@ -66,7 +66,7 @@
 
   <div class="trade-form-container" id="sell-form" style="display: none;">
     <h2>Sell</h2>
-    <form action="{{ url_for('user_sell.sell_coin') }}" method="POST">
+    <form action="{{ url_for('crypto_sell.sell_crypto') }}" method="POST">
       <label for="sell-crypto">Coin:</label>
       <select id="sell-crypto" name="coin-selection" required>
         <option value="BTC">Bitcoin (BTC)</option>

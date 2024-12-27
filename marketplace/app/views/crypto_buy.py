@@ -13,7 +13,7 @@ def create_trade_form():
     return render_template('trade.html')
 
 @crypto_buy.route('/trade', methods=['POST'])
-def purchase_coin():
+def buy_crypto():
     try:
         coin = request.form['coin-selection']
         amount = request.form['coin-amount']
