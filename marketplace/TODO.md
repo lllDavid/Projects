@@ -1,5 +1,5 @@
  TODO:
-   - 2FA Functionality
+    - 2FA Functionality
 
     - KYC 
 
@@ -10,10 +10,8 @@
     - fees for transactions
 
 
-    - Coin functionality (create, database)
     - Forgot password send reset email
     - home fetch market data api
-    - trade functionality
     - wallet functionality
     - settings change password, delete account functionality
     - support funtionality

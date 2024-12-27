@@ -10,7 +10,7 @@ class CryptoWallet:
     wallet_id: int | None
     wallet_address: str | None
     coin_amount: dict[str, Decimal] = field(default_factory=dict)
-    total_coin_value: Decimal = Decimal("0.00")
+    total_coin_value: Decimal | None = None
     last_accessed: datetime | None = None
     encryption_key: str | None = None
     deposit_history: dict[str, Decimal] = field(default_factory=dict)
@@ -30,8 +30,10 @@ class CryptoWallet:
             sum(methods.values()) for methods in self.withdrawal_history.values()
         )
         coin_balance = sum(self.coin_amount.values()) if self.coin_amount else Decimal("0.00")
-        total_balance = coin_balance + self.total_coin_value
-        return (total_deposits - total_withdrawals + total_balance).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        total_balance = self.total_coin_value if self.total_coin_value is not None else Decimal("0.00")
+        total_balance = total_balance.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+
+        return (total_deposits - total_withdrawals + coin_balance + total_balance).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
     def update_last_accessed(self):
         self.last_accessed = datetime.now()
