@@ -32,7 +32,7 @@ def buy_crypto():
             ),
             wallet_id=101,
             wallet_address='0xABC123DEF456',
-            coin_amount={'BTC': Decimal('0.5'), 'ETH': Decimal('10.0')},
+            coin_balance={'BTC': Decimal('0.5'), 'ETH': Decimal('10.0')},
             total_coin_value=Decimal('25000.00'),
             last_accessed=datetime(2024, 12, 26, 15, 45, 54, 455287),
             encryption_key='super_secret_key',
@@ -44,6 +44,7 @@ def buy_crypto():
         )
 
         wallet.increase_coin_balance(coin, amount, datetime.now())
+        wallet.add_deposit_to_history(datetime.now(), amount)
 
         print(wallet)
 
