@@ -5,7 +5,7 @@ from marketplace.app.wallets.crypto.crypto_wallet import CryptoWallet
 from marketplace.app.wallets.fiat.fiat_wallet import FiatWallet
 
 @dataclass
-class Purchase:
+class Buy:
     user_id: int
     purchase_id: int
     crypto_wallet: CryptoWallet
