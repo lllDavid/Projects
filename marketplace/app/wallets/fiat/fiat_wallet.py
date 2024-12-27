@@ -14,22 +14,37 @@ class FiatWallet:
     deposit_history: dict[str, Decimal] = field(default_factory=dict)
     withdrawal_history: dict[str, dict[str, Decimal]] = field(default_factory=dict)
 
-    def add_deposit(self, date: str, amount: Decimal) -> None:
+    def add_deposit_to_history(self, date: str, amount: Decimal) -> None:
         amount = amount.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
         self.deposit_history[date] = self.deposit_history.get(date, Decimal("0.00")) + amount
 
-    def withdraw_to_bank(self, amount: Decimal, date: str) -> str:
+    def add_withdrawal_to_history(self, date: str, amount: Decimal, method: str) -> None:
+        amount = Decimal(amount).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        self.withdrawal_history.setdefault(date, {})[method] = amount
+
+    def withdraw_to_bank(self, amount: Decimal, date: str, method: str) -> str:
         if not self.has_sufficient_funds(amount):
             return f"Insufficient funds to withdraw {amount:.2f}. Current balance: {self.wallet_balance:.2f}"
 
         self.update_balance(amount)
-        self.add_to_withdrawal_history(amount, date)
+        self.add_withdrawal_to_history(date, amount, method)
         self.update_last_accessed()
         
         if self.user_bank is not None:
             return f"Withdrawal of {amount:.2f} to account {self.user_bank.account_number} completed on {date}. New balance: {self.wallet_balance:.2f}"
         
         return "No bank account linked for withdrawal."
+    
+    def simulate_bank_transfer(self, amount: Decimal) -> str:
+        # Simulate bank transfer here
+        if self.user_bank:
+            # You can simulate some transaction logic, like checking the bank details or confirming the transfer.
+            print(f"Simulating bank transfer of {amount} to bank account: {self.user_bank.account_number}")
+            # In reality, this would be replaced with an actual call to a bank API, e.g.:
+            # bank_api.withdraw(self.user_bank, amount)
+            return "Transfer successful"  # Placeholder message
+        
+        return "Bank account details are missing."
 
     def has_sufficient_funds(self, amount: Decimal) -> bool:
         return (self.wallet_balance or Decimal("0.00")) >= amount
@@ -39,10 +54,6 @@ class FiatWallet:
             raise ValueError("Wallet balance is None, cannot perform withdrawal.")
         self.wallet_balance -= amount
         self.wallet_balance = self.wallet_balance.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
-
-    def add_to_withdrawal_history(self, amount: Decimal, date: str) -> None:
-        amount = amount.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
-        self.withdrawal_history.setdefault(date, {})['amount'] = amount
 
     def get_balance(self) -> Decimal:
         total_deposits = sum(self.deposit_history.values())

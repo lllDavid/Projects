@@ -35,9 +35,6 @@ class CryptoWallet:
 
         return (total_deposits - total_withdrawals + coin_balance + total_balance).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
-    def update_last_accessed(self):
-        self.last_accessed = datetime.now()
-
     def increase_coin_balance(self, coin: str, amount: Decimal) -> None:
         amount = Decimal(amount).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
         if amount <= Decimal("0.00"):
@@ -51,6 +48,9 @@ class CryptoWallet:
         if coin not in self.coin_amount or self.coin_amount[coin] < amount:
             raise ValueError("Insufficient coin balance or coin does not exist.")
         self.coin_amount[coin] -= amount
+
+    def update_last_accessed(self):
+        self.last_accessed = datetime.now()
 
     def __str__(self) -> str:
         coin_summary = (
