@@ -36,17 +36,19 @@ class CryptoWallet:
     def update_last_accessed(self):
         self.last_accessed = datetime.now()
 
-    def update_coin_amount(self, coin: str, amount: Decimal) -> None:
-        """Updates the amount of a specific coin in the wallet.
-
-        Args:
-            coin (str): The name or symbol of the coin.
-            amount (Decimal): The amount of the coin to update or add.
-        """
+    def add_coin_amount(self, coin: str, amount: Decimal) -> None:
         amount = Decimal(amount).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
-        if amount < Decimal("0.00"):
-            raise ValueError("Amount cannot be negative.")
+        if amount <= Decimal("0.00"):
+            raise ValueError("Amount to add must be positive.")
         self.coin_amount[coin] = self.coin_amount.get(coin, Decimal("0.00")) + amount
+
+    def subtract_coin_amount(self, coin: str, amount: Decimal) -> None:
+        amount = Decimal(amount).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        if amount <= Decimal("0.00"):
+            raise ValueError("Amount to subtract must be positive.")
+        if coin not in self.coin_amount or self.coin_amount[coin] < amount:
+            raise ValueError("Insufficient coin balance or coin does not exist.")
+        self.coin_amount[coin] -= amount
 
     def __str__(self) -> str:
         coin_summary = (

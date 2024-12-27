@@ -21,7 +21,7 @@
 
   <div class="trade-form-container" id="buy-form">
     <h2>Buy</h2>
-    <form action="{{ url_for('submit_buy_order') }}" method="POST">
+    <form action="{{ url_for('user_purchase.purchase_coin') }}" method="POST">
       <label for="buy-crypto">Coin:</label>
       <select id="buy-crypto" name="coin-selection" required>
         <option value="BTC">Bitcoin (BTC)</option>
@@ -54,7 +54,7 @@
 
   <div class="trade-form-container" id="sell-form" style="display: none;">
     <h2>Sell</h2>
-    <form action="{{ url_for('submit_sell_order') }}" method="POST">
+    <form action="{{ url_for('user_sell.sell_coin') }}" method="POST">
       <label for="sell-crypto">Coin:</label>
       <select id="sell-crypto" name="crypto" required>
         <option value="BTC">Bitcoin (BTC)</option>

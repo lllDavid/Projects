@@ -9,15 +9,14 @@ from marketplace.app.wallets.crypto.crypto_wallet import CryptoWallet
 from marketplace.app.user.user_bank import UserBank
 
 
-user_purchase = Blueprint('user_purchase', __name__)
+user_sell = Blueprint('user_sell', __name__)
 
-@user_purchase.route('/trade/buy', methods=['GET'])
+@user_sell.route('/trade/sell', methods=['GET'])
 def create_trade_form():
     return render_template('trade.html')
 
-
-@user_purchase.route('/trade/buy', methods=['POST'])
-def purchase_coin():
+@user_sell.route('/trade/sell', methods=['POST'])
+def sell_coin():
     try:
         coin = request.form['coin-selection']
         amount = request.form['coin-amount']
@@ -48,7 +47,7 @@ def purchase_coin():
                 }
             )
 
-        wallet.add_coin_amount(coin, amount)
+        wallet.subtract_coin_amount(coin, amount)
 
     except Exception as e:
         print(e)
