@@ -43,7 +43,7 @@ def buy_crypto():
             }
         )
 
-        wallet.add_deposit_to_history(coin, amount)
+        wallet.increase_coin_balance(coin, amount, datetime.now())
 
         print(wallet)
 
