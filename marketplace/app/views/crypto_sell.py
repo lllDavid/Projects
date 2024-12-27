@@ -1,32 +1,24 @@
-# marketplace/app/views/user_purchase.py
-
-from flask import Blueprint, render_template, redirect, url_for, flash, request, session
+from flask import Blueprint, render_template, redirect, url_for, flash, request
 from decimal import Decimal
 from datetime import datetime
 from werkzeug.exceptions import BadRequest
 
-from marketplace.app.coin.coin import Coin
-from marketplace.app.transaction.purchase import Purchase
 from marketplace.app.wallets.crypto.crypto_wallet import CryptoWallet
 from marketplace.app.user.user_bank import UserBank
 
-user_purchase = Blueprint('user_purchase', __name__)
+crypto_sell = Blueprint('crypto_sell', __name__)
 
-# Handle GET request to display the form (buy form on the /trade/buy page)
-@user_purchase.route('/trade/buy', methods=['GET'])
+@crypto_sell.route('/trade', methods=['GET'])
 def create_trade_form():
     return render_template('trade.html')
 
-# Handle POST request when the form is submitted (for purchasing coins)
-@user_purchase.route('/trade/buy', methods=['POST'])
-def purchase_coin():
+@crypto_sell.route('/trade', methods=['POST'])
+def sell_coin():
     try:
-        # Extract form data
         coin = request.form['coin-selection']
         amount = request.form['coin-amount']
-        amount = Decimal(amount)  # Ensure the amount is a Decimal for accurate calculations
-
-        # Create or get a user's wallet (here, we mock a wallet object for demo purposes)
+        amount = Decimal(amount)
+    
         wallet = CryptoWallet(
             user_id=1,
             user_bank=UserBank(
@@ -51,15 +43,10 @@ def purchase_coin():
             }
         )
 
-        # Perform the purchase (add coins to the wallet)
-        wallet.add_coin_amount(coin, amount)
+        wallet.subtract_coin_amount(coin, amount)
 
-        print(wallet)
+        flash(f'Successfully sold {amount} {coin}', 'success')
 
-        # Flash a success message
-        flash(f'Successfully purchased {amount} {coin}', 'success')
-
-        # Redirect back to the trade page after the purchase
         return redirect(url_for('trade'))
 
     except BadRequest as e:
@@ -67,7 +54,6 @@ def purchase_coin():
         return redirect(url_for('trade'))
 
     except Exception as e:
-        # Log the exception for debugging purposes
         print(f'Error during purchase: {e}')
         flash('An error occurred during the purchase process. Please try again.', 'error')
         return redirect(url_for('trade'))
