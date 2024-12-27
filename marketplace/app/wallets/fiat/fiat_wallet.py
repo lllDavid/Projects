@@ -50,7 +50,8 @@ class FiatWallet:
             amount for methods in self.withdrawal_history.values() for amount in methods.values()
         )
         current_balance = total_deposits - total_withdrawals
-        return current_balance.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        dec_current_balance = Decimal(current_balance)
+        return dec_current_balance.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
     def update_last_accessed(self) -> None:
         self.last_accessed = datetime.now()
