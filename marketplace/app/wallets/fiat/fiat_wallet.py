@@ -42,7 +42,7 @@ class FiatWallet:
         withdrawal_message = self.simulate_bank_transfer(amount)
 
         if withdrawal_message:
-            self.decrease_balance(amount)
+            self.decrease_wallet_balance(amount)
             self.add_withdrawal_to_history(date, amount, method)
             self.update_last_accessed()
 
@@ -57,14 +57,14 @@ class FiatWallet:
         
         return "Bank account details are missing."
 
-    def increase_balance(self, amount: Decimal) -> None:
+    def increase_wallet_balance(self, amount: Decimal) -> None:
         if self.wallet_balance is None:
             raise ValueError("Wallet balance is None, cannot credit funds.")
         
         self.wallet_balance += amount
         self.wallet_balance = self.wallet_balance.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
-    def decrease_balance(self, amount: Decimal) -> None:
+    def decrease_wallet_balance(self, amount: Decimal) -> None:
         if self.wallet_balance is None:
             raise ValueError("Wallet balance is None, cannot perform withdrawal.")
         
