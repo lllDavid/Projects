@@ -1,6 +1,6 @@
 from flask import render_template, request
 
-from marketplace.app.controllers.routes_controller import handle_login, handle_logout, handle_settings
+from marketplace.app.controllers.auth_controller import handle_login, handle_logout, handle_settings
 
 def register_routes(app):
     # Landing Routes

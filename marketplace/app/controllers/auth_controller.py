@@ -1,7 +1,6 @@
 from flask import render_template, redirect, url_for, flash, session
 
 from marketplace.app.user.user_security import UserSecurity
-
 from marketplace.app.db.user_db import update_username, get_user_by_username, get_user_by_id
 
 def handle_login(request):
