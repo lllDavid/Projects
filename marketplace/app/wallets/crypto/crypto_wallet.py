@@ -16,15 +16,15 @@ class CryptoWallet:
     deposit_history: dict[str, Decimal] = field(default_factory=dict)
     withdrawal_history: dict[str, dict[str, Decimal]] = field(default_factory=dict)
 
-    def add_deposit(self, date: str, amount: Decimal) -> None:
+    def add_deposit_to_history(self, date: str, amount: Decimal) -> None:
         amount = Decimal(amount).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
         self.deposit_history[date] = self.deposit_history.get(date, Decimal("0.00")) + amount
 
-    def add_withdrawal(self, date: str, amount: Decimal, method: str) -> None:
+    def add_withdrawal_to_history(self, date: str, amount: Decimal, method: str) -> None:
         amount = Decimal(amount).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
         self.withdrawal_history.setdefault(date, {})[method] = amount
 
-    def get_balance(self) -> Decimal:
+    def calculate_total_balance(self) -> Decimal:
         total_deposits = sum(self.deposit_history.values())
         total_withdrawals = sum(
             sum(methods.values()) for methods in self.withdrawal_history.values()
@@ -38,13 +38,13 @@ class CryptoWallet:
     def update_last_accessed(self):
         self.last_accessed = datetime.now()
 
-    def add_coin_amount(self, coin: str, amount: Decimal) -> None:
+    def increase_coin_balance(self, coin: str, amount: Decimal) -> None:
         amount = Decimal(amount).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
         if amount <= Decimal("0.00"):
             raise ValueError("Amount to add must be positive.")
         self.coin_amount[coin] = self.coin_amount.get(coin, Decimal("0.00")) + amount
 
-    def subtract_coin_amount(self, coin: str, amount: Decimal) -> None:
+    def decrease_coin_balance(self, coin: str, amount: Decimal) -> None:
         amount = Decimal(amount).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
         if amount <= Decimal("0.00"):
             raise ValueError("Amount to subtract must be positive.")
@@ -59,5 +59,5 @@ class CryptoWallet:
         )
         return (
             f"CryptoWallet(wallet_id={self.wallet_id}, user_id={self.user_id}, "
-            f"coins={coin_summary}, balance={self.get_balance():.2f})"
+            f"coins={coin_summary}, balance={self.calculate_total_balance():.2f})"
         )
