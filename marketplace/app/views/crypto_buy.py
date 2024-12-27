@@ -46,8 +46,6 @@ def buy_crypto():
         wallet.increase_coin_balance(coin, amount, datetime.now())
         wallet.add_deposit_to_history(datetime.now(), amount)
 
-        print(wallet)
-
         flash(f'Successfully purchased {amount} {coin}', 'success')
 
         return redirect(url_for('trade'))

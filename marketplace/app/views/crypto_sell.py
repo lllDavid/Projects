@@ -43,7 +43,8 @@ def sell_crypto():
             }
         )
 
-        wallet.decrease_coin_balance(coin, amount, datetime.now())
+        wallet.decrease_coin_balance(coin, amount, datetime.now(), "")
+        wallet.add_deposit_to_history(datetime.now(), amount)
 
         flash(f'Successfully sold {amount} {coin}', 'success')
 
