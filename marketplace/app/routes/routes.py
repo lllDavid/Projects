@@ -46,6 +46,7 @@ def register_routes(app):
     @app.route("/trade", methods=["GET", "POST"])
     def trade():
         return render_template("trade.html")
+    
 
     @app.route("/wallet")
     def wallet():
@@ -59,16 +60,6 @@ def register_routes(app):
     @app.route("/support")
     def support():
         return render_template("support.html")
-
-    # Trade Routes
-    @app.route("/submit_buy_order")
-    def submit_buy_order():
-        return render_template("trade.html")
-    
-    @app.route("/submit_sell_order")
-    def submit_sell_order():
-        return render_template("trade.html")
-    
 
 # Request Handlers
 def handle_login(request):
