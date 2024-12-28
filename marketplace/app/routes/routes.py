@@ -48,6 +48,10 @@ def register_routes(app):
     @app.route("/wallet")
     def wallet():
         return render_template("wallet.html")
+    
+    @app.route("/deposit")
+    def deposit():
+        return render_template("wallet.html")
 
     @app.route("/settings", methods=["GET", "POST"])
     def settings():
