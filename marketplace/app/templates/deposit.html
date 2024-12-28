@@ -1,34 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deposit Fiat into Wallet</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Add your styles -->
-    <script src="https://js.stripe.com/v3/"></script> <!-- Example Stripe integration -->
-</head>
+{% block title %}Trade{% endblock %}
 
-<body>
-    <div class="container">
-        <h1>Deposit Fiat to Your Wallet</h1>
-        <form id="payment-form">
-            <label for="amount">Amount to Deposit (USD)</label>
-            <input type="number" id="amount" name="amount" required placeholder="Enter amount" min="1">
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/deposit.css') }}">
+{% endblock %}
 
-            <label for="payment-method">Payment Method</label>
-            <div id="card-element">
-                <!-- A Stripe Element will be inserted here. -->
-            </div>
+{% block content %}
 
-            <!-- Display any error message to the user -->
-            <div id="card-errors" role="alert"></div>
+<div class="container">
+    <h1>Deposit Fiat to Your Wallet</h1>
+    <form id="payment-form">
+        <label for="amount">Amount to Deposit (USD)</label>
+        <input type="number" id="amount" name="amount" required placeholder="Enter amount" min="1">
 
-            <button type="submit">Deposit</button>
-        </form>
-    </div>
+        <label for="payment-method">Payment Method</label>
+        <div id="card-element">
+            <!-- A Stripe Element will be inserted here. -->
+        </div>
 
-    <script src="script.js"></script> <!-- Your JS file to handle the payment logic -->
-</body>
+        <!-- Display any error message to the user -->
+        <div id="card-errors" role="alert"></div>
 
-</html>
+        <button type="submit">Deposit</button>
+    </form>
+</div>
+{% endblock %}
