@@ -9,30 +9,20 @@
 {% block content %}
 <div class="container">
     <h1>Deposit Fiat to Your Wallet</h1>
-    <p>Select your deposit amount and choose your region to see the appropriate bank transfer details.</p>
+    <p>Select your region to see the appropriate bank transfer details. You will need to send the desired amount manually from your bank account to the provided details.</p>
 
-    <!-- Deposit Form -->
     <form id="payment-form" class="deposit-form">
 
-        <!-- Region Selector (EU or Other) -->
         <div class="form-group">
             <label for="region">Select Your Region</label>
             <select id="region" name="region" required class="form-control">
                 <option value="other">Select Region</option>
                 <option value="eu">European Union (SEPA Transfer)</option>
-                <option value="other">Other Regions</option>
+                <option value="other">Other Regions (SWIFT Transfer)</option>
             </select>
         </div>
 
-        <!-- Amount input field -->
-        <div class="form-group">
-            <label for="amount">Amount to Deposit (EUR)</label>
-            <input type="number" id="amount" name="amount" required placeholder="Enter amount" min="1" step="any"
-                class="form-control">
-            <small class="form-text">Minimum deposit is 1 EUR.</small>
-        </div>
-
-        <!-- SEPA Bank Details (Only shown when 'EU' region is selected) -->
+        <!-- SEPA Bank Details for EU -->
         <div id="sepa-bank-details" class="bank-details" style="display:none;">
             <h3>SEPA Bank Transfer</h3>
             <p>Use the following details for SEPA bank transfer:</p>
@@ -42,27 +32,34 @@
                 <li><strong>Bank Name:</strong> German Bank AG</li>
                 <li><strong>Account Holder:</strong> Your Name</li>
             </ul>
-            <p><strong>Important:</strong> Please ensure the deposit is made from the same account registered with your
-                profile.</p>
+            <p><strong>Important:</strong> Please ensure the deposit is made from the same account registered with your profile.</p>
         </div>
 
-        <!-- Submit button -->
+        <!-- SWIFT Bank Details for Other Regions -->
+        <div id="swift-bank-details" class="bank-details" style="display:none;">
+            <h3>SWIFT Bank Transfer</h3>
+            <p>Use the following details for SWIFT bank transfer:</p>
+            <ul>
+                <li><strong>SWIFT/BIC:</strong> 0000DE00XXX</li>
+                <li><strong>Account Number:</strong> 123456789</li>
+                <li><strong>Bank Name:</strong> Bank of America</li>
+                <li><strong>Bank Address:</strong> 100 N Tryon St, Charlotte, NC 28255, USA</li>
+            </ul>
+            <p><strong>Important:</strong> Please ensure the deposit is made from the same account registered with your profile. SWIFT transfers may take longer to process.</p>
+        </div>
+
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Proceed with Deposit</button>
+            <button type="submit" class="btn btn-primary">Proceed</button>
         </div>
     </form>
 
-    <!-- Additional information -->
     <div class="additional-info">
-        <p><strong>Note:</strong> Deposits will be processed securely, but can take up to 1-3 business days depending on
-            your bank.</p>
+        <p><strong>Note:</strong> Deposits will be processed securely, but can take up to 1-3 business days depending on your bank.</p>
         <p>If you experience any issues, <a href="/support">contact our support team</a>.</p>
     </div>
 </div>
 
 {% block additional_scripts %}
-
 <script src="{{ url_for('static', filename='js/sepa-toggler.js') }}"></script>
-
 {% endblock %}
 {% endblock %}
