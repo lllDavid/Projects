@@ -5,10 +5,6 @@
     margin-top: 6vh;
 }
 
-a:hover {
-    text-decoration: underline;
-}
-
 .settings-section {
     background-color: #121212;
     border-radius: 0.5rem;

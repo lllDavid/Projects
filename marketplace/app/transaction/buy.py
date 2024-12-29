@@ -18,4 +18,6 @@ class Buy:
     completed_at: datetime
     status: str
     successful: bool
+    reference_number: int
+    
 
