@@ -92,18 +92,9 @@ button:hover {
     display: none;               /* Initially hidden */
 }
 
-/* Responsiveness for smaller screens */
-@media (max-width: 768px) {
-    .container {
-        padding: 1rem;            /* Slightly less padding on smaller screens */
-        margin-top: 5vh;           /* Reduced margin on smaller screens */
-    }
-    
-    .tab-button {
-        padding: 0.5rem;           /* Smaller padding for tab buttons */
-    }
-    
-    button {
-        padding: 0.625rem 1rem;    /* Slightly smaller button padding */
-    }
+ul, ol {
+    list-style-type: none;       /* Removes bullet points or numbers */
+    padding-left: 0;             /* Removes the default padding */
+    margin: 0;                   /* Removes the default margin */
 }
+
