@@ -8,8 +8,8 @@
 
 {% block content %}
 <div class="container">
-    <h1>Deposit Fiat to Your Wallet</h1>
-    <p>Select your region to see the appropriate bank transfer details. You will need to send the desired amount manually from your bank account to the provided details.</p>
+    <h1>Deposit Fiat</h1>
+    <p>Select your region to see the appropriate bank transfer details.</p>
 
     <form id="payment-form" class="deposit-form">
 
@@ -22,7 +22,6 @@
             </select>
         </div>
 
-        <!-- SEPA Bank Details for EU -->
         <div id="sepa-bank-details" class="bank-details" style="display:none;">
             <h3>SEPA Bank Transfer</h3>
             <p>Use the following details for SEPA bank transfer:</p>
@@ -32,10 +31,8 @@
                 <li><strong>Bank Name:</strong> German Bank AG</li>
                 <li><strong>Account Holder:</strong> Your Name</li>
             </ul>
-            <p><strong>Important:</strong> Please ensure the deposit is made from the same account registered with your profile.</p>
         </div>
 
-        <!-- SWIFT Bank Details for Other Regions -->
         <div id="swift-bank-details" class="bank-details" style="display:none;">
             <h3>SWIFT Bank Transfer</h3>
             <p>Use the following details for SWIFT bank transfer:</p>
@@ -45,18 +42,12 @@
                 <li><strong>Bank Name:</strong> Bank of America</li>
                 <li><strong>Bank Address:</strong> 100 N Tryon St, Charlotte, NC 28255, USA</li>
             </ul>
-            <p><strong>Important:</strong> Please ensure the deposit is made from the same account registered with your profile. SWIFT transfers may take longer to process.</p>
         </div>
 
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Proceed</button>
         </div>
     </form>
-
-    <div class="additional-info">
-        <p><strong>Note:</strong> Deposits will be processed securely, but can take up to 1-3 business days depending on your bank.</p>
-        <p>If you experience any issues, <a href="/support">contact our support team</a>.</p>
-    </div>
 </div>
 
 {% block additional_scripts %}
