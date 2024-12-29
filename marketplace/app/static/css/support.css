@@ -33,6 +33,7 @@
 
 .support-form-section {
     max-width: 600px;
+    min-width: 300px;
     margin: 0 auto;
 }
 
