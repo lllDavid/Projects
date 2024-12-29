@@ -1,100 +1,52 @@
 /* Container styles */
 .container {
-    max-width: 37.5rem;        /* Maximum width of the container */
-    min-width: 18.75rem;       /* Minimum width of the container */
-    padding: 1.25rem;          /* Padding inside the container */
-    margin-top: 6vh;           /* Margin from the top of the viewport */
-    background-color: #1e1e1e; /* Dark background to contrast with the form elements */
-    border-radius: 0.5rem;     /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Soft shadow */
-    font-family: Arial, sans-serif; /* Set font for the form */
+    max-width: 31.25rem;          /* Updated max width */
+    min-width: 20rem;             /* Updated min width */
+    padding: 1.25rem;             /* Padding inside the container */
+    margin-top: 3.25rem;          /* Updated margin from top of viewport */
+    background-color: #121212;    /* Dark background */
+    border-radius: 0.75rem;       /* Rounded corners */
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.5); /* Softer shadow */
 }
 
-/* Tab button styles */
-.tab-button {
-    flex: 1;                   /* Each tab will take equal space */
-    padding: 0.625rem;         /* Padding inside each button */
-    background-color: #e0e0e0; /* Light gray background for inactive tabs */
-    border: none;
-    border-radius: 0.4375rem;  /* Rounded corners */
-    margin: 0.1rem;            /* Small margin between tabs */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+h1 {
+    color: #fff;
+    font-size: 2.8rem;            /* Larger font size */
+    font-weight: bold;            /* Bold title */
+    margin: 2rem;                 /* Margin around the title */
 }
 
-.tab-button.active {
-    background-color: #1639ad; /* Dark blue background for active tab */
-    color: white;              /* White text color for active tab */
-}
 
-/* Label styles */
-label {
-    display: block;
-    margin: 0.625rem 0 0.3125rem; /* Spacing above and below the label */
-    font-weight: bold;
-    color: white;  /* White color for labels */
-}
+
+
 
 /* Input and select fields styles */
 input,
 select {
-    background-color: #121212;   /* Dark background for form elements */
-    color: white;                /* White text */
-    width: 100%;                 /* Full width of the parent container */
-    padding: 0.625rem;           /* Padding inside inputs/selects */
+    background-color: #121212;    /* Dark background for form elements */
+    color: white;                 /* White text */
+    width: 40%;                   /* Reduced width of input/select */
+    padding: 0.625rem;            /* Padding inside inputs/selects */
     margin: 0.3125rem 0 0.9375rem; /* Margin around inputs/selects */
-    border-radius: 0.25rem;      /* Rounded corners for inputs/selects */
-    border: 1px solid #ccc;      /* Light border color */
-    font-size: 1rem;             /* Slightly larger font size for inputs */
+    border-radius: 0.25rem;       /* Rounded corners for inputs/selects */
+    border: 1px solid #444;       /* Updated border color */
+    font-size: 1rem;              /* Slightly larger font size for inputs */
 }
 
-input:focus,
-select:focus {
-    outline: none;               /* Remove default outline on focus */
-    border-color: #1639ad;       /* Highlight the input with blue border on focus */
-    box-shadow: 0 0 5px rgba(22, 57, 173, 0.5); /* Soft blue shadow around focused input */
-}
 
-/* Button styles */
-button {
-    background-color: #1639ad;   /* Blue background for buttons */
-    color: white;                /* White text on buttons */
-    padding: 0.75rem 1.25rem;    /* Padding for the button */
-    border: none;
-    border-radius: 0.4375rem;    /* Rounded corners for the button */
-    width: 100%;                 /* Full width button */
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-}
 
-button:hover {
-    background-color: #0d2b8c;   /* Darker blue shade on hover */
-}
 
-/* Error message styling */
-#card-errors {
-    color: red;                  /* Red color for error messages */
-    font-size: 0.875rem;         /* Slightly smaller font size */
-    margin-top: 0.5rem;          /* Spacing above error messages */
-}
 
-/* Specific section for the trade form container */
-.trade-form-container {
-    background-color: #121212;   /* Dark background */
-    border-radius: 0.5rem;       /* Rounded corners */
-    padding: 1.25rem;            /* Padding inside the container */
-    margin-top: 1.25rem;         /* Margin above the trade form */
-}
 
-/* Hiding specific container (e.g., buy limit) initially */
-#buy-limit-container {
-    display: none;               /* Initially hidden */
-}
 
 ul, ol {
-    list-style-type: none;       /* Removes bullet points or numbers */
-    padding-left: 0;             /* Removes the default padding */
-    margin: 0;                   /* Removes the default margin */
+    list-style-type: none;        /* Removes bullet points or numbers */
+    padding-left: 0;              /* Removes the default padding */
+    margin: 0;                    /* Removes the default margin */
+    margin-bottom: 1.25rem;       /* Add space at the bottom of the list */
 }
 
+/* Add more space between the list and the button */
+.bank-details {
+    margin-bottom: 1.25rem;       /* Adds bottom margin to bank details section */
+}
