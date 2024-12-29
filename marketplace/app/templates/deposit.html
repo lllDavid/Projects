@@ -9,10 +9,21 @@
 {% block content %}
 <div class="container">
     <h1>Deposit Fiat to Your Wallet</h1>
-    <p>Select your deposit amount and follow the instructions for SEPA bank transfer to deposit funds into your wallet.</p>
-    
-    <!-- Deposit Form (SEPA Transfer) -->
+    <p>Select your deposit amount and choose your region to see the appropriate bank transfer details.</p>
+
+    <!-- Deposit Form -->
     <form id="payment-form" class="deposit-form">
+        
+        <!-- Region Selector (EU or Other) -->
+        <div class="form-group">
+            <label for="region">Select Your Region</label>
+            <select id="region" name="region" required class="form-control">
+                <option value="other">Select Region</option>
+                <option value="eu">European Union (SEPA Transfer)</option>
+                <option value="other">Other Regions</option>
+            </select>
+        </div>
+
         <!-- Amount input field -->
         <div class="form-group">
             <label for="amount">Amount to Deposit (EUR)</label>
@@ -20,8 +31,8 @@
             <small class="form-text">Minimum deposit is 1 EUR.</small>
         </div>
 
-        <!-- SEPA Bank Details -->
-        <div id="sepa-bank-details" class="bank-details">
+        <!-- SEPA Bank Details (Only shown when 'EU' region is selected) -->
+        <div id="sepa-bank-details" class="bank-details" style="display:none;">
             <h3>SEPA Bank Transfer</h3>
             <p>Use the following details for SEPA bank transfer:</p>
             <ul>
@@ -50,6 +61,17 @@
 
 {% block scripts %}
 <script>
-    // Optionally, you can add JavaScript for form validation or handling deposit process
+    // Toggle visibility of SEPA bank details based on selected region
+    document.getElementById('region').addEventListener('change', function() {
+        var region = this.value;
+        var sepaBankDetails = document.getElementById('sepa-bank-details');
+        
+        // Show SEPA details if 'EU' is selected, hide otherwise
+        if (region === 'eu') {
+            sepaBankDetails.style.display = 'block';  // Show SEPA details
+        } else {
+            sepaBankDetails.style.display = 'none';   // Hide SEPA details
+        }
+    });
 </script>
 {% endblock %}
