@@ -1,28 +1,89 @@
 {% extends "base.html" %}
 
-{% block title %}Trade{% endblock %}
+{% block title %}Deposit Funds{% endblock %}
 
 {% block stylesheets %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/deposit.css') }}">
 {% endblock %}
 
 {% block content %}
-
 <div class="container">
     <h1>Deposit Fiat to Your Wallet</h1>
-    <form id="payment-form">
-        <label for="amount">Amount to Deposit (USD)</label>
-        <input type="number" id="amount" name="amount" required placeholder="Enter amount" min="1">
-
-        <label for="payment-method">Payment Method</label>
-        <div id="card-element">
-            <!-- A Stripe Element will be inserted here. -->
+    <p>Select your region and payment method to deposit funds into your wallet.</p>
+    
+    <!-- Deposit Method Selection -->
+    <form id="payment-form" class="deposit-form">
+        <!-- Region Selector (US or EU) -->
+        <div class="form-group">
+            <label for="region">Select Your Region</label>
+            <select id="region" name="region" required class="form-control">
+                <option value="us">United States (ACH Transfer)</option>
+                <option value="eu">European Union (SEPA Transfer)</option>
+            </select>
         </div>
 
-        <!-- Display any error message to the user -->
-        <div id="card-errors" role="alert"></div>
+        <!-- Amount input field -->
+        <div class="form-group">
+            <label for="amount">Amount to Deposit (USD or EUR)</label>
+            <input type="number" id="amount" name="amount" required placeholder="Enter amount" min="1" step="any" class="form-control">
+            <small class="form-text">Minimum deposit is 1 USD or EUR.</small>
+        </div>
 
-        <button type="submit">Deposit</button>
+        <!-- Bank Details for US or EU -->
+        <div id="us-bank-details" class="bank-details" style="display:none;">
+            <h3>US Bank Transfer (ACH)</h3>
+            <p>Use the following details for ACH bank transfer:</p>
+            <ul>
+                <li>Bank Name: XYZ Bank</li>
+                <li>Account Number: 1234567890</li>
+                <li>Routing Number: 111000025</li>
+                <li>Account Type: Checking</li>
+            </ul>
+            <p><strong>Important:</strong> Please ensure the deposit is made from the same account registered with your profile.</p>
+        </div>
+
+        <div id="eu-bank-details" class="bank-details" style="display:none;">
+            <h3>EU Bank Transfer (SEPA)</h3>
+            <p>Use the following details for SEPA bank transfer:</p>
+            <ul>
+                <li>IBAN: DE00000000000000000000</li>
+                <li>BIC: COBADEFFXXX</li>
+                <li>Bank Name: German Bank AG</li>
+                <li>Account Holder: Your Name</li>
+            </ul>
+            <p><strong>Important:</strong> Please ensure the deposit is made from the same account registered with your profile.</p>
+        </div>
+
+        <!-- Submit button -->
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Proceed with Deposit</button>
+        </div>
     </form>
+
+    <!-- Additional information -->
+    <div class="additional-info">
+        <p><strong>Note:</strong> Deposits will be processed securely, but can take up to 1-3 business days depending on the region.</p>
+        <p>If you experience any issues, <a href="/support">contact our support team</a>.</p>
+    </div>
 </div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('region').addEventListener('change', function() {
+        var region = this.value;
+        var usBankDetails = document.getElementById('us-bank-details');
+        var euBankDetails = document.getElementById('eu-bank-details');
+
+        // Show or hide the bank details based on region
+        if (region === 'us') {
+            usBankDetails.style.display = 'block';
+            euBankDetails.style.display = 'none';
+        } else if (region === 'eu') {
+            usBankDetails.style.display = 'none';
+            euBankDetails.style.display = 'block';
+        }
+    });
+</script>
 {% endblock %}
