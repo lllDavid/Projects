@@ -13,7 +13,7 @@
 
     <!-- Deposit Form -->
     <form id="payment-form" class="deposit-form">
-        
+
         <!-- Region Selector (EU or Other) -->
         <div class="form-group">
             <label for="region">Select Your Region</label>
@@ -27,7 +27,8 @@
         <!-- Amount input field -->
         <div class="form-group">
             <label for="amount">Amount to Deposit (EUR)</label>
-            <input type="number" id="amount" name="amount" required placeholder="Enter amount" min="1" step="any" class="form-control">
+            <input type="number" id="amount" name="amount" required placeholder="Enter amount" min="1" step="any"
+                class="form-control">
             <small class="form-text">Minimum deposit is 1 EUR.</small>
         </div>
 
@@ -41,7 +42,8 @@
                 <li><strong>Bank Name:</strong> German Bank AG</li>
                 <li><strong>Account Holder:</strong> Your Name</li>
             </ul>
-            <p><strong>Important:</strong> Please ensure the deposit is made from the same account registered with your profile.</p>
+            <p><strong>Important:</strong> Please ensure the deposit is made from the same account registered with your
+                profile.</p>
         </div>
 
         <!-- Submit button -->
@@ -52,30 +54,15 @@
 
     <!-- Additional information -->
     <div class="additional-info">
-        <p><strong>Note:</strong> Deposits will be processed securely, but can take up to 1-3 business days depending on your bank.</p>
+        <p><strong>Note:</strong> Deposits will be processed securely, but can take up to 1-3 business days depending on
+            your bank.</p>
         <p>If you experience any issues, <a href="/support">contact our support team</a>.</p>
     </div>
 </div>
 
+{% block additional_scripts %}
+
+<script src="{{ url_for('static', filename='js/sepa-toggler.js') }}"></script>
+
 {% endblock %}
-
-{% block scripts %}
-<script>
-    // Wait for the DOM to fully load before attaching event listener
-    document.addEventListener('DOMContentLoaded', function() {
-        const regionSelect = document.getElementById('region');
-        const sepaBankDetails = document.getElementById('sepa-bank-details');
-
-        // Ensure the toggle works when the region changes
-        regionSelect.addEventListener('change', function() {
-            if (regionSelect.value === 'eu') {
-                // Show SEPA details if 'EU' is selected
-                sepaBankDetails.style.display = 'block';
-            } else {
-                // Hide SEPA details for other regions
-                sepaBankDetails.style.display = 'none';
-            }
-        });
-    });
-</script>
 {% endblock %}
