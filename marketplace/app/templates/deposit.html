@@ -61,17 +61,21 @@
 
 {% block scripts %}
 <script>
-    // Toggle visibility of SEPA bank details based on selected region
-    document.getElementById('region').addEventListener('change', function() {
-        var region = this.value;
-        var sepaBankDetails = document.getElementById('sepa-bank-details');
-        
-        // Show SEPA details if 'EU' is selected, hide otherwise
-        if (region === 'eu') {
-            sepaBankDetails.style.display = 'block';  // Show SEPA details
-        } else {
-            sepaBankDetails.style.display = 'none';   // Hide SEPA details
-        }
+    // Wait for the DOM to fully load before attaching event listener
+    document.addEventListener('DOMContentLoaded', function() {
+        const regionSelect = document.getElementById('region');
+        const sepaBankDetails = document.getElementById('sepa-bank-details');
+
+        // Ensure the toggle works when the region changes
+        regionSelect.addEventListener('change', function() {
+            if (regionSelect.value === 'eu') {
+                // Show SEPA details if 'EU' is selected
+                sepaBankDetails.style.display = 'block';
+            } else {
+                // Hide SEPA details for other regions
+                sepaBankDetails.style.display = 'none';
+            }
+        });
     });
 </script>
 {% endblock %}
