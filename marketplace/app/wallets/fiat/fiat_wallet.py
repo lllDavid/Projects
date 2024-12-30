@@ -14,6 +14,13 @@ class FiatWallet:
     deposit_history: dict[str, Decimal] = field(default_factory=dict)
     withdrawal_history: dict[str, dict[str, Decimal]] = field(default_factory=dict)
 
+    # Address-related fields for transactions
+    # These are the addresses to which users send money
+    receiving_iban: str | None = None      # IBAN where the user can receive funds
+    receiving_swift_bic: str | None = None # SWIFT/BIC code for bank identification for receiving funds
+    receiving_routing_number: str | None = None  # Routing number for domestic transfers to receive funds
+    receiving_account_number: str | None = None  # Bank account number where funds are received
+
     def add_deposit_to_history(self, date: datetime, amount: Decimal) -> None:
         amount = amount.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
         formatted_date = date.strftime('%Y-%m-%d %H:%M:%S')
@@ -70,6 +77,19 @@ class FiatWallet:
         
         self.wallet_balance -= amount
         self.wallet_balance = self.wallet_balance.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
-
+    
     def update_last_accessed(self) -> None:
         self.last_accessed = datetime.now()
+
+    def update_receiving_iban(self, new_iban: str):
+        self.receiving_iban = new_iban
+
+    def update_receiving_swift_bic(self, new_swift_bic: str):
+        self.receiving_swift_bic = new_swift_bic
+
+    def update_receiving_routing_number(self, new_routing_number: str):
+        self.receiving_routing_number = new_routing_number
+
+    def update_receiving_account_number(self, new_account_number: str):
+        self.receiving_account_number = new_account_number
+
