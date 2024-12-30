@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash, session
 from marketplace.app.user.user_security import UserSecurity
 from marketplace.helpers.validation import is_valid_password, is_unique_username, is_unique_email
-from marketplace.app.db.user_db import update_username, update_email, update_password, get_user_from_db,get_user_by_id, get_user_by_username
+from marketplace.app.db.user_db import update_username, update_email, update_password, get_user_from_db, get_user_by_id, get_user_by_username
 
 def handle_login(request):
     username = request.form["username"]
@@ -84,27 +84,21 @@ def handle_settings(request):
     return render_template("settings.html", username=current_username, email=current_email, user=user)
 
 def handle_deposit(request):
-    # Check if the user is authenticated
     redirect_response = check_authentication()
     if redirect_response:
         return redirect_response
 
-    # Retrieve the authenticated user from the session
     user_id = session["user_id"]
     user = get_authenticated_user(user_id)
     
     if not user:
         return redirect(url_for("login"))
 
-    # Fetch the account holder data
     account_holder_data = get_user_from_db(session["user_id"])
-    
-    # Debugging print statements
 
     if account_holder_data is not None and account_holder_data.user_bank:
         account_holder = account_holder_data.user_bank.account_holder
     else:
-        account_holder = None  # If there's no account holder data, handle gracefully
+        account_holder = None
 
     return render_template("deposit.html", account_holder=account_holder)
-

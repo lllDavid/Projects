@@ -23,135 +23,126 @@ conn = connect(
 # --------------------------------------------------------------
 
 def insert_user(user: User) -> User | None:
-    cursor = conn.cursor()
     try:
-        cursor.execute(
-            "INSERT INTO user (username, email, role) VALUES (%s, %s, %s)",
-            (user.username, user.email, user.role.value)
-        )
-          
-        user_id = cursor.lastrowid  
-
-        two_factor_backup_codes_hash_json = dumps(list(user.user_security.two_factor_backup_codes_hash)) if user.user_security.two_factor_backup_codes_hash else None
-
-        user_transaction_history = dumps(list(user.user_history.transaction_history)) if user.user_history.transaction_history else None
-
-        cursor.execute(
-            "INSERT INTO user_bank (user_id, bank_name, account_holder, account_number, routing_number, iban, swift_bic, date_linked) "
-            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-            (user_id, user.user_bank.bank_name, user.user_bank.account_holder, user.user_bank.account_number,
-             user.user_bank.routing_number, user.user_bank.iban, user.user_bank.swift_bic, user.user_bank.date_linked)
-        )
-
-        cursor.execute(
-            "INSERT INTO user_status (user_id, is_banned, is_inactive, ban_type, ban_reason, ban_duration, "
-            "ban_start_time, ban_end_time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-            (user_id, user.user_status.is_banned, user.user_status.is_inactive, user.user_status.ban_type,
-             user.user_status.ban_reason, user.user_status.ban_duration, user.user_status.ban_start_time,
-             user.user_status.ban_end_time)
-        )
-
-        cursor.execute(
-            "INSERT INTO user_history (user_id, login_count, last_login, failed_login_count, last_failed_login, "
-            "created_at, updated_at, transaction_history) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-            (user_id, user.user_history.login_count, user.user_history.last_login,
-             user.user_history.failed_login_count, user.user_history.last_failed_login,
-             user.user_history.created_at, user.user_history.updated_at, user_transaction_history)
-        )
-
-        cursor.execute(
-            "INSERT INTO user_security (user_id, password_hash, two_factor_enabled, two_factor_secret_key, "
-            "two_factor_backup_codes_hash) VALUES (%s, %s, %s, %s, %s)",
-            (user_id, user.user_security.password_hash, user.user_security.two_factor_enabled,
-             user.user_security.two_factor_secret_key, two_factor_backup_codes_hash_json)
-        )
-
-        cursor.execute(
-            "INSERT INTO user_fingerprint (user_id, username_history, email_address_history, mac_address, "
-            "associated_ips, avg_login_frequency, avg_session_duration, geolocation_country, geolocation_city, "
-            "geolocation_latitude, geolocation_longitude, browser_info, os_name, os_version, device_type, "
-            "device_manufacturer, device_model, user_preferences, user_agent, device_id, screen_resolution, "
-            "two_factor_enabled, vpn_usage, behavioral_biometrics) "
-            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-            (
-                user_id,
-                dumps(list(user.user_fingerprint.username_history)),
-                dumps(list(user.user_fingerprint.email_address_history)),
-                user.user_fingerprint.mac_address,
-                dumps(user.user_fingerprint.associated_ips) if user.user_fingerprint.associated_ips else None,
-                dumps(user.user_fingerprint.avg_login_frequency) if user.user_fingerprint.avg_login_frequency else None,
-                dumps(user.user_fingerprint.avg_session_duration) if user.user_fingerprint.avg_session_duration else None,
-                user.user_fingerprint.geolocation_country,
-                user.user_fingerprint.geolocation_city,
-                user.user_fingerprint.geolocation_latitude,
-                user.user_fingerprint.geolocation_longitude,
-                user.user_fingerprint.browser_info,
-                user.user_fingerprint.os_name,
-                user.user_fingerprint.os_version,
-                user.user_fingerprint.device_type,
-                user.user_fingerprint.device_manufacturer,
-                user.user_fingerprint.device_model,
-                dumps(user.user_fingerprint.user_preferences) if user.user_fingerprint.user_preferences else None,
-                user.user_fingerprint.user_agent,
-                user.user_fingerprint.device_id,
-                user.user_fingerprint.screen_resolution,
-                user.user_fingerprint.two_factor_enabled,
-                user.user_fingerprint.vpn_usage,
-                dumps(user.user_fingerprint.behavioral_biometrics) if user.user_fingerprint.behavioral_biometrics else None
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "INSERT INTO user (username, email, role) VALUES (%s, %s, %s)",
+                (user.username, user.email, user.role.value)
             )
-        )
+            
+            user_id = cursor.lastrowid
 
-        conn.commit()  
-        print("User inserted into the database.")
-        user.id = user_id  
-        return user
+            two_factor_backup_codes_hash_json = dumps(list(user.user_security.two_factor_backup_codes_hash)) if user.user_security.two_factor_backup_codes_hash else None
+            user_transaction_history = dumps(list(user.user_history.transaction_history)) if user.user_history.transaction_history else None
+
+            cursor.execute(
+                "INSERT INTO user_bank (user_id, bank_name, account_holder, account_number, routing_number, iban, swift_bic, date_linked) "
+                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                (user_id, user.user_bank.bank_name, user.user_bank.account_holder, user.user_bank.account_number,
+                 user.user_bank.routing_number, user.user_bank.iban, user.user_bank.swift_bic, user.user_bank.date_linked)
+            )
+
+            cursor.execute(
+                "INSERT INTO user_status (user_id, is_banned, is_inactive, ban_type, ban_reason, ban_duration, "
+                "ban_start_time, ban_end_time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                (user_id, user.user_status.is_banned, user.user_status.is_inactive, user.user_status.ban_type,
+                 user.user_status.ban_reason, user.user_status.ban_duration, user.user_status.ban_start_time,
+                 user.user_status.ban_end_time)
+            )
+
+            cursor.execute(
+                "INSERT INTO user_history (user_id, login_count, last_login, failed_login_count, last_failed_login, "
+                "created_at, updated_at, transaction_history) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                (user_id, user.user_history.login_count, user.user_history.last_login,
+                 user.user_history.failed_login_count, user.user_history.last_failed_login,
+                 user.user_history.created_at, user.user_history.updated_at, user_transaction_history)
+            )
+
+            cursor.execute(
+                "INSERT INTO user_security (user_id, password_hash, two_factor_enabled, two_factor_secret_key, "
+                "two_factor_backup_codes_hash) VALUES (%s, %s, %s, %s, %s)",
+                (user_id, user.user_security.password_hash, user.user_security.two_factor_enabled,
+                 user.user_security.two_factor_secret_key, two_factor_backup_codes_hash_json)
+            )
+
+            cursor.execute(
+                "INSERT INTO user_fingerprint (user_id, username_history, email_address_history, mac_address, "
+                "associated_ips, avg_login_frequency, avg_session_duration, geolocation_country, geolocation_city, "
+                "geolocation_latitude, geolocation_longitude, browser_info, os_name, os_version, device_type, "
+                "device_manufacturer, device_model, user_preferences, user_agent, device_id, screen_resolution, "
+                "two_factor_enabled, vpn_usage, behavioral_biometrics) "
+                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                (
+                    user_id,
+                    dumps(list(user.user_fingerprint.username_history)),
+                    dumps(list(user.user_fingerprint.email_address_history)),
+                    user.user_fingerprint.mac_address,
+                    dumps(user.user_fingerprint.associated_ips) if user.user_fingerprint.associated_ips else None,
+                    dumps(user.user_fingerprint.avg_login_frequency) if user.user_fingerprint.avg_login_frequency else None,
+                    dumps(user.user_fingerprint.avg_session_duration) if user.user_fingerprint.avg_session_duration else None,
+                    user.user_fingerprint.geolocation_country,
+                    user.user_fingerprint.geolocation_city,
+                    user.user_fingerprint.geolocation_latitude,
+                    user.user_fingerprint.geolocation_longitude,
+                    user.user_fingerprint.browser_info,
+                    user.user_fingerprint.os_name,
+                    user.user_fingerprint.os_version,
+                    user.user_fingerprint.device_type,
+                    user.user_fingerprint.device_manufacturer,
+                    user.user_fingerprint.device_model,
+                    dumps(user.user_fingerprint.user_preferences) if user.user_fingerprint.user_preferences else None,
+                    user.user_fingerprint.user_agent,
+                    user.user_fingerprint.device_id,
+                    user.user_fingerprint.screen_resolution,
+                    user.user_fingerprint.two_factor_enabled,
+                    user.user_fingerprint.vpn_usage,
+                    dumps(user.user_fingerprint.behavioral_biometrics) if user.user_fingerprint.behavioral_biometrics else None
+                )
+            )
+
+            conn.commit()
+            print("User inserted into the database.")
+            user.id = user_id
+            return user
 
     except conn.Error as e:
-        conn.rollback()  
+        conn.rollback()
         print(f"Error occurred: {e}")
-    finally:
-        cursor.close()
 
 
 def update_username(id: int, username: str) -> None:
-    cursor = conn.cursor()
     try:
-        cursor.execute("UPDATE user SET username = %s WHERE id = %s", (username, id))
-        conn.commit()
-        print("Username updated successfully.")
+        with conn.cursor() as cursor:
+            cursor.execute("UPDATE user SET username = %s WHERE id = %s", (username, id))
+            conn.commit()
+            print("Username updated successfully.")
     except conn.Error as e:
         conn.rollback()
         print(f"Error occurred: {e}")
-    finally:
-        cursor.close()
 
 
 def update_email(id: int, email: str) -> None:
-    cursor = conn.cursor()
     try:
-        cursor.execute("UPDATE user SET email = %s WHERE id = %s", (email, id))
-        conn.commit()
-        print("Email updated successfully.")
+        with conn.cursor() as cursor:
+            cursor.execute("UPDATE user SET email = %s WHERE id = %s", (email, id))
+            conn.commit()
+            print("Email updated successfully.")
     except conn.Error as e:
         conn.rollback()
         print(f"Error occurred: {e}")
-    finally:
-        cursor.close()
 
 
 def update_password(user_id: int, password: str) -> None:
-    cursor = conn.cursor()
     try:
-        password_hash = UserSecurity.hash_password(password)
+        with conn.cursor() as cursor:
+            password_hash = UserSecurity.hash_password(password)
 
-        cursor.execute("UPDATE user_security SET password_hash = %s WHERE user_id = %s", (password_hash, user_id))
-        conn.commit()
-        print("Password updated successfully.")
+            cursor.execute("UPDATE user_security SET password_hash = %s WHERE user_id = %s", (password_hash, user_id))
+            conn.commit()
+            print("Password updated successfully.")
     except conn.Error as e:
         conn.rollback()
         print(f"Error occurred: {e}")
-    finally:
-        cursor.close()
 
 
 # --------------------------------------------------------------
@@ -159,20 +150,19 @@ def update_password(user_id: int, password: str) -> None:
 # --------------------------------------------------------------
 
 def get_user_by_id(id: int) -> User | None:
-    cursor = conn.cursor()
-    cursor.execute("SELECT id FROM user WHERE id = %s", (id,))
-    user = cursor.fetchone()
-    cursor.close()
+    with conn.cursor() as cursor:
+        cursor.execute("SELECT id FROM user WHERE id = %s", (id,))
+        user = cursor.fetchone()
+
     if user:
         return get_user_from_db(user[0])
     return None
 
 
 def get_user_by_username(username: str) -> User | None:
-    cursor = conn.cursor()
-    cursor.execute("SELECT id FROM user WHERE username = %s", (username,))
-    user = cursor.fetchone()
-    cursor.close()
+    with conn.cursor() as cursor:
+        cursor.execute("SELECT id FROM user WHERE username = %s", (username,))
+        user = cursor.fetchone()
 
     if user:
         return get_user_from_db(user[0])
@@ -180,10 +170,9 @@ def get_user_by_username(username: str) -> User | None:
 
 
 def get_user_by_email(email: str) -> User | None:
-    cursor = conn.cursor()
-    cursor.execute("SELECT id FROM user WHERE email = %s", (email,))
-    user = cursor.fetchone()
-    cursor.close()
+    with conn.cursor() as cursor:
+        cursor.execute("SELECT id FROM user WHERE email = %s", (email,))
+        user = cursor.fetchone()
 
     if user:
         return get_user_from_db(user[0])
@@ -195,30 +184,28 @@ def get_user_by_email(email: str) -> User | None:
 # --------------------------------------------------------------
 
 def get_user(user_id: int) -> tuple[str, str, Role] | None:
-    cursor = conn.cursor()
-    cursor.execute(
-        "SELECT username, email, role FROM user WHERE id = %s",
-        (user_id,)
-    )
-    user_data = cursor.fetchone()
-    cursor.close()
-    
+    with conn.cursor() as cursor:
+        cursor.execute(
+            "SELECT username, email, role FROM user WHERE id = %s",
+            (user_id,)
+        )
+        user_data = cursor.fetchone()
+
     if user_data:
         username, email, role_str = user_data
         role = Role(role_str)
-        return username, email, role 
+        return username, email, role
     return None
 
 
-
 def get_user_bank(user_id: int) -> UserBank | None:
-    cursor = conn.cursor()
-    cursor.execute(
-        "SELECT user_id, bank_name, account_holder, account_number, routing_number, iban, swift_bic, date_linked FROM user_bank WHERE user_id = %s", 
-        (user_id,)
-    )
-    bank = cursor.fetchone()
-    cursor.close()
+    with conn.cursor() as cursor:
+        cursor.execute(
+            "SELECT user_id, bank_name, account_holder, account_number, routing_number, iban, swift_bic, date_linked FROM user_bank WHERE user_id = %s", 
+            (user_id,)
+        )
+        bank = cursor.fetchone()
+
     if bank:
         return UserBank(
             bank_name=bank[1],
@@ -233,13 +220,13 @@ def get_user_bank(user_id: int) -> UserBank | None:
 
 
 def get_user_status(user_id: int) -> UserStatus | None:
-    cursor = conn.cursor()
-    cursor.execute(
-        "SELECT user_id, is_banned, is_inactive, ban_type, ban_reason, ban_duration, "
-        "ban_start_time, ban_end_time FROM user_status WHERE user_id = %s", (user_id,)
-    )
-    status = cursor.fetchone()
-    cursor.close()
+    with conn.cursor() as cursor:
+        cursor.execute(
+            "SELECT user_id, is_banned, is_inactive, ban_type, ban_reason, ban_duration, "
+            "ban_start_time, ban_end_time FROM user_status WHERE user_id = %s", (user_id,)
+        )
+        status = cursor.fetchone()
+
     if status:
         return UserStatus(
             is_online=False,
@@ -255,13 +242,13 @@ def get_user_status(user_id: int) -> UserStatus | None:
 
 
 def get_user_history(user_id: int) -> UserHistory | None:
-    cursor = conn.cursor()
-    cursor.execute(
-        "SELECT user_id, login_count, failed_login_count, last_login, last_failed_login, "
-        "created_at, updated_at, transaction_history FROM user_history WHERE user_id = %s", (user_id,)
-    )
-    history = cursor.fetchone()
-    cursor.close()
+    with conn.cursor() as cursor:
+        cursor.execute(
+            "SELECT user_id, login_count, failed_login_count, last_login, last_failed_login, "
+            "created_at, updated_at, transaction_history FROM user_history WHERE user_id = %s", (user_id,)
+        )
+        history = cursor.fetchone()
+
     if history:
         return UserHistory(
             login_count=history[1],
@@ -276,13 +263,13 @@ def get_user_history(user_id: int) -> UserHistory | None:
 
 
 def get_user_security(user_id: int) -> UserSecurity | None:
-    cursor = conn.cursor()
-    cursor.execute(
-        "SELECT user_id, password_hash, two_factor_enabled, two_factor_secret_key, "
-        "two_factor_backup_codes_hash FROM user_security WHERE user_id = %s", (user_id,)
-    )
-    security = cursor.fetchone()
-    cursor.close()
+    with conn.cursor() as cursor:
+        cursor.execute(
+            "SELECT user_id, password_hash, two_factor_enabled, two_factor_secret_key, "
+            "two_factor_backup_codes_hash FROM user_security WHERE user_id = %s", (user_id,)
+        )
+        security = cursor.fetchone()
+
     if security:
         return UserSecurity(
             password_hash=security[1],
@@ -295,17 +282,16 @@ def get_user_security(user_id: int) -> UserSecurity | None:
 
 
 def get_user_fingerprint(user_id: int) -> UserFingerprint | None:
-    cursor = conn.cursor()
-    cursor.execute(
-        "SELECT user_id, username_history, email_address_history, mac_address, associated_ips, "
-        "avg_login_frequency, avg_session_duration, geolocation_country, geolocation_city, "
-        "geolocation_latitude, geolocation_longitude, browser_info, os_name, os_version, "
-        "device_type, device_manufacturer, device_model, user_preferences, user_agent, device_id, "
-        "screen_resolution, two_factor_enabled, vpn_usage, behavioral_biometrics "
-        "FROM user_fingerprint WHERE user_id = %s", (user_id,)
-    )
-    fingerprint = cursor.fetchone()
-    cursor.close()
+    with conn.cursor() as cursor:
+        cursor.execute(
+            "SELECT user_id, username_history, email_address_history, mac_address, associated_ips, "
+            "avg_login_frequency, avg_session_duration, geolocation_country, geolocation_city, "
+            "geolocation_latitude, geolocation_longitude, browser_info, os_name, os_version, "
+            "device_type, device_manufacturer, device_model, user_preferences, user_agent, device_id, "
+            "screen_resolution, two_factor_enabled, vpn_usage, behavioral_biometrics "
+            "FROM user_fingerprint WHERE user_id = %s", (user_id,)
+        )
+        fingerprint = cursor.fetchone()
 
     if fingerprint:
         return UserFingerprint(
@@ -335,12 +321,12 @@ def get_user_fingerprint(user_id: int) -> UserFingerprint | None:
         )
     return None
 
+
 # --------------------------------------------------------------
 # Section 4: Complete User Retrieval
 # --------------------------------------------------------------
 
 def get_user_from_db(user_id: int) -> User | None:
-
     user_data = get_user(user_id)
     if not user_data:
         return None
@@ -376,5 +362,3 @@ def get_user_from_db(user_id: int) -> User | None:
         user_history=user_history,
         user_fingerprint=user_fingerprint
     )
-
-  
