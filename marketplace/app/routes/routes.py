@@ -53,7 +53,6 @@ def register_routes(app):
     def deposit():
         return handle_deposit(request)
 
-
     @app.route("/settings", methods=["GET", "POST"])
     def settings():
         return handle_settings(request)
