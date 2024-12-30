@@ -64,13 +64,5 @@ class CoinMarketData:
     def update_last_updated(self):
         self.last_updated = datetime.now()
 
-    def __repr__(self) -> str:
-        return (f"CoinMarketData(rank={self.rank}, price_usd={self.price_usd!r}, "
-                f"market_cap_usd={self.market_cap_usd!r}, volume_24h_usd={self.volume_24h_usd!r}, "
-                f"high_24h_usd={self.high_24h_usd!r}, low_24h_usd={self.low_24h_usd!r}, "
-                f"change_24h_percent={self.change_24h_percent!r}, "
-                f"all_time_high={self.all_time_high!r}, all_time_low={self.all_time_low!r}, "
-                f"circulating_supply={self.circulating_supply!r}, market_dominance={self.market_dominance!r}, "
-                f"last_updated={self.last_updated!r})")
     
 

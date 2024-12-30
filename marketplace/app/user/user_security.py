@@ -54,7 +54,3 @@ class UserSecurity:
         
         return totp.verify(user_provided_code)  
     
-    def __str__(self):
-        return (f"Password Hash: {self.password_hash}, "
-                f"2FA Enabled: {self.two_factor_enabled}, "
-                f"Hashed 2FA Backup Codes: {self.two_factor_backup_codes_hash}")

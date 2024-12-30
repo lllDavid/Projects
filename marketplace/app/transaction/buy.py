@@ -57,9 +57,3 @@ class Buy:
             raise ValueError("Completed timestamp cannot be earlier than the created timestamp.")
         self.completed_at = new_completed_at
 
-    def __repr__(self):
-        return f"Buy(user_id={self.user_id}, crypto_wallet={self.crypto_wallet}, fiat_wallet={self.fiat_wallet}, " \
-               f"transaction_id={self.transaction_id}, fiat_amount={self.fiat_amount}, coin_name={self.coin_name}, " \
-               f"coin_amount={self.coin_amount}, created_at={self.created_at}, status={self.status}, " \
-               f"successful={self.successful}, completed_at={self.completed_at})"
-

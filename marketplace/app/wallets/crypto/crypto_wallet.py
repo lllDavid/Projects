@@ -51,7 +51,3 @@ class CryptoWallet:
 
     def update_last_accessed(self):
         self.last_accessed = datetime.now()
-
-    def __str__(self) -> str:
-        coin_summary = ", ".join(f"{coin}: {amount}" for coin, amount in self.coin_balance.items()) if self.coin_balance else "No coins"
-        return f"CryptoWallet(wallet_id={self.wallet_id}, user_id={self.user_id}, coins={coin_summary}, balance={self.calculate_total_balance():.2f}, last_accessed={self.last_accessed}))"
