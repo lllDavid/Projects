@@ -37,6 +37,7 @@ class UserBank:
             f"Bank Name: {self.bank_name}, "
             f"Account Holder: {self.account_holder}, "
             f"Account Number: {self.account_number}, "
+            f"Routing Number: {self.routing_number},"
             f"IBAN: {self.iban}, "
             f"SWIFT/BIC: {self.swift_bic}, "
             f"Date Linked: {self.date_linked}")
