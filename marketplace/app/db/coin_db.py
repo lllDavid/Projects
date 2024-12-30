@@ -75,7 +75,6 @@ def get_coin_by_id(id: int) -> Coin | None:
         return get_complete_coin(coin[0])
     return None
 
-
 def get_coin_by_symbol(symbol: str) -> Coin | None:
     with conn.cursor() as cursor:
         cursor.execute("SELECT id, name, symbol, category, description, price FROM coin WHERE symbol = %s", (symbol,))
@@ -85,7 +84,6 @@ def get_coin_by_symbol(symbol: str) -> Coin | None:
         return get_complete_coin(coin[0])
     return None
 
-
 def get_coin_by_name(name: str) -> Coin | None:
     with conn.cursor() as cursor:
         cursor.execute("SELECT id, name, symbol, category, description, price FROM coin WHERE name = %s", (name,))
@@ -94,7 +92,6 @@ def get_coin_by_name(name: str) -> Coin | None:
     if coin:
         return get_complete_coin(coin[0])
     return None
-
 
 # --------------------------------------------------------------
 # Section 3: Coin Object Components by Coin ID
@@ -110,7 +107,6 @@ def get_coin(coin_id: int):
         return coin_data
     return None
 
-
 def get_coin_specs(coin_id: int) -> CoinSpecs | None:
     with conn.cursor() as cursor:
         cursor.execute(
@@ -124,7 +120,6 @@ def get_coin_specs(coin_id: int) -> CoinSpecs | None:
         return CoinSpecs(*specs)
     return None
 
-
 def get_coin_market_data(coin_id: int) -> CoinMarketData | None:
     with conn.cursor() as cursor:
         cursor.execute(
@@ -137,7 +132,6 @@ def get_coin_market_data(coin_id: int) -> CoinMarketData | None:
     if market_data:
         return CoinMarketData(*market_data)
     return None
-
 
 # --------------------------------------------------------------
 # Section 4: Complete Coin Retrieval
