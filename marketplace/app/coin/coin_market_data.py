@@ -64,18 +64,13 @@ class CoinMarketData:
     def update_last_updated(self):
         self.last_updated = datetime.now()
 
-    def __str__(self) -> str:
-        return (
-            f"Rank: {self.rank}, "
-            f"Price (USD): ${self.price_usd:,.2f}, "
-            f"Market Cap (USD): ${self.market_cap_usd:,.2f}, "
-            f"24h Volume (USD): ${self.volume_24h_usd:,.2f}, "
-            f"24h High (USD): ${self.high_24h_usd:,.2f}, "
-            f"24h Low (USD): ${self.low_24h_usd:,.2f}, "
-            f"24h Price Change: {self.change_24h_percent:+.2f}%, "
-            f"All Time High (USD): ${self.all_time_high:,.2f}, "
-            f"All Time Low (USD): ${self.all_time_low:,.2f}, "
-            f"Circulating Supply: {self.circulating_supply:,.0f}, "
-            f"Market Dominance: {self.market_dominance:.2f}%, "
-            f"Last Updated: {self.last_updated}"
-        )
+    def __repr__(self) -> str:
+        return (f"CoinMarketData(rank={self.rank}, price_usd={self.price_usd!r}, "
+                f"market_cap_usd={self.market_cap_usd!r}, volume_24h_usd={self.volume_24h_usd!r}, "
+                f"high_24h_usd={self.high_24h_usd!r}, low_24h_usd={self.low_24h_usd!r}, "
+                f"change_24h_percent={self.change_24h_percent!r}, "
+                f"all_time_high={self.all_time_high!r}, all_time_low={self.all_time_low!r}, "
+                f"circulating_supply={self.circulating_supply!r}, market_dominance={self.market_dominance!r}, "
+                f"last_updated={self.last_updated!r})")
+    
+

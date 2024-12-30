@@ -63,19 +63,3 @@ class Buy:
                f"coin_amount={self.coin_amount}, created_at={self.created_at}, status={self.status}, " \
                f"successful={self.successful}, completed_at={self.completed_at})"
 
-buy = Buy(
-    user_id=123,
-    crypto_wallet=None,
-    fiat_wallet=None,
-    transaction_id="TX987654",
-    fiat_amount=1000.0,
-    coin_name="Bitcoin",
-    coin_amount=0.1,  # Example coin amount
-    created_at=datetime.now(),  # Set the current time
-    status="pending",  # Or any status you want to set initially
-    successful=True,   # Set initial success state
-    completed_at=datetime.now()  # Or leave this empty if not completed yet
-)
-
-# Now you can access the object like this
-print(buy)

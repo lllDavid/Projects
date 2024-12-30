@@ -32,13 +32,13 @@ class UserBank:
     def update_date_linked(self, new_date_linked: datetime) -> None:
         self.date_linked = new_date_linked
 
-    def __str__(self) -> str:
-        return (
-            f"Bank Name: {self.bank_name}, "
-            f"Account Holder: {self.account_holder}, "
-            f"Account Number: {self.account_number}, "
-            f"Routing Number: {self.routing_number},"
-            f"IBAN: {self.iban}, "
-            f"SWIFT/BIC: {self.swift_bic}, "
-            f"Date Linked: {self.date_linked}")
+    def __repr__(self) -> str:
+        return (f"{self.__class__.__name__}(bank_name={self.bank_name!r}, "
+                f"account_holder={self.account_holder!r}, "
+                f"account_number={self.account_number!r}, "
+                f"routing_number={self.routing_number!r}, "
+                f"iban={self.iban!r}, "
+                f"swift_bic={self.swift_bic!r}, "
+                f"date_linked={self.date_linked!r})")
+
 
