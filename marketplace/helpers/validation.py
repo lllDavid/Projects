@@ -14,16 +14,16 @@ conn = connect(
 def is_unique_username(username: str) -> bool:
     cursor = conn.cursor()
     cursor.execute("""SELECT username FROM user WHERE username = %s""", (username,))
-    user = cursor.fetchone()
+    username = cursor.fetchone()
     cursor.close()
-    return user is None
+    return username is None
 
 def is_unique_email(email: str) -> bool:
     cursor = conn.cursor()
     cursor.execute("""SELECT email FROM user WHERE email = %s""", (email,))
-    user = cursor.fetchone()
+    email = cursor.fetchone()
     cursor.close()
-    return user is None
+    return email is None
 
 def is_unique_user_and_email(username: str, email: str):
     cursor = conn.cursor()
