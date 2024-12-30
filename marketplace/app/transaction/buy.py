@@ -7,7 +7,6 @@ from marketplace.app.wallets.fiat.fiat_wallet import FiatWallet
 @dataclass
 class Buy:
     user_id: int
-    purchase_id: int
     crypto_wallet: CryptoWallet
     fiat_wallet: FiatWallet
     transaction_id: str
@@ -16,8 +15,8 @@ class Buy:
     coin_name: str
     coin_amount: float
     created_at: datetime
-    completed_at: datetime
     status: str
     successful: bool
+    completed_at: datetime
     
 
