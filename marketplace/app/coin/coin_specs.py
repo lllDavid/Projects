@@ -59,9 +59,18 @@ class CoinSpecs:
     def update_tokenomics(self, new_tokenomics: str):
         self.tokenomics = new_tokenomics
 
-    def __str__(self):
-            return (f"Algorithm: {self.algorithm}\n"
-                    f"Consensus Mechanism: {self.consensus_mechanism}\n"
-                    f"Block Time: {self.average_block_time} seconds\n"
-                    f"Security Features: {self.security_features}\n"
-                    f"Privacy Features: {self.privacy_features}")
+    def __repr__(self):
+        return (f"CoinSpecs(algorithm={self.algorithm!r}, "
+                f"consensus_mechanism={self.consensus_mechanism!r}, "
+                f"blockchain_network={self.blockchain_network!r}, "
+                f"average_block_time={self.average_block_time!r}, "
+                f"security_features={self.security_features!r}, "
+                f"privacy_features={self.privacy_features!r}, "
+                f"max_supply={self.max_supply!r}, "
+                f"genesis_block_date={self.genesis_block_date!r}, "
+                f"token_type={self.token_type!r}, "
+                f"governance_model={self.governance_model!r}, "
+                f"development_activity={self.development_activity!r}, "
+                f"hard_cap={self.hard_cap!r}, "
+                f"forking_coin={self.forking_coin!r}, "
+                f"tokenomics={self.tokenomics!r})")
