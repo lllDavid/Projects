@@ -32,7 +32,30 @@
                 <label for="confirm-password">Confirm Password</label>
                 <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm new password">
             </div>
-            <button id="save-wallet-button" type="submit" class="btn btn-primary">Save Changes</button>
+            <button id="save-wallet-button" type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </section>
+
+    <section class="settings-section">
+        <h2>Bank</h2>
+        <form action="/update-bank-details" method="POST" id="bank-account-form">
+            <div class="form-group">
+                <p class="lead">Change bank settings</p>
+                <input type="text" id="bank-account-holder" name="bank_account_holder" placeholder="Enter account holder name" required>
+            </div>
+            <div class="form-group">
+                <label for="iban">IBAN</label>
+                <input type="text" id="iban" name="iban" placeholder="Enter IBAN" required>
+            </div>
+            <div class="form-group">
+                <label for="swift">SWIFT</label>
+                <input type="text" id="swift" name="swift" placeholder="Enter SWIFT" required>
+            </div>
+            <div class="form-group">
+                <label for="routing-number">Routing Number</label>
+                <input type="text" id="routing-number" name="routing_number" placeholder="Enter routing number" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
         </form>
     </section>
 
