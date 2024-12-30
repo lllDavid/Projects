@@ -82,3 +82,22 @@ def handle_settings(request):
         return redirect(url_for("settings"))
 
     return render_template("settings.html", username=current_username, email=current_email, user=user)
+
+def handle_deposit(request):
+    # Check if the user is authenticated
+    redirect_response = check_authentication()
+    if redirect_response:
+        return redirect_response
+
+    # Retrieve the authenticated user from the session
+    user_id = session["user_id"]
+    user = get_authenticated_user(user_id)
+    
+    if not user:
+        return redirect(url_for("login"))
+
+    # Assuming the account holder is related to the username, fetch account info
+    account_holder = get_user_by_username(session["username"])
+
+    # Render the deposit page with account_holder details
+    return render_template("deposit.html", account_holder=account_holder)
