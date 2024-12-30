@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Optional
 
 from marketplace.app.wallets.crypto.crypto_wallet import CryptoWallet
 from marketplace.app.wallets.fiat.fiat_wallet import FiatWallet
@@ -17,7 +16,7 @@ class Buy:
     created_at: datetime
     status: str
     successful: bool
-    completed_at: Optional[datetime] = None
+    completed_at: datetime
 
     def update_crypto_wallet(self, new_crypto_wallet: CryptoWallet):
         self.crypto_wallet = new_crypto_wallet
