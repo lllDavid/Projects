@@ -14,6 +14,21 @@
         <p class="lead">Change account settings</p>
     </div>
 
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+
+    <div class="alert alert-dismissible fade show" role="alert">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+
     <section class="settings-section">
         <form action="/settings" method="POST" id="account-form">
             <div class="form-group">
@@ -41,7 +56,8 @@
         <form action="/update-bank-details" method="POST" id="bank-account-form">
             <div class="form-group">
                 <p class="lead">Change bank settings</p>
-                <input type="text" id="bank-account-holder" name="bank_account_holder" placeholder="Enter account holder name" required>
+                <input type="text" id="bank-account-holder" name="bank_account_holder"
+                    placeholder="Enter account holder name" required>
             </div>
             <div class="form-group">
                 <label for="iban">IBAN</label>
@@ -53,7 +69,8 @@
             </div>
             <div class="form-group">
                 <label for="routing-number">Routing Number</label>
-                <input type="text" id="routing-number" name="routing_number" placeholder="Enter routing number" required>
+                <input type="text" id="routing-number" name="routing_number" placeholder="Enter routing number"
+                    required>
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
         </form>

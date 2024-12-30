@@ -11,6 +11,20 @@ conn = connect(
     database=Config.USER_DB_CONFIG["database"]
 )
 
+def is_unique_username(username: str) -> bool:
+    cursor = conn.cursor()
+    cursor.execute("""SELECT username FROM user WHERE username = %s""", (username,))
+    user = cursor.fetchone()
+    cursor.close()
+    return user is None
+
+def is_unique_email(email: str) -> bool:
+    cursor = conn.cursor()
+    cursor.execute("""SELECT email FROM user WHERE email = %s""", (email,))
+    user = cursor.fetchone()
+    cursor.close()
+    return user is None
+
 def is_unique_user_and_email(username: str, email: str):
     cursor = conn.cursor()
     cursor.execute(""" 
