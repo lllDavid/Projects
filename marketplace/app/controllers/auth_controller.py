@@ -83,7 +83,7 @@ def handle_settings(request):
 
     return render_template("settings.html", username=current_username, email=current_email, user=user)
 
-def handle_deposit(request):
+def handle_deposit():
     redirect_response = check_authentication()
     if redirect_response:
         return redirect_response
