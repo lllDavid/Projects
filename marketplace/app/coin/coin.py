@@ -35,14 +35,5 @@ class Coin:
     def update_coin_market_data(self, new_coin_market_data: CoinMarketData):
         self.coin_market_data = new_coin_market_data
 
-    def __repr__(self):
-        return (f"{self.__class__.__name__}(id={self.id!r}, "
-                f"name={self.name!r}, "
-                f"symbol={self.symbol!r}, "
-                f"category={self.category!r}, "
-                f"description={self.description!r}, "
-                f"price={self.price!r}, "
-                f"coin_specs={self.coin_specs!r}, "
-                f"coin_market_data={self.coin_market_data!r})")
 
 

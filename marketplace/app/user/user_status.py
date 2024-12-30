@@ -46,10 +46,3 @@ class UserStatus:
             else:
                 self.is_inactive = False
         print(f"User inactivity: {self.is_inactive}.")
-
-    def __str__(self):
-        return (f"Online: {self.is_online}, "
-                f"Banned: {self.is_banned}, "
-                f"Ban Reason: {self.ban_reason}, "
-                f"Ban Duration: {self.ban_duration}, "
-                f"Inactive: {self.is_inactive}")

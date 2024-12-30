@@ -44,13 +44,3 @@ class UserHistory:
         amount = amount.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
         self.transaction_history[transaction_id] = amount
         self.update_updated_at()
-
-    
-    def __str__(self):
-        return (f"Login count: {self.login_count}, "
-                f"Last login: {self.last_login}, "
-                f"Failed login count: {self.failed_login_count}, "
-                f"Last failed login: {self.last_failed_login}, "
-                f"Created at: {self.created_at}, "
-                f"Updated at: {self.updated_at}, "
-                f"Transaction History: {self.transaction_history}")

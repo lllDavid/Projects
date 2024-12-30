@@ -73,8 +73,3 @@ class FiatWallet:
 
     def update_last_accessed(self) -> None:
         self.last_accessed = datetime.now()
-
-    def __str__(self) -> str:
-        return (f"FiatWallet(wallet_id={self.wallet_id}, user_id={self.user_id}, "
-                f"bank={self.user_bank.bank_name}, account_number={self.user_bank.account_number}, "
-                f"balance={self.calculate_total_balance():.2f}, last_accessed={self.last_accessed})")

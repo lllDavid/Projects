@@ -93,24 +93,4 @@ class UserFingerprint:
             self.behavioral_biometrics = {}
         self.behavioral_biometrics.update(biometrics)
 
-    def __str__(self):
-        return (f"Username history: {', '.join(self.username_history)}; "
-                f"Email address history: {', '.join(self.email_address_history)}; "
-                f"MAC address: {self.mac_address}; "
-                f"Associated IPs: {self.associated_ips}; "
-                f"Avg login frequency: {self.avg_login_frequency}; "
-                f"Avg session duration: {self.avg_session_duration}; "
-                f"Geolocation: {self.geolocation_country}, {self.geolocation_city}, "
-                f"Lat: {self.geolocation_latitude}, "
-                f"Lon: {self.geolocation_longitude}; "
-                f"Browser info: {self.browser_info}; "
-                f"OS: {self.os_name} {self.os_version}; "
-                f"Device info: {self.device_type} by {self.device_manufacturer}, Model: {self.device_model}; "
-                f"User preferences: {self.user_preferences}; "
-                f"User agent: {self.user_agent}; "
-                f"Device ID: {self.device_id}; "
-                f"Screen resolution: {self.screen_resolution}; "
-                f"Two-factor enabled: {self.two_factor_enabled}; "
-                f"VPN usage: {self.vpn_usage}; "
-                f"Behavioral biometrics: {self.behavioral_biometrics}")
 

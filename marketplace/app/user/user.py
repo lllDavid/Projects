@@ -51,9 +51,3 @@ class User:
     def update_user_fingerprint(self, new_user_fingerprint: UserFingerprint):
         self.user_fingerprint = new_user_fingerprint
         print("User fingerprint updated.")
-
-    def __str__(self):
-        return (f"ID: {self.id}, Username: {self.username}, Email: {self.email}, "
-                f"Role: {self.role}, Bank: {self.user_bank}, Status: {self.user_status}, "
-                f"History: {self.user_history}, Security: {self.user_security}, "
-                f"Fingerprint: {self.user_fingerprint}")
