@@ -1,6 +1,6 @@
 from flask import render_template, request
 
-from marketplace.app.controllers.auth_controller import handle_login, handle_logout, handle_settings
+from marketplace.app.controllers.auth_controller import handle_login, handle_logout, handle_settings, handle_deposit
 
 def register_routes(app):
     # Landing Routes
@@ -51,7 +51,8 @@ def register_routes(app):
     
     @app.route("/deposit")
     def deposit():
-        return render_template("deposit.html")
+        return render_template("deposit.html", account_holder=account_holder)
+
 
     @app.route("/settings", methods=["GET", "POST"])
     def settings():
