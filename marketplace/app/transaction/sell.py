@@ -11,6 +11,7 @@ class Sell:
     crypto_wallet: CryptoWallet
     fiat_wallet: FiatWallet
     transaction_id: str
+    reference_number: int
     fiat_amount: float
     coin_name: str
     coin_amount: float
@@ -18,6 +19,5 @@ class Sell:
     completed_at: datetime
     status: str
     successful: bool
-    reference_number: int
     
 
