@@ -97,7 +97,10 @@ def handle_deposit(request):
         return redirect(url_for("login"))
 
     # Assuming the account holder is related to the username, fetch account info
-    account_holder = get_user_by_username(session["username"])
+    account_holder_data = get_user_by_username(session["username"])
+    if account_holder_data is not None:
+        account_holder = account_holder_data.user_bank.account_holder
+    
 
     # Render the deposit page with account_holder details
     return render_template("deposit.html", account_holder=account_holder)

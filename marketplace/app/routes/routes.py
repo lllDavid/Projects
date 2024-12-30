@@ -51,7 +51,7 @@ def register_routes(app):
     
     @app.route("/deposit")
     def deposit():
-        return render_template("deposit.html", account_holder=account_holder)
+        return handle_deposit(request)
 
 
     @app.route("/settings", methods=["GET", "POST"])
