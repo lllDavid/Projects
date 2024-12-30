@@ -1,8 +1,7 @@
 from json import dumps
 from mariadb import connect
-
-from marketplace.helpers.roles import Role
 from marketplace.config import Config
+from marketplace.helpers.roles import Role
 from marketplace.app.user.user import User
 from marketplace.app.user.user_bank import UserBank
 from marketplace.app.user.user_status import UserStatus
@@ -109,6 +108,22 @@ def insert_user(user: User) -> User | None:
         conn.rollback()
         print(f"Error occurred: {e}")
 
+def delete_user(user_id: int) -> None:
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("DELETE FROM user_fingerprint WHERE user_id = %s", (user_id,))
+            cursor.execute("DELETE FROM user_security WHERE user_id = %s", (user_id,))
+            cursor.execute("DELETE FROM user_history WHERE user_id = %s", (user_id,))
+            cursor.execute("DELETE FROM user_status WHERE user_id = %s", (user_id,))
+            cursor.execute("DELETE FROM user_bank WHERE user_id = %s", (user_id,))
+
+            cursor.execute("DELETE FROM user WHERE id = %s", (user_id,))
+            conn.commit()
+
+            print("User deleted successfully.")
+    except conn.Error as e:
+        conn.rollback()
+        print(f"Error occurred: {e}")
 
 def update_username(id: int, username: str) -> None:
     try:
@@ -120,7 +135,6 @@ def update_username(id: int, username: str) -> None:
         conn.rollback()
         print(f"Error occurred: {e}")
 
-
 def update_email(id: int, email: str) -> None:
     try:
         with conn.cursor() as cursor:
@@ -131,19 +145,16 @@ def update_email(id: int, email: str) -> None:
         conn.rollback()
         print(f"Error occurred: {e}")
 
-
 def update_password(user_id: int, password: str) -> None:
     try:
         with conn.cursor() as cursor:
             password_hash = UserSecurity.hash_password(password)
-
             cursor.execute("UPDATE user_security SET password_hash = %s WHERE user_id = %s", (password_hash, user_id))
             conn.commit()
             print("Password updated successfully.")
     except conn.Error as e:
         conn.rollback()
         print(f"Error occurred: {e}")
-
 
 # --------------------------------------------------------------
 # Section 2: User Retrieval by Specific Criteria
@@ -158,7 +169,6 @@ def get_user_by_id(id: int) -> User | None:
         return get_user_from_db(user[0])
     return None
 
-
 def get_user_by_username(username: str) -> User | None:
     with conn.cursor() as cursor:
         cursor.execute("SELECT id FROM user WHERE username = %s", (username,))
@@ -167,7 +177,6 @@ def get_user_by_username(username: str) -> User | None:
     if user:
         return get_user_from_db(user[0])
     return None
-
 
 def get_user_by_email(email: str) -> User | None:
     with conn.cursor() as cursor:
@@ -178,9 +187,8 @@ def get_user_by_email(email: str) -> User | None:
         return get_user_from_db(user[0])
     return None
 
-
 # --------------------------------------------------------------
-# Section 3: User Object Components by User ID
+# Section 3: Retrieve User Components by User ID
 # --------------------------------------------------------------
 
 def get_user(user_id: int) -> tuple[str, str, Role] | None:
@@ -196,7 +204,6 @@ def get_user(user_id: int) -> tuple[str, str, Role] | None:
         role = Role(role_str)
         return username, email, role
     return None
-
 
 def get_user_bank(user_id: int) -> UserBank | None:
     with conn.cursor() as cursor:
@@ -217,7 +224,6 @@ def get_user_bank(user_id: int) -> UserBank | None:
             date_linked=bank[7]
         )
     return None
-
 
 def get_user_status(user_id: int) -> UserStatus | None:
     with conn.cursor() as cursor:
@@ -240,7 +246,6 @@ def get_user_status(user_id: int) -> UserStatus | None:
         )
     return None
 
-
 def get_user_history(user_id: int) -> UserHistory | None:
     with conn.cursor() as cursor:
         cursor.execute(
@@ -261,7 +266,6 @@ def get_user_history(user_id: int) -> UserHistory | None:
         )
     return None
 
-
 def get_user_security(user_id: int) -> UserSecurity | None:
     with conn.cursor() as cursor:
         cursor.execute(
@@ -279,7 +283,6 @@ def get_user_security(user_id: int) -> UserSecurity | None:
             two_factor_backup_codes_hash=security[4]
         )
     return None
-
 
 def get_user_fingerprint(user_id: int) -> UserFingerprint | None:
     with conn.cursor() as cursor:
@@ -320,7 +323,6 @@ def get_user_fingerprint(user_id: int) -> UserFingerprint | None:
             behavioral_biometrics=fingerprint[23]
         )
     return None
-
 
 # --------------------------------------------------------------
 # Section 4: Complete User Retrieval
