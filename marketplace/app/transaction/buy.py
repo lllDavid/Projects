@@ -7,8 +7,8 @@ from marketplace.app.wallets.fiat.fiat_wallet import FiatWallet
 @dataclass
 class Buy:
     user_id: int
-    crypto_wallet: CryptoWallet
-    fiat_wallet: FiatWallet
+    crypto_wallet: CryptoWallet | None
+    fiat_wallet: FiatWallet | None
     transaction_id: str
     fiat_amount: float
     coin_name: str
@@ -58,6 +58,24 @@ class Buy:
         self.completed_at = new_completed_at
 
     def __repr__(self):
-        return f"Buy(user_id={self.user_id}, transaction_id={self.transaction_id}, " \
-               f"coin_name={self.coin_name}, fiat_amount={self.fiat_amount}, " \
-               f"successful={self.successful})"
+        return f"Buy(user_id={self.user_id}, crypto_wallet={self.crypto_wallet}, fiat_wallet={self.fiat_wallet}, " \
+               f"transaction_id={self.transaction_id}, fiat_amount={self.fiat_amount}, coin_name={self.coin_name}, " \
+               f"coin_amount={self.coin_amount}, created_at={self.created_at}, status={self.status}, " \
+               f"successful={self.successful}, completed_at={self.completed_at})"
+
+buy = Buy(
+    user_id=123,
+    crypto_wallet=None,
+    fiat_wallet=None,
+    transaction_id="TX987654",
+    fiat_amount=1000.0,
+    coin_name="Bitcoin",
+    coin_amount=0.1,  # Example coin amount
+    created_at=datetime.now(),  # Set the current time
+    status="pending",  # Or any status you want to set initially
+    successful=True,   # Set initial success state
+    completed_at=datetime.now()  # Or leave this empty if not completed yet
+)
+
+# Now you can access the object like this
+print(buy)
