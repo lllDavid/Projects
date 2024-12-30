@@ -15,7 +15,7 @@ class UserCreator:
     def create_user_bank(self) -> UserBank:
         return UserBank(
             bank_name=None,
-            account_holder=None,
+            account_holder="David Wagner",
             account_number=None,
             routing_number=None,
             iban=None,

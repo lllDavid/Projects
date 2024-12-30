@@ -160,7 +160,7 @@ def update_password(user_id: int, password: str) -> None:
 
 def get_user_by_id(id: int) -> User | None:
     cursor = conn.cursor()
-    cursor.execute("SELECT id, username, email, role FROM user WHERE id = %s", (id,))
+    cursor.execute("SELECT id FROM user WHERE id = %s", (id,))
     user = cursor.fetchone()
     cursor.close()
     if user:
@@ -170,7 +170,7 @@ def get_user_by_id(id: int) -> User | None:
 
 def get_user_by_username(username: str) -> User | None:
     cursor = conn.cursor()
-    cursor.execute("SELECT id, username, email, role FROM user WHERE username = %s", (username,))
+    cursor.execute("SELECT id FROM user WHERE username = %s", (username,))
     user = cursor.fetchone()
     cursor.close()
 
@@ -181,7 +181,7 @@ def get_user_by_username(username: str) -> User | None:
 
 def get_user_by_email(email: str) -> User | None:
     cursor = conn.cursor()
-    cursor.execute("SELECT id, username, email, role FROM user WHERE email = %s", (email,))
+    cursor.execute("SELECT id FROM user WHERE email = %s", (email,))
     user = cursor.fetchone()
     cursor.close()
 
@@ -222,9 +222,9 @@ def get_user_bank(user_id: int) -> UserBank | None:
     if bank:
         return UserBank(
             bank_name=bank[1],
-            account_holder=bank[3],
-            account_number=bank[4],
-            routing_number=bank[5],
+            account_holder=bank[2],
+            account_number=bank[3],
+            routing_number=bank[4],
             iban=bank[5],
             swift_bic=bank[6],
             date_linked=bank[7]
@@ -378,6 +378,3 @@ def get_user_from_db(user_id: int) -> User | None:
     )
 
   
-
-
-
