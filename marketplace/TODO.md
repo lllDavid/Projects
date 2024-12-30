@@ -1,9 +1,9 @@
  TODO:
-    - Forgot password send reset email
-    - home fetch market data api
-    - wallet functionality
-    - settings change password, delete account functionality
-    - support funtionality
+    - (Login html) Forgot password send reset email
+    - (Home html) fetch actual market data api, more diagrams etc...
+    - (Wallet html) more functionality, general improvements
+    - (Settings html) delete account functionality, bank account functionality
+    - (Support html) send form funtionality
       - 2FA Functionality
 
     - KYC 
