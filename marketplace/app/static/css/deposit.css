@@ -1,4 +1,3 @@
-/* Container styles */
 .container {
     max-width: 31.25rem;
     min-width: 20rem;
@@ -9,9 +8,6 @@
     box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.5);
 }
 
-
-
-/* Input and select fields styles */
 input,
 select {
     background-color: #121212;

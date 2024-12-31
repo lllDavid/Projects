@@ -1,5 +1,4 @@
 from flask import render_template, request
-
 from marketplace.app.controllers.auth_controller import handle_login, handle_logout, handle_settings, handle_deposit
 
 def register_routes(app):
