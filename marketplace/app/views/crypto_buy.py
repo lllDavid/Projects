@@ -1,8 +1,7 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request
 from decimal import Decimal
 from datetime import datetime
 from werkzeug.exceptions import BadRequest
-
+from flask import Blueprint, render_template, redirect, url_for, flash, request
 from marketplace.app.wallets.crypto.crypto_wallet import CryptoWallet
 from marketplace.app.user.user_bank import UserBank
 

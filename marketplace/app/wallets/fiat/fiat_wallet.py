@@ -1,5 +1,5 @@
-from dataclasses import dataclass, field
 from datetime import datetime
+from dataclasses import dataclass, field
 from decimal import Decimal, ROUND_HALF_UP
 from marketplace.app.user.user_bank import UserBank
 

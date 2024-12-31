@@ -39,8 +39,6 @@ def is_unique_user_and_email(username: str, email: str):
             return "email"
     return None
 
-from re import match
-
 def is_valid_username(username):
     if len(username) < 3 or len(username) > 20:
         return "Username must be between 3 and 20 characters long."
@@ -64,7 +62,6 @@ def is_valid_username(username):
         return "Username contains restricted terms."
 
     return True
-
 
 def is_valid_email(email: str) -> bool:
     email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'

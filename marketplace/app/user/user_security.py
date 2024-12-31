@@ -1,7 +1,6 @@
-from dataclasses import dataclass
 from random import randint
+from dataclasses import dataclass
 from pyotp import TOTP, random_base32
-
 from argon2 import PasswordHasher
 from argon2.exceptions import VerificationError
 

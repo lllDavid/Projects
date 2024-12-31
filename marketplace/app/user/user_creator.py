@@ -1,9 +1,6 @@
 from datetime import datetime
-
 from marketplace.app.db import user_db
-
 from marketplace.helpers.roles import Role
-
 from marketplace.app.user.user import User
 from marketplace.app.user.user_bank import UserBank
 from marketplace.app.user.user_status import UserStatus
