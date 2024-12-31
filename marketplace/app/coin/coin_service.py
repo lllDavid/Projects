@@ -1,14 +1,15 @@
-import requests
-from .coin_market_data import CoinMarketData
+from requests import get
 from decimal import Decimal
+from dataclasses import dataclass
+from marketplace.app.coin.coin_market_data import CoinMarketData
 
+@dataclass
 class CoinService:
-    def __init__(self, api_url: str):
-        self.api_url = api_url
+    api_url = str
     
     def fetch_coin_data(self, coin_id: str) -> CoinMarketData:
         """Fetch coin data from an external API and return a CoinMarketData object."""
-        response = requests.get(f"{self.api_url}/coins/{coin_id}")
+        response = get(f"{self.api_url}/coins/{coin_id}")
         data = response.json()
         
         return CoinMarketData(

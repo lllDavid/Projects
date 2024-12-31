@@ -1,8 +1,6 @@
-from datetime import datetime
 from decimal import Decimal
-
+from datetime import datetime
 from marketplace.app.db import coin_db
-
 from marketplace.app.coin.coin import Coin
 from marketplace.app.coin.coin_specs import CoinSpecs
 from marketplace.app.coin.coin_market_data import CoinMarketData
@@ -91,7 +89,7 @@ class CoinCreator:
     
         except Exception as e:
                 print(f"Error: {e}")
-                raise ValueError("Coin account couldn't be created")  
+                raise ValueError("Coin couldn't be created")  
     
     def save_user(self, coin):
         try:
