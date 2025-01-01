@@ -1,14 +1,12 @@
 from datetime import datetime
 from dataclasses import dataclass, field
 from decimal import Decimal, ROUND_HALF_UP
-from marketplace.app.user.user_bank import UserBank
 
 @dataclass
 class FiatWallet:
     user_id: int | None
-    user_bank: UserBank
     wallet_id: int | None
-    wallet_balance: Decimal | None
+    balance: Decimal | None
     iban: str | None = None   
     swift_code: str | None = None 
     routing_number: str | None = None 
@@ -36,43 +34,21 @@ class FiatWallet:
         return Decimal(current_balance).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
     def has_sufficient_funds(self, amount: Decimal) -> bool:
-        return (self.wallet_balance or Decimal("0.00")) >= amount
-
-    def withdraw_to_bank(self, amount: Decimal, date: datetime, method: str) -> str:
-        if not self.has_sufficient_funds(amount):
-            return f"Insufficient funds to withdraw {amount:.2f}. Current balance: {self.wallet_balance:.2f}"
-
-        withdrawal_message = self.simulate_bank_transfer(amount)
-
-        if withdrawal_message:
-            self.decrease_wallet_balance(amount)
-            self.add_withdrawal_to_history(date, amount, method)
-            self.update_last_accessed()
-
-            return f"Withdrawal of {amount:.2f} via {method} completed on {date.strftime('%Y-%m-%d %H:%M:%S')}. New balance: {self.wallet_balance:.2f}"
-        
-        return "No bank account linked for withdrawal."
-
-    def simulate_bank_transfer(self, amount: Decimal) -> str:
-        if self.user_bank:
-            print(f"Simulating bank transfer of {amount} to bank account: {self.user_bank.account_number}")
-            return "Transfer successful"
-        
-        return "Bank account details are missing."
+        return (self.balance or Decimal("0.00")) >= amount
 
     def increase_wallet_balance(self, amount: Decimal) -> None:
-        if self.wallet_balance is None:
+        if self.balance is None:
             raise ValueError("Wallet balance is None, cannot credit funds.")
         
-        self.wallet_balance += amount
-        self.wallet_balance = self.wallet_balance.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        self.balance += amount
+        self.balance = self.balance.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
     def decrease_wallet_balance(self, amount: Decimal) -> None:
-        if self.wallet_balance is None:
+        if self.balance is None:
             raise ValueError("Wallet balance is None, cannot perform withdrawal.")
         
-        self.wallet_balance -= amount
-        self.wallet_balance = self.wallet_balance.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        self.balance -= amount
+        self.balance = self.balance.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
     
     def update_last_accessed(self) -> None:
         self.last_accessed = datetime.now()

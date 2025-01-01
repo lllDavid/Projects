@@ -8,7 +8,7 @@ class UserBank:
     account_number: str | None
     routing_number: str | None
     iban: str | None
-    swift_bic: str | None
+    swift_code: str | None
     date_linked: datetime | None
 
     def update_bank_name(self, new_bank_name: str) -> None:
@@ -26,8 +26,8 @@ class UserBank:
     def update_iban(self, new_iban: str) -> None:
         self.iban = new_iban
 
-    def update_swift_bic(self, new_swift_bic: str) -> None:
-        self.swift_bic = new_swift_bic
+    def update_swift_code(self, new_swift_code: str) -> None:
+        self.swift_code = new_swift_code
 
     def update_date_linked(self, new_date_linked: datetime) -> None:
         self.date_linked = new_date_linked

@@ -25,8 +25,8 @@ def insert_user(user: User) -> User | None:
     try:
         with conn.cursor() as cursor:
             cursor.execute(
-                "INSERT INTO user (username, email, role) VALUES (%s, %s, %s)",
-                (user.username, user.email, user.role.value)
+                "INSERT INTO user (username, email, rolen, fiat_wallet, crypto_wallet ) VALUES (%s, %s, %s, %s, %s)",
+                (user.username, user.email, user.role.value, user.fiat_wallet, user.crypto_wallet)
             )
             
             user_id = cursor.lastrowid
@@ -35,10 +35,10 @@ def insert_user(user: User) -> User | None:
             user_transaction_history = dumps(list(user.user_history.transaction_history)) if user.user_history.transaction_history else None
 
             cursor.execute(
-                "INSERT INTO user_bank (user_id, bank_name, account_holder, account_number, routing_number, iban, swift_bic, date_linked) "
+                "INSERT INTO user_bank (user_id, bank_name, account_holder, account_number, routing_number, iban, swift_code, date_linked) "
                 "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
                 (user_id, user.user_bank.bank_name, user.user_bank.account_holder, user.user_bank.account_number,
-                 user.user_bank.routing_number, user.user_bank.iban, user.user_bank.swift_bic, user.user_bank.date_linked)
+                 user.user_bank.routing_number, user.user_bank.iban, user.user_bank.swift_code, user.user_bank.date_linked)
             )
 
             cursor.execute(
@@ -191,24 +191,24 @@ def get_user_by_email(email: str) -> User | None:
 # Section 3: Retrieve User Components by User ID
 # --------------------------------------------------------------
 
-def get_user(user_id: int) -> tuple[str, str, Role] | None:
+def get_user(user_id: int) -> tuple[str, str, Role, str, str] | None:
     with conn.cursor() as cursor:
         cursor.execute(
-            "SELECT username, email, role FROM user WHERE id = %s",
+            "SELECT username, email, role, fiat_wallet, crypto_wallet FROM user WHERE id = %s",
             (user_id,)
         )
         user_data = cursor.fetchone()
 
     if user_data:
-        username, email, role_str = user_data
+        username, email, role_str, fiat_wallet, crypto_wallet = user_data
         role = Role(role_str)
-        return username, email, role
+        return username, email, role, fiat_wallet, crypto_wallet
     return None
 
 def get_user_bank(user_id: int) -> UserBank | None:
     with conn.cursor() as cursor:
         cursor.execute(
-            "SELECT user_id, bank_name, account_holder, account_number, routing_number, iban, swift_bic, date_linked FROM user_bank WHERE user_id = %s", 
+            "SELECT user_id, bank_name, account_holder, account_number, routing_number, iban, swift_code, date_linked FROM user_bank WHERE user_id = %s", 
             (user_id,)
         )
         bank = cursor.fetchone()
@@ -220,7 +220,7 @@ def get_user_bank(user_id: int) -> UserBank | None:
             account_number=bank[3],
             routing_number=bank[4],
             iban=bank[5],
-            swift_bic=bank[6],
+            swift_code=bank[6],
             date_linked=bank[7]
         )
     return None
