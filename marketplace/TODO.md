@@ -11,3 +11,4 @@
     - 2FA Functionality (QR Code)
     - KYC 
 
+css clamp anpassen (landing.html)
