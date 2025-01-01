@@ -15,7 +15,7 @@ This platform allows users to buy and sell cryptocurrency in a secure and user-f
 ## Prerequisites
 Before running the application, ensure you have the following installed:
 
-- **Python 3.10+**: The application is built with Python.
+- **Python 3.12+**: The application is built with Python.
 - **MariaDB**: The application uses MariaDB for database storage.
 - **Flask**: The application uses Flask as Webframework.
 
