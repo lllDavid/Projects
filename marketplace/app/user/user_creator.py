@@ -16,7 +16,7 @@ class UserCreator:
             account_number=None,
             routing_number=None,
             iban=None,
-            swift_bic=None,
+            swift_code=None,
             date_linked=None
         )
 
@@ -95,6 +95,8 @@ class UserCreator:
                 username=username,
                 email=email,
                 role=role,
+                fiat_wallet=None,
+                crypto_wallet=None,
                 user_bank=user_bank,
                 user_status=user_status,
                 user_history=user_history,

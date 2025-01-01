@@ -19,7 +19,7 @@ CREATE TABLE user_bank (
     account_number VARCHAR(50),             -- Bank account number
     routing_number VARCHAR(50),             -- Routing number
     iban VARCHAR(50),                       -- IBAN number
-    swift_bic VARCHAR(50),                  -- SWIFT/BIC code
+    swift_code VARCHAR(50),                  -- SWIFT/BIC code
     date_linked TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- When the bank account was linked
     FOREIGN KEY (user_id) REFERENCES user(id) -- Foreign key to user table
 );
