@@ -40,3 +40,12 @@ build/
 # Cache and temporary files
 *.bak
 *.tmp
+
+# Confidential information
+*.pem            
+*.key           
+*.crt            
+
+# API keys
+api_keys/      
+*.apikey        
