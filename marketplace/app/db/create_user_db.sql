@@ -93,31 +93,3 @@ CREATE TABLE user_fingerprint (
     FOREIGN KEY (user_id) REFERENCES user(id) -- Foreign key to user table
 );
 
--- Table for storing fiat wallet information
-CREATE TABLE fiat_wallet (
-    wallet_id INT AUTO_INCREMENT PRIMARY KEY,        -- Unique identifier for the wallet
-    user_id INT,                                     -- Foreign key reference to the user table
-    wallet_balance DECIMAL(15, 2) DEFAULT 0,         -- Wallet balance (decimal format)
-    iban VARCHAR(50),                                -- IBAN number (if applicable)
-    swift_code VARCHAR(50),                          -- SWIFT code (if applicable)
-    routing_number VARCHAR(50),                      -- Routing number (if applicable)
-    last_accessed TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Last time the wallet was accessed
-    encryption_key VARCHAR(255),                     -- Encryption key for securing the wallet
-    deposit_history JSON,                            -- Deposit history (stored as JSON, with timestamps and amounts)
-    withdrawal_history JSON,                         -- Withdrawal history (stored as JSON, with timestamps, amounts, and other relevant data)
-    FOREIGN KEY (user_id) REFERENCES user(id)       -- Foreign key to user table
-);
-
--- Table for storing crypto wallet information
-CREATE TABLE crypto_wallet (
-    wallet_id INT AUTO_INCREMENT PRIMARY KEY,        -- Unique identifier for the wallet
-    user_id INT,                                     -- Foreign key reference to the user table
-    wallet_address VARCHAR(255),                     -- Wallet address (e.g., Bitcoin address)
-    total_coin_value DECIMAL(15, 2),                 -- Total value of the coins in the wallet (in fiat)
-    last_accessed TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Last time the wallet was accessed
-    encryption_key VARCHAR(255),                     -- Encryption key for securing the wallet
-    deposit_history JSON,                            -- Deposit history (stored as JSON, with timestamps and amounts)
-    withdrawal_history JSON,                         -- Withdrawal history (stored as JSON, with timestamps, amounts, and other relevant data)
-    coin_balance JSON DEFAULT '{}',                  -- Coin balance as JSON (to store multiple coin types and amounts)
-    FOREIGN KEY (user_id) REFERENCES user(id)       -- Foreign key to user table
-);

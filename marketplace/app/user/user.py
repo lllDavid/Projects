@@ -2,6 +2,9 @@ from dataclasses import dataclass
 
 from marketplace.helpers.roles import Role
 
+from marketplace.app.wallets.fiat.fiat_wallet import FiatWallet
+from marketplace.app.wallets.crypto.crypto_wallet import CryptoWallet
+
 from marketplace.app.user.user_bank import UserBank
 from marketplace.app.user.user_status import UserStatus
 from marketplace.app.user.user_history import UserHistory
@@ -14,6 +17,8 @@ class User:
     username: str
     email: str
     role: Role
+    fiat_wallet: FiatWallet | None
+    crypto_wallet: CryptoWallet | None
     user_bank: UserBank
     user_status: UserStatus
     user_history: UserHistory
@@ -31,6 +36,14 @@ class User:
     def update_role(self, new_role: Role):
         self.role = new_role
         print(f"Role updated to {new_role}.")
+
+    def update_fiat_wallet(self, new_fiat_wallet: FiatWallet | None):
+        self.fiat_wallet = new_fiat_wallet
+        print(f"Fiat wallet updated to {new_fiat_wallet}.")
+
+    def update_crypto_wallet(self, new_crypto_wallet: CryptoWallet | None):
+        self.crypto_wallet = new_crypto_wallet
+        print(f"Crypto wallet updated to {new_crypto_wallet}.")
 
     def update_user_bank(self, new_user_bank: UserBank):
         self.user_bank = new_user_bank
