@@ -27,6 +27,6 @@ setup(
     ],
     include_package_data=True,
     install_requires=get_requirements('requirements.txt'),
-    python_requires=">=3.12.8",
+    python_requires=">=3.10",
     keywords="flask mariadb crypto marketplace",
 )
