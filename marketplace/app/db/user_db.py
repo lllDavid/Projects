@@ -25,8 +25,8 @@ def insert_user(user: User) -> User | None:
     try:
         with conn.cursor() as cursor:
             cursor.execute(
-                "INSERT INTO user (username, email, rolen, fiat_wallet, crypto_wallet ) VALUES (%s, %s, %s, %s, %s)",
-                (user.username, user.email, user.role.value, user.fiat_wallet, user.crypto_wallet)
+                "INSERT INTO user (username, email, role) VALUES (%s, %s, %s)",
+                (user.username, user.email, user.role.value)
             )
             
             user_id = cursor.lastrowid
@@ -191,18 +191,18 @@ def get_user_by_email(email: str) -> User | None:
 # Section 3: Retrieve User Components by User ID
 # --------------------------------------------------------------
 
-def get_user(user_id: int) -> tuple[str, str, Role, str, str] | None:
+def get_user(user_id: int) -> tuple[str, str, Role] | None:
     with conn.cursor() as cursor:
         cursor.execute(
-            "SELECT username, email, role, fiat_wallet, crypto_wallet FROM user WHERE id = %s",
+            "SELECT username, email, role FROM user WHERE id = %s",
             (user_id,)
         )
         user_data = cursor.fetchone()
 
     if user_data:
-        username, email, role_str, fiat_wallet, crypto_wallet = user_data
+        username, email, role_str = user_data
         role = Role(role_str)
-        return username, email, role, fiat_wallet, crypto_wallet
+        return username, email, role
     return None
 
 def get_user_bank(user_id: int) -> UserBank | None:
