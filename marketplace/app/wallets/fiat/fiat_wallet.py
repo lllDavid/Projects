@@ -9,14 +9,13 @@ class FiatWallet:
     user_bank: UserBank
     wallet_id: int | None
     wallet_balance: Decimal | None
+    iban: str | None = None   
+    swift_code: str | None = None 
+    routing_number: str | None = None 
     last_accessed: datetime | None = None
     encryption_key: str | None = None
     deposit_history: dict[str, Decimal] = field(default_factory=dict)
     withdrawal_history: dict[str, dict[str, Decimal]] = field(default_factory=dict)
-
-    receiving_iban: str | None = None   
-    receiving_swift_bic: str | None = None 
-    receiving_routing_number: str | None = None 
 
     def add_deposit_to_history(self, date: datetime, amount: Decimal) -> None:
         amount = amount.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
