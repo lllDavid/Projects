@@ -13,7 +13,7 @@ setup(
     packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'your_project_name=your_project_name.cli:main',
+    'marketplace-cli=marketplace.run:main',
         ],
     },
     long_description=open('README.md').read(),
@@ -27,6 +27,6 @@ setup(
     ],
     include_package_data=True,
     install_requires=get_requirements('requirements.txt'),
-    python_requires=">=3.10",
+    python_requires=">=3.12",
     keywords="flask mariadb crypto marketplace",
 )
