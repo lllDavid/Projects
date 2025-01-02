@@ -12,5 +12,5 @@ CREATE TABLE fiat_wallets (
     encryption_key VARCHAR(255),               -- Encryption key for securing wallet information
     deposit_history JSON DEFAULT '{}',         -- Deposit history (stored as JSON for flexibility)
     withdrawal_history JSON DEFAULT '{}',      -- Withdrawal history (stored as JSON for flexibility)
-    FOREIGN KEY (user_id) REFERENCES marketplace_users(id) ON DELETE CASCADE  -- Link to the `marketplace_users` table
+    FOREIGN KEY (user_id) REFERENCES marketplace_users.user(id)  -- Link to the `marketplace_users` table
 );

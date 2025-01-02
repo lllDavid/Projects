@@ -6,7 +6,7 @@ from marketplace.app.routes.routes import register_routes
 
 def create_app() -> Flask:
     app = Flask(__name__, static_folder="static", template_folder="templates")
-    # app.config["SECRET_KEY"] = "secret_key"
+    app.config["SECRET_KEY"] = "secret_key"
     
     app.register_blueprint(user_creator)
     app.register_blueprint(crypto_buy)
