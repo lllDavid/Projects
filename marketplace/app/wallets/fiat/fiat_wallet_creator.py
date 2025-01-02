@@ -1,11 +1,13 @@
 from marketplace.app.wallets.fiat.fiat_wallet import FiatWallet
+from marketplace.app.db.fiat_wallet import insert_fiat_wallet
 from marketplace.app.db.user_db import get_user_from_db
+from decimal import Decimal
 
 def create_fiat_wallet(user_id) -> FiatWallet | None:
     user = get_user_from_db(user_id)
     if user is not None:
         wallet_id = None
-        balance = None
+        balance = Decimal(5000.00)
         deposit_history = {}
         withdrawal_history = {}
         last_accessed = None
@@ -20,6 +22,9 @@ def create_fiat_wallet(user_id) -> FiatWallet | None:
             last_accessed=last_accessed,
             encryption_key=encryption_key
         )
-        
+        insert_fiat_wallet(wallet)
         return wallet
 
+
+
+create_fiat_wallet(1)
