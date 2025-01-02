@@ -1,7 +1,10 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, session
 from werkzeug.exceptions import BadRequest
+
+from marketplace.app.user.user import User
 from marketplace.app.user.user_creator import UserCreator
 from marketplace.helpers.validation import validate_user_input
+from marketplace.app.wallets.fiat.fiat_wallet_creator import create_fiat_wallet
 
 user_creator = Blueprint('user_creator', __name__)
 
@@ -15,7 +18,12 @@ def create_and_save_user(username, email, password):
     user_creator = UserCreator()
     user = user_creator.create_user(username, email, password)
     user_creator.save_user(user)
+    if user.id is not None:
+        create_user_fiat_wallet(user.id)
     return user
+
+def create_user_fiat_wallet(user_id: int):
+    create_fiat_wallet(user_id)
 
 def set_user_session(user):
     session["user_id"] = user.id
