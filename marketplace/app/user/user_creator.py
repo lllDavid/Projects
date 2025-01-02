@@ -95,8 +95,6 @@ class UserCreator:
                 username=username,
                 email=email,
                 role=role,
-                fiat_wallet=None,
-                crypto_wallet=None,
                 user_bank=user_bank,
                 user_status=user_status,
                 user_history=user_history,
