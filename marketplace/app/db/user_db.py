@@ -106,7 +106,7 @@ def insert_user(user: User) -> User | None:
 
     except conn.Error as e:
         conn.rollback()
-        print(f"Error occurred: {e}")
+        print(f"Error inserting the user: {e}")
 
 def delete_user(user_id: int) -> None:
     try:
