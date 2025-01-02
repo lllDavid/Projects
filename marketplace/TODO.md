@@ -11,6 +11,7 @@
         - input rate limiter (Login etc.)
         - 2FA Functionality (QR Code)
         - KYC 
+        - Database improve closing/pooling
 
     low:
         css clamp (landing.html)
