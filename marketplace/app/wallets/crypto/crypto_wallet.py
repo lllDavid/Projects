@@ -1,12 +1,10 @@
 from datetime import datetime
 from dataclasses import dataclass, field
 from decimal import Decimal, ROUND_HALF_UP
-from marketplace.app.user.user_bank import UserBank
 
 @dataclass
 class CryptoWallet:
     user_id: int | None
-    user_bank: UserBank
     wallet_id: int | None
     wallet_address: str | None
     balance: dict[str, Decimal] = field(default_factory=dict)
