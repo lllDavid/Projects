@@ -6,7 +6,7 @@ from marketplace.config import Config
 from marketplace.app.wallets.fiat.fiat_wallet import FiatWallet
 
 pool = ConnectionPool(
-    pool_name="wallet_db_pool",
+    pool_name="fiat_wallet_db_pool",
     pool_size=20,  
     user=Config.WALLET_DB_CONFIG["user"],
     password=Config.WALLET_DB_CONFIG["password"],
