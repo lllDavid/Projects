@@ -15,7 +15,6 @@ def create_cryto_wallet(user_id) -> CryptoWallet | None:
 
         wallet = CryptoWallet(
             user_id= user.id,
-            user_bank = user.user_bank,
             wallet_id=wallet_id,
             wallet_address=wallet_address,
             balance=balance,
