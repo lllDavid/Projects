@@ -29,6 +29,7 @@ def buy_crypto():
         try:
             coin = request.form['coin-selection']
             amount = Decimal(request.form['coin-amount'])
+            # Doesnt work !!!
             total_cost = Decimal(request.form['total-cost'])
 
             wallet = get_crypto_wallet_by_user_id(user_id)
