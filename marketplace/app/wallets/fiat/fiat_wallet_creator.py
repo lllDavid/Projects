@@ -22,6 +22,7 @@ def create_fiat_wallet(user_id: int) -> FiatWallet | None:
             encryption_key=encryption_key
         )
         insert_fiat_wallet(wallet)
+        
         return wallet
 
 
