@@ -20,18 +20,9 @@ def sell_crypto():
     
         wallet = CryptoWallet(
             user_id=1,
-            user_bank=UserBank(
-                bank_name='Example Bank',
-                account_holder='John Doe',
-                account_number='123456789',
-                routing_number='987654321',
-                iban='GB29NWBK60161331926819',
-                swift_bic='NWBKGB2L',
-                date_linked=datetime(2024, 12, 26, 15, 47, 16, 981356)
-            ),
             wallet_id=101,
             wallet_address='0xABC123DEF456',
-            coin_balance={'BTC': Decimal('0.5'), 'ETH': Decimal('10.0')},
+            balance={'BTC': Decimal('0.5'), 'ETH': Decimal('10.0')},
             total_coin_value=Decimal('25000.00'),
             last_accessed=datetime(2024, 12, 26, 15, 45, 54, 455287),
             encryption_key='super_secret_key',
