@@ -62,6 +62,4 @@ class FiatWallet:
     def update_routing_number(self, new_routing_number: str):
         self.routing_number = new_routing_number
 
-    def update_account_number(self, new_account_number: str):
-        self.account_number = new_account_number
 
