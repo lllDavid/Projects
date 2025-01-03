@@ -53,15 +53,15 @@ class FiatWallet:
     def update_last_accessed(self) -> None:
         self.last_accessed = datetime.now()
 
-    def update_receiving_iban(self, new_iban: str):
-        self.receiving_iban = new_iban
+    def update_iban(self, new_iban: str):
+        self.iban = new_iban
 
-    def update_receiving_swift_bic(self, new_swift_bic: str):
-        self.receiving_swift_bic = new_swift_bic
+    def update_swift_code(self, new_swift_code: str):
+        self.swift_code = new_swift_code
 
-    def update_receiving_routing_number(self, new_routing_number: str):
-        self.receiving_routing_number = new_routing_number
+    def update_routing_number(self, new_routing_number: str):
+        self.routing_number = new_routing_number
 
-    def update_receiving_account_number(self, new_account_number: str):
-        self.receiving_account_number = new_account_number
+    def update_account_number(self, new_account_number: str):
+        self.account_number = new_account_number
 
