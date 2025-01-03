@@ -1,4 +1,5 @@
 from marketplace.app.wallets.crypto.crypto_wallet import CryptoWallet
+from marketplace.app.db.crypto_wallet_db import insert_crypto_wallet
 from marketplace.app.db.user_db import get_user_from_db
 
 def create_cryto_wallet(user_id) -> CryptoWallet | None:
@@ -24,6 +25,7 @@ def create_cryto_wallet(user_id) -> CryptoWallet | None:
             last_accessed=last_accessed,
             encryption_key=encryption_key
         )
+        insert_crypto_wallet(wallet)
         
         return wallet
     

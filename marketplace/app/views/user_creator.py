@@ -5,6 +5,7 @@ from marketplace.app.user.user import User
 from marketplace.app.user.user_creator import UserCreator
 from marketplace.helpers.validation import validate_user_input
 from marketplace.app.wallets.fiat.fiat_wallet_creator import create_fiat_wallet
+from marketplace.app.wallets.crypto.crypto_wallet_creator import create_cryto_wallet
 
 user_creator = Blueprint('user_creator', __name__)
 
@@ -20,6 +21,7 @@ def create_and_save_user(username, email, password):
     user_creator.save_user(user)
     if user.id is not None:
         create_fiat_wallet(user.id)
+        create_cryto_wallet(user.id)
     return user
 
 def set_user_session(user):
