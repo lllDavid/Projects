@@ -5,7 +5,6 @@ from mariadb import ConnectionPool
 from marketplace.config import Config
 from marketplace.app.wallets.fiat.fiat_wallet import FiatWallet
 
-
 pool = ConnectionPool(
     pool_name="wallet_db_pool",
     pool_size=20,  
