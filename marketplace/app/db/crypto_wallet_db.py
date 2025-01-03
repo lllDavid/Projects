@@ -1,5 +1,4 @@
-from json import dumps
-from json import loads
+from json import dumps, loads
 
 from mariadb import ConnectionPool
 
