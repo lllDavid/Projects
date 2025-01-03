@@ -1,7 +1,7 @@
 CREATE DATABASE marketplace_wallets;
 USE marketplace_wallets;
 
-CREATE TABLE fiat_wallets (
+CREATE TABLE fiat_wallet (
     wallet_id INT PRIMARY KEY AUTO_INCREMENT,  -- Unique identifier for the wallet
     user_id INT,                              -- Foreign key to link to the user (referencing `marketplace_users.id`)
     balance DECIMAL(20, 8),                    -- Wallet balance

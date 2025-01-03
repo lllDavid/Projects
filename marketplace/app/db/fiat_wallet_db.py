@@ -22,7 +22,7 @@ def insert_fiat_wallet(wallet: FiatWallet) -> FiatWallet | None:
             with conn.cursor() as cursor:
                 print(f"Executing INSERT query for FiatWallet with user_id: {wallet.user_id}.")
                 cursor.execute(
-                    "INSERT INTO fiat_wallets (user_id, balance, iban, swift_code, routing_number, encryption_key, deposit_history, withdrawal_history) "
+                    "INSERT INTO fiat_wallet (user_id, balance, iban, swift_code, routing_number, encryption_key, deposit_history, withdrawal_history) "
                     "VALUES (%s, %s, %s, %s, %s, %s, %s, %s); ",
                     (wallet.user_id, wallet.balance, wallet.iban, wallet.swift_code, wallet.routing_number, wallet.encryption_key, 
                      dumps(wallet.deposit_history), dumps(wallet.withdrawal_history))
