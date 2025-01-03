@@ -16,7 +16,7 @@ def create_trade_form():
 
 @crypto_buy.route('/trade', methods=['POST'])
 def buy_crypto():
-    if is not None FiatWallet.balance > 0:
+    if FiatWallet.balance is not None and FiatWallet.balance > 0:
         try:
             coin = request.form['coin-selection']
             amount = request.form['coin-amount']
@@ -52,3 +52,7 @@ def buy_crypto():
             print(f'Error during purchase: {e}')
             flash('An error occurred during the purchase process. Please try again.', 'error')
             return redirect(url_for('trade'))
+
+    else:
+        flash('Insufficient funds in your fiat wallet', 'error')
+        return redirect(url_for('trade'))
