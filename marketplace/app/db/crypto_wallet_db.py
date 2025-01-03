@@ -1,4 +1,5 @@
 from json import dumps
+from json import loads
 
 from mariadb import ConnectionPool
 
@@ -38,4 +39,47 @@ def insert_crypto_wallet(wallet: CryptoWallet) -> CryptoWallet | None:
 
     except conn.Error as e:
         print(f"Error inserting the wallet: {e}")
+        return None
+    
+def get_crypto_wallet_by_user_id(user_id: int) -> CryptoWallet | None:
+    try:
+        with pool.get_connection() as conn:
+            with conn.cursor() as cursor:
+                print(f"Executing SELECT query for CryptoWallet with user_id: {user_id}.")
+                
+                cursor.execute(
+                    "SELECT wallet_id, user_id, wallet_address, balance, total_coin_value, last_accessed, encryption_key, deposit_history, withdrawal_history "
+                    "FROM crypto_wallet WHERE user_id = %s LIMIT 1;",
+                    (user_id,)
+                )
+
+                result = cursor.fetchone()
+                
+                if result:
+                    wallet_id, user_id, wallet_address, balance, total_coin_value, last_accessed, encryption_key, deposit_history, withdrawal_history = result
+
+                    balance = loads(balance)
+                    deposit_history = loads(deposit_history)
+                    withdrawal_history = loads(withdrawal_history)
+                    
+                    wallet = CryptoWallet(
+                        wallet_id=wallet_id,
+                        user_id=user_id,
+                        wallet_address=wallet_address,
+                        balance=balance,
+                        total_coin_value=total_coin_value,
+                        last_accessed=last_accessed,
+                        encryption_key=encryption_key,
+                        deposit_history=deposit_history,
+                        withdrawal_history=withdrawal_history
+                    )
+
+                    print(f"Wallet with user_id {user_id} found.")
+                    return wallet
+                else:
+                    print(f"No wallet found for user_id: {user_id}.")
+                    return None
+
+    except Exception as e:
+        print(f"Error retrieving the wallet for user_id {user_id}: {e}")
         return None

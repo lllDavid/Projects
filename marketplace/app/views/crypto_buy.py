@@ -5,6 +5,8 @@ from werkzeug.exceptions import BadRequest
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 
 from marketplace.app.wallets.crypto.crypto_wallet import CryptoWallet
+
+from marketplace.app.db.crypto_wallet_db import c
 from marketplace.app.wallets.fiat.fiat_wallet import FiatWallet
 
 
@@ -15,27 +17,14 @@ def create_trade_form():
     return render_template('trade.html')
 
 @crypto_buy.route('/trade', methods=['POST'])
-def buy_crypto():
+def buy_crypto(wallet):
     if FiatWallet.balance is not None and FiatWallet.balance > 0:
         try:
             coin = request.form['coin-selection']
             amount = request.form['coin-amount']
             amount = Decimal(amount)
 
-            wallet = CryptoWallet(
-                user_id=1,
-                wallet_id=101,
-                wallet_address='0xABC123DEF456',
-                balance={'BTC': Decimal('0.5'), 'ETH': Decimal('10.0')},
-                total_coin_value=Decimal('25000.00'),
-                last_accessed=datetime(2024, 12, 26, 15, 45, 54, 455287),
-                encryption_key='super_secret_key',
-                deposit_history={'BTC': Decimal('0.5'), 'ETH': Decimal('10.0')},
-                withdrawal_history={
-                    'BTC': {'tx1': Decimal('0.1')},
-                    'ETH': {'tx2': Decimal('2.0')}
-                }
-            )
+            wallet = CryptoWallet
 
             wallet.increase_coin_balance(coin, amount, datetime.now())
             wallet.add_deposit_to_history(datetime.now(), amount)
