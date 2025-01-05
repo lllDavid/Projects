@@ -82,3 +82,45 @@ def get_crypto_wallet_by_user_id(user_id: int) -> CryptoWallet | None:
     except Exception as e:
         print(f"Error retrieving the wallet for user_id {user_id}: {e}")
         return None
+
+def update_crypto_wallet(wallet: CryptoWallet) -> bool:
+    try:
+        with pool.get_connection() as conn:
+            with conn.cursor() as cursor:
+                # Update query for updating existing wallet values in the database
+                cursor.execute(
+                    """
+                    UPDATE crypto_wallet
+                    SET 
+                        wallet_address = %s, 
+                        balance = %s, 
+                        total_coin_value = %s, 
+                        last_accessed = %s, 
+                        encryption_key = %s, 
+                        deposit_history = %s, 
+                        withdrawal_history = %s
+                    WHERE wallet_id = %s;
+                    """,
+                    (
+                        wallet.wallet_address, 
+                        dumps(wallet.balance), 
+                        wallet.total_coin_value, 
+                        wallet.last_accessed, 
+                        wallet.encryption_key, 
+                        dumps(wallet.deposit_history), 
+                        dumps(wallet.withdrawal_history), 
+                        wallet.wallet_id
+                    )
+                )
+
+                conn.commit()
+
+                # Check if any rows were affected (i.e., if the wallet was actually updated)
+                if cursor.rowcount > 0:
+                    return True
+                else:
+                    return False
+
+    except Exception as e:
+        print(f"Error updating CryptoWallet: {e}")
+        return False
