@@ -1,11 +1,12 @@
 from decimal import Decimal
 from datetime import datetime
+
 from werkzeug.exceptions import BadRequest
 from flask import Blueprint, render_template, redirect, url_for, flash, session, request
-from marketplace.app.wallets.crypto.crypto_wallet import CryptoWallet
-from marketplace.app.db.crypto_wallet_db import get_crypto_wallet_by_user_id
+
+from marketplace.app.db.crypto_wallet_db import get_crypto_wallet_by_user_id, update_crypto_wallet
 from marketplace.app.db.fiat_wallet_db import get_fiat_wallet_by_user_id
-from marketplace.app.wallets.fiat.fiat_wallet import FiatWallet
+
 
 crypto_buy = Blueprint('crypto_buy', __name__)
 
@@ -21,7 +22,6 @@ def buy_crypto():
         return redirect(url_for('login'))
 
     fiat_wallet = get_fiat_wallet_by_user_id(user_id)
-    print("fiat before",fiat_wallet)
 
     if fiat_wallet is not None:
         if fiat_wallet.balance is None or fiat_wallet.balance <= 0:
@@ -34,7 +34,7 @@ def buy_crypto():
             amount = Decimal(amount)
 
             wallet = get_crypto_wallet_by_user_id(user_id)
-            print("crypto before",wallet)
+            print("Crypto wallet in DB before",wallet)
 
             if wallet is None:
                 flash('No crypto wallet found for the user.', 'error')
@@ -42,9 +42,10 @@ def buy_crypto():
 
             wallet.increase_coin_balance(coin, amount, datetime.now())
             wallet.add_deposit_to_history(datetime.now(), amount)
+            update_crypto_wallet(wallet)
+            curr_wallet = get_crypto_wallet_by_user_id(user_id)
+            print("Crypto wallet in DB after buy: ", curr_wallet)
 
-            print("crypto after",wallet)
-            print("fiat after",fiat_wallet)
             flash(f'Successfully purchased {amount} {coin}', 'success')
             return redirect(url_for('trade'))
 

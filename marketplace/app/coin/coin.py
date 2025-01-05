@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from decimal import Decimal
 
 from marketplace.app.coin.coin_specs import CoinSpecs
 from marketplace.app.coin.coin_market_data import CoinMarketData
@@ -10,7 +11,7 @@ class Coin:
     symbol: str
     category: str
     description: str
-    price: float
+    price: Decimal
     coin_specs: CoinSpecs 
     coin_market_data: CoinMarketData 
 
@@ -26,7 +27,7 @@ class Coin:
     def update_description(self, new_description: str):
         self.description = new_description
 
-    def update_price(self, new_price: float):
+    def update_price(self, new_price: Decimal):
         self.price = new_price
 
     def update_coin_specs(self, new_coin_specs: CoinSpecs):
