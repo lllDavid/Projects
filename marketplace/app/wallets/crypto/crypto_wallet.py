@@ -24,21 +24,35 @@ class CryptoWallet:
         formatted_date = date.strftime('%Y-%m-%d %H:%M:%S')
         self.withdrawal_history.setdefault(formatted_date, {})[method] = amount
 
-    def calculate_total_coins(self) -> Decimal:
+    def calculate_total_coins(self, coin_prices: dict[str, Decimal]) -> Decimal:
+        # Calculate the total deposits and withdrawals
         total_deposits = sum(self.deposit_history.values())
         total_withdrawals = sum(sum(methods.values()) for methods in self.withdrawal_history.values())
-        coins = sum(self.coins.values()) if self.coins else Decimal("0.00")
-        total_balance = self.total_coin_value if self.total_coin_value is not None else Decimal("0.00")
-        return (total_deposits - total_withdrawals + coins + total_balance).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        
+        # Calculate the value of coins in the wallet
+        total_coin_value = Decimal("0.00")
+        for coin, quantity in self.coins.items():
+            # Get the current price of the coin from the coin_prices dictionary
+            coin_value = coin_prices.get(coin, Decimal("0.00"))
+            total_coin_value += quantity * coin_value
 
-    def increase_coins(self, coin: str, amount: Decimal, date: datetime) -> None:
+        # Update the wallet's total_coin_value
+        self.total_coin_value = total_coin_value.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        
+        # Sum the coins, total deposits, and total withdrawals
+        total_balance = self.total_coin_value if self.total_coin_value is not None else Decimal("0.00")
+        total_value = (total_deposits - total_withdrawals + total_balance).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+
+        return total_value
+    
+    def add_coins_(self, coin: str, amount: Decimal, date: datetime) -> None:
         amount = amount.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
         if amount <= Decimal("0.00"):
             raise ValueError("Amount to add must be positive.")
         self.coins[coin] = self.coins.get(coin, Decimal("0.00")) + amount
         self.add_deposit_to_history(date, amount)
 
-    def decrease_coins(self, coin: str, amount: Decimal, date: datetime, method: str) -> None:
+    def remove_coins(self, coin: str, amount: Decimal, date: datetime, method: str) -> None:
         amount = amount.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
         if amount <= Decimal("0.00"):
             raise ValueError("Amount to subtract must be positive.")

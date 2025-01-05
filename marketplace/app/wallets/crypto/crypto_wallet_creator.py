@@ -7,7 +7,7 @@ def create_cryto_wallet(user_id) -> CryptoWallet | None:
     if user is not None:
         wallet_id = None
         wallet_address=None
-        balance= {}
+        coins= {}
         total_coin_value = None
         last_accessed= None
         encryption_key= None
@@ -18,7 +18,7 @@ def create_cryto_wallet(user_id) -> CryptoWallet | None:
             user_id= user.id,
             wallet_id=wallet_id,
             wallet_address=wallet_address,
-            balance=balance,
+            coins=coins,
             total_coin_value=total_coin_value,
             deposit_history=deposit_history,
             withdrawal_history=withdrawal_history,

@@ -40,7 +40,7 @@ def buy_crypto():
                 flash('No crypto wallet found for the user.', 'error')
                 return redirect(url_for('trade'))
 
-            wallet.increase_coin_balance(coin, amount, datetime.now())
+            wallet.add_coins_(coin, amount, datetime.now())
             wallet.add_deposit_to_history(datetime.now(), amount)
             update_crypto_wallet(wallet)
             curr_wallet = get_crypto_wallet_by_user_id(user_id)
