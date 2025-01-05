@@ -2,12 +2,13 @@ from marketplace.app.wallets.crypto.crypto_wallet import CryptoWallet
 from marketplace.app.db.crypto_wallet_db import insert_crypto_wallet
 from marketplace.app.db.user_db import get_user_from_db
 
+from decimal import Decimal
 def create_cryto_wallet(user_id) -> CryptoWallet | None:
     user = get_user_from_db(user_id)
     if user is not None:
         wallet_id = None
         wallet_address=None
-        coins= {}
+        coins= {"BTC":Decimal(666.00)}
         total_coin_value = None
         last_accessed= None
         encryption_key= None

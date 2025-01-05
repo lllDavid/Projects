@@ -1,4 +1,5 @@
 from json import dumps, loads
+from decimal import Decimal
 
 from mariadb import ConnectionPool
 
@@ -15,6 +16,11 @@ pool = ConnectionPool(
     database=Config.WALLET_DB_CONFIG["database"]
 )
 
+def decimal_serializer(obj):
+    if isinstance(obj, Decimal):
+        return str(obj)
+    raise TypeError("Error")
+
 def insert_crypto_wallet(wallet: CryptoWallet) -> CryptoWallet | None:
     try:
         with pool.get_connection() as conn:
@@ -24,9 +30,9 @@ def insert_crypto_wallet(wallet: CryptoWallet) -> CryptoWallet | None:
                     "INSERT INTO crypto_wallet (user_id, wallet_address, coins, total_coin_value, last_accessed, encryption_key, deposit_history, withdrawal_history) "
                     "VALUES (%s, %s, %s, %s, %s, %s, %s, %s); ",
                     (wallet.user_id, wallet.wallet_address, 
-                     dumps(wallet.coins), wallet.total_coin_value, 
+                     dumps(wallet.coins, default=decimal_serializer), wallet.total_coin_value, 
                      wallet.last_accessed, wallet.encryption_key, 
-                     dumps(wallet.deposit_history), dumps(wallet.withdrawal_history))
+                     dumps(wallet.deposit_history, default=decimal_serializer), dumps(wallet.withdrawal_history, default=decimal_serializer))
                 )
 
                 conn.commit()
@@ -83,11 +89,10 @@ def get_crypto_wallet_by_user_id(user_id: int) -> CryptoWallet | None:
         print(f"Error retrieving the wallet for user_id {user_id}: {e}")
         return None
 
-def update_crypto_wallet(wallet: CryptoWallet) -> bool:
+def update_crypto_wallet(wallet: CryptoWallet) -> CryptoWallet | None:
     try:
         with pool.get_connection() as conn:
             with conn.cursor() as cursor:
-                # Update query for updating existing wallet values in the database
                 cursor.execute(
                     """
                     UPDATE crypto_wallet
@@ -103,24 +108,25 @@ def update_crypto_wallet(wallet: CryptoWallet) -> bool:
                     """,
                     (
                         wallet.wallet_address, 
-                        dumps(wallet.coins), 
+                        dumps(wallet.coins, default=decimal_serializer), 
                         wallet.total_coin_value, 
                         wallet.last_accessed, 
                         wallet.encryption_key, 
-                        dumps(wallet.deposit_history), 
-                        dumps(wallet.withdrawal_history), 
+                        dumps(wallet.deposit_history, default=decimal_serializer), 
+                        dumps(wallet.withdrawal_history, default=decimal_serializer), 
                         wallet.wallet_id
                     )
                 )
 
                 conn.commit()
 
-                # Check if any rows were affected (i.e., if the wallet was actually updated)
                 if cursor.rowcount > 0:
-                    return True
+                    print(f"Wallet with wallet_id {wallet.wallet_id} updated successfully.")
+                    return wallet  
                 else:
-                    return False
+                    print(f"No updates were made to wallet with wallet_id {wallet.wallet_id}.")
+                    return None
 
     except Exception as e:
         print(f"Error updating CryptoWallet: {e}")
-        return False
+        return None 
