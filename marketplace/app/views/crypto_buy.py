@@ -41,8 +41,9 @@ def buy_crypto():
                 flash('No crypto wallet found for the user.', 'error')
                 return redirect(url_for('trade'))
 
-            wallet.add_coins_(coin, amount, datetime.now())
+            wallet.add_coins(coin, amount, datetime.now())
             wallet.add_deposit_to_history(datetime.now(), amount)
+            wallet.calculate_total_coin_value()
             update_crypto_wallet(wallet)
             curr_wallet = get_crypto_wallet_by_user_id(user_id)
             print("Crypto wallet in DB after: ", curr_wallet)
@@ -52,15 +53,14 @@ def buy_crypto():
             return redirect(url_for('trade'))
 
         except BadRequest as e:
-            flash(f'Invalid data: {str(e)}', 'error')  # Convert exception to string
-            print(f"BadRequest error: {str(e)}")  # Log the exception for BadRequest
+            flash(f'Invalid data: {e}', 'error')  
+            print(f"BadRequest error: {e}")  
             return redirect(url_for('trade'))
 
         except Exception as e:
             flash('An error occurred during the purchase process. Please try again.', 'error')
-            print(f"Unexpected error: {str(e)}")  # Log any unexpected exception as string
+            print(f"Unexpected error: {e}")  
             return redirect(url_for('trade'))
-
 
     else:
         flash('No fiat wallet found or invalid balance data', 'error')
