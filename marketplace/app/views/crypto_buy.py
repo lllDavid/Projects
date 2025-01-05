@@ -52,12 +52,15 @@ def buy_crypto():
             return redirect(url_for('trade'))
 
         except BadRequest as e:
-            flash(f'Invalid data: {e}', 'error')
+            flash(f'Invalid data: {str(e)}', 'error')  # Convert exception to string
+            print(f"BadRequest error: {str(e)}")  # Log the exception for BadRequest
             return redirect(url_for('trade'))
 
         except Exception as e:
             flash('An error occurred during the purchase process. Please try again.', 'error')
+            print(f"Unexpected error: {str(e)}")  # Log any unexpected exception as string
             return redirect(url_for('trade'))
+
 
     else:
         flash('No fiat wallet found or invalid balance data', 'error')
