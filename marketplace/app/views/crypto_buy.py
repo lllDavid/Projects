@@ -20,10 +20,8 @@ def buy_crypto():
         flash('You must be logged in to perform this action.', 'error')
         return redirect(url_for('login'))
 
-    print(f"User ID: {user_id}")  # Debug: Print user_id
-
     fiat_wallet = get_fiat_wallet_by_user_id(user_id)
-    print(f"Fiat Wallet: {fiat_wallet}")  # Debug: Print fiat_wallet
+    print("fiat before",fiat_wallet)
 
     if fiat_wallet is not None:
         if fiat_wallet.balance is None or fiat_wallet.balance <= 0:
@@ -31,20 +29,12 @@ def buy_crypto():
             return redirect(url_for('trade'))
 
         try:
-            # Debug: Print all form data
-            print(f"Form Data: {request.form}")
-
             coin = request.form['coin-selection']
-            print(f"Coin selected: {coin}")  # Debug: Print coin selected
-
             amount = request.form['coin-amount']
-            print(f"Amount input: {amount}")  # Debug: Print amount input
-
             amount = Decimal(amount)
-            print(f"Amount after Decimal conversion: {amount}")  # Debug: Print amount as Decimal
 
             wallet = get_crypto_wallet_by_user_id(user_id)
-            print(f"Crypto Wallet: {wallet}")  # Debug: Print crypto wallet
+            print("crypto before",wallet)
 
             if wallet is None:
                 flash('No crypto wallet found for the user.', 'error')
@@ -52,23 +42,20 @@ def buy_crypto():
 
             wallet.increase_coin_balance(coin, amount, datetime.now())
             wallet.add_deposit_to_history(datetime.now(), amount)
-           
 
+            print("crypto after",wallet)
+            print("fiat after",fiat_wallet)
             flash(f'Successfully purchased {amount} {coin}', 'success')
-            print(f"Updated Wallet: {wallet}")  # Debug: Print updated wallet
             return redirect(url_for('trade'))
 
         except BadRequest as e:
             flash(f'Invalid data: {e}', 'error')
-            print(f"BadRequest error: {e}")  # Debug: Print BadRequest error
             return redirect(url_for('trade'))
 
         except Exception as e:
             flash('An error occurred during the purchase process. Please try again.', 'error')
-            print(f"General error: {e}")  # Debug: Print general error
             return redirect(url_for('trade'))
 
     else:
         flash('No fiat wallet found or invalid balance data', 'error')
-        print("Fiat wallet is None or invalid")  # Debug: Print if no fiat wallet found
         return redirect(url_for('trade'))

@@ -12,14 +12,27 @@ function showTab(tab) {
     }
 }
 
+// @todo: Get actual values for coins from db
 document.getElementById('buy-amount').addEventListener('input', function () {
     const amount = parseFloat(this.value);
-    const price = 25000; 
+    const price = 25000;
     if (!isNaN(amount)) {
         const totalCost = amount * price;
         document.getElementById('total-cost').value = `$${totalCost.toFixed(2)}`;
     } else {
         document.getElementById('total-cost').value = '';
+    }
+});
+
+// @todo: Get actual values for coins from db
+document.getElementById('sell-amount').addEventListener('input', function () {
+    const amount = parseFloat(this.value);
+    const price = 25000;
+    if (!isNaN(amount)) {
+        const totalWorth = amount * price;
+        document.getElementById('total-worth').value = `$${totalWorth.toFixed(2)}`;
+    } else {
+        document.getElementById('total-worth').value = '';
     }
 });
 
