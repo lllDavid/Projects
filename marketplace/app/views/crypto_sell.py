@@ -1,9 +1,11 @@
 from decimal import Decimal
 from datetime import datetime
+
 from werkzeug.exceptions import BadRequest
 from flask import Blueprint, render_template, redirect, url_for, flash, session, request
-from marketplace.app.wallets.crypto.crypto_wallet import CryptoWallet
+
 from marketplace.app.db.crypto_wallet_db import get_crypto_wallet_by_user_id
+
 
 crypto_sell = Blueprint('crypto_sell', __name__)
 

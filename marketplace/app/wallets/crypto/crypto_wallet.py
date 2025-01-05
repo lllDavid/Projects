@@ -24,7 +24,7 @@ class CryptoWallet:
         formatted_date = date.strftime('%Y-%m-%d %H:%M:%S')
         self.withdrawal_history.setdefault(formatted_date, {})[method] = amount
 
-    def calculate_total_coins(self, coin_prices: dict[str, Decimal]) -> Decimal:
+    def calculate_total_coin_value(self, coin_prices: dict[str, Decimal]) -> Decimal:
         # Calculate the total deposits and withdrawals
         total_deposits = sum(self.deposit_history.values())
         total_withdrawals = sum(sum(methods.values()) for methods in self.withdrawal_history.values())
