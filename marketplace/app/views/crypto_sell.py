@@ -27,11 +27,11 @@ def sell_crypto():
             amount = request.form['coin-amount']
             amount = Decimal(amount)
 
-            if wallet.balance.get(coin, Decimal('0')) < amount:
-                flash('Insufficient balance in your crypto wallet', 'error')
+            if wallet.coins.get(coin, Decimal('0')) < amount:
+                flash('Insufficient coins in your crypto wallet', 'error')
                 return redirect(url_for('trade'))
 
-            wallet.decrease_coin_balance(coin, amount, datetime.now(), "")
+            wallet.remove_coins(coin, amount, datetime.now(), "")
             wallet.add_deposit_to_history(datetime.now(), amount)
             print(wallet)
 

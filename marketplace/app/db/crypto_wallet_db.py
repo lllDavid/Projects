@@ -21,10 +21,10 @@ def insert_crypto_wallet(wallet: CryptoWallet) -> CryptoWallet | None:
             with conn.cursor() as cursor:
                 print(f"Executing INSERT query for CryptoWallet with user_id: {wallet.user_id}.")
                 cursor.execute(
-                    "INSERT INTO crypto_wallet (user_id, wallet_address, balance, total_coin_value, last_accessed, encryption_key, deposit_history, withdrawal_history) "
+                    "INSERT INTO crypto_wallet (user_id, wallet_address, coins, total_coin_value, last_accessed, encryption_key, deposit_history, withdrawal_history) "
                     "VALUES (%s, %s, %s, %s, %s, %s, %s, %s); ",
                     (wallet.user_id, wallet.wallet_address, 
-                     dumps(wallet.balance), wallet.total_coin_value, 
+                     dumps(wallet.coins), wallet.total_coin_value, 
                      wallet.last_accessed, wallet.encryption_key, 
                      dumps(wallet.deposit_history), dumps(wallet.withdrawal_history))
                 )
@@ -47,7 +47,7 @@ def get_crypto_wallet_by_user_id(user_id: int) -> CryptoWallet | None:
                 print(f"Executing SELECT query for CryptoWallet with user_id: {user_id}.")
                 
                 cursor.execute(
-                    "SELECT wallet_id, user_id, wallet_address, balance, total_coin_value, last_accessed, encryption_key, deposit_history, withdrawal_history "
+                    "SELECT wallet_id, user_id, wallet_address, coins, total_coin_value, last_accessed, encryption_key, deposit_history, withdrawal_history "
                     "FROM crypto_wallet WHERE user_id = %s LIMIT 1;",
                     (user_id,)
                 )
@@ -55,9 +55,9 @@ def get_crypto_wallet_by_user_id(user_id: int) -> CryptoWallet | None:
                 result = cursor.fetchone()
                 
                 if result:
-                    wallet_id, user_id, wallet_address, balance, total_coin_value, last_accessed, encryption_key, deposit_history, withdrawal_history = result
+                    wallet_id, user_id, wallet_address, coins, total_coin_value, last_accessed, encryption_key, deposit_history, withdrawal_history = result
 
-                    balance = loads(balance)
+                    coins = loads(coins)
                     deposit_history = loads(deposit_history)
                     withdrawal_history = loads(withdrawal_history)
                     
@@ -65,7 +65,7 @@ def get_crypto_wallet_by_user_id(user_id: int) -> CryptoWallet | None:
                         wallet_id=wallet_id,
                         user_id=user_id,
                         wallet_address=wallet_address,
-                        balance=balance,
+                        coins=coins,
                         total_coin_value=total_coin_value,
                         last_accessed=last_accessed,
                         encryption_key=encryption_key,
@@ -93,7 +93,7 @@ def update_crypto_wallet(wallet: CryptoWallet) -> bool:
                     UPDATE crypto_wallet
                     SET 
                         wallet_address = %s, 
-                        balance = %s, 
+                        coins = %s, 
                         total_coin_value = %s, 
                         last_accessed = %s, 
                         encryption_key = %s, 
@@ -103,7 +103,7 @@ def update_crypto_wallet(wallet: CryptoWallet) -> bool:
                     """,
                     (
                         wallet.wallet_address, 
-                        dumps(wallet.balance), 
+                        dumps(wallet.coins), 
                         wallet.total_coin_value, 
                         wallet.last_accessed, 
                         wallet.encryption_key, 
