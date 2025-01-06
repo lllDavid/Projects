@@ -23,6 +23,7 @@ def process_crypto_liquidation(user_id, wallet, fiat_wallet, form_data):
         print(f"[DEBUG] Removing {amount} {coin} from crypto wallet.")
         wallet.remove_coins(coin, amount, datetime.now(), "")
         wallet.add_withdrawal_to_history(datetime.now(), amount, method="crypto_withdraw")
+        wallet.calculate_total_coin_value()
         wallet.update_last_accessed()
         # fiat_wallet.increase_wallet_balance(amount)
         update_crypto_wallet(wallet)
