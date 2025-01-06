@@ -15,15 +15,13 @@ def get_wallet_values():
     if user_id is None:
         flash('You must be logged in to perform this action.', 'error')
         return redirect(url_for('login'))
-    try:
-        crypto_wallet = get_crypto_wallet_by_user_id(user_id)
-        if crypto_wallet is not None:
-            for key, value in crypto_wallet.coins:
-                print(f"Key: {key} Value: {value}")
-        
-        
-        return redirect(url_for('trade'))
     
-    except Exception as e:
-        flash('An error occurred during the sale process. Please try again.', 'error')
-        return redirect(url_for('trade'))
+    crypto_wallet = get_crypto_wallet_by_user_id(user_id)
+    print(crypto_wallet)  # Add this for debugging
+    if crypto_wallet is not None:
+        for key, value in crypto_wallet.coins:
+            print(f"Key: {key} Value: {value}")
+    
+    return render_template('wallet.html', crypto_wallet=crypto_wallet)
+    
+    
