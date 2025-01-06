@@ -28,35 +28,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Bitcoin (BTC)</td>
-                                <td>0.5</td>
-                                <td>$40,000</td>
-                                <td>$20,000</td>
-                            </tr>
-                            <tr>
-                                <td>Ethereum (ETH)</td>
-                                <td>2.5</td>
-                                <td>$2,500</td>
-                                <td>$6,250</td>
-                            </tr>
-                            <tr>
-                                <td>Cardano (ADA)</td>
-                                <td>1000</td>
-                                <td>$0.50</td>
-                                <td>$500</td>
-                            </tr>
-                            <tr>
-                                <td>Solana (SOL)</td>
-                                <td>50</td>
-                                <td>$150</td>
-                                <td>$7,500</td>
-                            </tr>
+                            {% for coin in crypto_wallet.coins %}
+                                <tr>
+                                    <td>{{ coin.name }}</td>
+                                    <td>{{ coin.amount }}</td>
+                                    <td>${{ coin.current_price }}</td>
+                                    <td>${{ coin.value }}</td>
+                                </tr>
+                            {% endfor %}
                             <tr>
                                 <td><strong>Total Wallet Value</strong></td>
                                 <td></td>
                                 <td></td>
-                                <td><strong>$34,250</strong></td>
+                                <td><strong>${{ crypto_wallet.total_value }}</strong></td>
                             </tr>
                         </tbody>
                     </table>
