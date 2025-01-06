@@ -28,19 +28,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for coin in crypto_wallet.coins %}
-                                <tr>
-                                    <td>{{ coin.name }}</td>
-                                    <td>{{ coin.amount }}</td>
-                                    <td>${{ coin.current_price }}</td>
-                                    <td>${{ coin.value }}</td>
-                                </tr>
+                            {% for coin_name, coin_data in crypto_wallet.coins.items() %}
+                            <tr>
+                                <td>{{ coin_name }}</td> <!-- Display coin name -->
+                                <td>{{ coin_data.amount }}</td> <!-- Display coin amount -->
+                                <td>${{ coin_data.current_price }}</td> <!-- Display current price -->
+                                <td>${{ coin_data.value }}</td> <!-- Display coin value -->
+                            </tr>
                             {% endfor %}
                             <tr>
                                 <td><strong>Total Wallet Value</strong></td>
                                 <td></td>
                                 <td></td>
                                 <td><strong>${{ crypto_wallet.total_value }}</strong></td>
+                            </tr>
+
+                            <td><strong>Total Wallet Value</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>${{ crypto_wallet.total_value }}</strong></td>
                             </tr>
                         </tbody>
                     </table>
