@@ -22,6 +22,7 @@ def buy_crypto():
         return redirect(url_for('login'))
 
     fiat_wallet = get_fiat_wallet_by_user_id(user_id)
+    print("Fiat Wallet BEFORE buy of Crypto:", fiat_wallet, "\n")
 
     if fiat_wallet is not None:
         if fiat_wallet.balance is None or fiat_wallet.balance <= 0:
@@ -35,18 +36,20 @@ def buy_crypto():
 
             wallet = get_crypto_wallet_by_user_id(user_id)
     
-
             if wallet is None:
                 flash('No crypto wallet found for the user.', 'error')
                 return redirect(url_for('trade'))
 
             wallet.add_coins(coin, amount, datetime.now())
             wallet.add_deposit_to_history(datetime.now(), amount)
-            wallet.calculate_total_coin_value()
+            wallet.update_last_accessed()
+            # fiat_wallet.decrease_wallet_balance()
             update_crypto_wallet(wallet)
+
             curr_wallet = get_crypto_wallet_by_user_id(user_id)
-            print("Crypto wallet in DB after buy: ", curr_wallet)
-            print("Crypto wallet after buy: ",wallet)
+            print("Crypto wallet AFTER buy: ",wallet, "\n")
+            print("Crypto wallet in DB AFTER buy: ", curr_wallet ,"\n")
+            print("Fiat Wallet AFTER buy of Crypto:", fiat_wallet, "\n")
 
             flash(f'Successfully purchased {amount} {coin}', 'success')
             return redirect(url_for('trade'))
