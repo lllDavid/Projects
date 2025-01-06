@@ -27,17 +27,17 @@ class CryptoWallet:
         self.withdrawal_history.setdefault(formatted_date, {})[method] = amount
 
     def calculate_total_coin_value(self) -> Decimal:
-        total_deposits = sum(self.deposit_history.values())
-        total_withdrawals = sum(sum(methods.values()) for methods in self.withdrawal_history.values())
+        # Make sure deposit_history values are Decimal, just in case there are any non-Decimal values
+        total_deposits = sum(Decimal(value) for value in self.deposit_history.values())
 
-        # Ensure total_coin_value is a Decimal, even if it was None
-        total_coin_value = sum(self.coins.values())
+        # Similarly, handle withdrawal history ensuring proper Decimal values
+        total_withdrawals = sum(sum(Decimal(amount) for amount in methods.values()) for methods in self.withdrawal_history.values())
 
-        # Explicitly cast total_coin_value to Decimal if it's not already
-        total_coin_value = Decimal(total_coin_value)
+        # Ensure that coins values are Decimal, and also handle any invalid types that may cause issues
+        total_coin_value = sum(Decimal(coin_value) for coin_value in self.coins.values())
 
         # Round the total_coin_value properly
-        self.total_coin_value = total_coin_value.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        total_coin_value = total_coin_value.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
         # Ensure total_balance is properly initialized as a Decimal
         total_balance = self.total_coin_value if self.total_coin_value is not None else Decimal("0.00")
@@ -47,8 +47,6 @@ class CryptoWallet:
 
         return total_value
 
-
-    
     def add_coins(self, coin: str, amount: Decimal, date: datetime) -> None:
         amount = amount.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
         if amount <= Decimal("0.00"):

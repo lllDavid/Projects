@@ -34,8 +34,7 @@ def buy_crypto():
             amount = Decimal(amount)
 
             wallet = get_crypto_wallet_by_user_id(user_id)
-            print("Crypto wallet in DB before:",wallet)
-       
+    
 
             if wallet is None:
                 flash('No crypto wallet found for the user.', 'error')
@@ -46,8 +45,8 @@ def buy_crypto():
             wallet.calculate_total_coin_value()
             update_crypto_wallet(wallet)
             curr_wallet = get_crypto_wallet_by_user_id(user_id)
-            print("Crypto wallet in DB after: ", curr_wallet)
-            print("Crypto wallet after: ",wallet)
+            print("Crypto wallet in DB after buy: ", curr_wallet)
+            print("Crypto wallet after buy: ",wallet)
 
             flash(f'Successfully purchased {amount} {coin}', 'success')
             return redirect(url_for('trade'))

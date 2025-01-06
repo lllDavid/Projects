@@ -4,7 +4,7 @@ from datetime import datetime
 from werkzeug.exceptions import BadRequest
 from flask import Blueprint, render_template, redirect, url_for, flash, session, request
 
-from marketplace.app.db.crypto_wallet_db import get_crypto_wallet_by_user_id
+from marketplace.app.db.crypto_wallet_db import get_crypto_wallet_by_user_id, update_crypto_wallet
 
 
 crypto_sell = Blueprint('crypto_sell', __name__)
@@ -34,8 +34,12 @@ def sell_crypto():
                 return redirect(url_for('trade'))
 
             wallet.remove_coins(coin, amount, datetime.now(), "")
-            wallet.add_deposit_to_history(datetime.now(), amount)
-            print(wallet)
+            wallet.add_withdrawal_to_history(datetime.now(), amount, method="crypto_withdraw")
+            wallet.calculate_total_coin_value()
+            update_crypto_wallet(wallet)
+            curr_wallet = get_crypto_wallet_by_user_id(user_id)
+            print("Crypto wallet in DB after sell: ", curr_wallet)
+            print("Crypto wallet after sell: ",wallet)
 
             flash(f'Successfully sold {amount} {coin}', 'success')
             return redirect(url_for('trade'))
