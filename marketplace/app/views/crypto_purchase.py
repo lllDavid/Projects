@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, session, request
-from marketplace.app.db.crypto_wallet_db import get_crypto_wallet_by_user_id, update_crypto_wallet
+
+from marketplace.app.db.crypto_wallet_db import get_crypto_wallet_by_user_id
 from marketplace.app.db.fiat_wallet_db import get_fiat_wallet_by_user_id
 from marketplace.app.transaction.purchase import process_crypto_purchase
 
@@ -18,7 +19,8 @@ def purchase_crypto():
     
     try:
         fiat_wallet = get_fiat_wallet_by_user_id(user_id)
-        success, message = process_crypto_purchase(user_id, fiat_wallet, request.form)
+        wallet = get_crypto_wallet_by_user_id(user_id)
+        success, message = process_crypto_purchase(user_id, wallet, fiat_wallet, request.form)
         
         flash(message[0], message[1])
         return redirect(url_for('trade'))
