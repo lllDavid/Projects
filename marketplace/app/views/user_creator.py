@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, session
 from werkzeug.exceptions import BadRequest
 
-from marketplace.app.user.user import User
 from marketplace.app.user.user_creator import UserCreator
 from marketplace.helpers.validation import validate_user_input
 from marketplace.app.wallets.fiat.fiat_wallet_creator import create_fiat_wallet
@@ -28,7 +27,7 @@ def set_user_session(user):
     session["user_id"] = user.id
     session["username"] = user.username
 
-# Change so it doesnt show certain info
+# TODO: Change so it doesnt show sensitive info
 def handle_error(error):
     flash(f"Error: {str(error)}", "error")
     return redirect(url_for('user_creator.create_user_form'))

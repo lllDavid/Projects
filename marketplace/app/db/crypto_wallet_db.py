@@ -1,6 +1,7 @@
 from json import dumps, loads
 from decimal import Decimal
 from mariadb import ConnectionPool
+
 from marketplace.config import Config
 from marketplace.app.wallets.crypto.crypto_wallet import CryptoWallet
 

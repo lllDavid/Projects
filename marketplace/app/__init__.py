@@ -1,7 +1,8 @@
 from flask import Flask
+
 from marketplace.app.views.user_creator import user_creator
-from marketplace.app.views.crypto_buy import crypto_buy
-from marketplace.app.views.crypto_sell import crypto_sell
+from marketplace.app.views.crypto_purchase import crypto_purchase
+from marketplace.app.views.crypto_liquidation import crypto_liquidation
 from marketplace.app.routes.routes import register_routes
 
 def create_app() -> Flask:
@@ -9,8 +10,8 @@ def create_app() -> Flask:
     app.config["SECRET_KEY"] = "secret_key"
     
     app.register_blueprint(user_creator)
-    app.register_blueprint(crypto_buy)
-    app.register_blueprint(crypto_sell)
+    app.register_blueprint(crypto_purchase)
+    app.register_blueprint(crypto_liquidation)
 
     register_routes(app)
 
