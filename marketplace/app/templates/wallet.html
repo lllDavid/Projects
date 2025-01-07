@@ -13,6 +13,10 @@
         <h1 class="display-4">Wallet</h1>
         <p class="lead">Track cryptocurrency investments</p>
     </div>
+    <form id="auto-submit-form" method="POST" action="{{ url_for('wallet_values.get_wallet_values') }}">
+        <!-- Add hidden fields if needed, for example: -->
+        <!-- <input type="hidden" name="some_data" value="some_value"> -->
+    </form>
 
     <div class="row mt-4">
         <div class="col-12">
@@ -28,32 +32,35 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for coin_name, coin_data in crypto_wallet.coins.items() %}
+                            {% if crypto_wallet %}
+                            {% for key, value in crypto_wallet.coins.items() %}
                             <tr>
-                                <td>{{ coin_name }}</td> <!-- Display coin name -->
-                                <td>{{ coin_data.amount }}</td> <!-- Display coin amount -->
-                                <td>${{ coin_data.current_price }}</td> <!-- Display current price -->
-                                <td>${{ coin_data.value }}</td> <!-- Display coin value -->
+                                <td>{{ key }}</td>  <!-- Coin -->
+                                <td>{{ value }}</td>  <!-- Amount -->
+                                <td>--</td>  <!-- Placeholder for Current Price (USD) -->
+                                <td>--</td>  <!-- Placeholder for Value (USD) -->
                             </tr>
                             {% endfor %}
+                            {% else %}
                             <tr>
-                                <td><strong>Total Wallet Value</strong></td>
-                                <td></td>
-                                <td></td>
-                                <td><strong>${{ crypto_wallet.total_value }}</strong></td>
+                                <td colspan="4">No wallet found.</td>
                             </tr>
-
-                            <td><strong>Total Wallet Value</strong></td>
-                            <td></td>
-                            <td></td>
-                            <td><strong>${{ crypto_wallet.total_value }}</strong></td>
-                            </tr>
+                            {% endif %}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
+    
+        </div>
+    </div>
 </div>
+<script>
+    window.onload = function () {
+        document.getElementById("auto-submit-form").submit();
+    };
+</script>
+
 
 {% endblock %}
