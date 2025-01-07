@@ -3,11 +3,15 @@ from flask import Blueprint, render_template, redirect, url_for, flash, session,
 from marketplace.app.db.crypto_wallet_db import get_crypto_wallet_by_user_id
 from marketplace.app.db.fiat_wallet_db import get_fiat_wallet_by_user_id
 from marketplace.app.transaction.liquidation import process_crypto_liquidation
+from marketplace.app.controllers.auth_controller import check_authentication
 
 crypto_liquidation = Blueprint('crypto_liquidation', __name__)
 
 @crypto_liquidation.route('/trade/sell', methods=['GET'])
 def create_trade_form():
+    redirect_response = check_authentication()
+    if redirect_response:
+        return redirect_response
     return render_template('trade.html')
 
 @crypto_liquidation.route('/trade/sell', methods=['POST'])
