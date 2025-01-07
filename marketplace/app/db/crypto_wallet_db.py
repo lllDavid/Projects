@@ -1,5 +1,6 @@
 from json import dumps, loads
 from decimal import Decimal
+
 from mariadb import ConnectionPool
 
 from marketplace.config import Config
