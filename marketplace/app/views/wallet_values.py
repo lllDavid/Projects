@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, session
+from flask import Blueprint, render_template, redirect, url_for, session, jsonify
 from werkzeug.exceptions import BadRequest
 
 from marketplace.app.db.crypto_wallet_db import get_crypto_wallet_by_user_id
@@ -14,15 +14,14 @@ def create_wallet_form():
 
     return render_template('wallet.html')
 
-@wallet_values.route('/wallet', methods=['POST'])
+@wallet_values.route('/wallet/values', methods=['GET'])
 def get_wallet_values():
     user_id = session.get('user_id')
     if user_id is None:
         return redirect(url_for('login'))
-    
+
     crypto_wallet = get_crypto_wallet_by_user_id(user_id)
-
-    return render_template('wallet.html', crypto_wallet=crypto_wallet)
-
-    
-    
+    if crypto_wallet:
+        return jsonify({'coins': crypto_wallet.coins})
+    else:
+        return redirect(url_for('login'))
