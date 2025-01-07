@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, session
-from werkzeug.exceptions import BadRequest
 
 from marketplace.app.user.user_creator import UserCreator
 from marketplace.helpers.validation import validate_user_input
@@ -54,9 +53,6 @@ def create_user():
         else:
             flash("Failed to create user.", "error")
             return redirect(url_for('user_creator.create_user_form'))
-
-    except BadRequest as br:
-        return handle_error(br)
     
     except Exception as e:
         return handle_error(e)

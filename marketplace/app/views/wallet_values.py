@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, redirect, url_for, session, jsonify
-from werkzeug.exceptions import BadRequest
 
 from marketplace.app.db.crypto_wallet_db import get_crypto_wallet_by_user_id
 from marketplace.app.controllers.auth_controller import check_authentication

@@ -1,25 +1,27 @@
  TODO:
-    high:
-        - (Login html) Forgot password send reset email
-        - (Home html) fetch actual market data api, more diagrams etc...
-        - (Trade html) add more coins to Coin Select
-        - (Wallet html) more functionality, general improvements
-        - (Settings html) delete account functionality, bank account functionality
-        - (Support html) send form funtionality
+    - (Home html) fetch actual market data api, more diagrams etc...
+    - (Login html) Forgot password send reset email
+    - (Trade html) add more coins to Coin Select
+    - (Wallet html) more functionality, general improvements
 
-        - AES256 encrypt (Data from Signup, Login etc.)
-        - input rate limiter (Login etc.)
-        - 2FA Functionality (QR Code)
-        - KYC 
-        - Database improve closing/pooling
+    - input rate limiter (Login etc.)
+    - 2FA Functionality (QR Code)
+    - KYC 
+    - Database improve closing/pooling
 
-    low:
-        css clamp (landing.html)
-        ip white/blacklist
-        logging
-        white/dark mode
-        price alerts/notifications
-        transaction analytics
-        admin alerts/sus traffic
-        testing 
+    css clamp (landing.html)
+    ip white/blacklist
+    logging
+    white/dark mode
+    price alerts/notifications
+    transaction analytics
+    admin alerts/sus traffic
+    testing 
+
+
+very high:
+
+    encrypt signup/login data
+    - (Settings html) delete account functionality, bank account functionality
+    - (Support html) send form funtionality
 
