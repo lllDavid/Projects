@@ -24,4 +24,6 @@ very high:
     encrypt signup/login data
     - (Settings html) delete account functionality, bank account functionality
     - (Support html) send form funtionality
+    - Wallet Coin Worth and Current Price
+    - Trade Validation of input ( has user enough funds etc.)
 

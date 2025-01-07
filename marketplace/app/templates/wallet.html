@@ -40,7 +40,6 @@
 
 {% block additional_scripts %}
 <script>
-    // Inject the URL into a global JS variable
     var walletValuesUrl = "{{ url_for('wallet_values.get_wallet_values') }}";
 </script>
 <script src="{{ url_for('static', filename='js/wallet-populate-table.js') }}"></script>

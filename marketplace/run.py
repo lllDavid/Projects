@@ -2,6 +2,7 @@ from threading import Thread
 from datetime import datetime
 from dataclasses import dataclass
 from decimal import getcontext
+
 from marketplace.app import create_app  
 from marketplace.helpers.version import Version  
 
