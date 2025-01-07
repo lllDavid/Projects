@@ -1,5 +1,7 @@
 from json import dumps
+
 from mariadb import ConnectionPool
+
 from marketplace.config import Config
 from marketplace.helpers.roles import Role
 from marketplace.app.user.user import User

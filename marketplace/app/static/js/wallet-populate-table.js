@@ -1,5 +1,5 @@
 function populateTable() {
-    fetch("{{ url_for('wallet_values.get_wallet_values') }}")
+    fetch(walletValuesUrl)
         .then(response => response.json())
         .then(data => {
             const tbody = document.getElementById("coin-data");
@@ -18,7 +18,7 @@ function populateTable() {
                     tbody.appendChild(row);
                 });
             } else {
-                tbody.innerHTML = '<tr><td colspan="4">No wallet found.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="4">No coins in wallet.</td></tr>';
             }
         })
         .catch(error => {

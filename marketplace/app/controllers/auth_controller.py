@@ -1,4 +1,5 @@
 from flask import render_template, redirect, url_for, flash, session
+
 from marketplace.app.user.user_security import UserSecurity
 from marketplace.helpers.validation import is_valid_password, is_unique_username, is_unique_email
 from marketplace.app.db.user_db import update_username, update_email, update_password, get_user_from_db, get_user_by_id, get_user_by_username

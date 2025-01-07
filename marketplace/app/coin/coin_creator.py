@@ -1,5 +1,6 @@
 from decimal import Decimal
 from datetime import datetime
+
 from marketplace.app.db import coin_db
 from marketplace.app.coin.coin import Coin
 from marketplace.app.coin.coin_specs import CoinSpecs

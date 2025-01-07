@@ -1,4 +1,5 @@
 from mariadb import connect
+
 from marketplace.config import Config
 from marketplace.app.coin.coin import Coin
 from marketplace.app.coin.coin_specs import CoinSpecs

@@ -1,6 +1,6 @@
 function getRandomPriceChange(currentPrice) {
     let priceChange = (Math.random() > 0.5 ? 1 : -1) * Math.floor(Math.random() * 1000);
-    return Math.max(10, Math.min(1000000, currentPrice + priceChange));
+    return Math.max(25, Math.min(1000000, currentPrice + priceChange));
 }
 
 function getRandomPercentage() {

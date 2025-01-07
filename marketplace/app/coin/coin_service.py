@@ -1,6 +1,7 @@
 from requests import get
 from decimal import Decimal
 from dataclasses import dataclass
+
 from marketplace.app.coin.coin_market_data import CoinMarketData
 
 @dataclass
@@ -8,7 +9,6 @@ class CoinService:
     api_url = str
     
     def fetch_coin_data(self, coin_id: str) -> CoinMarketData:
-        """Fetch coin data from an external API and return a CoinMarketData object."""
         response = get(f"{self.api_url}/coins/{coin_id}")
         data = response.json()
         
