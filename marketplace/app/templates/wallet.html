@@ -13,8 +13,6 @@
         <h1 class="display-4">Wallet</h1>
         <p class="lead">Track cryptocurrency investments</p>
     </div>
-    <form id="auto-submit-form" method="POST" action="{{ url_for('wallet_values.get_wallet_values') }}">
-    </form>
 
     <div class="row mt-4">
         <div class="col-12">
@@ -29,21 +27,10 @@
                                 <th scope="col">Value (USD)</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {% if crypto_wallet %}
-                            {% for key, value in crypto_wallet.coins.items() %}
+                        <tbody id="coin-data">
                             <tr>
-                                <td>{{ key }}</td>
-                                <td>{{ value }}</td>
-                                <td>--</td>
-                                <td>--</td>
+                                <td colspan="4">Loading...</td>
                             </tr>
-                            {% endfor %}
-                            {% else %}
-                            <tr>
-                                <td colspan="4">No wallet found.</td>
-                            </tr>
-                            {% endif %}
                         </tbody>
                     </table>
                 </div>
@@ -52,13 +39,38 @@
     </div>
 
 </div>
-</div>
-</div>
-<script>
-    window.onload = function () {
-        document.getElementById("auto-submit-form").submit();
-    };
-</script>
 
+<script>function populateTable() {
+        fetch("{{ url_for('wallet_values.get_wallet_values') }}")
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.getElementById("coin-data");
+                tbody.innerHTML = '';
+
+                if (data.coins && Object.keys(data.coins).length > 0) {
+                    Object.keys(data.coins).forEach(coin => {
+                        const row = document.createElement("tr");
+
+                        row.innerHTML = `
+                        <td>${coin}</td>
+                        <td>${data.coins[coin]}</td>
+                        <td>--</td>
+                        <td>--</td>
+                    `;
+                        tbody.appendChild(row);
+                    });
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4">No wallet found.</td></tr>';
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching wallet data:", error);
+                document.getElementById("coin-data").innerHTML = '<tr><td colspan="4">Error loading data</td></tr>';
+            });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        populateTable();
+    });</script>
 
 {% endblock %}
