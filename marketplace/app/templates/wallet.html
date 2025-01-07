@@ -14,8 +14,6 @@
         <p class="lead">Track cryptocurrency investments</p>
     </div>
     <form id="auto-submit-form" method="POST" action="{{ url_for('wallet_values.get_wallet_values') }}">
-        <!-- Add hidden fields if needed, for example: -->
-        <!-- <input type="hidden" name="some_data" value="some_value"> -->
     </form>
 
     <div class="row mt-4">
@@ -35,10 +33,10 @@
                             {% if crypto_wallet %}
                             {% for key, value in crypto_wallet.coins.items() %}
                             <tr>
-                                <td>{{ key }}</td>  <!-- Coin -->
-                                <td>{{ value }}</td>  <!-- Amount -->
-                                <td>--</td>  <!-- Placeholder for Current Price (USD) -->
-                                <td>--</td>  <!-- Placeholder for Value (USD) -->
+                                <td>{{ key }}</td>
+                                <td>{{ value }}</td>
+                                <td>--</td>
+                                <td>--</td>
                             </tr>
                             {% endfor %}
                             {% else %}
@@ -52,9 +50,9 @@
             </div>
         </div>
     </div>
-    
-        </div>
-    </div>
+
+</div>
+</div>
 </div>
 <script>
     window.onload = function () {
