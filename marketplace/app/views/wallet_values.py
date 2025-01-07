@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request, session
+from flask import Blueprint, render_template, redirect, url_for, session
 from werkzeug.exceptions import BadRequest
 
 from marketplace.app.db.crypto_wallet_db import get_crypto_wallet_by_user_id
@@ -13,15 +13,12 @@ def create_wallet_form():
 def get_wallet_values():
     user_id = session.get('user_id')
     if user_id is None:
-        flash('You must be logged in to perform this action.', 'error')
         return redirect(url_for('login'))
+    print(user_id)
     
     crypto_wallet = get_crypto_wallet_by_user_id(user_id)
-    print(crypto_wallet)  # Add this for debugging
-    if crypto_wallet is not None:
-        for key, value in crypto_wallet.coins:
-            print(f"Key: {key} Value: {value}")
     
     return render_template('wallet.html', crypto_wallet=crypto_wallet)
+
     
     
