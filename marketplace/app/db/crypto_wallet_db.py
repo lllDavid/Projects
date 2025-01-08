@@ -8,13 +8,17 @@ from marketplace.app.wallets.crypto.crypto_wallet import CryptoWallet
 
 pool = ConnectionPool(
     pool_name="crypto_wallet_db_pool",
-    pool_size=20,
+    pool_size=30,
     user=Config.WALLET_DB_CONFIG["user"],
     password=Config.WALLET_DB_CONFIG["password"],
     host=Config.WALLET_DB_CONFIG["host"],
     port=Config.WALLET_DB_CONFIG["port"],
     database=Config.WALLET_DB_CONFIG["database"]
 )
+
+# --------------------------------------------------------------
+# Section 0: Helper Functions
+# --------------------------------------------------------------
 
 def decimal_serializer(obj):
     if isinstance(obj, Decimal):
@@ -26,6 +30,10 @@ def deserialize_data(data):
 
 def convert_to_decimal(data):
     return {key: Decimal(value) if isinstance(value, str) else value for key, value in data.items()}
+
+# --------------------------------------------------------------
+# Section 1: Insert and Update Wallet Data
+# --------------------------------------------------------------
 
 def insert_crypto_wallet(wallet: CryptoWallet) -> CryptoWallet | None:
     try:
@@ -49,44 +57,6 @@ def insert_crypto_wallet(wallet: CryptoWallet) -> CryptoWallet | None:
                 conn.commit()
                 wallet.wallet_id = cursor.lastrowid
                 return wallet
-
-    except Exception as e:
-        return None
-
-def get_crypto_wallet_by_user_id(user_id: int) -> CryptoWallet | None:
-    try:
-        with pool.get_connection() as conn:
-            with conn.cursor() as cursor:
-                cursor.execute(
-                    "SELECT wallet_id, user_id, wallet_address, coins, total_coin_value, last_accessed, encryption_key, deposit_history, withdrawal_history "
-                    "FROM crypto_wallet WHERE user_id = %s LIMIT 1;",
-                    (user_id,)
-                )
-
-                result = cursor.fetchone()
-
-                if result:
-                    wallet_id, user_id, wallet_address, coins, total_coin_value, last_accessed, encryption_key, deposit_history, withdrawal_history = result
-
-                    coins = convert_to_decimal(deserialize_data(coins))
-                    deposit_history = deserialize_data(deposit_history)
-                    withdrawal_history = deserialize_data(withdrawal_history)
-
-                    wallet = CryptoWallet(
-                        wallet_id=wallet_id,
-                        user_id=user_id,
-                        wallet_address=wallet_address,
-                        coins=coins,
-                        total_coin_value=total_coin_value,
-                        last_accessed=last_accessed,
-                        encryption_key=encryption_key,
-                        deposit_history=deposit_history,
-                        withdrawal_history=withdrawal_history
-                    )
-
-                    return wallet
-                else:
-                    return None
 
     except Exception as e:
         return None
@@ -129,3 +99,46 @@ def update_crypto_wallet(wallet: CryptoWallet) -> CryptoWallet | None:
 
     except Exception as e:
         return None
+
+# --------------------------------------------------------------
+# Section 2: Get Wallet by ID
+# --------------------------------------------------------------
+
+def get_crypto_wallet_by_user_id(user_id: int) -> CryptoWallet | None:
+    try:
+        with pool.get_connection() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "SELECT wallet_id, user_id, wallet_address, coins, total_coin_value, last_accessed, encryption_key, deposit_history, withdrawal_history "
+                    "FROM crypto_wallet WHERE user_id = %s LIMIT 1;",
+                    (user_id,)
+                )
+
+                result = cursor.fetchone()
+
+                if result:
+                    wallet_id, user_id, wallet_address, coins, total_coin_value, last_accessed, encryption_key, deposit_history, withdrawal_history = result
+
+                    coins = convert_to_decimal(deserialize_data(coins))
+                    deposit_history = deserialize_data(deposit_history)
+                    withdrawal_history = deserialize_data(withdrawal_history)
+
+                    wallet = CryptoWallet(
+                        wallet_id=wallet_id,
+                        user_id=user_id,
+                        wallet_address=wallet_address,
+                        coins=coins,
+                        total_coin_value=total_coin_value,
+                        last_accessed=last_accessed,
+                        encryption_key=encryption_key,
+                        deposit_history=deposit_history,
+                        withdrawal_history=withdrawal_history
+                    )
+
+                    return wallet
+                else:
+                    return None
+
+    except Exception as e:
+        return None
+

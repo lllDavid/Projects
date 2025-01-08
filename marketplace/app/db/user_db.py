@@ -21,6 +21,10 @@ pool = ConnectionPool(
     database=Config.USER_DB_CONFIG["database"]
 )
 
+# --------------------------------------------------------------
+# Section 1: Insert, Delete, and Update User Data
+# --------------------------------------------------------------
+
 def insert_user(user: User) -> User | None:
     try:
         with pool.get_connection() as conn:
@@ -117,7 +121,7 @@ def delete_user(user_id: int) -> None:
                 cursor.execute("DELETE FROM user WHERE id = %s", (user_id,))
                 conn.commit()
     except Exception as e:
-        print(f"Error occurred: {e}")
+            print(f"Error occurred while deleting coin with ID {user_id}: {e}")
 
 def update_username(id: int, username: str) -> None:
     try:
@@ -147,6 +151,10 @@ def update_password(user_id: int, password: str) -> None:
     except Exception as e:
         print(f"Error occurred: {e}")
 
+# --------------------------------------------------------------
+# Section 2: User Retrieval by Specific Criteria
+# --------------------------------------------------------------
+
 def get_user_by_id(id: int) -> User | None:
     try:
         with pool.get_connection() as conn:
@@ -154,7 +162,7 @@ def get_user_by_id(id: int) -> User | None:
                 cursor.execute("SELECT id FROM user WHERE id = %s", (id,))
                 user = cursor.fetchone()
             if user:
-                return get_user_from_db(user[0])
+                return get_complete_user(user[0])
             return None
     except Exception as e:
         print(f"Error occurred: {e}")
@@ -167,7 +175,7 @@ def get_user_by_username(username: str) -> User | None:
                 cursor.execute("SELECT id FROM user WHERE username = %s", (username,))
                 user = cursor.fetchone()
             if user:
-                return get_user_from_db(user[0])
+                return get_complete_user(user[0])
             return None
     except Exception as e:
         print(f"Error occurred: {e}")
@@ -180,11 +188,15 @@ def get_user_by_email(email: str) -> User | None:
                 cursor.execute("SELECT id FROM user WHERE email = %s", (email,))
                 user = cursor.fetchone()
             if user:
-                return get_user_from_db(user[0])
+                return get_complete_user(user[0])
             return None
     except Exception as e:
         print(f"Error occurred: {e}")
         return None
+
+# --------------------------------------------------------------
+# Section 3: User Components Retrieval by User ID
+# --------------------------------------------------------------
 
 def get_user(user_id: int) -> tuple[str, str, Role] | None:
     try:
@@ -347,7 +359,11 @@ def get_user_fingerprint(user_id: int) -> UserFingerprint | None:
         print(f"Error occurred: {e}")
         return None
 
-def get_user_from_db(user_id: int) -> User | None:
+# --------------------------------------------------------------
+# Section 4: Complete User Retrieval
+# --------------------------------------------------------------
+
+def get_complete_user(user_id: int) -> User | None:
     try:
         user_data = get_user(user_id)
         if not user_data:
