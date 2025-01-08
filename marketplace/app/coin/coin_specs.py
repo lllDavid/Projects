@@ -18,7 +18,6 @@ class CoinSpecs:
     forking_coin: str | None 
     tokenomics: str | None
 
-
     def update_algorithm(self, new_algorithm: str):
         self.algorithm = new_algorithm
 

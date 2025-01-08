@@ -64,6 +64,46 @@ def insert_coin(coin: Coin) -> Coin | None:
     except Exception as e:
         print(f"Error occurred: {e}")
         return None 
+
+def update_coin(coin: Coin) -> Coin | None:
+    try:
+        with pool.get_connection() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "UPDATE coin SET name = %s, symbol = %s, category = %s, description = %s, price = %s WHERE id = %s",
+                    (coin.name, coin.symbol, coin.category, coin.description, coin.price, coin.id)
+                )
+
+                cursor.execute(
+                    "UPDATE coin_specs SET algorithm = %s, consensus_mechanism = %s, blockchain_network = %s, "
+                    "average_block_time = %s, security_features = %s, privacy_features = %s, max_supply = %s, "
+                    "genesis_block_date = %s, token_type = %s, governance_model = %s, development_activity = %s, "
+                    "hard_cap = %s, forking_coin = %s, tokenomics = %s WHERE coin_id = %s",
+                    (coin.coin_specs.algorithm, coin.coin_specs.consensus_mechanism, coin.coin_specs.blockchain_network,
+                     coin.coin_specs.average_block_time, coin.coin_specs.security_features, coin.coin_specs.privacy_features,
+                     coin.coin_specs.max_supply, coin.coin_specs.genesis_block_date, coin.coin_specs.token_type,
+                     coin.coin_specs.governance_model, coin.coin_specs.development_activity, coin.coin_specs.hard_cap,
+                     coin.coin_specs.forking_coin, coin.coin_specs.tokenomics, coin.id)
+                )
+
+                cursor.execute(
+                    "UPDATE coin_market_data SET rank = %s, price_usd = %s, market_cap_usd = %s, volume_24h_usd = %s, "
+                    "high_24h_usd = %s, low_24h_usd = %s, change_24h_percent = %s, all_time_high = %s, "
+                    "all_time_low = %s, circulating_supply = %s, market_dominance = %s, last_updated = %s WHERE coin_id = %s",
+                    (coin.coin_market_data.rank, coin.coin_market_data.price_usd, coin.coin_market_data.market_cap_usd,
+                     coin.coin_market_data.volume_24h_usd, coin.coin_market_data.high_24h_usd,
+                     coin.coin_market_data.low_24h_usd, coin.coin_market_data.change_24h_percent,
+                     coin.coin_market_data.all_time_high, coin.coin_market_data.all_time_low,
+                     coin.coin_market_data.circulating_supply, coin.coin_market_data.market_dominance,
+                     coin.coin_market_data.last_updated, coin.id)
+                )
+
+                conn.commit()  
+                print("Coin updated successfully.")
+                return coin
+    except Exception as e:
+        print(f"Error occurred while updating coin: {e}")
+        return None
     
 def delete_coin(coin_id: int) -> None:
     try:
@@ -208,4 +248,3 @@ def get_complete_coin(coin_id: int) -> Coin | None:
     except Exception as e:
         print(f"Error occurred: {e}")
         return None
-
