@@ -8,13 +8,17 @@ from marketplace.app.wallets.fiat.fiat_wallet import FiatWallet
 
 pool = ConnectionPool(
     pool_name="fiat_wallet_db_pool",
-    pool_size=20,
+    pool_size=30,
     user=Config.WALLET_DB_CONFIG["user"],
     password=Config.WALLET_DB_CONFIG["password"],
     host=Config.WALLET_DB_CONFIG["host"],
     port=Config.WALLET_DB_CONFIG["port"],
     database=Config.WALLET_DB_CONFIG["database"]
 )
+
+# --------------------------------------------------------------
+# Section 0: Helper Functions
+# --------------------------------------------------------------
 
 def decimal_serializer(obj):
     if isinstance(obj, Decimal):
@@ -23,6 +27,10 @@ def decimal_serializer(obj):
 
 def deserialize_data(data):
     return loads(data) if isinstance(data, str) else data
+
+# --------------------------------------------------------------
+# Section 1: Insert and Update Wallet Data
+# --------------------------------------------------------------
 
 def insert_fiat_wallet(wallet: FiatWallet) -> FiatWallet | None:
     try:
@@ -45,44 +53,6 @@ def insert_fiat_wallet(wallet: FiatWallet) -> FiatWallet | None:
 
                 wallet.wallet_id = cursor.lastrowid
                 return wallet
-
-    except Exception as e:
-        return None
-
-def get_fiat_wallet_by_user_id(user_id: int) -> FiatWallet | None:
-    try:
-        with pool.get_connection() as conn:
-            with conn.cursor() as cursor:
-                cursor.execute(
-                    "SELECT wallet_id, user_id, balance, iban, swift_code, routing_number, last_accessed, encryption_key, deposit_history, withdrawal_history "
-                    "FROM fiat_wallet WHERE user_id = %s LIMIT 1;", 
-                    (user_id,)
-                )
-
-                result = cursor.fetchone()
-                
-                if result:
-                    wallet_id, user_id, balance, iban, swift_code, routing_number, last_accessed, encryption_key, deposit_history, withdrawal_history = result
-
-                    deposit_history = deserialize_data(deposit_history)
-                    withdrawal_history = deserialize_data(withdrawal_history)
-
-                    wallet = FiatWallet(
-                        wallet_id=wallet_id,
-                        user_id=user_id,
-                        balance=balance,
-                        iban=iban,
-                        swift_code=swift_code,
-                        routing_number=routing_number,
-                        last_accessed=last_accessed,
-                        encryption_key=encryption_key,
-                        deposit_history=deposit_history,
-                        withdrawal_history=withdrawal_history
-                    )
-
-                    return wallet
-                else:
-                    return None
 
     except Exception as e:
         return None
@@ -121,6 +91,48 @@ def update_fiat_wallet(wallet: FiatWallet) -> FiatWallet | None:
                 conn.commit()
 
                 if cursor.rowcount > 0:
+                    return wallet
+                else:
+                    return None
+
+    except Exception as e:
+        return None
+
+# --------------------------------------------------------------
+# Section 2: Get Wallet by ID
+# --------------------------------------------------------------
+
+def get_fiat_wallet_by_user_id(user_id: int) -> FiatWallet | None:
+    try:
+        with pool.get_connection() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "SELECT wallet_id, user_id, balance, iban, swift_code, routing_number, last_accessed, encryption_key, deposit_history, withdrawal_history "
+                    "FROM fiat_wallet WHERE user_id = %s LIMIT 1;", 
+                    (user_id,)
+                )
+
+                result = cursor.fetchone()
+                
+                if result:
+                    wallet_id, user_id, balance, iban, swift_code, routing_number, last_accessed, encryption_key, deposit_history, withdrawal_history = result
+
+                    deposit_history = deserialize_data(deposit_history)
+                    withdrawal_history = deserialize_data(withdrawal_history)
+
+                    wallet = FiatWallet(
+                        wallet_id=wallet_id,
+                        user_id=user_id,
+                        balance=balance,
+                        iban=iban,
+                        swift_code=swift_code,
+                        routing_number=routing_number,
+                        last_accessed=last_accessed,
+                        encryption_key=encryption_key,
+                        deposit_history=deposit_history,
+                        withdrawal_history=withdrawal_history
+                    )
+
                     return wallet
                 else:
                     return None
