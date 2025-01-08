@@ -32,7 +32,7 @@ def convert_to_decimal(data):
     return {key: Decimal(value) if isinstance(value, str) else value for key, value in data.items()}
 
 # --------------------------------------------------------------
-# Section 1: Insert and Update Wallet Data
+# Section 1: Insert, Update and Delete Wallet Data
 # --------------------------------------------------------------
 
 def insert_crypto_wallet(wallet: CryptoWallet) -> CryptoWallet | None:
@@ -99,6 +99,23 @@ def update_crypto_wallet(wallet: CryptoWallet) -> CryptoWallet | None:
 
     except Exception as e:
         return None
+
+def delete_crypto_wallet(user_id: int) -> bool:
+    try:
+        with pool.get_connection() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("DELETE FROM crypto_wallet WHERE user_id = %s", (user_id,))
+                
+                conn.commit()
+
+                if cursor.rowcount > 0:
+                    return True
+                else:
+                    return False
+
+    except Exception as e:
+        print(f"Error occurred while deleting wallet with ID {user_id}: {e}")
+        return False
 
 # --------------------------------------------------------------
 # Section 2: Get Wallet by ID

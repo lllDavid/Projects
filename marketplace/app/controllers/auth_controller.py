@@ -52,11 +52,20 @@ def update_current_password(user_id, new_password):
     else:
         flash("The new password is not valid. Please try again.", "error")
 
+from flask import flash, redirect, url_for, session, request
+from marketplace.app.db.crypto_wallet_db import delete_crypto_wallet
+from marketplace.app.db.fiat_wallet_db import delete_fiat_wallet
+from marketplace.app.db.user_db import delete_user
+from marketplace.app.controllers.auth_controller import check_authentication, get_authenticated_user, get_user_by_id
+
+
 def handle_settings(request):
+    # Check authentication
     redirect_response = check_authentication()
     if redirect_response:
         return redirect_response
 
+    # Retrieve the authenticated user's ID and info
     user_id = session["user_id"]
     user = get_authenticated_user(user_id)
     if not user:
@@ -65,11 +74,30 @@ def handle_settings(request):
     current_username = session.get("username")
     current_email = user.email
 
+    # Handling POST request
     if request.method == "POST":
+        # Check if account deletion button was pressed
+        if 'delete-account' in request.form:
+            try:
+                # Perform account deletion
+                delete_crypto_wallet(user_id)
+                delete_fiat_wallet(user_id)
+                delete_user(user_id)
+
+                # Flash success message
+                flash('Your account has been successfully deleted.', 'success')
+
+                # Redirect to login page after deletion
+                return redirect(url_for("login"))
+            except Exception as e:
+                print("Error: ",e)
+
+        # Handle changes for username, email, and password
         new_username = request.form.get("username")
         new_email = request.form.get("email")
         new_password = request.form.get("new-password")
 
+        # Update username, email, or password if provided
         if new_username:
             update_current_username(user_id, new_username)
 
@@ -79,10 +107,15 @@ def handle_settings(request):
         if new_password:
             update_current_password(user_id, new_password)
 
+        # Refresh user data
         user = get_user_by_id(user_id)
+        flash('Your account settings have been updated successfully.', 'success')
+
         return redirect(url_for("settings"))
 
+    # Render the settings page
     return render_template("settings.html", username=current_username, email=current_email, user=user)
+
 
 def handle_deposit():
     redirect_response = check_authentication()
