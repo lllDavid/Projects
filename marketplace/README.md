@@ -6,6 +6,7 @@ This platform allows users to buy and sell cryptocurrency in a secure and user-f
 - Flask-based REST API
 - Integration with MariaDB for data storage
 - Real-time updates and transactions
+- Using OAuth2 to login with Google Account
 - Secure password hashing (Argon2id)
 - Secure data encryption (AES-256)
 - Secure authentication (2FA via Authenticator App)

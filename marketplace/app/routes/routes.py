@@ -1,6 +1,6 @@
 import string
 from random import choices
-from os import environ, urandom
+from os import getenv
 from requests import get, post
 
 from flask import render_template, redirect, url_for, jsonify, request, session
@@ -8,8 +8,8 @@ from flask import render_template, redirect, url_for, jsonify, request, session
 from marketplace.app.controllers.auth_controller import handle_login, handle_settings, handle_deposit
 
 # OAuth credentials
-client_id = "YOUR_GOOGLE_CLIENT_ID"
-client_secret = "YOUR_GOOGLE_CLIENT_SECRET"
+client_id = getenv("GOOGLE_CLIENT_ID")
+client_secret = getenv("GOOGLE_CLIENT_SECRET")
 redirect_uri = 'http://localhost:5000/callback'
 mock_user_data = {
     'id': '12345',
