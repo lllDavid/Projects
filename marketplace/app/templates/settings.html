@@ -14,20 +14,18 @@
         <p class="lead">Change account settings</p>
     </div>
 
-    <!-- Flash message display -->
     {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        <div class="alert alert-dismissible fade show" role="alert">
-            {% for category, message in messages %}
-            <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }}">
-                {{ message }}
-            </div>
-            {% endfor %}
+    {% if messages %}
+    <div class="alert alert-dismissible fade show" role="alert">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }}">
+            {{ message }}
         </div>
-        {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
     {% endwith %}
 
-    <!-- Account Settings Form -->
     <section class="settings-section">
         <form action="/settings" method="POST" id="account-form">
             <div class="form-group">
@@ -50,7 +48,6 @@
         </form>
     </section>
 
-    <!-- Bank Settings Form -->
     <section class="settings-section">
         <h2>Bank</h2>
         <form action="/update-bank-details" method="POST" id="bank-account-form">
@@ -76,7 +73,6 @@
         </form>
     </section>
 
-    <!-- Account Deletion Form -->
     <section class="settings-section">
         <h2>Account Management</h2>
         <form action="/settings" method="POST" id="delete-account-form" onsubmit="return confirmDelete()">
@@ -87,10 +83,9 @@
 
 </div>
 
-<!-- JavaScript for confirmation before submitting the delete account form -->
 <script>
     function confirmDelete() {
-        return confirm('Are you sure you want to delete your account? This action is irreversible.');
+        return confirm('Are you sure you want to delete your account?');
     }
 </script>
 
