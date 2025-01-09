@@ -16,21 +16,7 @@ def handle_login(request):
         session["username"] = user.username
         session["email"] = user.email
         session.modified = True
-
-        # Mock Google OAuth Token and User Info
-        session['google_token'] = {
-            'access_token': 'mock-access-token',
-            'token_type': 'bearer',
-            'expires_in': 3600,
-            'scope': 'openid profile email'
-        }
-        session['user_info'] = {
-            'id': user.id,
-            'name': user.username,  
-            'email': user.email,
-            'picture': 'https://example.com/profile_pic.jpg'  
-        }
-
+        
         return redirect(url_for("home"))
     else:
         return redirect(url_for("login"))
