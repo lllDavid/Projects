@@ -23,7 +23,6 @@
     {% endif %}
     {% endwith %}
 
-    <!-- Regular Login Form -->
     <form action="{{ url_for('login') }}" method="POST">
         <div>
             <input type="text" class="form-control" id="username" name="username" required placeholder="Username">
@@ -42,9 +41,8 @@
         </div>
     </form>
 
-    <!-- Google Login Section -->
     <div class="text-center">
-        <a href="{{ url_for('demo') }}" class="btn btn-google">Login with Google</a>
+        <a href="{{ url_for('oauth_google') }}" class="btn btn-google">Login with Google</a>
     </div>
 
 </div>
