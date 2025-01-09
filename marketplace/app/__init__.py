@@ -40,7 +40,7 @@ def create_app() -> Flask:
         print(f"Session content: {session}")
         
         if 'google_token' not in session or 'user_info' not in session:
-            if request.endpoint not in ['index','login','static']: 
+            if request.endpoint not in ['index', 'signup', 'login', 'privacy', 'cookies', 'terms', 'static']: 
                 print("User not authenticated")
                 return redirect(url_for('login'))
 
