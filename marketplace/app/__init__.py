@@ -1,4 +1,4 @@
-from flask import Flask, session
+from flask import Flask, session, request, redirect, url_for
 from authlib.integrations.flask_client import OAuth
 
 from marketplace.config import Config
@@ -23,7 +23,7 @@ def create_app() -> Flask:
     # Initialize OAuth
     oauth = OAuth(app)
 
-    # Register Google OAuth2 client
+    '''
     google = oauth.register(
         name='google',
         client_id=app.config['GOOGLE_CLIENT_ID'],
@@ -32,27 +32,19 @@ def create_app() -> Flask:
         access_token_url='https://accounts.google.com/o/oauth2/token',
         client_kwargs={'scope': 'openid profile email'},
     )
+    '''
 
-    # Mock Google OAuth token in session
     @app.before_request
-    def mock_google_token():
-        # Simulate that the user is authenticated with a mock Google token
-        if 'google_token' not in session:
-            # Example of a mock Google OAuth token (simulating a valid access token)
-            session['google_token'] = {
-                'access_token': 'mock-access-token',
-                'token_type': 'bearer',
-                'expires_in': 3600,
-                'scope': 'openid profile email'
-            }
-            # Simulate mock user info (normally this would come from Google)
-            session['user_info'] = {
-                'id': '123456',
-                'name': 'John Doe',
-                'email': 'johndoe@example.com',
-                'picture': 'https://example.com/profile_pic.jpg'
-            }
+    def ensure_authenticated_user():
+        print(f"Request endpoint: {request.endpoint}")
+        print(f"Session content: {session}")
+        
+        if 'google_token' not in session or 'user_info' not in session:
+            if request.endpoint not in ['index','login','static']: 
+                print("User not authenticated")
+                return redirect(url_for('login'))
 
+            
     register_routes(app)
 
     return app

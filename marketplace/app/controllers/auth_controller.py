@@ -39,6 +39,7 @@ def handle_logout():
     session.pop("user_id", None)
     session.pop("username", None)
     session.pop("email", None)
+    session.clear() 
     return redirect(url_for("index"))
 
 def check_authentication():
