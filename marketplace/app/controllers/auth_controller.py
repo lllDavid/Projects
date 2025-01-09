@@ -1,4 +1,10 @@
 from flask import Flask, redirect, url_for, session, render_template, flash, request
+# Import the necessary functions for user management (from the second part of the provided code)
+from marketplace.app.user.user_security import UserSecurity
+from marketplace.app.db.crypto_wallet_db import delete_crypto_wallet
+from marketplace.app.db.fiat_wallet_db import delete_fiat_wallet
+from marketplace.helpers.validation import is_valid_password, is_unique_username, is_unique_email
+from marketplace.app.db.user_db import update_username, update_email, update_password, get_complete_user, get_user_by_id, get_user_by_username, delete_user
 from authlib.integrations.flask_client import OAuth
 import os
 
@@ -11,50 +17,47 @@ app.secret_key = os.urandom(24)
 # Initialize OAuth client
 oauth = OAuth(app)
 
-# Register Google OAuth provider
+# Mocked Google OAuth provider
 google = oauth.register(
     name='google',
-    client_id='YOUR_GOOGLE_CLIENT_ID',  # Replace with your Google Client ID
-    client_secret='YOUR_GOOGLE_CLIENT_SECRET',  # Replace with your Google Client Secret
+    client_id='fake-client-id',  # Fake client ID for development
+    client_secret='fake-client-secret',  # Fake client secret for development
     authorize_url='https://accounts.google.com/o/oauth2/auth',
-    authorize_params=None,
     access_token_url='https://accounts.google.com/o/oauth2/token',
-    refresh_token_url=None,
     api_base_url='https://www.googleapis.com/oauth2/v1/',
     client_kwargs={'scope': 'openid profile email'},
 )
 
-# Import the necessary functions for user management (from the second part of the provided code)
-from marketplace.app.user.user_security import UserSecurity
-from marketplace.app.db.crypto_wallet_db import delete_crypto_wallet
-from marketplace.app.db.fiat_wallet_db import delete_fiat_wallet
-from marketplace.helpers.validation import is_valid_password, is_unique_username, is_unique_email
-from marketplace.app.db.user_db import update_username, update_email, update_password, get_complete_user, get_user_by_id, get_user_by_username, delete_user
+# Simulate user data for OAuth
+mock_user_data = {
+    'id': 'mock-user-id',
+    'name': 'Mock User',
+    'email': 'mockuser@example.com'
+}
 
-# Handle OAuth Login Route
+# Login route: Mock OAuth login process
 @app.route('/login')
 def login():
-    redirect_uri = url_for('auth', _external=True)
-    return google.authorize_redirect(redirect_uri)
+    # Normally, we would redirect to Google for OAuth, but we simulate the process here
+    session['google_oauth_token'] = {'access_token': 'mock-access-token'}
+    session['user_id'] = mock_user_data['id']
+    session['username'] = mock_user_data['name']
+    session['email'] = mock_user_data['email']
+    return redirect(url_for('home'))
 
-# Handle OAuth Callback Route
+# Auth route: Simulate OAuth callback from Google
 @app.route('/auth')
 def auth():
-    token = google.authorize_access_token()
-    session['google_oauth_token'] = token
-    user_info = google.get('userinfo')
-
-    # Store user info in session
-    session['user_id'] = user_info['id']
-    session['username'] = user_info['name']
-    session['email'] = user_info['email']
-    
-    # Optionally, you can store the user in the database if it's their first time logging in
-    # Example: add user creation logic here if needed
+    # In a real app, you'd get the access token and user data here
+    # Mock the token and user info
+    session['google_oauth_token'] = {'access_token': 'mock-access-token'}
+    session['user_id'] = mock_user_data['id']
+    session['username'] = mock_user_data['name']
+    session['email'] = mock_user_data['email']
 
     return redirect(url_for('home'))
 
-# Handle Logout Route
+# Logout route: Clears the session and logs the user out
 @app.route('/logout')
 def logout():
     session.pop('google_oauth_token', None)
@@ -63,20 +66,20 @@ def logout():
     session.pop('email', None)
     return redirect(url_for('home'))
 
-# Home Route
+# Home route: Displays welcome message or login prompt
 @app.route('/')
 def home():
     if 'user_id' in session:
         return f'Hello, {session["username"]}! <a href="/settings">Go to Settings</a>'
     return 'You are not logged in. <a href="/login">Login with Google</a>'
 
-# Authentication Check (for protected routes)
+# Authentication check for protected routes
 def check_authentication():
     if "user_id" not in session:
         return redirect(url_for("login"))
     return None
 
-# Settings Route (for managing account settings)
+# Settings route for managing account settings
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
     redirect_response = check_authentication()
@@ -84,34 +87,18 @@ def settings():
         return redirect_response
 
     user_id = session["user_id"]
-    user = get_user_by_id(user_id)  # Get user data from DB
+    # Here, we use the mock user data directly for the settings page
+    user = mock_user_data  # In a real application, you would query your database here
 
     current_username = session.get("username")
-    current_email = session.get("email")
+    current_email = user.get("email", "")
 
     if request.method == "POST":
-        if 'delete-account' in request.form:
-            return delete_user_account(user_id)
-
-        new_username = request.form.get("username")
-        new_email = request.form.get("email")
-        new_password = request.form.get("new-password")
-
-        if new_username:
-            update_current_username(user_id, new_username)
-
-        if new_email:
-            update_current_email(user_id, new_email)
-
-        if new_password:
-            update_current_password(user_id, new_password)
-
-        user = get_user_by_id(user_id)
-        flash('Your account settings have been updated successfully.', 'success')
-
-        return redirect(url_for("settings"))
+        # Handle settings updates (username, email, password, etc.)
+        pass
 
     return render_template("settings.html", username=current_username, email=current_email, user=user)
+
 
 # Handle User Account Deletion
 def delete_user_account(user_id):
@@ -157,7 +144,6 @@ def handle_deposit():
         return redirect_response
 
     user_id = session["user_id"]
-    user = get_user_by_id(user_id)  # Get user data from DB
     
     account_holder_data = get_complete_user(user_id)
     if account_holder_data is not None and account_holder_data.user_bank:
