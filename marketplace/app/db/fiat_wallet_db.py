@@ -8,7 +8,7 @@ from app.wallets.fiat.fiat_wallet import FiatWallet
 
 pool = ConnectionPool(
     pool_name="fiat_wallet_db_pool",
-    pool_size=30,
+    pool_size=10,
     user=Config.WALLET_DB_CONFIG["user"],
     password=Config.WALLET_DB_CONFIG["password"],
     host=Config.WALLET_DB_CONFIG["host"],
