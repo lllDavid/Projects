@@ -1,3 +1,4 @@
+version: '3.8'
 services:
   app:
     build: .
@@ -5,6 +6,13 @@ services:
       - "5000:5000"
     depends_on:
       - db
+    environment:
+      DB_HOST: db  # This is critical for Docker's internal network
+      DB_PORT: 3306
+      DB_USER: user
+      DB_PASSWORD: user_password
+      DB_NAME: crypto_app_db
+
   db:
     image: mariadb:latest
     environment:
@@ -13,8 +21,9 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: user_password
     ports:
-      - "3306:3306"
+      - "3306:3306"  # Exposing the MariaDB port
     volumes:
       - mariadb_data:/var/lib/mysql
+
 volumes:
-  mariadb_data:
+  mariadb_data:  # Persistent volume

@@ -22,4 +22,4 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 EXPOSE 5000
 
 # Run the application (adjust as needed)
-CMD ["python", "-m", "marketplace.run"]
+CMD ["python", "run.py"]
