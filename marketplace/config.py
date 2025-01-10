@@ -1,8 +1,16 @@
+import os
+
+def get_db_host():
+    if os.path.exists("/.dockerenv"):
+        return "host.docker.internal"  
+    else:
+        return "localhost"  
+
 class Config:
     USER_DB_CONFIG = {
         "user": "root",
         "password": "root",
-        "host": "db",  
+        "host": get_db_host(),  
         "port": 3306,  
         "database": "marketplace_users"
     }
@@ -10,7 +18,7 @@ class Config:
     COIN_DB_CONFIG = {
         "user": "root",
         "password": "root",
-        "host": "db",
+        "host": get_db_host(),  
         "port": 3306,
         "database": "marketplace_coins"
     }
@@ -18,7 +26,7 @@ class Config:
     WALLET_DB_CONFIG = {
         "user": "root",
         "password": "root",
-        "host": "db",
+        "host": get_db_host(), 
         "port": 3306,
         "database": "marketplace_wallets"
     }

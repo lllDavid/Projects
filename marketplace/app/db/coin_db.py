@@ -7,7 +7,7 @@ from app.coin.coin_market_data import CoinMarketData
 
 pool = ConnectionPool(
     pool_name="coin_db_pool",
-    pool_size=30,
+    pool_size=10,
     user=Config.COIN_DB_CONFIG["user"],
     password=Config.COIN_DB_CONFIG["password"],
     host=Config.COIN_DB_CONFIG["host"],

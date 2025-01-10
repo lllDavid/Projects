@@ -13,7 +13,7 @@ from app.user.user_fingerprint import UserFingerprint
 
 pool = ConnectionPool(
     pool_name="user_db_pool",
-    pool_size=50,
+    pool_size=10,
     user=Config.USER_DB_CONFIG["user"],
     password=Config.USER_DB_CONFIG["password"],
     host=Config.USER_DB_CONFIG["host"],
