@@ -1,13 +1,13 @@
 from datetime import datetime
 
-from marketplace.app.db import user_db
-from marketplace.helpers.roles import Role
-from marketplace.app.user.user import User
-from marketplace.app.user.user_bank import UserBank
-from marketplace.app.user.user_status import UserStatus
-from marketplace.app.user.user_history import UserHistory
-from marketplace.app.user.user_security import UserSecurity
-from marketplace.app.user.user_fingerprint import UserFingerprint
+from app.db import user_db
+from helpers.roles import Role
+from app.user.user import User
+from app.user.user_bank import UserBank
+from app.user.user_status import UserStatus
+from app.user.user_history import UserHistory
+from app.user.user_security import UserSecurity
+from app.user.user_fingerprint import UserFingerprint
 
 class UserCreator:
     def create_user_bank(self) -> UserBank:

@@ -3,7 +3,7 @@ from re import match
 from flask import flash
 from mariadb import connect
 
-from marketplace.config import Config
+from config import Config
 
 conn = connect(
     user=Config.USER_DB_CONFIG["user"],

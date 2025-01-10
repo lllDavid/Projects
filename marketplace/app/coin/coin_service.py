@@ -2,7 +2,7 @@ from requests import get
 from decimal import Decimal
 from dataclasses import dataclass
 
-from marketplace.app.coin.coin_market_data import CoinMarketData
+from app.coin.coin_market_data import CoinMarketData
 
 @dataclass
 class CoinService:

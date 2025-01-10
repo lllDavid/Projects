@@ -1,6 +1,6 @@
-from marketplace.app.wallets.crypto.crypto_wallet import CryptoWallet
-from marketplace.app.db.crypto_wallet_db import insert_crypto_wallet
-from marketplace.app.db.user_db import get_complete_user
+from app.wallets.crypto.crypto_wallet import CryptoWallet
+from app.db.crypto_wallet_db import insert_crypto_wallet
+from app.db.user_db import get_complete_user
 
 def create_cryto_wallet(user_id) -> CryptoWallet | None:
     user = get_complete_user(user_id)

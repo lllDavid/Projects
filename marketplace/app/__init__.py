@@ -1,12 +1,11 @@
-from flask import Flask, session, request, redirect, url_for
-from requests_oauthlib import OAuth2Session
+from flask import Flask
 
-from marketplace.config import Config
-from marketplace.app.views.user_creator import user_creator
-from marketplace.app.views.crypto_purchase import crypto_purchase
-from marketplace.app.views.crypto_liquidation import crypto_liquidation
-from marketplace.app.views.wallet_values import wallet_values
-from marketplace.app.routes.routes import register_routes
+from config import Config
+from app.views.user_creator import user_creator
+from app.views.crypto_purchase import crypto_purchase
+from app.views.crypto_liquidation import crypto_liquidation
+from app.views.wallet_values import wallet_values
+from app.routes.routes import register_routes
 
 def create_app() -> Flask:
     app = Flask(__name__, static_folder="static", template_folder="templates")

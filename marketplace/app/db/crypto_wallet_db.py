@@ -3,8 +3,8 @@ from decimal import Decimal
 
 from mariadb import ConnectionPool
 
-from marketplace.config import Config
-from marketplace.app.wallets.crypto.crypto_wallet import CryptoWallet
+from config import Config
+from app.wallets.crypto.crypto_wallet import CryptoWallet
 
 pool = ConnectionPool(
     pool_name="crypto_wallet_db_pool",

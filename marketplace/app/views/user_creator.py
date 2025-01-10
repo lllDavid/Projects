@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, session
 
-from marketplace.app.user.user_creator import UserCreator
-from marketplace.helpers.validation import validate_user_input
-from marketplace.app.wallets.fiat.fiat_wallet_creator import create_fiat_wallet
-from marketplace.app.wallets.crypto.crypto_wallet_creator import create_cryto_wallet
+from app.user.user_creator import UserCreator
+from helpers.validation import validate_user_input
+from app.wallets.fiat.fiat_wallet_creator import create_fiat_wallet
+from app.wallets.crypto.crypto_wallet_creator import create_cryto_wallet
 
 user_creator = Blueprint('user_creator', __name__)
 

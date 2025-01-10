@@ -3,8 +3,8 @@ from decimal import Decimal
 
 from mariadb import ConnectionPool
 
-from marketplace.config import Config
-from marketplace.app.wallets.fiat.fiat_wallet import FiatWallet
+from config import Config
+from app.wallets.fiat.fiat_wallet import FiatWallet
 
 pool = ConnectionPool(
     pool_name="fiat_wallet_db_pool",

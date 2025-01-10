@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, session, jsonify
 
-from marketplace.app.db.crypto_wallet_db import get_crypto_wallet_by_user_id
-from marketplace.app.controllers.auth_controller import check_authentication
+from app.db.crypto_wallet_db import get_crypto_wallet_by_user_id
+from app.controllers.auth_controller import check_authentication
 
 wallet_values = Blueprint('wallet_values', __name__)
 

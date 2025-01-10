@@ -1,10 +1,10 @@
 from decimal import Decimal
 from datetime import datetime
 
-from marketplace.app.db import coin_db
-from marketplace.app.coin.coin import Coin
-from marketplace.app.coin.coin_specs import CoinSpecs
-from marketplace.app.coin.coin_market_data import CoinMarketData
+from app.db import coin_db
+from app.coin.coin import Coin
+from app.coin.coin_specs import CoinSpecs
+from app.coin.coin_market_data import CoinMarketData
 
 class CoinCreator:
     def create_coin_specs(self, 

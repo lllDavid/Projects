@@ -2,14 +2,14 @@ from json import dumps
 
 from mariadb import ConnectionPool
 
-from marketplace.config import Config
-from marketplace.helpers.roles import Role
-from marketplace.app.user.user import User
-from marketplace.app.user.user_bank import UserBank
-from marketplace.app.user.user_status import UserStatus
-from marketplace.app.user.user_history import UserHistory
-from marketplace.app.user.user_security import UserSecurity
-from marketplace.app.user.user_fingerprint import UserFingerprint
+from config import Config
+from helpers.roles import Role
+from app.user.user import User
+from app.user.user_bank import UserBank
+from app.user.user_status import UserStatus
+from app.user.user_history import UserHistory
+from app.user.user_security import UserSecurity
+from app.user.user_fingerprint import UserFingerprint
 
 pool = ConnectionPool(
     pool_name="user_db_pool",

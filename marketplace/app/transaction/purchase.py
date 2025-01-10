@@ -1,8 +1,8 @@
 from decimal import Decimal
 from datetime import datetime
 
-from marketplace.app.db.crypto_wallet_db import update_crypto_wallet
-from marketplace.app.db.fiat_wallet_db import update_fiat_wallet
+from app.db.crypto_wallet_db import update_crypto_wallet
+from app.db.fiat_wallet_db import update_fiat_wallet
 
 def process_crypto_purchase(user_id, wallet, fiat_wallet, form_data):
     if wallet is None:
