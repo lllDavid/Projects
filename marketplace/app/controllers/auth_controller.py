@@ -1,14 +1,48 @@
 from flask import render_template, redirect, url_for, flash, session
 
-from marketplace.app.user.user_security import UserSecurity
-from marketplace.app.db.crypto_wallet_db import delete_crypto_wallet
-from marketplace.app.db.fiat_wallet_db import delete_fiat_wallet
-from marketplace.helpers.validation import is_valid_password, is_unique_username, is_unique_email
-from marketplace.app.db.user_db import update_username, update_email, update_password, get_complete_user, get_user_by_id, get_user_by_username, delete_user
+from app.user.user import User
+from app.user.user_security import UserSecurity
+from app.db.crypto_wallet_db import delete_crypto_wallet
+from app.db.fiat_wallet_db import delete_fiat_wallet
+from helpers.validation import is_valid_password, is_unique_username, is_unique_email
+from app.db.user_db import update_username, update_email, update_password, get_complete_user, get_user_by_id, get_user_by_email, get_user_by_username, delete_user
+
 
 def handle_login(request):
-    username = request.form["username"]
-    password = request.form["password"]
+    # Check if the user is logging in with OAuth
+    oauth_token = session.get('oauth_token')
+    
+    if oauth_token:
+        # User is logging in via OAuth (Google in this case)
+        user_info = session.get('user_info')
+        if user_info:
+            email = user_info.get('email')
+            # Check if the user already exists in the database
+            user = get_user_by_email(email)
+            '''
+            if not user:
+                # If the user doesn't exist, create a new user in the database
+                user = User(
+                    username=user_info.get('name'),
+                    email=email,
+                    oauth_provider='google',  # Store that this user logged in with Google OAuth
+                )
+                save_user(user)  # Save the new user to the database
+                '''
+            # Now log the user in by storing their data in the session
+            if user:
+                session["user_id"] = user.id
+                session["username"] = user.username
+                session["email"] = user.email
+                session.modified = True
+            
+            return redirect(url_for("home"))
+        else:
+            return redirect(url_for("login"))  # In case there's no user info, redirect to login
+    
+    # Traditional username/password login
+    username = request.form.get("username")
+    password = request.form.get("password")
 
     user = get_user_by_username(username)
     if user and UserSecurity.validate_password_hash(password, user.user_security.password_hash):
@@ -20,6 +54,7 @@ def handle_login(request):
         return redirect(url_for("home"))
     else:
         return redirect(url_for("login"))
+
 
 def handle_logout():
     session.pop("user_id", None)

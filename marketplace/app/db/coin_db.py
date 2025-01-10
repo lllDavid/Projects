@@ -1,9 +1,9 @@
 from mariadb import ConnectionPool
 
-from marketplace.config import Config
-from marketplace.app.coin.coin import Coin
-from marketplace.app.coin.coin_specs import CoinSpecs
-from marketplace.app.coin.coin_market_data import CoinMarketData
+from config import Config
+from app.coin.coin import Coin
+from app.coin.coin_specs import CoinSpecs
+from app.coin.coin_market_data import CoinMarketData
 
 pool = ConnectionPool(
     pool_name="coin_db_pool",

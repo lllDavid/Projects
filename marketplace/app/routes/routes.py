@@ -1,11 +1,14 @@
 import string
 from random import choices
 from os import getenv
+from dotenv import load_dotenv
 from requests import get, post
 
 from flask import render_template, redirect, url_for, jsonify, request, session
 
-from marketplace.app.controllers.auth_controller import handle_login, handle_settings, handle_deposit
+from app.controllers.auth_controller import handle_login, handle_settings, handle_deposit
+
+load_dotenv()
 
 # OAuth credentials
 client_id = getenv("GOOGLE_CLIENT_ID")
@@ -85,7 +88,7 @@ def register_routes(app):
             session['user_info'] = user_info_response.json()
             return redirect(url_for('home'))
         else:
-            return "OAuth failed, could not fetch the access token.", 400
+            return redirect(url_for('login'))
 
     @app.route("/profile", methods=["GET"])
     def profile():

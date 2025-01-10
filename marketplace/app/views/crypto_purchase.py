@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, session, request
 
-from marketplace.app.db.crypto_wallet_db import get_crypto_wallet_by_user_id
-from marketplace.app.db.fiat_wallet_db import get_fiat_wallet_by_user_id
-from marketplace.app.transaction.purchase import process_crypto_purchase
-from marketplace.app.controllers.auth_controller import check_authentication
+from app.db.crypto_wallet_db import get_crypto_wallet_by_user_id
+from app.db.fiat_wallet_db import get_fiat_wallet_by_user_id
+from app.transaction.purchase import process_crypto_purchase
+from app.controllers.auth_controller import check_authentication
 
 crypto_purchase = Blueprint('crypto_purchase', __name__)
 

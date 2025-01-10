@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from decimal import Decimal
 
-from marketplace.app.coin.coin_specs import CoinSpecs
-from marketplace.app.coin.coin_market_data import CoinMarketData
+from app.coin.coin_specs import CoinSpecs
+from app.coin.coin_market_data import CoinMarketData
 
 @dataclass
 class Coin:
