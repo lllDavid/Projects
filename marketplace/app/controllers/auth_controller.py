@@ -1,11 +1,12 @@
+from datetime import datetime
+
 from flask import render_template, redirect, url_for, flash, session
 
-from app.user.user_bank import UserBank
 from app.user.user_security import UserSecurity
 from app.db.crypto_wallet_db import delete_crypto_wallet
 from app.db.fiat_wallet_db import delete_fiat_wallet
 from helpers.validation import is_valid_password, is_unique_username, is_unique_email
-from app.db.user_db import update_username, update_email, update_password, update_user_bank, get_complete_user, get_user_by_id, get_user_by_email, get_user_by_username, delete_user
+from app.db.user_db import update_username, update_email, update_password, update_user_bank, get_complete_user,get_user_bank, get_user_by_id, get_user_by_email, get_user_by_username, delete_user
 
 
 def handle_login(request):
@@ -119,10 +120,14 @@ def handle_settings(request):
         new_email = request.form.get("email")
         new_password = request.form.get("new-password")
 
+        new_bank_name = request.form.get("bank_name")
         new_account_holder = request.form.get("bank_account_holder")
-        new_iban = request.form.get("iban")
-        new_swift = request.form.get("swift")
+        new_account_number = request.form.get("account_number")
         new_routing_number = request.form.get("routing_number")
+        new_iban = request.form.get("iban")
+        new_swift_code = request.form.get("swift")
+        
+        user_bank = get_user_bank(user_id)
 
         if new_username:
             update_current_username(user_id, new_username)
@@ -133,17 +138,36 @@ def handle_settings(request):
         if new_password:
             update_current_password(user_id, new_password)
 
-        if new_account_holder:
-            update_user_bank(user_id, new_account_holder=new_account_holder)
+        if user_bank:
+            if not any([new_bank_name, new_account_holder, new_account_number, new_routing_number, new_iban, new_swift_code]):
+               
+                if not user_bank.date_linked: 
+                    user_bank.date_linked = datetime.now()  
 
-        if new_iban:
-            update_user_bank(user_id, new_iban=new_iban)
+            if new_bank_name:
+                user_bank.bank_name = new_bank_name
+                update_user_bank(user_id, user_bank)
 
-        if new_swift:
-            update_user_bank(user_id, new_swift=new_swift)
+            if new_account_holder:
+                user_bank.account_holder = new_account_holder
+                update_user_bank(user_id, user_bank)
 
-        if new_routing_number:
-            update_user_bank(user_id, new_routing_number=new_routing_number)
+            if new_account_number:
+                user_bank.account_number = new_account_number
+                update_user_bank(user_id, user_bank)
+
+            if new_routing_number:
+                user_bank.routing_number = new_routing_number
+                update_user_bank(user_id, user_bank)
+
+            if new_iban:
+                user_bank.iban = new_iban
+                update_user_bank(user_id, user_bank)
+
+            if new_swift_code:
+                user_bank.swift_code = new_swift_code
+                update_user_bank(user_id, user_bank)
+
 
         user = get_user_by_id(user_id)
         flash('Your account settings have been updated successfully.', 'success')
@@ -172,10 +196,3 @@ def handle_deposit():
 
     return render_template("deposit.html", account_holder=account_holder)
 
-def handle_settings_bankdata(request):
-    user_id = session["user_id"]
-    user = get_authenticated_user(user_id)
-
-    if request.method == "POST":
-        if user:
-            account_holder =  request.form.get("username")

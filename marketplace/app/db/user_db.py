@@ -151,30 +151,45 @@ def update_password(user_id: int, password: str) -> None:
     except Exception as e:
         print(f"Error occurred: {e}")
 
-def update_user_bank(user_id: int, **kwargs) -> bool:
+def update_user_bank(user_id:int, user_bank: UserBank) -> UserBank | None :
     try:
         with pool.get_connection() as conn:
             with conn.cursor() as cursor:
-                # Build the update query dynamically
-                update_columns = [f"{field} = %s" for field in kwargs if kwargs.get(field) is not None]
-                update_values = list(kwargs.values())
+                cursor.execute(
+                    """
+                    UPDATE user_bank
+                    SET 
+                        bank_name = %s, 
+                        account_holder = %s, 
+                        account_number = %s, 
+                        routing_number = %s, 
+                        iban = %s, 
+                        swift_code = %s, 
+                        date_linked = %s
+                    WHERE user_id = %s;
+                    """,
+                    (
+                        user_bank.bank_name, 
+                        user_bank.account_holder, 
+                        user_bank.account_number, 
+                        user_bank.routing_number, 
+                        user_bank.iban, 
+                        user_bank.swift_code, 
+                        user_bank.date_linked,
+                        user_id
+                    )
+                )
 
-                # Add user_id to the values and include it in the WHERE clause
-                update_columns.append("WHERE user_id = %s")
-                update_values.append(user_id)
+                conn.commit()
 
-                # Construct and execute the update query
-                update_query = f"UPDATE user_bank SET {', '.join(update_columns)}"
-                cursor.execute(update_query, tuple(update_values))
+                if cursor.rowcount > 0:
+                    return user_bank
+                else:
+                    return None
 
-                conn.commit()  # Commit the transaction
-                return True
     except Exception as e:
         print(f"Error occurred: {e}")
-        return False
-
-
-
+        return None
 
 # --------------------------------------------------------------
 # Section 2: User Retrieval by Specific Criteria

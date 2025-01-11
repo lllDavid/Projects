@@ -96,6 +96,7 @@ def update_fiat_wallet(wallet: FiatWallet) -> FiatWallet | None:
                     return None
 
     except Exception as e:
+        print(f"Error occurred: {e}")
         return None
     
 def delete_fiat_wallet(user_id: int) -> bool:
