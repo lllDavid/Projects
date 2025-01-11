@@ -9,15 +9,12 @@ from app.db.user_db import update_username, update_email, update_password, get_c
 
 
 def handle_login(request):
-    # Check if the user is logging in with OAuth
     oauth_token = session.get('oauth_token')
     
     if oauth_token:
-        # User is logging in via OAuth (Google in this case)
         user_info = session.get('user_info')
         if user_info:
             email = user_info.get('email')
-            # Check if the user already exists in the database
             user = get_user_by_email(email)
             '''
             if not user:
@@ -29,7 +26,6 @@ def handle_login(request):
                 )
                 save_user(user)  # Save the new user to the database
                 '''
-            # Now log the user in by storing their data in the session
             if user:
                 session["user_id"] = user.id
                 session["username"] = user.username
@@ -38,9 +34,8 @@ def handle_login(request):
             
             return redirect(url_for("home"))
         else:
-            return redirect(url_for("login"))  # In case there's no user info, redirect to login
+            return redirect(url_for("login"))  
     
-    # Traditional username/password login
     username = request.form.get("username")
     password = request.form.get("password")
 
