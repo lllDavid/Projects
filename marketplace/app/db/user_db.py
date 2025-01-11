@@ -151,6 +151,31 @@ def update_password(user_id: int, password: str) -> None:
     except Exception as e:
         print(f"Error occurred: {e}")
 
+def update_user_bank(user_id: int, **kwargs) -> bool:
+    try:
+        with pool.get_connection() as conn:
+            with conn.cursor() as cursor:
+                # Build the update query dynamically
+                update_columns = [f"{field} = %s" for field in kwargs if kwargs.get(field) is not None]
+                update_values = list(kwargs.values())
+
+                # Add user_id to the values and include it in the WHERE clause
+                update_columns.append("WHERE user_id = %s")
+                update_values.append(user_id)
+
+                # Construct and execute the update query
+                update_query = f"UPDATE user_bank SET {', '.join(update_columns)}"
+                cursor.execute(update_query, tuple(update_values))
+
+                conn.commit()  # Commit the transaction
+                return True
+    except Exception as e:
+        print(f"Error occurred: {e}")
+        return False
+
+
+
+
 # --------------------------------------------------------------
 # Section 2: User Retrieval by Specific Criteria
 # --------------------------------------------------------------
@@ -193,6 +218,7 @@ def get_user_by_email(email: str) -> User | None:
     except Exception as e:
         print(f"Error occurred: {e}")
         return None
+    
 
 # --------------------------------------------------------------
 # Section 3: User Components Retrieval by User ID
