@@ -44,8 +44,8 @@ build/
 # Confidential information
 *.pem            
 *.key           
-*.crt            
-
+*.crt  
+       
 # API keys
 api_keys/      
 *.apikey        
