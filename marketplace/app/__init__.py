@@ -1,10 +1,10 @@
 from flask import Flask
 
 from config import Config
-from app.views.user_creator import user_creator
-from app.views.crypto_purchase import crypto_purchase
-from app.views.crypto_liquidation import crypto_liquidation
-from app.views.wallet_values import wallet_values
+from app.blueprints.user_creator import user_creator
+from app.blueprints.crypto_purchase import crypto_purchase
+from app.blueprints.crypto_liquidation import crypto_liquidation
+from app.blueprints.wallet_values import wallet_values
 from app.routes.routes import register_routes
 
 def create_app() -> Flask:
