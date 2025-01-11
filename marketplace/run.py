@@ -1,12 +1,19 @@
 from datetime import datetime
 from dataclasses import dataclass
 from decimal import getcontext
+from dotenv import load_dotenv
+from os import getenv
 
 from app import create_app
 from helpers.version import Version
 
 # Set global Decimal precision 
 getcontext().prec = 28
+
+load_dotenv()
+
+cert_path = getenv('SSL_CERT_PATH')
+key_path = getenv('SSL_KEY_PATH')
 
 @dataclass
 class Main:
@@ -22,7 +29,7 @@ class Main:
         print(f"{self.app_name} version {self.app_version} started at: {self.start_time}")
 
         app = create_app()
-        app.run(debug=True, host='0.0.0.0', port=5000, use_reloader=False)
+        app.run(debug=True, host='0.0.0.0', port=5000, use_reloader=False, ssl_context=(cert_path,key_path))
 
         return self.start_time
 
