@@ -21,7 +21,6 @@
 
 very high:
 
-    - encrypt signup/login data
     - (Settings html) bank data functionality/ require old password to change new
     - (Support html) send form funtionality
     - Wallet html Coin Worth and Current Price
