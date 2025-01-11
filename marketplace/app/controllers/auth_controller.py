@@ -99,6 +99,10 @@ def delete_user_account(user_id):
         flash("An error occurred while deleting your account. Please try again.", "error")
         return redirect(url_for("settings"))
 
+from datetime import datetime
+from flask import request, redirect, render_template, flash, url_for, session
+
+
 def handle_settings(request):
     redirect_response = check_authentication()
     if redirect_response:
@@ -116,65 +120,71 @@ def handle_settings(request):
         if 'delete-account' in request.form:
             return delete_user_account(user_id)
 
-        new_username = request.form.get("username")
-        new_email = request.form.get("email")
-        new_password = request.form.get("new-password")
+        handle_user_info_update(request, user_id)
 
-        new_bank_name = request.form.get("bank_name")
-        new_account_holder = request.form.get("bank_account_holder")
-        new_account_number = request.form.get("account_number")
-        new_routing_number = request.form.get("routing_number")
-        new_iban = request.form.get("iban")
-        new_swift_code = request.form.get("swift")
-        
-        user_bank = get_user_bank(user_id)
-
-        if new_username:
-            update_current_username(user_id, new_username)
-
-        if new_email:
-            update_current_email(user_id, new_email)
-
-        if new_password:
-            update_current_password(user_id, new_password)
-
-        if user_bank:
-            if not any([new_bank_name, new_account_holder, new_account_number, new_routing_number, new_iban, new_swift_code]):
-               
-                if not user_bank.date_linked: 
-                    user_bank.date_linked = datetime.now()  
-
-            if new_bank_name:
-                user_bank.bank_name = new_bank_name
-                update_user_bank(user_id, user_bank)
-
-            if new_account_holder:
-                user_bank.account_holder = new_account_holder
-                update_user_bank(user_id, user_bank)
-
-            if new_account_number:
-                user_bank.account_number = new_account_number
-                update_user_bank(user_id, user_bank)
-
-            if new_routing_number:
-                user_bank.routing_number = new_routing_number
-                update_user_bank(user_id, user_bank)
-
-            if new_iban:
-                user_bank.iban = new_iban
-                update_user_bank(user_id, user_bank)
-
-            if new_swift_code:
-                user_bank.swift_code = new_swift_code
-                update_user_bank(user_id, user_bank)
-
+        handle_bank_info_update(request, user_id)
 
         user = get_user_by_id(user_id)
-        flash('Your account settings have been updated successfully.', 'success')
 
+        flash('Your account settings have been updated successfully.', 'success')
         return redirect(url_for("settings"))
 
     return render_template("settings.html", username=current_username, email=current_email, user=user)
+
+
+def handle_user_info_update(request, user_id):
+    new_username = request.form.get("username")
+    new_email = request.form.get("email")
+    new_password = request.form.get("new-password")
+
+    if new_username:
+        update_current_username(user_id, new_username)
+
+    if new_email:
+        update_current_email(user_id, new_email)
+
+    if new_password:
+        update_current_password(user_id, new_password)
+
+
+def handle_bank_info_update(request, user_id):
+    new_bank_name = request.form.get("bank_name")
+    new_account_holder = request.form.get("bank_account_holder")
+    new_account_number = request.form.get("account_number")
+    new_routing_number = request.form.get("routing_number")
+    new_iban = request.form.get("iban")
+    new_swift_code = request.form.get("swift")
+
+    user_bank = get_user_bank(user_id)
+
+    if user_bank:
+        if not any([new_bank_name, new_account_holder, new_account_number, new_routing_number, new_iban, new_swift_code]):
+            if not user_bank.date_linked:
+                user_bank.date_linked = datetime.now()
+
+        if new_bank_name:
+            user_bank.bank_name = new_bank_name
+            update_user_bank(user_id, user_bank)
+
+        if new_account_holder:
+            user_bank.account_holder = new_account_holder
+            update_user_bank(user_id, user_bank)
+
+        if new_account_number:
+            user_bank.account_number = new_account_number
+            update_user_bank(user_id, user_bank)
+
+        if new_routing_number:
+            user_bank.routing_number = new_routing_number
+            update_user_bank(user_id, user_bank)
+
+        if new_iban:
+            user_bank.iban = new_iban
+            update_user_bank(user_id, user_bank)
+
+        if new_swift_code:
+            user_bank.swift_code = new_swift_code
+            update_user_bank(user_id, user_bank)
 
 def handle_deposit():
     redirect_response = check_authentication()

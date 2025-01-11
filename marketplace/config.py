@@ -1,7 +1,7 @@
-import os
+from os import path
 
 def get_db_host():
-    if os.path.exists("/.dockerenv"):
+    if path.exists("/.dockerenv"):
         return "host.docker.internal"  
     else:
         return "localhost"  
