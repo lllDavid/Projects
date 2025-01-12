@@ -8,7 +8,7 @@ This platform allows users to buy and sell cryptocurrency in a secure and user-f
 - Integration with MariaDB for data storage
 - Using OAuth2 to login with Google Account (Mock Implementation)
 - Secure password hashing (Argon2id)
-- Secure authentication (2FA via Authenticator App)
+- Secure authentication (2FA via Authenticator App not yet implemented)
 
 ---
 
