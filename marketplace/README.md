@@ -4,6 +4,7 @@ This platform allows users to buy and sell cryptocurrency in a secure and user-f
 ## Features
 - Cryptocurrency buying and selling functionality
 - Dashboard showing Market Data (Mock Implementation)
+- Wallet showing Coins and Values
 - Flask-based REST API
 - Integration with MariaDB for data storage
 - Using OAuth2 to login with Google Account (Mock Implementation)
