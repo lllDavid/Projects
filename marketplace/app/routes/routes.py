@@ -54,6 +54,10 @@ def register_routes(app):
             return handle_login(request)
         return render_template("login.html")
     
+    @app.route("/login/reset-password")
+    def reset_password():
+        return render_template("reset-password.html")
+    
     @app.route("/oauth_google")
     def oauth_google():
         oauth_url = (
