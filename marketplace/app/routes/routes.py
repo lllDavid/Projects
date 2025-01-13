@@ -131,4 +131,3 @@ def register_routes(app):
     def support():
         return render_template("support.html")
     
-
