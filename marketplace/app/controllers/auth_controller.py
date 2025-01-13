@@ -19,13 +19,12 @@ def handle_login(request):
             user = get_user_by_email(email)
             '''
             if not user:
-                # If the user doesn't exist, create a new user in the database
                 user = User(
                     username=user_info.get('name'),
                     email=email,
-                    oauth_provider='google',  # Store that this user logged in with Google OAuth
+                    oauth_provider='google',
                 )
-                save_user(user)  # Save the new user to the database
+                save_user(user) 
                 '''
             if user:
                 session["user_id"] = user.id

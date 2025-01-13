@@ -1,7 +1,7 @@
 from os import getenv
 from dotenv import load_dotenv
 
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash, request
 from itsdangerous import URLSafeTimedSerializer
 
 from app.user.user_security import UserSecurity
