@@ -51,7 +51,6 @@ def handle_login(request):
     else:
         return redirect(url_for("login"))
 
-
 def handle_logout():
     session.pop("user_id", None)
     session.pop("username", None)

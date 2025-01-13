@@ -1,16 +1,16 @@
-import os
-import time
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from itsdangerous import URLSafeTimedSerializer
 
+from app.user.user_security import UserSecurity
+from app.db.user_db import update_password, get_user_by_email
+from helpers.validation import is_valid_password
+
 reset_password = Blueprint('reset_password', __name__)
 
-# Secret key for generating and validating tokens (should be kept secure)
-SECRET_KEY = "12345678"  # Use a secure key here for production
+SECRET_KEY = "12345678"  
 s = URLSafeTimedSerializer(SECRET_KEY)
 
-# Token expiration time (in seconds)
-TOKEN_EXPIRATION_TIME = 3600  # 1 hour expiration time
+TOKEN_EXPIRATION_TIME = 3600  
 
 def send_reset_email(to_email, reset_url):
     from app import mail
@@ -25,7 +25,6 @@ def send_reset_email(to_email, reset_url):
 def reset_user_password():
     if request.method == 'POST':
         email = request.form['email']
-        # Generate a token with the email address and timestamp
         token = s.dumps(email, salt="reset-password")
         reset_url = url_for('reset_password.reset_user_password_token', token=token, _external=True)
         send_reset_email(email, reset_url)
@@ -37,22 +36,35 @@ def reset_user_password():
 @reset_password.route('/reset-password/<token>', methods=['GET', 'POST'])
 def reset_user_password_token(token):
     try:
-        # Try to load the email from the token, validate it within the expiration time
         email = s.loads(token, salt="reset-password", max_age=TOKEN_EXPIRATION_TIME)
-    except Exception as e:
+    except Exception:
         flash('The password reset link is invalid or has expired.', 'danger')
         return redirect(url_for('reset_password.reset_user_password'))
 
+    user = get_user_by_email(email)
+    if not user:
+        flash('User not found.', 'danger')
+        return redirect(url_for('reset_password.reset_user_password'))
+
     if request.method == 'POST':
-        new_password = request.form['password']
-        from app.db.user_db import update_password, get_user_by_email
-        from app.user.user_security import UserSecurity
-        # Here, you would update the user's password in the database
-        user = get_user_by_email(email)
-        hashed_password = UserSecurity.hash_password(new_password)
-        if user and user.id:
-            update_password(user.id, hashed_password)
-        flash('Your password has been updated!', 'success')
-        return redirect(url_for('reset_password.login'))
+        old_password = request.form['old_password']
+        new_password = request.form['new_password']
+        confirm_new_password = request.form['confirm_new_password']
+
+        if not UserSecurity.validate_password_hash(old_password, user.user_security.password_hash):
+            flash('Incorrect old password.', 'danger')
+            return render_template('reset-password-token.html', token=token)
+
+        if new_password != confirm_new_password:
+            flash('New password and confirmation do not match.', 'danger')
+            return render_template('reset-password-token.html', token=token)
+
+        if is_valid_password(new_password) and is_valid_password(confirm_new_password):
+            hashed_password = UserSecurity.hash_password(new_password)
+            if user.id:
+                update_password(user.id, hashed_password)
+
+            flash('Your password has been updated successfully!', 'success')
+            return redirect(url_for('login'))
 
     return render_template('reset-password-token.html', token=token)
