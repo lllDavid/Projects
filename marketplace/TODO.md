@@ -8,7 +8,6 @@ TODO
     - (Trade) Validation of input (has user enough funds...)
     - (Trade html) add more coins to Coin Select 
     - (Trade) implement code to pay with crypto
-
     - Check why you can stil access pages after logout/delete (Session)
     - (Home) fetch actual market data api, add graphs
     - (Login/Signup) Input rate limiter 
