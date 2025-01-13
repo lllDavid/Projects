@@ -8,7 +8,6 @@ from app.db.fiat_wallet_db import delete_fiat_wallet
 from helpers.validation import is_valid_password, is_unique_username, is_unique_email
 from app.db.user_db import update_username, update_email, update_password, update_user_bank, get_complete_user,get_user_bank, get_user_by_id, get_user_by_email, get_user_by_username, delete_user
 
-
 def handle_login(request):
     oauth_token = session.get('oauth_token')
     

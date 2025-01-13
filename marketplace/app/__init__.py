@@ -29,7 +29,6 @@ def create_app() -> Flask:
 
     mail.init_app(marketplace)
 
-
     marketplace.register_blueprint(user_creator)
     marketplace.register_blueprint(wallet_values)
     marketplace.register_blueprint(crypto_purchase)
