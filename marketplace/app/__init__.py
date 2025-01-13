@@ -1,4 +1,6 @@
 from os import urandom
+from os import getenv
+from dotenv import load_dotenv
 from flask import Flask
 from flask_mail import Mail
 
@@ -10,6 +12,8 @@ from app.blueprints.wallet_values import wallet_values
 from app.blueprints.password_reset import reset_password
 from app.routes.routes import register_routes
 
+load_dotenv()
+
 mail = Mail()
 
 def create_app() -> Flask:
@@ -17,11 +21,14 @@ def create_app() -> Flask:
     marketplace.secret_key = urandom(24)
     marketplace.config.from_object(Config)
 
-    marketplace.config['MAIL_SERVER'] = 'smtp.gmail.com'
+    marketplace.config['MAIL_SERVER'] = 'smtp.gmail.com' # GMAIL for testing purposes only
     marketplace.config['MAIL_PORT'] = 587
     marketplace.config['MAIL_USE_TLS'] = True
-    marketplace.config['MAIL_USERNAME'] = 'your_email@gmail.com'  
-    marketplace.config['MAIL_PASSWORD'] = 'your_email_password' 
+    marketplace.config['MAIL_USERNAME'] = getenv('GMAIL_ADDRESS')  
+    marketplace.config['MAIL_PASSWORD'] = getenv('GMAIL_PASSWORD') 
+
+    mail.init_app(marketplace)
+
 
     marketplace.register_blueprint(user_creator)
     marketplace.register_blueprint(wallet_values)
