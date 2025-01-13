@@ -12,7 +12,7 @@ function showTab(tab) {
     }
 }
 
-// @todo: Get actual values for coins from db
+// @todo: Get actual values for coins from db/api
 document.getElementById('buy-amount').addEventListener('input', function () {
     const amount = parseFloat(this.value);
     const price = 90000;
@@ -24,7 +24,7 @@ document.getElementById('buy-amount').addEventListener('input', function () {
     }
 });
 
-// @todo: Get actual values for coins from db
+// @todo: Get actual values for coins from db/api
 document.getElementById('sell-amount').addEventListener('input', function () {
     const amount = parseFloat(this.value);
     const price = 90000;

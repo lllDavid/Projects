@@ -1,5 +1,7 @@
 TODO    
+    - Add Coin html for admin to allow CRUD
     - Add missing CRUD Methods for User Components
+    - Add functionality to withdraw crypto and fiat
     - (Settings) add check for old password 
     - (Support) send form funtionality
     - (Wallet) Add Current Price and Value
