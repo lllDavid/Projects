@@ -54,11 +54,13 @@ sudo service mysql start
 
 You can download and install MariaDB from their official site. [MariaDB](https://mariadb.com/downloads/)
 
-5. **Create the Database: Log in to MariaDB and create the necessary database for the project.**
+5. **Create the Database:** 
+Log in to MariaDB and create the necessary database for the project.
 mysql -u root -p
 CREATE DATABASE marketplace;
 
 6. **Configure Database and Database Connection: config.py**
+
 The sql scripts to create the tables needed are located in /db 
 
 7. **Run the Flask Application: Run the Flask app with the following command:**
@@ -68,6 +70,7 @@ python run.py
 ```
 
 8. **This will start the Flask development server at http://127.0.0.1:5000/ by default.**
+
 Access the Application: You can now access it by opening a web browser and navigating to:
 
 http://127.0.0.1:5000/
@@ -86,17 +89,20 @@ git clone https://github.com/lllDavid/marketplace.git
 cd marketplace
 ```
 
-**Build and Start the Application Using Docker Compose: The repository contains a docker-compose.yml file that simplifies the process of running the application with Docker.**
+**Build and Start the Application Using Docker Compose:**
+The repository contains a docker-compose.yml file that simplifies the process of running the application with Docker.
 Run the following command to build and start the application (including the database):
 ```bash
 docker-compose up --build
 This will build the Docker image if necessary, start the Flask application, and start the MariaDB container.
 ```
 
-**Access the Application: Once the containers are up and running, you can access your Flask app in your browser at:**
+**Access the Application:** 
+Once the containers are up and running, you can access your Flask app in your browser at:
 http://localhost:5000
 
-**Stop the Docker Containers: To stop the running Docker containers, use the following command:**
+**Stop the Docker Containers:**
+To stop the running Docker containers, use the following command:
 ```bash
 docker-compose down
 ```
