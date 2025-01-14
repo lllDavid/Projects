@@ -44,12 +44,12 @@ pip install -r requirements.txt
 ```
 
 3. **Set up MariaDB: Install MariaDB on your local machine. You can do so by running the following commands depending on your operating system.**
-Ubuntu/Debian:
+**Ubuntu/Debian:**
 ```bash
 sudo apt-get install mariadb-server
 sudo service mysql start
 ```
-Windows:
+**Windows:**
 You can download and install MariaDB from their official site. [MariaDB](https://mariadb.com/downloads/)
 
 5. **Create the Database: Log in to MariaDB and create the necessary database for the project.**
