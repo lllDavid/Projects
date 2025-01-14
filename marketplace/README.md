@@ -37,13 +37,15 @@ Follow these steps to install and run the project using Git.
    git clone https://github.com/lllDavid/marketplace.git
 ```
 
-2. **Navigate into the Project Directory: After cloning, go to the project directory.**
+2. **Navigate into the Project Directory:**
+After cloning, go to the project directory.
 ```bash
 cd marketplace
 pip install -r requirements.txt
 ```
 
-3. **Set up MariaDB: Install MariaDB on your local machine. You can do so by running the following commands depending on your operating system.**
+3. **Set up MariaDB: Install MariaDB on your local machine.**
+You can do so by running the following commands depending on your operating system.
 
 **Ubuntu/Debian:**
 ```bash
@@ -63,7 +65,8 @@ CREATE DATABASE marketplace;
 
 The sql scripts to create the tables needed are located in /db 
 
-7. **Run the Flask Application: Run the Flask app with the following command:**
+7. **Run the Flask Application:**
+Run the Flask app with the following command:
 ```bash
 cd /path/to/your/project
 python run.py
