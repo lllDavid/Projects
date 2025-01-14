@@ -38,16 +38,17 @@ Follow these steps to install and run the project using Git.
 ```
 
 2. **Navigate into the Project Directory: After cloning, go to the project directory.**
+```bash
 cd marketplace
-
 pip install -r requirements.txt
+```
 
 3. **Set up MariaDB: Install MariaDB on your local machine. You can do so by running the following commands depending on your operating system.**
 Ubuntu/Debian:
-
+```bash
 sudo apt-get install mariadb-server
 sudo service mysql start
-
+```
 Windows:
 You can download and install MariaDB from their official site. [MariaDB](https://mariadb.com/downloads/)
 
@@ -59,8 +60,10 @@ CREATE DATABASE marketplace;
 The sql scripts to create the tables needed are located in /db 
 
 7. **Run the Flask Application: Run the Flask app with the following command:**
+```bash
 cd /path/to/your/project
 python run.py
+```
 
 8. **This will start the Flask development server at http://127.0.0.1:5000/ by default.**
 Access the Application: You can now access it by opening a web browser and navigating to:
@@ -71,29 +74,28 @@ http://127.0.0.1:5000/
 Follow these steps to run the project using Docker and Docker Compose.
 
 **Prerequisites**:
-
 - [Docker](https://www.docker.com/get-started)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
 **Steps**:
 Clone the Repository: If you haven't cloned the repository yet, run the following command:
-
+```bash
 git clone https://github.com/lllDavid/marketplace.git
 cd marketplace
-
+```
 
 **Build and Start the Application Using Docker Compose: The repository contains a docker-compose.yml file that simplifies the process of running the application with Docker.**
-
 Run the following command to build and start the application (including the database):
-
+```bash
 docker-compose up --build
 This will build the Docker image if necessary, start the Flask application, and start the MariaDB container.
+```
 
 **Access the Application: Once the containers are up and running, you can access your Flask app in your browser at:**
-
 http://localhost:5000
 
 **Stop the Docker Containers: To stop the running Docker containers, use the following command:**
-
+```bash
 docker-compose down
+```
 This will stop and remove the containers but leave the images intact.
