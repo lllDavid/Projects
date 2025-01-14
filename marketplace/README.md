@@ -33,8 +33,9 @@ Follow these steps to install and run the project using Git.
 
 1. **Clone the Repository**:
    Clone the repository from GitHub to your local machine.
-
+```bash
    git clone https://github.com/lllDavid/marketplace.git
+```
 
 2. **Navigate into the Project Directory: After cloning, go to the project directory.**
 cd marketplace
