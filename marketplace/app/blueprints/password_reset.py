@@ -24,8 +24,11 @@ TOKEN_EXPIRATION_TIME = 3600
 def send_reset_email(to_email, reset_url):
     from app import mail
     from flask_mail import Message
-    msg = Message('Password Reset Request',
-                  recipients=[to_email])
+    msg = Message(
+        'Password Reset Request',
+        sender=getenv('GMAIL_ADDRESS'),
+        recipients=[to_email]
+    )
     msg.body = f'Click the link to reset your password: {reset_url}'
     mail.send(msg)
 
