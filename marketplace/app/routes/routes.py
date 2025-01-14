@@ -127,7 +127,7 @@ def register_routes(app):
     def settings():
         return handle_settings(request)
 
-    @app.route("/support")
+    @app.route("/support", methods=["GET", "POST"])
     def support():
         return render_template("support.html")
     

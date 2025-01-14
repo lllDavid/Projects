@@ -1,4 +1,4 @@
-- Add Coin html for admin to allow CRUD
+- Add Coin html template (Coin Creator Blueprint)
 - Add missing CRUD Methods for User Components
 - Add functionality to withdraw crypto and fiat
 - (Settings) add check for old password 
