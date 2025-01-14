@@ -1,3 +1,5 @@
+- Add check/ connection to funds on users fiat wallet (Currently no check)
+
 - Add Coin html template (Coin Creator Blueprint)
 - Add missing CRUD Methods for User Components
 - Add functionality to withdraw crypto and fiat
@@ -12,3 +14,4 @@
 - (Login/Signup) Input rate limiter 
 - 2FA Functionality (QR Code)
 - Database Connection Pool(Currently pool size of 10)
+- Security/vulnerabilities checks
