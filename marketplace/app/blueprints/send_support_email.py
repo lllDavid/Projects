@@ -1,7 +1,7 @@
 from os import getenv
 from dotenv import load_dotenv
 
-from flask import Blueprint, render_template, redirect, url_for, request, session
+from flask import Blueprint, render_template, redirect, url_for, flash,  request, session
 from app.controllers.auth_controller import check_authentication
 
 load_dotenv()
@@ -40,4 +40,5 @@ def send_support_email():
 
     send_email(SUPPORT_EMAIL, user_email, subject, message)
 
-    return 'Your message has been sent to support!'
+    flash('Message has been sent to support! We will get back to you shortly.', 'success')
+    return redirect(url_for('support'))

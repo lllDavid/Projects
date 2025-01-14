@@ -14,6 +14,20 @@
         <p class="lead">Ask for help</p>
     </div>
 
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+
+    <div class="alert alert-dismissible fade show" role="alert">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
     <section class="faq-section">
         <div class="faq-item">
             <h3>How do I reset my password?</h3>
