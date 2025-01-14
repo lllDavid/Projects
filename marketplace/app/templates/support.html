@@ -34,7 +34,7 @@
 
     <section class="support-form-section">
         <h2>Contact Support</h2>
-        <form action="submit_support_request.php" method="POST">
+        <form action="{{ url_for('support_email.send_support_email') }}" method="POST">
 
             <div class="form-group mb-3">
                 <label for="email">Your Email:</label>
