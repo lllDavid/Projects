@@ -54,4 +54,4 @@ function updateTable() {
     });
 }
 
-setInterval(updateTable, 2500);
+setInterval(updateTable, 1500);
