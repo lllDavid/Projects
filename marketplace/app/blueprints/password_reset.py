@@ -25,7 +25,6 @@ def send_reset_email(to_email, reset_url):
     from app import mail
     from flask_mail import Message
     msg = Message('Password Reset Request',
-                  sender='your_email@gmail.com',
                   recipients=[to_email])
     msg.body = f'Click the link to reset your password: {reset_url}'
     mail.send(msg)

@@ -10,6 +10,7 @@ from app.blueprints.crypto_purchase import crypto_purchase
 from app.blueprints.crypto_liquidation import crypto_liquidation
 from app.blueprints.wallet_values import wallet_values
 from app.blueprints.password_reset import reset_password
+from app.blueprints.send_support_email import support_email
 from app.routes.routes import register_routes
 
 load_dotenv()
@@ -33,7 +34,8 @@ def create_app() -> Flask:
     marketplace.register_blueprint(wallet_values)
     marketplace.register_blueprint(crypto_purchase)
     marketplace.register_blueprint(crypto_liquidation)
-    marketplace.register_blueprint(reset_password) 
+    marketplace.register_blueprint(reset_password)
+    marketplace.register_blueprint(support_email)
             
     register_routes(marketplace)
 
