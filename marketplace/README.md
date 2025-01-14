@@ -86,6 +86,7 @@ Follow these steps to run the project using Docker and Docker Compose.
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
 **Steps**:
+
 Clone the Repository: If you haven't cloned the repository yet, run the following command:
 ```bash
 git clone https://github.com/lllDavid/marketplace.git
@@ -93,6 +94,7 @@ cd marketplace
 ```
 
 **Build and Start the Application Using Docker Compose:**
+
 The repository contains a docker-compose.yml file that simplifies the process of running the application with Docker.
 Run the following command to build and start the application (including the database):
 ```bash
@@ -101,10 +103,12 @@ This will build the Docker image if necessary, start the Flask application, and 
 ```
 
 **Access the Application:** 
+
 Once the containers are up and running, you can access your Flask app in your browser at:
 http://localhost:5000
 
 **Stop the Docker Containers:**
+
 To stop the running Docker containers, use the following command:
 ```bash
 docker-compose down
