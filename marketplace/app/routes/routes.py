@@ -1,31 +1,10 @@
-import string
-from random import choices
-from os import getenv
-from dotenv import load_dotenv
-from requests import get, post
-
-from flask import render_template, redirect, url_for, jsonify, request, session
+from flask import render_template, redirect, url_for, request, session
 
 from app.controllers.auth_controller import handle_login, handle_settings, handle_deposit
-
-load_dotenv()
-
-# OAuth credentials
-client_id = getenv("GOOGLE_CLIENT_ID")
-client_secret = getenv("GOOGLE_CLIENT_SECRET")
-redirect_uri = 'http://localhost:5000/callback'
-mock_user_data = {
-    'id': '12345',
-    'email': 'mockuser@example.com',
-    'name': 'Mock User',
-}
-
-def generate_mock_oauth_token():
-    return {
-        'access_token': ''.join(choices(string.ascii_letters + string.digits, k=40)),
-        'token_type': 'bearer',
-        'expires_in': 3600,  
-    }
+from app.db.user_db import get_user_by_email
+from app.user.user_creator import UserCreator
+from app.wallets.fiat.fiat_wallet_creator import create_fiat_wallet
+from app.wallets.crypto.crypto_wallet_creator import create_cryto_wallet
 
 def register_routes(app):
     @app.route("/")
@@ -47,6 +26,11 @@ def register_routes(app):
     @app.route("/signup")
     def signup():
         return render_template("signup.html")
+    
+    @app.route("/oauth-signup")
+    def oauth_signup():
+        redirect_uri = url_for('authorize', _external=True)
+        return app.google.authorize_redirect(redirect_uri)
 
     @app.route("/login", methods=["GET", "POST"])
     def login():
@@ -54,53 +38,14 @@ def register_routes(app):
             return handle_login(request)
         return render_template("login.html")
     
+    @app.route("/oauth-login")
+    def oauth_login():
+        redirect_uri = url_for('authorize', _external=True)
+        return app.google.authorize_redirect(redirect_uri)
+    
     @app.route("/login/reset-password")
     def reset_password():
         return render_template("reset-password.html")
-    
-    @app.route("/oauth_google")
-    def oauth_google():
-        oauth_url = (
-            f"https://accounts.google.com/o/oauth2/v2/auth?response_type=code"
-            f"&client_id={client_id}&redirect_uri={redirect_uri}&scope=email%20profile"
-        )
-        return redirect(oauth_url)
-    
-    @app.route("/callback", methods=["GET"])
-    def callback():
-        code = request.args.get('code')
-        if not code:
-            return "Error: No authorization code provided by OAuth provider.", 400
-        
-        token_url = "https://oauth2.googleapis.com/token"
-        token_data = {
-            'code': code,
-            'client_id': client_id,
-            'client_secret': client_secret,
-            'redirect_uri': redirect_uri,
-            'grant_type': 'authorization_code',
-        }
-        token_response = post(token_url, data=token_data)
-        token_info = token_response.json()
-        
-        if token_response.status_code == 200:
-            session['oauth_token'] = token_info
-            user_info_response = get(
-                "https://www.googleapis.com/oauth2/v3/userinfo", 
-                headers={"Authorization": f"Bearer {token_info['access_token']}"}
-            )
-            session['user_info'] = user_info_response.json()
-            return redirect(url_for('home'))
-        else:
-            return redirect(url_for('login'))
-
-    @app.route("/profile", methods=["GET"])
-    def profile():
-        user_info = session.get('user_info')
-        if user_info:
-            return jsonify(user_info)
-        else:
-            return "User not logged in!", 400
 
     @app.route("/logout")
     def logout():
@@ -130,4 +75,37 @@ def register_routes(app):
     @app.route("/support", methods=["GET", "POST"])
     def support():
         return render_template("support.html")
-    
+
+    @app.route('/authorize')
+    def authorize():
+        token = app.google.authorize_access_token()
+        resp = app.google.get('userinfo')
+        user_info = resp.json()
+        print(user_info)
+
+        session["email"] = user_info["email"]
+        email = user_info["email"]
+        
+        user = get_user_by_email(email)
+
+        if user_info:
+            if not user:
+                user_creator = UserCreator()
+                user = user_creator.create_user(user_info["name"], user_info["email"], password="")
+                user_creator.save_user(user)
+                if user.id:
+                    create_fiat_wallet(user.id)
+                    create_cryto_wallet(user.id)
+                session["user_id"] = user.id
+                session["username"] = user.username
+                session["email"] = user.email
+                session.modified = True
+
+        if user:
+            session["user_id"] = user.id
+            session["username"] = user.username
+            session.modified = True
+
+            return redirect(url_for("home"))
+        else:
+            return redirect(url_for("login"))
