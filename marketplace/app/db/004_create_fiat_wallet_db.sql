@@ -1,3 +1,4 @@
+CREATE DATABASE marketplace_wallets;
 USE marketplace_wallets;
 
 CREATE TABLE fiat_wallet (
