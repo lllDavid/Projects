@@ -22,6 +22,6 @@ services:
       - mariadb_data:/var/lib/mysql
       - ./app/db:/docker-entrypoint-initdb.d
 
-  volumes:
+volumes:
   mariadb_data:
     driver: local
