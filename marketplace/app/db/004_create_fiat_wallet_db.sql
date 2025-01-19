@@ -10,5 +10,5 @@ CREATE TABLE fiat_wallet (
     last_accessed TIMESTAMP,
     encryption_key VARCHAR(255),
     deposit_history JSON DEFAULT '{}',
-    withdrawal_history JSON DEFAULT '{}',
+    withdrawal_history JSON DEFAULT '{}'
 );
