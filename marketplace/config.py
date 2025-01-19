@@ -1,7 +1,10 @@
-from os import path, getenv
+from os import path
 
 def get_db_host():
-    return getenv("DB_HOST", "localhost") 
+    if path.exists("/.dockerenv"):
+        return "host.docker.internal"  
+    else:
+        return "localhost"  
 
 class Config:
     USER_DB_CONFIG = {
