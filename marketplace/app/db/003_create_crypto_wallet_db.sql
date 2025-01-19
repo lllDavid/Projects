@@ -11,6 +11,6 @@ CREATE TABLE crypto_wallet (
     encryption_key VARCHAR(255),
     deposit_history JSON DEFAULT '{}',
     withdrawal_history JSON DEFAULT '{}',
-    FOREIGN KEY (user_id) REFERENCES marketplace_users(id)
+    FOREIGN KEY (user_id) REFERENCES marketplace_users.user(id)
 );
 
