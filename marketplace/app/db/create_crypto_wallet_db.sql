@@ -13,3 +13,4 @@ CREATE TABLE crypto_wallet (
     withdrawal_history JSON DEFAULT '{}',
     FOREIGN KEY (user_id) REFERENCES marketplace_users.user(id)
 );
+
