@@ -58,7 +58,7 @@ def client():
                         
                 elif ftp == "N":
                     client_socket.sendall(ftp.encode())
-                    image_path = input("Enter image path: ")
+                    image_path = input("Enter image path(eg. images/dog.12492.jpg):")
                     client_socket.sendall(image_path.encode())
                 
                 server_response = client_socket.recv(1024).decode()
