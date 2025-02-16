@@ -4,6 +4,7 @@ from ftplib import FTP
 class User:
     def __init__(self):
         self.user_data = {}
+        self.logged_in_users = {}
 
     def register(self, conn, addr):
         new_username = conn.recv(1024).decode()
@@ -24,6 +25,7 @@ class User:
         password = conn.recv(1024).decode()
 
         if username in self.user_data and self.user_data[username] == password:
+            self.logged_in_users[conn] = username
             conn.sendall(f"Welcome {username}.\n".encode())
             print(f"[{username}] logged in with IP: [{addr[0]}]")
         else:
@@ -31,11 +33,23 @@ class User:
             print(f"{addr[0]} tried to log in with username: {username} and password: {password}")
 
     def handle_user_contact_message(self, conn, addr):
+        username = self.logged_in_users.get(conn)
+        
+        if username is None:
+            conn.sendall("You must be logged in to send a message.\n".encode())
+            return
+        
         user_message = conn.recv(1024).decode()
-        print(f"[{self.username}] sent the message: [{user_message}] with IP: [{addr[0]}]")
+        print(f"[{username}] sent the message: [{user_message}] with IP: [{addr[0]}]")
         conn.sendall(f"{addr[0]} we received your message.\n".encode())
 
     def run_image_recognition(self, conn, image_path=None):
+        username = self.logged_in_users.get(conn)
+        
+        if username is None:
+            conn.sendall("You must be logged in to perform image recognition.\n".encode())
+            return
+
         ftp_yes_no = conn.recv(1024).decode().strip()
 
         if ftp_yes_no == "Y":
@@ -80,17 +94,3 @@ class User:
         except Exception as e:
             conn.send(f"Failed to upload file: {str(e)}".encode())
             return None
-    
-    def reset(self):
-        pass
-
-    def delete(self):
-        pass
-
-
-
-    
-
-    
-
-   

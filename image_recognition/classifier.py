@@ -1,9 +1,9 @@
 import os
 import torch
-from model import CNNModel
 from PIL import Image
-from torchvision import transforms
 from pathlib import Path
+from model import CNNModel
+from torchvision import transforms
 
 class Classifier:
     def main(self, image_path):
