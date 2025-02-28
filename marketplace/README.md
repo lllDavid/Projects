@@ -3,7 +3,7 @@
 - This platform simulates a crypto marketplace environment, allowing users to explore features such as buying and selling crypto, viewing market data, and managing wallets. 
 - **Note**: This is not an actual exchange and does not involve real transactions. It is intended as a development prototype for educational and demonstration purposes.
 
-## Features:
+## Features
 - Cryptocurrency buying and selling functionality (Mock Implementation) 
 - Dashboard showing Market Data (Mock Implementation) 
 - Wallet showing coins and values 
@@ -15,12 +15,12 @@
 - Secure password hashing (Argon2id) 
 - Secure authentication (2FA via Authenticator App not yet implemented) 
 
-## Prerequisites:
+## Prerequisites
 - Python 3.12+
 - MariaDB
 - `pip`
 
-## Setting up Environment Variables:
+## Setting up Environment Variables
 
 To use certain features, you'll need to create a `.env` file in the root of the project with the following content: 
 
@@ -44,10 +44,10 @@ APP_SECRET_KEY=your_secret_key
 
 ```
 
-## Setting up OAuth2 with Google:
-https://support.google.com/cloud/answer/6158849?hl=en#zippy=
+## Setting up OAuth2 with Google
+- https://support.google.com/cloud/answer/6158849?hl=en#zippy=
 
-https://developers.google.com/identity/protocols/oauth2/web-server
+- https://developers.google.com/identity/protocols/oauth2/web-server
 
 Authorized redirect URIs needed for OAuth2:
 
@@ -60,105 +60,146 @@ Authorized redirect URIs needed for OAuth2:
 
 You can set up the **Marketplace** in two ways: using **Git** or **Docker**.
 
-## **How to Use with Git**:
+## How to Use with Git
 
-### 1. **Clone the Repository:**
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/lllDavid/marketplace.git
 ```
 
-### 2. **Install dependencies:**
-#### **Debian:**
-```bash
-cd marketplace
-``` 
+## 2. Install dependencies
 
-Create virtual enviroment:
-```bash
-python3 -m venv venv
-```
+### Debian 
 
-Activate virtual enviroment:
-```bash
-source venv/bin/activate
-```
+1. **Navigate to the marketplace directory:**
+    ```bash
+    cd marketplace
+    ```
 
-Install requirements:
-```bash
-pip install -r requirements.txt
-```
+2. **Create a virtual environment:**
+    ```bash
+    python3 -m venv venv
+    ```
 
-#### **Windows:**
-```bash
-cd marketplace
-pip install -r requirements.txt
-```
+3. **Activate the virtual environment:**
+    ```bash
+    source venv/bin/activate
+    ```
 
-### 3. **Set up MariaDB:**
+4. **Install requirements:**
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-#### **Debian:**
-```bash
-sudo apt-get install mariadb-server
-sudo service mysql start
-```
-#### **Windows:**
+### Windows
 
-You can download and install MariaDB from their official site: [MariaDB](https://mariadb.com/downloads/)
+1. **Navigate to the marketplace directory:**
+    ```bash
+    cd marketplace
+    ```
 
-### 4. **Connect to Database:** 
+2. **Install requirements:**
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-#### **Debian:**
-```bash
-mysql -u root -p
-```
+## 3. Set up MariaDB
 
-#### **Windows:**
+### Debian 
 
-Run HeidiSQL which comes with MariaDB and create a new Session. Enter your MariaDB User and Password.
+1. **Install MariaDB server:**
+    ```bash
+    sudo apt-get install mariadb-server
+    ```
 
-### 5. **Create the tables:**
-#### **Debian:**
-```bash
-source app/db/001_create_user_db.sql;
-source app/db/002_create_coin_db.sql;
-source app/db/003_create_crypto_wallet_db.sql;
-source app/db/004_create_fiat_wallet_db.sql;
-```
+2. **Start the MySQL service:**
+    ```bash
+    sudo service mysql start
+    ```
 
-#### **Windows:**
+### Windows
 
-After entering the session use the query tab to execute the SQL scripts located in app/db.
+1. **Download and install MariaDB from their official site:**
+    [MariaDB](https://mariadb.com/downloads/)
 
-### 6. **Run the Application:**
-#### **Debian:**
-```bash
-python3 run.py
-```
 
-#### **Windows:**
-```bash
-python run.py
-```
+## 4. Connect to Database
 
-### 7. **This will start the App at: http://127.0.0.1:5000**
+### Debian 
 
-## **How to Use with Docker**:
+1. **Connect to the MariaDB server:**
 
-**Prerequisites**:
+    ```bash
+    mysql -u root -p
+    ```
+
+### Windows
+
+1. **Run HeidiSQL** (which comes with MariaDB) and **create a new session**.
+2. **Enter your MariaDB user and password.**
+
+## 5. Create the tables
+
+### Debian 
+
+1. **Execute the SQL scripts to create the necessary tables:**
+
+    ```bash
+    source app/db/001_create_user_db.sql;
+    source app/db/002_create_coin_db.sql;
+    source app/db/003_create_crypto_wallet_db.sql;
+    source app/db/004_create_fiat_wallet_db.sql;
+    ```
+### Windows
+
+1. **After entering the session in HeidiSQL,** use the **query tab** to execute the SQL scripts located in `app/db`.
+
+## 6. Run the Application
+
+### Debian 
+
+1. **Start the application:**
+
+    ```bash
+    python3 run.py
+    ```
+
+### Windows
+
+1. **Start the application:**
+
+    ```bash
+    python run.py
+    ```
+
+### 7. This will start the App at: [http://127.0.0.1:5000](http://127.0.0.1:5000)
+
+
+## How to Use with Docker
+
+#### Prerequisites
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
-### 1. Clone the Repository and navigate to the project directory:
+### 1. Clone the Repository and navigate to the directory
+
 ```bash
 git clone https://github.com/lllDavid/marketplace.git
 cd marketplace
 ```
 
-### 2. **Build and Start the Application Using Docker Compose:**
+### 2. Run docker compose
 
 ```bash
 docker-compose up 
 ```
 
-### 3. **This will start the App at: http://localhost:5000**
+### 3. Run docker start
+
+```bash
+docker start marketplace-app-1
+```
+
+### 3. This will start the App at: [http://localhost:5000](http://localhost:5000)
+
 
