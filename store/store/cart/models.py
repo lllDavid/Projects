@@ -14,7 +14,7 @@ class Cart(models.Model):
         return f"Cart for {self.user.email} - {self.created_at}"
 
     def get_total_cart_price(self):
-        total_price = sum(item.get_item_total() for item in self.cart_items.all())
+        total_price = sum(item.get_total_items_price() for item in self.cart_items.all())
         return total_price
 
 class CartItem(models.Model):
