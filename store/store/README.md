@@ -12,27 +12,6 @@ E-Commerce store built with Django.
 - Cart overview
 - Checkout functionality (Missing actual payment/shipping process)
 
-
-![Home](images/home.png)
-
-![Products](images/products-grid.png)
-
-![Products Details](images/product-details.png)
-
-![Responsive](images/responsive.png)
-
-![Cart](images/cart.png)
-
-![Checkout](images/checkout.png)
-
-![Register](images/register.png)
-
-![Login](images/login.png)
-
-![About](images/about.png)
-
-![Contact](images/contact.png)
-
 ## Prerequisites:
 - Python 3.13+
 - `pip`
