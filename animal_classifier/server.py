@@ -1,11 +1,11 @@
-import user
 import socket
-import threading
+from service import Service
+from threading import Thread
+
 
 class Server:
     def __init__(self):
-        self.user_instance = user.User()
-        self.active_connections = []    
+        self.user_instance = Service()
 
     def start_server(self, host="0.0.0.0", port=1234):
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -16,12 +16,11 @@ class Server:
 
         while True:
             conn, addr = server_socket.accept()
-            t = threading.Thread(target=self.handle_client, args=(conn, addr))
+            t = Thread(target=self.handle_client, args=(conn, addr))
             t.start()
 
     def handle_client(self, conn, addr):
         print(f"New connection: {addr[0]}")
-        self.active_connections.append(addr[0])
 
         while True:
             try:
@@ -30,14 +29,10 @@ class Server:
 
                 match user_message:
                     case "1":
-                        self.user_instance.register(conn, addr)
+                        self.user_instance.image_recognition(conn, addr)
                     case "2":
-                        self.user_instance.login(conn, addr)
-                    case "3":
-                        self.user_instance.run_image_recognition(conn)
-                    case "4":
-                        self.user_instance.handle_user_contact_message(conn, addr)
-
+                        self.user_instance.ftp_recognition(conn)
+        
             except Exception as e:
                 print(f"Error while handling client {addr}: {e}")
                 break
