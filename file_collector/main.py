@@ -4,33 +4,31 @@ from find_matches import find_matches
 from copy_matches import copy_matches
 
 def main():
-    search_dir = str(input("Enter directory to search in (e.g., C:/ ): "))
-    search_patterns = []
+    search_dir = input("Enter directory to search in (e.g. C:/ ): ").strip()
 
-    while True:
-        user_input = input("Add a search pattern (or type 's' to search): ")
+    raw = input("Enter search pattern(s), separated by commas (e.g. .json, .sql, .py): ")
+    patterns = [p.strip() for p in raw.split(',') if p.strip()]
 
-        if user_input.lower() == 's':
-            break
+    user = getlogin()
+    base_out = path.join("C:/Users", user, "File_Collector")
+    makedirs(base_out, exist_ok=True)
 
-        search_patterns.append(user_input)
+    recycle_bin = path.join(search_dir, "$Recycle.Bin")
+    exclude = [recycle_bin, base_out]
 
-    user_name = getlogin()
-    user_dir = f"C:/Users/{user_name}/File_Collector"
+    for pat in patterns:
+        folder = pat.lstrip(".").lower() or "misc"
+        out_dir = path.join(base_out, folder)
+        makedirs(out_dir, exist_ok=True)
 
-    if not path.exists(user_dir):
-        makedirs(user_dir)
+        print(f"\nSearching for *{pat}* files...")
+        matches = find_matches(search_dir, [pat], exclude_dirs=exclude)
 
-    print(f"Searching for files and folders in {search_dir}...")
-
-    found_paths = find_matches(search_dir, search_patterns)
-
-    if found_paths:
-        print(f"Found {len(found_paths)} matching files/folders. Copying them...")
-        copy_matches(user_dir, found_paths)
-        print(f"Files copied successfully to {user_dir}.")
-    else:
-        print("No matching files found.")
+        if matches:
+            print(f"Found {len(matches)} files. Copying...")
+            copy_matches(out_dir, matches)
+        else:
+            print(f"No *{pat}* files found.")
 
 if __name__ == "__main__":
     main()
