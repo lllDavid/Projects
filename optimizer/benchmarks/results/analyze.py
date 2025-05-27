@@ -1,8 +1,15 @@
 from os import path
 
-def analyze():
-    directory = 'benchmarks/results/unoptimized'
-    filename = input("Enter filename (eg. inefficient_matrix_multiplication.lprof):").strip()
+def analyze(profile_type="unoptimized"):
+    if profile_type == 'unoptimized':
+        directory = 'benchmarks/results/unoptimized'
+        filename = input("Enter filename (eg. inefficient_matrix_multiplication.lprof):").strip()
+    elif profile_type == 'optimized':
+        directory = 'benchmarks/results/optimized'
+        filename = input("Enter filename (eg. decorated_test_func.lprof):").strip()
+    else:
+        raise ValueError(f"Unknown profile_type: {profile_type}")
+    
     f = path.join(directory, filename)
 
     if not path.exists(f):

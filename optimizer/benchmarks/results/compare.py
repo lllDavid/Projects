@@ -51,7 +51,7 @@ def load_lprof_file(file: str, directory: str):
         print(f"{directory.capitalize()} file '{file}' not found!")
         return None
 
-
+# TODO: only works if files of same name in both dirs
 def compare(file_name):
     unoptimized_stats = load_lprof_file(file_name, "benchmarks/results/unoptimized")
     optimized_stats = load_lprof_file(file_name, "benchmarks/results/optimized")
