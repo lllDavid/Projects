@@ -3,8 +3,6 @@ from urllib.parse import urlparse
 
 def find():
     url = str(input("Enter a URL (eg. https://app.instaffo.com): "))
-    parsed_url = urlparse(url)
-    parsed_url = f"{parsed_url.scheme}://{parsed_url.netloc}"
 
     sitemaps = [
         f"{url}/sitemap.xml",
