@@ -1,6 +1,6 @@
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
@@ -39,6 +39,28 @@ def add_to_cart(request, product_id):
     cart_item.save()
 
     return HttpResponseRedirect(reverse('product-detail', args=[product_id]))
+
+@login_required(login_url='login')
+def remove_from_cart(request, item_id):
+    cart_item = get_object_or_404(CartItem, id=item_id)
+
+    if cart_item.cart.user == request.user:
+        cart_item.delete()  
+
+    return redirect('cart')  
+
+def search_products(request):
+    search_query = request.GET.get('q', '').strip()  
+
+    if search_query:
+        products = Product.objects.filter(name__iexact=search_query)  
+    else:
+        products = Product.objects.all()
+
+    return render(request, 'product-grid.html', {'products': products, 'search_query': search_query})
+
+
+
 
 
 

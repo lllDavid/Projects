@@ -1,5 +1,0 @@
-Django==5.1.7
-fastapi==0.115.11
-fastapi-cli==0.0.7
-psycopg2-binary==2.9.10
-uvicorn==0.34.0

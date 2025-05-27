@@ -1,16 +1,15 @@
 # Store
-![Status](https://img.shields.io/badge/status-Early_Development-orange)
-
-E-Commerce store built with Django. 
-
+- E-Commerce store built with Django.
 ## Features
-- Products Grid view
-- Products Detail view
-- Register user
-- Login/Logout user
-- Add products to cart
-- Cart overview
-- Checkout functionality (Missing actual payment/shipping process)
+- Product Grid View
+- Product Details View
+- Product Search Functionality
+- Register User
+- Login/Logout User
+- Forgot Password Functionality
+- Add Products to Cart (Custom Quantity)
+- Cart Overview
+- Checkout Functionality (Missing Actual Payment/Shipping Process)
 
 ## Prerequisites:
 - Python 3.13+

@@ -25,8 +25,8 @@ from .views import contact_view
 from cart.views import cart_view
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', home_view, name='home'),
+    path('admin/', admin.site.urls),
     path("products/", include('product.urls')),
     path('cart/', cart_view, name='cart'),
     path('orders/', include('order.urls')), 
@@ -35,5 +35,9 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('register/', user.create_user, name='register'),
+    path('reset-password/', auth_views.PasswordResetView.as_view(template_name='registration/password_reset_form.html'), name='password_reset'),
+    path('reset-password/done/', auth_views.PasswordResetDoneView.as_view(template_name='registration/password_reset_done.html'), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 ]
 

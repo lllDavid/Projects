@@ -6,6 +6,16 @@
 <link rel="stylesheet" href="{% static 'css/product-grid.css' %}">
 <h1>Products</h1>
 
+{% if search_query %}
+{% if products|length > 0 %}
+<p id="p-search">Search results:</p>
+{% else %}
+<p id="p-search">No results found for "{{ search_query }}"</p>
+{% endif %}
+{% endif %}
+
+
+
 <div class="product-grid">
     {% for product in products %}
     <div class="product-card">

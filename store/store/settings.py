@@ -136,6 +136,25 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'user.StoreUser'
 
+LOGIN_URL = '/login/'
+
 LOGIN_REDIRECT_URL = '/'  
 
 LOGOUT_REDIRECT_URL = '/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# To send a password reset to an actual email instead of printing it in console you need to configure those settings below.
+# NOTE: Use .env file and environ for host_user and host_password.
+'''
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'  
+EMAIL_PORT = 587  
+EMAIL_USE_TLS = True  
+EMAIL_HOST_USER = 'your-email@gmail.com'
+EMAIL_HOST_PASSWORD = 'your-email-password'  
+
+DEFAULT_FROM_EMAIL = 'your-email@gmail.com'
+
+'''
