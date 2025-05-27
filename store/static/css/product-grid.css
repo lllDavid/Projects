@@ -35,3 +35,8 @@
     object-fit: contain;
     margin-bottom: 0.9375rem;
 }
+
+#p-search {
+    font-size: 1.1rem;
+    margin-left: 1.5rem;
+}
