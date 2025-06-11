@@ -1,10 +1,6 @@
-import json
-from dacite import from_dict
-from fingerprint import fingerprint
-
 from django.shortcuts import render
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
+
 
 def home_view(request):
     return render(request, 'home.html')
@@ -15,22 +11,16 @@ def about_view(request):
 def contact_view(request):
     return render(request, 'contact.html')
 
-stored_fingerprint = None
-fingerprint_instance = None
+def show_headers(request):
+    headers = request.headers  
+    output = "\n".join(f"{key}: {value}" for key, value in headers.items())
+    print("Request headers:\n" + output)  
 
-@csrf_exempt
-def create_fingerprint(request):
-    global stored_fingerprint, fingerprint_instance
-    if request.method == "POST":
-        try:
-            data = json.loads(request.body)
-            stored_fingerprint = data
+    x_forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR")
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(",")[0].strip()
+    else:
+        ip = request.META.get("REMOTE_ADDR")
+    print(ip)
 
-            fingerprint_instance = from_dict(data_class=fingerprint.Fingerprint, data=stored_fingerprint)
-            print(fingerprint_instance)
-
-            return JsonResponse({"status": "ok"})
-        except json.JSONDecodeError:
-            return JsonResponse({"error": "Invalid JSON"}, status=400)
-
-    return JsonResponse({"error": "Only POST allowed"}, status=405)
+    return HttpResponse("Headers printed to server log.")

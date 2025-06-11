@@ -84,11 +84,22 @@ async function collectFingerprint() {
     let webgl_renderer = null;
     let webgl_vendor = null;
     let webgl_extensions = [];
+    let webgl_debug_supported = false;
 
     if (gl) {
-        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-        webgl_renderer = debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER);
-        webgl_vendor = debugInfo ? gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) : gl.getParameter(gl.VENDOR);
+        const isFirefox = navigator.userAgent.toLowerCase().includes("firefox");
+
+        const debugInfo = !isFirefox ? gl.getExtension('WEBGL_debug_renderer_info') : null;
+        webgl_debug_supported = !!debugInfo;
+
+        webgl_renderer = debugInfo
+            ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
+            : gl.getParameter(gl.RENDERER);
+
+        webgl_vendor = debugInfo
+            ? gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL)
+            : gl.getParameter(gl.VENDOR);
+
         webgl_extensions = gl.getSupportedExtensions() || [];
     }
 
@@ -313,7 +324,8 @@ async function collectFingerprint() {
                 supportedCDMs.push(keySystem);
             } catch { }
         }
-        return supportedCDMs.length ? supportedCDMs : null;
+        return supportedCDMs;
+
     }
 
     const cdm_list = await getAvailableCDMs();
@@ -393,7 +405,6 @@ collectFingerprint().then(fp => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            // "X-CSRFToken": getCookie("csrftoken") # Not needed in Django (@csrf_exempt)
         },
         body: JSON.stringify(fp)
     })
@@ -410,21 +421,4 @@ collectFingerprint().then(fp => {
             console.log("Fingerprint:", fp);
         })
         .catch(error => console.error("Error sending fingerprint:", error));
-
-    /*
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.startsWith(name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.slice(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-    */
 });
