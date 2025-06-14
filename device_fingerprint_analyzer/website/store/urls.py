@@ -21,7 +21,7 @@ from django.urls import path, include
 from user import views as user
 from cart.views import cart_view
 from fingerprint.views import create_fingerprint_from_request
-from .views import home_view, about_view, contact_view, show_headers
+from .views import home_view, about_view, contact_view
 
 urlpatterns = [
     path('', home_view, name='home'),
@@ -39,5 +39,4 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('fingerprint/', create_fingerprint_from_request),
-    path('debug/headers/', show_headers),
 ]
