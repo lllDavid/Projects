@@ -9,8 +9,8 @@ from helpers.validation import is_valid_password, is_unique_username, is_unique_
 from app.db.user_db import update_username, update_email, update_password, update_user_bank, get_complete_user,get_user_bank, get_user_by_id, get_user_by_email, get_user_by_username, delete_user
 
 def handle_login(request):
-    username = request.form.get("username")
-    password = request.form.get("password")
+    username = request.form['username']
+    password = request.form['password']
 
     user = get_user_by_username(username)
     if user and UserSecurity.validate_password_hash(password, user.user_security.password_hash):
@@ -22,7 +22,7 @@ def handle_login(request):
         return redirect(url_for("home"))
     else:
         return redirect(url_for("login"))
-    
+
 def handle_logout():
     session.pop("user_id", None)
     session.pop("username", None)
@@ -70,10 +70,6 @@ def delete_user_account(user_id):
         flash("An error occurred while deleting your account. Please try again.", "error")
         return redirect(url_for("settings"))
 
-from datetime import datetime
-from flask import request, redirect, render_template, flash, url_for, session
-
-
 def handle_settings(request):
     redirect_response = check_authentication()
     if redirect_response:
@@ -102,7 +98,6 @@ def handle_settings(request):
 
     return render_template("settings.html", username=current_username, email=current_email, user=user)
 
-
 def handle_user_info_update(request, user_id):
     new_username = request.form.get("username")
     new_email = request.form.get("email")
@@ -116,7 +111,6 @@ def handle_user_info_update(request, user_id):
 
     if new_password:
         update_current_password(user_id, new_password)
-
 
 def handle_bank_info_update(request, user_id):
     new_bank_name = request.form.get("bank_name")
