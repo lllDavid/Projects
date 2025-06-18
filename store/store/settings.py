@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from os import path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,7 +42,8 @@ INSTALLED_APPS = [
     'order',
     'payment',
     'product',
-    'user'
+    'user',
+    'store'
 ]
 
 MIDDLEWARE = [
@@ -78,13 +80,20 @@ WSGI_APPLICATION = 'store.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# Dynamically get host
+def get_db_host():
+    if path.exists("/.dockerenv"):
+        return "db"  
+    else:
+        return "localhost"  
+    
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'store_db',  
         'USER': 'postgres',  
         'PASSWORD': 'root',  
-        'HOST': 'localhost',  
+        'HOST': get_db_host(),
         'PORT': '5432',  
     }
 }

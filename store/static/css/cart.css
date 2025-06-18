@@ -1,12 +1,16 @@
-table,
-p {
-    font-size: 1.2rem;
-    margin: 1.2rem;
+table {
+    font-size: clamp(0.8rem, 2.5vw, 1.2rem);
 }
 
 th,
 td {
+    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
     padding: 0.5rem;
+}
+
+p {
+    font-size: 1.2rem;
+    margin: 1.2rem;
 }
 
 #table-container {
@@ -30,6 +34,16 @@ td {
 }
 
 a {
-    color:black;
+    color: black;
     text-decoration: none;
+}
+
+
+#delete-button {
+    font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+    text-wrap: nowrap;
+}
+
+#buy-button {
+    font-size: clamp(1.0rem, 2.5vw, 1.05rem);
 }
