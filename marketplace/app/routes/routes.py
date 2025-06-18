@@ -1,10 +1,10 @@
 from flask import render_template, redirect, url_for, request, session
 
-from app.controllers.auth_controller import handle_login, handle_settings, handle_deposit
 from app.db.user_db import get_user_by_email
 from app.user.user_creator import UserCreator
 from app.wallets.fiat.fiat_wallet_creator import create_fiat_wallet
 from app.wallets.crypto.crypto_wallet_creator import create_cryto_wallet
+from app.controllers.auth_controller import handle_login, handle_settings, handle_deposit
 
 def register_routes(app):
     @app.route("/")
@@ -75,13 +75,12 @@ def register_routes(app):
     @app.route("/support", methods=["GET", "POST"])
     def support():
         return render_template("support.html")
-
+    
     @app.route('/authorize')
     def authorize():
         token = app.google.authorize_access_token()
         resp = app.google.get('userinfo')
         user_info = resp.json()
-        print(user_info)
 
         session["email"] = user_info["email"]
         email = user_info["email"]
@@ -109,3 +108,5 @@ def register_routes(app):
             return redirect(url_for("home"))
         else:
             return redirect(url_for("login"))
+
+    

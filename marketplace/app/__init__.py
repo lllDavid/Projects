@@ -12,7 +12,7 @@ from app.blueprints.crypto_purchase import crypto_purchase
 from app.blueprints.crypto_liquidation import crypto_liquidation
 from app.blueprints.wallet_values import wallet_values
 from app.blueprints.password_reset import reset_password
-from app.blueprints.send_support_email import support_email
+from app.blueprints.support_email import support_email
 from app.routes.routes import register_routes
 
 load_dotenv()
@@ -22,7 +22,8 @@ mail = Mail()
 def create_app() -> Flask:
     marketplace = Flask(__name__, static_folder="static", template_folder="templates")
     oauth = OAuth(marketplace)
-    marketplace.secret_key = getenv('SECRET_KEY', urandom(24)) # Fallback to urandom if not found
+    marketplace.secret_key = getenv('APP_SECRET_KEY', urandom(24)) # Fallback to urandom if not found
+    marketplace.config.from_object(Config)
     marketplace.config.from_object(Config)
 
     google = oauth.register(
@@ -37,8 +38,8 @@ def create_app() -> Flask:
         client_kwargs={'scope': 'openid profile email'},
         jwks_uri="https://www.googleapis.com/oauth2/v3/certs",
         userinfo_endpoint='https://openidconnect.googleapis.com/v1/userinfo'
-        )
-    
+    )
+
     marketplace.google = google
 
     marketplace.config['MAIL_SERVER'] = 'smtp.gmail.com' 
