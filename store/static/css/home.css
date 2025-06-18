@@ -1,0 +1,8 @@
+h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8.5rem;
+    font-size: clamp(1.75rem, 5vw, 3.75rem) !important;
+    white-space: nowrap;
+}

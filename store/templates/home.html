@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}Home{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
     {% if user.is_authenticated %}
         <h1>Welcome, {{ user.username }}!</h1>
     {% else %}
