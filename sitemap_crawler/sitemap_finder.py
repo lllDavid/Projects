@@ -1,5 +1,4 @@
 from requests import get
-from urllib.parse import urlparse
 
 def find():
     url = str(input("Enter a URL (eg. https://app.instaffo.com): "))
@@ -19,31 +18,26 @@ def find():
         f"{url}/sitemap1_index.xml",
         f"{url}/robots.txt"
     ]
-    
-    found_sitemap = False  
-    
+        
     for sitemap in sitemaps:
         try:
             response = get(sitemap, timeout=10)
 
             if response.status_code == 200:
-                if sitemap == sitemaps[-1]:
-                    robots_text = response.text.split(" ")
-                    for i in robots_text:
-                        if "sitemap" in i:
-                            print(f"Sitemap found in robots.txt: {i}")
-                            found_sitemap = True  
-                            return True, i
+                if sitemap == sitemaps[-1]: 
+                    robots_lines = response.text.splitlines()
+                    for line in robots_lines:
+                        if "sitemap" in line.lower():
+                            parts = line.split(":")
+                            if len(parts) > 1:
+                                sitemap_url = parts[1].strip()
+                                print(f"Sitemap found in robots.txt: {sitemap_url}")
+                                return sitemap_url
                 else:
                     print(f"Sitemap found at: {sitemap}")
-                    found_sitemap = True 
-                    return True, sitemap
-                
+                    return sitemap
+
         except Exception as e:
             print(f"Error: {e}")
 
-    if not found_sitemap:
-        print("No sitemap found.")
-
-
-
+    print("No sitemap found.")

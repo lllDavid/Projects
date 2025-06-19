@@ -13,5 +13,3 @@ def download(url):
             print(f"Failed to retrieve the sitemap. HTTP Status Code: {response.status_code}")
     except Exception as e:
         print(f"Error: {e}")
-
-
