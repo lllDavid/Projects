@@ -1,40 +1,28 @@
 # File Collector
 ![Platform: Windows](https://img.shields.io/badge/Platform-Windows-blue)
-## Use Cases:
-- Collect all files of a specific extension (e.g., .cfg, .sql, .json) from multiple directories into a single folder.
 
-- Create a dedicated subfolder for each file extension within the main folder.
+- Recursively collects files with specified extensions from multiple directories.
 
-## Clone
+- Organizes matched files into subfolders named by extension within a single output folder.
 
+## Usage
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/lllDavid/file_collector
 ```
-
-## Save
-
-To change the save location, adjust the path in user_dir variable (main.py):
-```bash
-user_dir = f"C:/Users/{user_name}/File_Collector"
-```
-
-## Start
+### 2. Run the Application
 
 ```bash
 cd file_collector
 python main.py
 ```
-
-## Usage
-
-Choose directory to search in:
-```bash
-Enter directory to search in (e.g. C:/ ): 
+## Output Location
+**By default, results are saved here**
+```text
+C:/Users/<your-username>/File_Collector/
 ```
 
-Add pattern(s):
-```bash
-Enter search pattern(s), separated by commas (e.g. .json, .sql, .py):
+**To change this, update the user_dir path in main.py:**
+```text
+user_dir = f"C:/Users/{user_name}/File_Collector"
 ```
-
-Any matches are saved in the user_dir folder path.
