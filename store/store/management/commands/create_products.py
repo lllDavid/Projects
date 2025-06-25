@@ -17,7 +17,7 @@ class Command(BaseCommand):
         for i in range(count):
             Product.objects.create(
                 name=f"Product {i+1}",
-                description=f"Description for product {i+1}",
+                description=f"Description for Product {i+1}",
                 price=round(random.uniform(10.0, 500.0), 2),
                 stock=random.randint(0, 100),
                 categories=random.sample(['Electronics', 'Clothing', 'Books', 'Home', 'Toys'], k=random.randint(1, 3)),

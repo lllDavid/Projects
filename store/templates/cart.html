@@ -4,52 +4,56 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/cart.css' %}">
-<h1>Cart</h1>
+
+<h1 class="cart-title">Cart</h1>
 
 {% if cart.cart_items.all %}
-<div id="table-container">
-    <table>
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in cart.cart_items.all %}
-            <tr>
-                <td><a href="{% url 'product-detail' item.product.id %}">{{ item.product.name }}</a></td>
-                <td>{{ item.quantity }}</td>
-                <td>${{ item.product.price }}</td>
-                <td>${{ item.get_total_items_price }}</td>
-                <td>
+<div class="cart-wrapper">
 
-                    <form method="post" action="{% url 'remove-from-cart' item.id %}">
-                        {% csrf_token %}
-                        <button type="submit" id="delete-button" class="btn btn-danger">Delete Item</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="cart-grid-header">
+        <div>Product</div>
+        <div>Quantity</div>
+        <div>Price</div>
+        <div>Total</div>
+        <div>Action</div>
+    </div>
+
+    <div class="cart-grid-items">
+        {% for item in cart.cart_items.all %}
+        <div class="cart-grid-row">
+            <div>
+                <a href="{% url 'product-detail' item.product.id %}" class="product-cell">
+                    {{ item.product.name }}
+                </a>
+            </div>
+            <div class="quantity-cell">{{ item.quantity }}</div>
+            <div class="price-cell">${{ item.product.price }}</div>
+            <div class="total-cell">${{ item.get_total_items_price }}</div>
+            <div class="action-cell">
+                <form method="post" action="{% url 'remove-from-cart' item.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn remove-btn">Remove</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="cart-summary">
+        <div class="cart-total">
+            <strong>Total:</strong> ${{ cart.get_total_cart_price }}
+        </div>
+        <div class="cart-checkout">
+            <a href="{% url 'checkout' %}">
+                <button type="submit" class="btn-checkout">Checkout</button>
+            </a>
+        </div>
+    </div>
 
 </div>
 
-<div id="total-container">
-    <p><strong>Total:</strong> ${{ cart.get_total_cart_price }}</p>
-
-</div>
-<div id="buy-button-container">
-    <form action="{% url 'checkout'%}" method="get">
-        {% csrf_token %}
-        <button id="buy-button" class="btn btn-warning" type="submit">Buy Now</button>
-    </form>
-</div>
 {% else %}
-<p>Cart is empty.</p>
+<p class="empty-cart-msg" id="empty">Cart is empty.</p>
 {% endif %}
 
 {% endblock %}

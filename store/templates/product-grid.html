@@ -14,8 +14,6 @@
 {% endif %}
 {% endif %}
 
-
-
 <div class="product-grid">
     {% for product in products %}
     <div class="product-card">
@@ -30,7 +28,7 @@
             {% csrf_token %}
             <input type="hidden" name="quantity" value="1">
 
-            <button type="submit" class="btn btn-secondary">Add to Cart</button>
+            <button type="submit" id="cart-button">Add to Cart</button>
         </form>
     </div>
     {% endfor %}

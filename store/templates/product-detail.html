@@ -23,12 +23,12 @@
             </select>
         </div>
         <div>
-            <button id="cart-button" type="submit" class="btn btn-secondary">Add to Cart</button>
+            <button id="cart-button" type="submit">Add to Cart</button>
         </div>
     </form>
     <form action="{% url 'checkout'%}" method="get">
         {% csrf_token %}
-        <button id="buy-button" class="btn btn-warning" type="submit">Buy Now</button>
+        <button id="buy-button" type="submit">Buy Now</button>
     </form>
 </div>
 {% endblock %}
