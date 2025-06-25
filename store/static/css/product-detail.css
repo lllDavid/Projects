@@ -16,15 +16,36 @@
     height: fit-content;
     width: 8rem;
     margin: 0.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#quantity:hover {
+    transform: translateY(-0.1rem);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.12);
 }
 
 #cart-button,
 #buy-button {
     width: 8rem;
     height: fit-content;
+    padding: 0.525rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0.6rem;
+    cursor: pointer;
 
+}
+
+#cart-button:hover,
+#buy-button:hover {
+    background-color: #0056b3;
 }
 
 #cart-button {
     margin: 0.5rem;
+}
+
+p {
+    font-size: 1.1rem;
 }

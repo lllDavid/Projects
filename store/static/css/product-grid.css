@@ -1,7 +1,7 @@
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(clamp(12rem, 12vw, 16rem), 1fr));
-    gap: 1.5rem;
+    gap: 3.8rem;
     margin-top: 2.5rem;
     padding: 0 1rem;
 }
@@ -52,4 +52,18 @@
 #p-search {
     font-size: clamp(1rem, 1.1vw, 1.3rem);
     margin-left: 1.5rem;
+}
+
+#cart-button {
+    width: 6.5rem;
+    padding: 0.625rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0.6rem;
+    cursor: pointer;
+}
+
+#cart-button:hover {
+    background-color: #0056b3;
 }

@@ -68,12 +68,13 @@
                     {% if user.is_authenticated %}
                     <form action="{% url 'logout' %}" method="POST" class="d-none d-lg-inline-block mb-0 ms-3">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-link p-0" style="font-size: 1.65rem;">
+                        <button type="submit" class="btn btn-link p-0" style="font-size: 1.65rem;" id="arrow">
                             <i class="bi bi-box-arrow-right"></i>
                         </button>
                     </form>
                     {% else %}
-                    <a href="{% url 'login' %}" class="d-none d-lg-inline-block ms-3" style="font-size: 1.65rem;">
+                    <a href="{% url 'login' %}" class="d-none d-lg-inline-block ms-3" style="font-size: 1.65rem;"
+                        id="person">
                         <i class="bi bi-person"></i>
                     </a>
                     {% endif %}
