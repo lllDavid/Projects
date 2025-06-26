@@ -1,26 +1,33 @@
 .cart-review {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 70%;
+    width: 100%;
+    max-width: 37.5rem;
     margin: 0 auto;
+    box-sizing: border-box;
 }
 
 .checkout-table {
     width: 100%;
-    max-width: 50%;
     border-collapse: collapse;
     margin-bottom: 2rem;
+    table-layout: auto;
 }
-
 
 .checkout-table th,
 .checkout-table td {
-    padding: 0.75rem;
+    padding: 0.75rem 1rem;
     text-align: left;
     font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-    text-wrap: nowrap;
+    white-space: normal;
+    word-break: break-word;
+    vertical-align: top;
+    text-align: center;
 }
+
+.checkout-table td:first-child,
+.checkout-table th:first-child {
+    min-width: 6rem;
+}
+
 
 .total-price {
     text-align: center;
