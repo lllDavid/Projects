@@ -26,7 +26,8 @@ ENV/
 # line_profiler
 *.lprof
 
-#...
-notes.md
+# Generated files
 run.py
 setup.py
+
+notes.md

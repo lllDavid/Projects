@@ -1,11 +1,13 @@
-from benchmarks.profiler import profile_function
-from benchmarks.time import time_function
 from random import randint
+
+from benchmarks.time import time_function
+from benchmarks.profiler import profile_function
+
 
 def main():
     @time_function(repetitions=10)
     @profile_function(profile_type="unoptimized")
-    def inefficient_matrix_multiplication(A, B):
+    def matrix_multiplication(A, B):
         n = len(A)  
         C = [[0] * n for _ in range(n)]  
         for i in range(n):
@@ -20,7 +22,7 @@ def main():
     A = [[randint(min_val, max_val) for _ in range(size)] for _ in range(size)]
     B = [[randint(min_val, max_val) for _ in range(size)] for _ in range(size)]
 
-    inefficient_matrix_multiplication(A, B)
+    matrix_multiplication(A, B)
 
 if __name__ == "__main__":
     main()

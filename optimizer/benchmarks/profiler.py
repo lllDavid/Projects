@@ -1,10 +1,13 @@
 from io import StringIO
-from os import path, makedirs
 from statistics import mean
+from os import path, makedirs
+
 from line_profiler import LineProfiler
+
 
 profiling_results = []
 
+# Saves profiling stats to a file and appends the result to a list.
 def save_profiling_result(profile_type, func_name, stats_str):
     base_directory = 'benchmarks/results'
     directory = path.join(base_directory, profile_type)
@@ -26,6 +29,7 @@ def save_profiling_result(profile_type, func_name, stats_str):
     print(f"Finished profiling.")
     return result_dict
 
+# Decorator to profile a function using LineProfiler and save the result.
 def profile_function(profile_type="unoptimized"):
     def decorator(func):
         def wrapper(*args, **kwargs):
@@ -44,6 +48,7 @@ def profile_function(profile_type="unoptimized"):
         return wrapper
     return decorator
 
+# Calculates mean profiling metrics per line across all saved profiling results.
 def get_mean_profile_times():
     line_stats = {}
     line_contents = {}
@@ -89,3 +94,10 @@ def get_mean_profile_times():
         print(f"{line_num:>5} {stats['Mean Hits']:>10.1f} {stats['Mean Time']:>10.1f} {stats['Mean Per Hit']:>10.1f} {stats['Mean % Time']:>10.1f}  {line_contents[line_num]}")
     
     return mean_results
+
+def check_for_optimized_profiles():
+    has_unoptimized = any(r['profile_type'] == 'unoptimized' for r in profiling_results)
+    has_optimized = any(r['profile_type'] == 'optimized' for r in profiling_results)
+
+    if has_unoptimized and not has_optimized:
+        print("Warning: Only unoptimized profiling results found. Optimized results are missing.")
