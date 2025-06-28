@@ -1,50 +1,55 @@
-import time
-import threading
-from functions.unoptimized.functions import main as unoptimized
+from time import sleep
+from threading import Thread
+
 from benchmarks.results.analyze import analyze
 from benchmarks.results.compare import compare
 from benchmarks.profiler import get_mean_profile_times
-from optimize.optimize_cython import main as opt_main
 
-optimized = None  
-# Delay import until content of functions/optimized/test_func is generated after running Option 0. 
+from optimize.optimize_cython import main as optim_main
+from functions.unoptimized.functions import main as unoptim_main
+
+
+imported= None  
 def try_import_optimized():
-    global optimized
-    while optimized is None:
+    global imported
+    first_try = True  
+    
+    while imported is None:
         try:
-            from functions.optimized.test_func.run import main as optimized
-            print("\n Successfully imported optimized function!")
-            break 
+            from functions.optimized.matrix_multiplication.run import main as imported
+            print("\nSuccessfully imported optimized function!")
+            break
         except ImportError:
-            print("\n Optimized function not yet in dir. Retrying in 15 seconds...")
-            time.sleep(15)  
+            if first_try:
+                print("\nOptimized function not yet in dir. Retrying in 5 seconds.")
+                first_try = False
+                sleep(5)
 
-threading.Thread(target=try_import_optimized, daemon=True).start()
+Thread(target=try_import_optimized, daemon=True).start()
 
-def menu():
-    print("\n--- Menu ---")
-    # 0. see /optimize ; this optimizes a .py func using cython 
-    print("0. Optimize a function (Function currently hardcoded)")
-    # 1. profiles functions and shows before vs. after execution times / change repetitions time in /functions/unoptimized on @time_function 
-    print("1. Compare unoptimized vs. optimized functions")
-    # 2. eg. analyze inefficient_matrix_multiplication.lprof after running Option 1
-    print("2. Analyze a function by execution time")
-    # 3. TODO: currently prints same values for unoptimized and optimized (should be unoptimized then optimized) + only works after running Option 1
-    print("3. Print profiling stats for file")
-    # 4. TODO: currently only works if files with same name in benchmarks/results/optimized and benchmarks/results/unoptimized
-    print("4. Compare profile times")
-    print("5. Exit")
+def options():
+    print("\n1. Convert function to Cython")
+
+    print("2. Benchmark: Unoptimized vs. Optimized function") # Use after converting a function
+
+    print("3. Rank bottlenecks in a unoptimzed function by execution time") #  Use after converting a function
+
+    print("4. Print profiling stats for file") # NOTE: Doesnt work correctly
+
+    print("5. See total perfromance increase") #  Use after converting a function
+
+    print("6. Exit")
 
 def optimize_function():
-    opt_main()
+    optim_main()
 
 def compare_functions():
-    print(f"\n--- Running Unoptimized version of matrix multiplication ---\n")
-    unoptimized()
+    print(f"\n--- Running Unoptimized version of matrix multiplication ---")
+    unoptim_main()
 
-    if optimized:
-        print("\n--- Running Optimized version of matrix multiplication ---\n")
-        optimized()
+    if imported:
+        print("\n--- Running Optimized version of matrix multiplication ---")
+        imported()
     else:
         print("\nOptimized function is still being imported. Please try again later.")
 
@@ -57,36 +62,35 @@ def print_profiling_stats():
     get_mean_profile_times()
 
     print("\n--- Profiling results of optimized: ---")
-    if optimized:
+    if imported:
         get_mean_profile_times()
     else:
         print("\nOptimized function is still being imported. Please try again later.")
 
 def compare_files():
-    file_name = input("\nEnter the filename to compare: \n").strip()
+    file_name = input("\nEnter the filename to compare (e.g. matrix_multiplication.lprof): \n").strip()
     print(f"\n--- Comparing results using file: {file_name} ---\n")
     compare(file_name)
 
 def main():
     while True:
-        menu()  
-        choice = input("Choose an option (0-5): ").strip()
+        options()  
+        choice = input("\nChoose an option: ").strip()
 
-        if choice == "0":
+        if choice == "1":
             optimize_function()
-        elif choice == '1':
-            compare_functions()
         elif choice == '2':
-            analyze_by_execution_time()
+            compare_functions()
         elif choice == '3':
-            print_profiling_stats()
+            analyze_by_execution_time()
         elif choice == '4':
-            compare_files()
+            print_profiling_stats()
         elif choice == '5':
+            compare_files()
+        elif choice == '6':
             print("Exiting...")
             break
         else:
             print("Invalid option. Please try again.")
 
-if __name__ == "__main__":
-    main()
+main()
