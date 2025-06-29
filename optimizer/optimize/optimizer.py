@@ -1,12 +1,11 @@
 import os
-import sys
+import ast
 import subprocess
-import importlib.util
+from sys import executable
 from inspect import getsource, signature
 
 # Extract full source code and signature of a function from a Python module
-# TODO: Handle functions with decorators
-# TODO: Validate file path existence before reading
+# TODO: Handle functions with decorators, nested and dynamic functions and functions that fail during execution
 def extract_function_code(file_path, func_name):
     try:
         with open(file_path, "r") as file:
@@ -55,36 +54,23 @@ def compile_cython_file(func_name, func_dir):
         f.write(setup_code)
     
     try:
-        subprocess.check_call([sys.executable, "setup.py", "build_ext", "--inplace"], cwd=func_dir)
+        subprocess.check_call([executable, "setup.py", "build_ext", "--inplace"], cwd=func_dir)
         print(f"Compiled {func_name}.pyx into a Cython module in {func_dir}.")
     except subprocess.CalledProcessError as e:
         print(f"Error during compilation: {e}")
 
-# Returns the platform-specific shared library extension
-def get_shared_lib_extension():
-    return ".pyd" if sys.platform.startswith("win") else ".so"
-
-# Loads the compiled Cython function from the shared library
-def load_compiled_function(func_name, func_dir):
-    module_name = f"{func_name}"
-    module_path = os.path.join(func_dir, f"{module_name}{get_shared_lib_extension()}")
-    try:
-        spec = importlib.util.spec_from_file_location(module_name, module_path)
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
-        return getattr(module, func_name)
-    except Exception as e:
-        print(f"Error loading {func_name}: {e}")
-        return None
-
-# Generates a run.py file to benchmark the compiled function
+# Generates a run.py file to benchmark the compiled function NOTE: Hardcoded example
 def generate_run_file(func_name, func_dir):
     run_file_path = os.path.join(func_dir, "run.py")
     run_code = (
-f"from functions.optimized.{func_name}.{func_name} import optimized_{func_name}\n"
+"from random import randint\n"
+"\n"
 "from benchmarks.time import time_function\n"
 "from benchmarks.profiler import profile_function\n"
-"from random import randint\n\n"
+"\n"
+f"from functions.optimized.{func_name}.{func_name} import optimized_{func_name}\n"
+"\n"
+"\n"
 "@time_function(repetitions=10)\n"
 "@profile_function(profile_type=\"optimized\")\n"
 "def " + func_name + "(*args, **kwargs):\n"
@@ -97,14 +83,14 @@ f"from functions.optimized.{func_name}.{func_name} import optimized_{func_name}\
 "    B = [[randint(min_val, max_val) for _ in range(size)] for _ in range(size)]\n"
 "    " + func_name + "(A, B)\n\n"
 "if __name__ == \"__main__\":\n"
-"    main()\n"
+"    main()"
     )
     with open(run_file_path, "w") as f:
         f.write(run_code)
     print(f"Generated run.py in {func_dir}.")
 
-# Orchestrates the Cython optimization process
-def dynamic_cython(func_name, func_params, func_code):
+
+def cythonize(func_name, func_params, func_code):
     base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../functions/optimized"))
     
     if not os.path.exists(base_dir):
@@ -120,21 +106,25 @@ def dynamic_cython(func_name, func_params, func_code):
     compile_cython_file(func_name, func_dir)
     generate_run_file(func_name, func_dir)
 
+
 def main():
-    file_path = input("Enter the file path (e.g., optimize/function.py): ")
-    file_path = os.path.normpath(file_path)  
+    base_dir = os.path.join("functions", "unoptimized")  
 
-    func_name = input("Enter the function to cythonize (e.g., matrix_multiplication): ")
+    module_name = input("Enter the module (e.g. functions.py): ").strip()
 
-    print(f"File path: {file_path}")
-    print(f"Function name: {func_name}")
-    
-    func_code, func_params = extract_function_code(file_path, func_name)
+    path = os.path.normpath(os.path.join(base_dir, module_name))  
+
+    print(f"File path: {path}")
+
+    function = input("Enter the function name (e.g. matrix_multiplication): ").strip()
+
+    func_code, func_params = extract_function_code(path, function)
     if func_code is None:
-        print(f"Could not extract the code for {func_name} from {file_path}.")
+        print(f"Could not extract the code for {function} from {path}.")
         return
-    
-    dynamic_cython(func_name, func_params, func_code)
+
+    cythonize(function, func_params, func_code)
+
 
 if __name__ == "__main__":
     main()

@@ -1,6 +1,7 @@
 from statistics import mean
 from time import perf_counter
 
+# Decorator that times a function over multiple repetitions and prints the average execution time
 def time_function(repetitions=1):
     def decorator(func):
         def wrapper(*args, **kwargs):
@@ -11,7 +12,7 @@ def time_function(repetitions=1):
                 end_time = perf_counter()
                 execution_times.append(end_time - start_time)
             avg_time = mean(execution_times)
-            print(f"\nAvg. execution time over {repetitions} repetitions: {avg_time} seconds")
+            print(f"Avg. execution time over {repetitions} repetitions: {avg_time} seconds")
             return avg_time 
         return wrapper
     return decorator

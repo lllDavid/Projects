@@ -1,5 +1,6 @@
 from os import path
 
+# Parses an unoptimized .lprof file, extracts time-percentage data per line, and displays sorted results
 def analyze():
     directory = 'benchmarks/results/unoptimized'
 
@@ -7,7 +8,7 @@ def analyze():
     filepath = path.join(directory, filename)
 
     if not path.exists(filepath):
-        print(f"Error: The file '{filename}' does not exist in the unoptimized directory.")
+        print(f"Error: The file '{filename}' does not exist in {directory}.")
         return
 
     values = []
@@ -24,7 +25,6 @@ def analyze():
 
     values_sorted = sorted(values, key=lambda x: x[0], reverse=True)
 
-    print("Selected profile type: unoptimized\n")
-    print("Results:")
+    print("\nResults:")
     for time_percentage, line_content in values_sorted:
         print(f"Time: {time_percentage:.2f}% -> Line: {line_content}")
