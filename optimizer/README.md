@@ -2,13 +2,13 @@
 
 ![Project Status](https://img.shields.io/badge/status-early%20development-orange)
 
-- A tool that allows identifying performance bottlenecks in Python functions, benchmarking and profiling them, and converting the code into optimized Cython.
+- A tool for identifying performance bottlenecks in Python functions, benchmarking and profiling them, and converting selected code into optimized Cython for improved execution speed.
 
 ## Features
 ### Implemented
-**Currently all features are limited to a hardcoded example function.**
+Currently all features are limited to a **hardcoded** example function.
 
-- Converts a hardcoded Python function into a .pyx module for performance optimization.
+- Converts a **hardcoded** Python function into a .pyx module for performance optimization.
 
 - **Benchmark:** Compares execution times of the original and optimized function.
  
@@ -17,9 +17,9 @@
 - **Line-by-Line Profiling Report:** Outputs detailed profiling statistics using line_profiler.
 
 ### Planned
-- Take a module from user, extract relevant function(s), evaluate if it makes sense to convert them to cython and apply below methods to allow automatic code improvements:
-- **Dynamic Type Tracing:** Collects runtime types of arguments, locals, and return values using tracing.
-- **Cython Code Generation**: Uses collected type information to convert an entire Python function into a complete Cython module. (Currently, this process generates a basic .pyx file without full Cython features like cdef declarations or advanced optimizations.)
+- More dynamic workflow, use module provided by user and automatically improve it using:
+- **Dynamic Type Tracing:** Collect runtime types of arguments, locals, and return values using tracing.
+- **Cython Code Generation**: Use collected types to convert the Python function into a Cython module. (Currently, this process generates a basic .pyx file without full Cython features like cdef declarations or advanced optimizations.)
 
 ## Installation
 
