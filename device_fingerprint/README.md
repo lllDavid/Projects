@@ -1,10 +1,11 @@
 # Device Fingerprint
-
-![Project Status](https://img.shields.io/badge/status-early%20development-orange)
+- This application creates a unique device fingerprint using client-side JavaScript and server-side data, with implemented support for conversion to a dataclass, dictionary, and flattened structure, enabling consistent identification across different environments.
 
 ## Features
 ### Implemented
-- Generates a fingerprint for each user's device using a wide range of metrics, primarily collected via client-side JavaScript, with some additional server-side data.
+- Generate a unique device fingerprint
+
+- Convert it to a Dataclass, Dictionary and a Flattened Dictionary
 
 - Example Django-based E-Commerce store to demonstrate integration and usage.
 
@@ -12,8 +13,6 @@
 - A ML model to determine whether two device fingerprints belong to the same user.
 
 - Potential integration with Selenium to simulate diverse user traffic. 
-
-- TODO: Mechanism needs to be implemented to prevent duplicate fingerprints. Currently each visit on homepage generates a new fingerprint.
 
 ## Installation
 
@@ -52,13 +51,9 @@ python manage.py migrate
 python manage.py runserver
 ```
 ## Fingerprint
-- On visiting the homepage (http://127.0.0.1:8000/), a device fingerprint is generated and logged to the browser console.
+- On visiting the homepage (http://127.0.0.1:8000/) a device fingerprint is generated and logged to the browser console.
 
-- It is then saved in the database (both as complete fingerprint aswell as its sub components). 
-
-- To populate the Fingerprint Dataclass, use the create_fingerprint_instance function in website/fingerprint/helpers.py. 
-
-- To retrieve the complete Fingerprint as dictionary use fetch_full_fingerprint in website/fingerprint/helpers.py.
+- For conversion options see website/fingerprint/helpers.py or website/fingerprint/views.py
 
 ## Components
 Fingerprint Dataclass:
