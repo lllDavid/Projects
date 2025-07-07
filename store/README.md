@@ -29,6 +29,19 @@
 - PostgreSQL
 - `pip`
 
+## Setting up Environment Variables
+Set your DB Configuration in a `.env` file in root dir
+
+```env
+DB_NAME=store_db
+DB_USER=""
+DB_PASSWORD=""
+DB_HOST=localhost
+DB_PORT=5432
+
+POSTGRES_PASSWORD=""
+POSTGRES_DB=store_db
+```
 ## Installation
 You can set up the **Store** in two ways: using **Git** or **Docker**.
 
@@ -77,7 +90,6 @@ psql -U postgres
 ```text
 CREATE DATABASE store_db;
 ```
-- Exact **DB Config** is located in: store/settings.py
 
 ### 6. Apply Database migrations
 ```bash

@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-from os import path
+from os import path, getenv
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -76,28 +79,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'store.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# Dynamically get host
 def get_db_host():
     if path.exists("/.dockerenv"):
-        return "db"  
+        return "db"
     else:
-        return "localhost"  
-    
+        return getenv("DB_HOST", "localhost")
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'store_db',  
-        'USER': 'postgres',  
-        'PASSWORD': 'root',  
+        'NAME': getenv("DB_NAME", "store_db"),
+        'USER': getenv("DB_USER", ""),
+        'PASSWORD': getenv("DB_PASSWORD", ""),
         'HOST': get_db_host(),
-        'PORT': '5432',  
+        'PORT': getenv("DB_PORT", "5432"),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
