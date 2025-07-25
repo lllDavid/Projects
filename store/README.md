@@ -1,17 +1,17 @@
 # Store
 
-- This project replicates an online store experience, allowing users to browse products, view product details, manage cart contents, and handle account login and registration.
+- This project simulates an e-commerce platform where users can explore products, access detailed product information, manage their shopping cart, and perform account registration and authentication.
 
 ## Features
-- Product Grid View
-- Product Details View
-- Product Search Functionality
-- Register User
-- Login/Logout User
-- Forgot Password Functionality
-- Add Products to Cart (Custom Quantity)
-- Cart Overview
-- Checkout Functionality (Missing Actual Payment/Shipping Process)
+- Products displayed in a grid layout
+- Individual product detail view
+- Product search functionality
+- User registration workflow
+- User authentication (login/logout)
+- Password reset capability
+- Add products to cart with customizable quantity
+- Cart overview interface
+- Checkout process (Payment and Shipping Steps Not Included)
 
 ![Home](images/home.png)
 ![Products](images/products-grid.png)
