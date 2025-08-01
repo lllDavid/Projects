@@ -3,23 +3,33 @@ package com.ehrblockchain.patient.service;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.persistence.EntityNotFoundException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ehrblockchain.patient.dto.PatientUpdateDTO;
+import com.ehrblockchain.patient.model.Address;
+import com.ehrblockchain.patient.model.Insurance;
 import com.ehrblockchain.patient.model.Patient;
 import com.ehrblockchain.patient.repository.PatientRepository;
+import com.ehrblockchain.patient.dto.PatientCreateDTO;
+import com.ehrblockchain.patient.mapper.PatientMapper;
+
 
 @Service
 public class PatientService {
 
     private final PatientRepository patientRepository;
+    private final PatientMapper patientMapper;
 
-    public PatientService(PatientRepository patientRepository) {
+    public PatientService(PatientRepository patientRepository, PatientMapper patientMapper) {
         this.patientRepository = patientRepository;
+        this.patientMapper = patientMapper;
     }
 
     @Transactional
-    public Patient savePatientWithHealthRecord(Patient patient) {
+    public Patient savePatient(Patient patient) {
         patientRepository.findByEmail(patient.getEmail()).ifPresent(p -> {
             throw new RuntimeException("Email already exists");
         });
@@ -27,9 +37,36 @@ public class PatientService {
     }
 
     @Transactional
-    public Patient updatePatient(Long patientId, Patient updatedPatient) {
-        Patient existingPatient = patientRepository.findById(patientId).orElseThrow(() -> new RuntimeException("Patient not found"));
-        existingPatient.updateFrom(updatedPatient);
+    public Patient createPatient(PatientCreateDTO dto) {
+        Patient patient = patientMapper.toEntity(dto);
+        return savePatient(patient);
+    }
+
+    @Transactional
+    public Patient updatePatient(Long id, PatientUpdateDTO updateDTO) {
+        Patient existingPatient = patientRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Patient not found with id: " + id));
+
+        patientMapper.updateFromDto(updateDTO, existingPatient);
+
+        if (updateDTO.getAddress() != null) {
+            Address existingAddress = existingPatient.getAddress();
+            if (existingAddress == null) {
+                existingAddress = new Address();
+                existingPatient.setAddress(existingAddress);
+            }
+            patientMapper.updateAddressFromDto(updateDTO.getAddress(), existingAddress);
+        }
+
+        if (updateDTO.getInsurance() != null) {
+            Insurance existingInsurance = existingPatient.getInsurance();
+            if (existingInsurance == null) {
+                existingInsurance = new Insurance();
+                existingPatient.setInsurance(existingInsurance);
+            }
+            patientMapper.updateInsuranceFromDto(updateDTO.getInsurance(), existingInsurance);
+        }
+
         return existingPatient;
     }
 

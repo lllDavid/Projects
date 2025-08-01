@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import jakarta.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ehrblockchain.healthrecord.model.HealthRecord;
 
 @Entity
@@ -181,22 +180,6 @@ public class Patient {
 
     public void setInsurance(Insurance insurance) {
         this.insurance = insurance;
-    }
-
-    public void updateFrom(Patient updatedPatient) {
-        if (updatedPatient.firstName != null) this.firstName = updatedPatient.firstName;
-        if (updatedPatient.lastName != null) this.lastName = updatedPatient.lastName;
-        if (updatedPatient.dateOfBirth != null) this.dateOfBirth = updatedPatient.dateOfBirth;
-        if (updatedPatient.gender != null) this.gender = updatedPatient.gender;
-        if (updatedPatient.height != null) this.height = updatedPatient.height;
-        if (updatedPatient.weight != null) this.weight = updatedPatient.weight;
-        if (updatedPatient.bloodType != null) this.bloodType = updatedPatient.bloodType;
-        if (updatedPatient.phoneNumber != null) this.phoneNumber = updatedPatient.phoneNumber;
-        if (updatedPatient.email != null) this.email = updatedPatient.email;
-        if (updatedPatient.emergencyContact != null) this.emergencyContact = updatedPatient.emergencyContact;
-        if (updatedPatient.address != null) this.address = updatedPatient.address;
-        if (updatedPatient.insurance != null) this.insurance = updatedPatient.insurance;
-        if (updatedPatient.healthRecord != null) this.healthRecord = updatedPatient.healthRecord;
     }
 
     @Override
