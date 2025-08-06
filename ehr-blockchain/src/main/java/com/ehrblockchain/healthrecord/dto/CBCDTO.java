@@ -4,12 +4,21 @@ import java.time.LocalDate;
 
 public class CBCDTO {
 
+    private Long id;
     private LocalDate testDate;
     private Integer redBloodCellCount;
     private Integer whiteBloodCellCount;
     private Double hemoglobin;
     private Double hematocrit;
     private Integer plateletCount;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public LocalDate getTestDate() {
         return testDate;

@@ -1,6 +1,7 @@
 package com.ehrblockchain.healthrecord.dto;
 
 public class VitalsDTO {
+
     private Long id;
     private String bloodPressure;
     private Double temperature;

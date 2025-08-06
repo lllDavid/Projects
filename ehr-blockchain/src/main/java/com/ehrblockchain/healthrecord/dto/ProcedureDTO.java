@@ -3,6 +3,7 @@ package com.ehrblockchain.healthrecord.dto;
 import java.time.LocalDate;
 
 public class ProcedureDTO {
+
     private Long id;
     private String procedureName;
     private LocalDate procedureDate;

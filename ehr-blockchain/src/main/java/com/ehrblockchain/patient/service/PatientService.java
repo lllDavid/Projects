@@ -37,8 +37,8 @@ public class PatientService {
     }
 
     @Transactional
-    public Patient createPatient(PatientCreateDTO dto) {
-        Patient patient = patientMapper.toEntity(dto);
+    public Patient createPatient(PatientCreateDTO createDTO) {
+        Patient patient = patientMapper.toEntity(createDTO);
         return savePatient(patient);
     }
 
@@ -70,6 +70,16 @@ public class PatientService {
         return existingPatient;
     }
 
+    @Transactional
+    public void deletePatient(Long patientId) {
+        patientRepository.deleteById(patientId);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Patient> getAllPatients() {
+        return patientRepository.findAll();
+    }
+
     @Transactional(readOnly = true)
     public Optional<Patient> getPatientById(Long patientId) {
         return patientRepository.findById(patientId);
@@ -78,15 +88,5 @@ public class PatientService {
     @Transactional(readOnly = true)
     public Optional<Patient> getPatientByEmail(String email) {
         return patientRepository.findByEmail(email);
-    }
-
-    @Transactional(readOnly = true)
-    public List<Patient> getAllPatients() {
-        return patientRepository.findAll();
-    }
-
-    @Transactional
-    public void deletePatientById(Long patientId) {
-        patientRepository.deleteById(patientId);
     }
 }

@@ -1,9 +1,11 @@
 package com.ehrblockchain.healthrecord.controller;
 
-import com.ehrblockchain.healthrecord.model.HealthRecord;
-import com.ehrblockchain.healthrecord.service.HealthRecordService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.ehrblockchain.healthrecord.dto.HealthRecordUpdateDTO;
+import com.ehrblockchain.healthrecord.model.HealthRecord;
+import com.ehrblockchain.healthrecord.service.HealthRecordService;
 
 @RestController
 @RequestMapping("/patients/{patientId}/healthrecord")
@@ -17,19 +19,16 @@ public class HealthRecordController {
 
     @GetMapping
     public ResponseEntity<HealthRecord> getHealthRecordById(@PathVariable Long patientId) {
-        try {
-            HealthRecord record = healthRecordService.getHealthRecordById(patientId);
-            return ResponseEntity.ok(record);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return healthRecordService.getHealthRecordById(patientId)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PutMapping
-    public ResponseEntity<HealthRecord> updateHealthRecord(@PathVariable Long patientId, @RequestBody HealthRecord updatedRecord) {
+    @PatchMapping
+    public ResponseEntity<HealthRecord> updateHealthRecord(@PathVariable Long patientId, @RequestBody HealthRecordUpdateDTO updateDto) {
         try {
-            HealthRecord updated = healthRecordService.updateHealthRecord(patientId, updatedRecord);
-            return ResponseEntity.ok(updated);
+            HealthRecord updatedHealthRecord = healthRecordService.updateHealthRecord(patientId, updateDto);
+            return ResponseEntity.ok(updatedHealthRecord);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
@@ -38,7 +37,7 @@ public class HealthRecordController {
     @DeleteMapping
     public ResponseEntity<Void> deleteHealthRecord(@PathVariable Long patientId) {
         try {
-            healthRecordService.deleteHealthRecordById(patientId);
+            healthRecordService.deleteHealthRecord(patientId);
             return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();

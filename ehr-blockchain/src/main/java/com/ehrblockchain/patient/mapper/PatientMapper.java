@@ -5,8 +5,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
-import com.ehrblockchain.healthrecord.dto.HealthRecordCreateDTO;
-import com.ehrblockchain.healthrecord.model.HealthRecord;
 import com.ehrblockchain.patient.dto.AddressDTO;
 import com.ehrblockchain.patient.dto.InsuranceDTO;
 import com.ehrblockchain.patient.dto.PatientCreateDTO;
@@ -14,6 +12,9 @@ import com.ehrblockchain.patient.dto.PatientUpdateDTO;
 import com.ehrblockchain.patient.model.Address;
 import com.ehrblockchain.patient.model.Insurance;
 import com.ehrblockchain.patient.model.Patient;
+
+import com.ehrblockchain.healthrecord.dto.*;
+import com.ehrblockchain.healthrecord.model.*;
 
 
 @Mapper(

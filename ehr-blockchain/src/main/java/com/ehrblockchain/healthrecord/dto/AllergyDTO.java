@@ -7,15 +7,6 @@ public class AllergyDTO {
     private String reaction;
     private String severity;
 
-    public AllergyDTO() {
-    }
-
-    public AllergyDTO(Long id, String allergen, String reaction, String severity) {
-        this.id = id;
-        this.allergen = allergen;
-        this.reaction = reaction;
-        this.severity = severity;
-    }
 
     public Long getId() {
         return id;

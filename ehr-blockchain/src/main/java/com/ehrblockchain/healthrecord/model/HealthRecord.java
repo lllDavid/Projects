@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -11,6 +12,7 @@ import jakarta.persistence.*;
 import com.ehrblockchain.patient.model.Patient;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.http.ResponseEntity;
 
 @Entity
 @Table(name = "health_records")
@@ -252,8 +254,8 @@ public class HealthRecord {
         this.procedures = procedures;
     }
 
-    public void updateFrom(HealthRecord updatedRecord) {
-        // Implement
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override
