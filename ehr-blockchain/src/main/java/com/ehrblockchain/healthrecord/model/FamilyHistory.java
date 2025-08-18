@@ -1,7 +1,10 @@
 package com.ehrblockchain.healthrecord.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+
+import jakarta.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "family_history")
@@ -9,9 +12,15 @@ public class FamilyHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Size(max = 255)
+    @Column(length = 255)
     private String relative;
+
+    @Size(max = 255)
     private String condition;
 
+    @Size(max = 1000)
     @Column(name = "family_history_notes")
     private String notes;
 

@@ -4,8 +4,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.ehrblockchain.healthrecord.dto.HealthRecordUpdateDTO;
-import com.ehrblockchain.healthrecord.model.HealthRecord;
 import com.ehrblockchain.healthrecord.service.HealthRecordService;
+import com.ehrblockchain.healthrecord.dto.HealthRecordDTO;
+
 
 @RestController
 @RequestMapping("/patients/{patientId}/healthrecord")
@@ -18,16 +19,16 @@ public class HealthRecordController {
     }
 
     @GetMapping
-    public ResponseEntity<HealthRecord> getHealthRecordById(@PathVariable Long patientId) {
+    public ResponseEntity<HealthRecordDTO> getHealthRecordById(@PathVariable Long patientId) {
         return healthRecordService.getHealthRecordById(patientId)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PatchMapping
-    public ResponseEntity<HealthRecord> updateHealthRecord(@PathVariable Long patientId, @RequestBody HealthRecordUpdateDTO updateDto) {
+    public ResponseEntity<HealthRecordDTO> updateHealthRecord(@PathVariable Long patientId, @RequestBody HealthRecordUpdateDTO updateDto) {
         try {
-            HealthRecord updatedHealthRecord = healthRecordService.updateHealthRecord(patientId, updateDto);
+            HealthRecordDTO updatedHealthRecord = healthRecordService.updateHealthRecord(patientId, updateDto);
             return ResponseEntity.ok(updatedHealthRecord);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();

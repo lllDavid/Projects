@@ -1,7 +1,10 @@
 package com.ehrblockchain.healthrecord.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+
+import jakarta.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "prescriptions")
@@ -9,10 +12,19 @@ public class Prescription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Size(max = 255)
     private String drugName;
+
+    @Size(max = 100)
     private String dosage;
+
+    @Size(max = 100)
     private String frequency;
+
+    @Size(max = 100)
     private String duration;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference

@@ -1,7 +1,10 @@
 package com.ehrblockchain.healthrecord.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+
+import jakarta.validation.constraints.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "vitals")
@@ -9,10 +12,25 @@ public class Vitals {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Size(max = 20)
+    @Column(name = "blood_pressure", length = 20)
     private String bloodPressure;
+
+    @DecimalMin(value = "25.0")
+    @DecimalMax(value = "110.0")
     private Double temperature;
+
+    @Min(30)
+    @Max(200)
     private Integer heartRate;
+
+    @Min(5)
+    @Max(60)
     private Integer respiratoryRate;
+
+    @Min(50)
+    @Max(100)
     private Integer oxygenSaturation;
 
     @ManyToOne(fetch = FetchType.LAZY)

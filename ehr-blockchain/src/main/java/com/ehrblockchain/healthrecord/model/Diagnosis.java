@@ -1,8 +1,12 @@
 package com.ehrblockchain.healthrecord.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
 import java.time.LocalDate;
+
+import jakarta.persistence.*;
+
+import jakarta.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "diagnoses")
@@ -10,9 +14,17 @@ public class Diagnosis {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Size(max = 20)
     private String code;
+
+    @Size(max = 255)
     private String description;
+
+    @Size(max = 20)
     private String severity;
+
+    @Column(name = "diagnosed_date")
     private LocalDate diagnosedDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -20,7 +32,8 @@ public class Diagnosis {
     @JoinColumn(name = "health_record_id", nullable = false)
     private HealthRecord healthRecord;
 
-    public Diagnosis() {}
+    public Diagnosis() {
+    }
 
     public Diagnosis(String code, String description, String severity, LocalDate diagnosedDate, HealthRecord healthRecord) {
         this.code = code;

@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import jakarta.persistence.*;
 
+import jakarta.validation.constraints.*;
+
 import com.ehrblockchain.healthrecord.model.HealthRecord;
 
 @Entity
@@ -16,37 +18,52 @@ public class Patient {
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "ehr_id", referencedColumnName = "id")
     private HealthRecord healthRecord;
 
+    @Size(max = 50)
     @Column(name = "first_name")
     private String firstName;
 
+    @Size(max = 50)
     @Column(name = "last_name")
     private String lastName;
 
+    @Past
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
+    @Size(max = 20)
     @Column(name = "gender")
     private String gender;
 
+    @Min(0)
+    @Max(300)
     @Column(name = "height")
     private Double height;
 
+    @Min(0)
+    @Max(500)
     @Column(name = "weight")
     private Double weight;
 
+    // Matches one of the blood types A, B, AB, or O followed by either a - or +
+    @Pattern(regexp = "^(A|B|AB|O)[-+]$")
     @Column(name = "blood_type")
     private String bloodType;
 
+    // Matches a phone number of 7–15 digits, optionally starting with a +
+    @Pattern(regexp = "\\+?[0-9]{7,15}")
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Email
+    @Size(min = 5, max = 254)
     @Column(name = "email", unique = true)
     private String email;
 
+    @Size(max = 50)
     @Column(name = "emergency_contact")
     private String emergencyContact;
 
@@ -90,92 +107,92 @@ public class Patient {
         return healthRecord;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public Double getHeight() {
-        return height;
-    }
-
-    public Double getWeight() {
-        return weight;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getEmergencyContact() {
-        return emergencyContact;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public Insurance getInsurance() {
-        return insurance;
-    }
-
     public void setHealthRecord(HealthRecord healthRecord) {
         this.healthRecord = healthRecord;
+    }
+
+    public String getFirstName() {
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
     }
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public Double getHeight() {
+        return height;
     }
 
     public void setHeight(Double height) {
         this.height = height;
     }
 
+    public Double getWeight() {
+        return weight;
+    }
+
     public void setWeight(Double weight) {
         this.weight = weight;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getEmergencyContact() {
+        return emergencyContact;
     }
 
     public void setEmergencyContact(String emergencyContact) {
         this.emergencyContact = emergencyContact;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public Insurance getInsurance() {
+        return insurance;
     }
 
     public void setInsurance(Insurance insurance) {
@@ -185,8 +202,6 @@ public class Patient {
     @Override
     public String toString() {
         return "Patient{" +
-                "id='" + id + '\'' +
-                ", ehrId='" + (healthRecord != null ? healthRecord.getId() : null) + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", dateOfBirth=" + dateOfBirth +

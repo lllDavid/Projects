@@ -1,9 +1,12 @@
 package com.ehrblockchain.healthrecord.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+import jakarta.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "procedures")
@@ -14,6 +17,7 @@ public class Procedure {
     private String procedureName;
     private LocalDate procedureDate;
 
+    @Size(max = 1000)
     @Column(name = "procedure_notes")
     private String notes;
 

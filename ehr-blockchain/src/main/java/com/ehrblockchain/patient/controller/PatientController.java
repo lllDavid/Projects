@@ -6,10 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.ehrblockchain.patient.model.Patient;
 import com.ehrblockchain.patient.service.PatientService;
 import com.ehrblockchain.patient.dto.PatientUpdateDTO;
 import com.ehrblockchain.patient.dto.PatientCreateDTO;
+import com.ehrblockchain.patient.dto.PatientDTO;
 
 @RestController
 @RequestMapping("/patients")
@@ -22,50 +22,34 @@ public class PatientController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Patient>> getAllPatients() {
-        try {
-            List<Patient> patients = patientService.getAllPatients();
-            return ResponseEntity.ok(patients);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+    public ResponseEntity<List<PatientDTO>> getAllPatients() {
+        List<PatientDTO> patients = patientService.getAllPatients();
+        return ResponseEntity.ok(patients);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Patient> getPatientById(@PathVariable Long id) {
+    public ResponseEntity<PatientDTO> getPatientById(@PathVariable Long id) {
         return patientService.getPatientById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Patient> createPatient(@RequestBody PatientCreateDTO patientCreateDTO) {
-        try {
-            Patient savedPatient = patientService.createPatient(patientCreateDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedPatient);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-
+    public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientCreateDTO patientCreateDTO) {
+        PatientDTO savedPatientDTO = patientService.createPatient(patientCreateDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedPatientDTO);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Patient> updatePatient(@PathVariable Long id,
-                                                 @RequestBody PatientUpdateDTO updateDTO) {
-        try {
-            Patient updatedPatient = patientService.updatePatient(id, updateDTO);
-            return ResponseEntity.ok(updatedPatient);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<PatientDTO> updatePatient(@PathVariable Long id,
+                                                    @RequestBody PatientUpdateDTO updateDTO) {
+        PatientDTO updatedPatientDto = patientService.updatePatient(id, updateDTO);
+        return ResponseEntity.ok(updatedPatientDto);
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePatient(@PathVariable Long id) {
-        try {
-            patientService.deletePatient(id);
-            return ResponseEntity.noContent().build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        patientService.deletePatient(id);
+        return ResponseEntity.noContent().build();
     }
 }

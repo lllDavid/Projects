@@ -8,6 +8,8 @@ import com.ehrblockchain.healthrecord.model.*;
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface HealthRecordMapper {
 
+    HealthRecordDTO toDto(HealthRecord healthRecord);
+
     Diagnosis mapToDiagnosis(DiagnosisDTO dto);
 
     Note mapToNote(NoteDTO dto);

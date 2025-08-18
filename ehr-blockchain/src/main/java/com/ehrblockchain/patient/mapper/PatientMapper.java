@@ -5,13 +5,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
-import com.ehrblockchain.patient.dto.AddressDTO;
-import com.ehrblockchain.patient.dto.InsuranceDTO;
-import com.ehrblockchain.patient.dto.PatientCreateDTO;
-import com.ehrblockchain.patient.dto.PatientUpdateDTO;
 import com.ehrblockchain.patient.model.Address;
 import com.ehrblockchain.patient.model.Insurance;
 import com.ehrblockchain.patient.model.Patient;
+import com.ehrblockchain.patient.dto.*;
 
 import com.ehrblockchain.healthrecord.dto.*;
 import com.ehrblockchain.healthrecord.model.*;
@@ -31,6 +28,8 @@ public interface PatientMapper {
 
     Patient toEntity(PatientCreateDTO dto);
 
+    PatientDTO toDto(Patient patient);
+
     HealthRecord toEntity(HealthRecordCreateDTO dto);
 
     @AfterMapping
@@ -48,5 +47,25 @@ public interface PatientMapper {
         entity.getFamilyHistory().forEach(familyHistory -> familyHistory.setHealthRecord(entity));
         entity.getEncounters().forEach(encounter -> encounter.setHealthRecord(entity));
         entity.getProcedures().forEach(procedure -> procedure.setHealthRecord(entity));
+    }
+
+    default void updateNestedEntitiesFromDto(PatientUpdateDTO updateDTO, Patient patient) {
+        if (updateDTO.getAddress() != null) {
+            Address address = patient.getAddress();
+            if (address == null) {
+                address = new Address();
+                patient.setAddress(address);
+            }
+            updateAddressFromDto(updateDTO.getAddress(), address);
+        }
+
+        if (updateDTO.getInsurance() != null) {
+            Insurance insurance = patient.getInsurance();
+            if (insurance == null) {
+                insurance = new Insurance();
+                patient.setInsurance(insurance);
+            }
+            updateInsuranceFromDto(updateDTO.getInsurance(), insurance);
+        }
     }
 }

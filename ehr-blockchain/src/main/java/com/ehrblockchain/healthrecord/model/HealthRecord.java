@@ -2,17 +2,20 @@ package com.ehrblockchain.healthrecord.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
-import com.ehrblockchain.patient.model.Patient;
+import jakarta.validation.Valid;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.http.ResponseEntity;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import com.ehrblockchain.patient.model.Patient;
 
 @Entity
 @Table(name = "health_records")
@@ -38,54 +41,67 @@ public class HealthRecord {
 
     @OneToMany(mappedBy = "healthRecord", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
+    @Valid
     private List<Note> notes = new ArrayList<>();
 
     @OneToMany(mappedBy = "healthRecord", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
+    @Valid
     private List<Diagnosis> diagnoses = new ArrayList<>();
 
     @OneToMany(mappedBy = "healthRecord", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
+    @Valid
     private List<TreatmentPlan> treatmentPlans = new ArrayList<>();
 
     @OneToMany(mappedBy = "healthRecord", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
+    @Valid
     private List<Prescription> prescriptions = new ArrayList<>();
 
     @OneToMany(mappedBy = "healthRecord", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
+    @Valid
     private List<Vitals> vitals = new ArrayList<>();
 
     @OneToMany(mappedBy = "healthRecord", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
+    @Valid
     private List<CBC> cbcTests = new ArrayList<>();
 
     @OneToMany(mappedBy = "healthRecord", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
+    @Valid
     private List<Allergy> allergies = new ArrayList<>();
 
     @OneToMany(mappedBy = "healthRecord", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
+    @Valid
     private List<LabResult> labResults = new ArrayList<>();
 
     @OneToMany(mappedBy = "healthRecord", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
+    @Valid
     private List<Immunization> immunizations = new ArrayList<>();
 
     @OneToMany(mappedBy = "healthRecord", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
+    @Valid
     private List<MedicalHistory> medicalHistory = new ArrayList<>();
 
     @OneToMany(mappedBy = "healthRecord", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
+    @Valid
     private List<FamilyHistory> familyHistory = new ArrayList<>();
 
     @OneToMany(mappedBy = "healthRecord", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
+    @Valid
     private List<Encounter> encounters = new ArrayList<>();
 
     @OneToMany(mappedBy = "healthRecord", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
+    @Valid
     private List<Procedure> procedures = new ArrayList<>();
 
     public HealthRecord() {
@@ -130,128 +146,132 @@ public class HealthRecord {
         return patient != null ? patient.getId() : null;
     }
 
-    public LocalDate getRecordDate() {
-        return recordDate;
-    }
-
-    public List<Diagnosis> getDiagnoses() {
-        return diagnoses;
-    }
-
-    public List<TreatmentPlan> getTreatmentPlans() {
-        return treatmentPlans;
-    }
-
-    public List<Prescription> getPrescriptions() {
-        return prescriptions;
-    }
-
-    public List<Vitals> getVitals() {
-        return vitals;
-    }
-
-    public List<CBC> getCbcTests() {
-        return cbcTests;
-    }
-
-    public List<Note> getNotes() {
-        return notes;
-    }
-
-    public List<Allergy> getAllergies() {
-        return allergies;
-    }
-
-    public List<LabResult> getLabResults() {
-        return labResults;
-    }
-
-    public List<Immunization> getImmunizations() {
-        return immunizations;
-    }
-
-    public List<MedicalHistory> getMedicalHistory() {
-        return medicalHistory;
-    }
-
-    public List<FamilyHistory> getFamilyHistory() {
-        return familyHistory;
-    }
-
-    public List<Encounter> getEncounters() {
-        return encounters;
-    }
-
-    public List<Procedure> getProcedures() {
-        return procedures;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
     public void setPatient(Patient patient) {
         this.patient = patient;
+    }
+
+    public LocalDate getRecordDate() {
+        return recordDate;
     }
 
     public void setRecordDate(LocalDate recordDate) {
         this.recordDate = recordDate;
     }
 
+    public List<Diagnosis> getDiagnoses() {
+        return diagnoses;
+    }
+
     public void setDiagnoses(List<Diagnosis> diagnoses) {
         this.diagnoses = diagnoses;
+    }
+
+    public List<TreatmentPlan> getTreatmentPlans() {
+        return treatmentPlans;
     }
 
     public void setTreatmentPlans(List<TreatmentPlan> treatmentPlans) {
         this.treatmentPlans = treatmentPlans;
     }
 
+    public List<Prescription> getPrescriptions() {
+        return prescriptions;
+    }
+
     public void setPrescriptions(List<Prescription> prescriptions) {
         this.prescriptions = prescriptions;
+    }
+
+    public List<Vitals> getVitals() {
+        return vitals;
     }
 
     public void setVitals(List<Vitals> vitals) {
         this.vitals = vitals;
     }
 
+    public List<CBC> getCbcTests() {
+        return cbcTests;
+    }
+
     public void setCbcTests(List<CBC> cbcTests) {
         this.cbcTests = cbcTests;
+    }
+
+    public List<Note> getNotes() {
+        return notes;
     }
 
     public void setNotes(List<Note> notes) {
         this.notes = notes;
     }
 
+    public List<Allergy> getAllergies() {
+        return allergies;
+    }
+
     public void setAllergies(List<Allergy> allergies) {
         this.allergies = allergies;
+    }
+
+    public List<LabResult> getLabResults() {
+        return labResults;
     }
 
     public void setLabResults(List<LabResult> labResults) {
         this.labResults = labResults;
     }
 
+    public List<Immunization> getImmunizations() {
+        return immunizations;
+    }
+
     public void setImmunizations(List<Immunization> immunizations) {
         this.immunizations = immunizations;
+    }
+
+    public List<MedicalHistory> getMedicalHistory() {
+        return medicalHistory;
     }
 
     public void setMedicalHistory(List<MedicalHistory> medicalHistory) {
         this.medicalHistory = medicalHistory;
     }
 
+    public List<FamilyHistory> getFamilyHistory() {
+        return familyHistory;
+    }
+
     public void setFamilyHistory(List<FamilyHistory> familyHistory) {
         this.familyHistory = familyHistory;
+    }
+
+    public List<Encounter> getEncounters() {
+        return encounters;
     }
 
     public void setEncounters(List<Encounter> encounters) {
         this.encounters = encounters;
     }
 
+    public List<Procedure> getProcedures() {
+        return procedures;
+    }
+
     public void setProcedures(List<Procedure> procedures) {
         this.procedures = procedures;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
@@ -261,7 +281,6 @@ public class HealthRecord {
     @Override
     public String toString() {
         return "HealthRecord{" +
-                "id=" + id +
                 ", patientId=" + (patient != null ? patient.getId() : null) +
                 ", recordDate=" + recordDate +
                 ", diagnoses=" + diagnoses +

@@ -2,6 +2,7 @@ package com.ehrblockchain.patient.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -9,12 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ehrblockchain.patient.dto.PatientUpdateDTO;
-import com.ehrblockchain.patient.model.Address;
-import com.ehrblockchain.patient.model.Insurance;
 import com.ehrblockchain.patient.model.Patient;
 import com.ehrblockchain.patient.repository.PatientRepository;
 import com.ehrblockchain.patient.dto.PatientCreateDTO;
 import com.ehrblockchain.patient.mapper.PatientMapper;
+import com.ehrblockchain.patient.dto.PatientDTO;
 
 
 @Service
@@ -29,45 +29,31 @@ public class PatientService {
     }
 
     @Transactional
-    public Patient savePatient(Patient patient) {
+    public PatientDTO savePatient(Patient patient) {
         patientRepository.findByEmail(patient.getEmail()).ifPresent(p -> {
             throw new RuntimeException("Email already exists");
         });
-        return patientRepository.save(patient);
+        Patient savedPatient = patientRepository.save(patient);
+
+        return patientMapper.toDto(savedPatient);
     }
 
     @Transactional
-    public Patient createPatient(PatientCreateDTO createDTO) {
+    public PatientDTO createPatient(PatientCreateDTO createDTO) {
         Patient patient = patientMapper.toEntity(createDTO);
+
         return savePatient(patient);
     }
 
     @Transactional
-    public Patient updatePatient(Long id, PatientUpdateDTO updateDTO) {
+    public PatientDTO updatePatient(Long id, PatientUpdateDTO updateDTO) {
         Patient existingPatient = patientRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Patient not found with id: " + id));
 
         patientMapper.updateFromDto(updateDTO, existingPatient);
+        patientMapper.updateNestedEntitiesFromDto(updateDTO, existingPatient);
 
-        if (updateDTO.getAddress() != null) {
-            Address existingAddress = existingPatient.getAddress();
-            if (existingAddress == null) {
-                existingAddress = new Address();
-                existingPatient.setAddress(existingAddress);
-            }
-            patientMapper.updateAddressFromDto(updateDTO.getAddress(), existingAddress);
-        }
-
-        if (updateDTO.getInsurance() != null) {
-            Insurance existingInsurance = existingPatient.getInsurance();
-            if (existingInsurance == null) {
-                existingInsurance = new Insurance();
-                existingPatient.setInsurance(existingInsurance);
-            }
-            patientMapper.updateInsuranceFromDto(updateDTO.getInsurance(), existingInsurance);
-        }
-
-        return existingPatient;
+        return patientMapper.toDto(existingPatient);
     }
 
     @Transactional
@@ -76,17 +62,19 @@ public class PatientService {
     }
 
     @Transactional(readOnly = true)
-    public List<Patient> getAllPatients() {
-        return patientRepository.findAll();
+    public List<PatientDTO> getAllPatients() {
+        return patientRepository.findAll().stream()
+                .map(patientMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public Optional<Patient> getPatientById(Long patientId) {
-        return patientRepository.findById(patientId);
+    public Optional<PatientDTO> getPatientById(Long patientId) {
+        return patientRepository.findById(patientId).map(patientMapper::toDto);
     }
 
     @Transactional(readOnly = true)
-    public Optional<Patient> getPatientByEmail(String email) {
-        return patientRepository.findByEmail(email);
+    public Optional<PatientDTO> getPatientByEmail(String email) {
+        return patientRepository.findByEmail(email).map(patientMapper::toDto);
     }
 }

@@ -1,9 +1,15 @@
 package com.ehrblockchain.healthrecord.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "cbc_tests")
@@ -11,11 +17,27 @@ public class CBC {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private LocalDate testDate;
+
+    @Min(1000000)
+    @Max(10000000)
     private Integer redBloodCellCount;
+
+    @Min(1000)
+    @Max(20000)
     private Integer whiteBloodCellCount;
+
+    @DecimalMin("3.0")
+    @DecimalMax("20.0")
     private Double hemoglobin;
+
+    @DecimalMin("10.0")
+    @DecimalMax("60.0")
     private Double hematocrit;
+
+    @Min(10000)
+    @Max(500000)
     private Integer plateletCount;
 
     @ManyToOne(fetch = FetchType.LAZY)

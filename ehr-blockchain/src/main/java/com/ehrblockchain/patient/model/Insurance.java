@@ -2,14 +2,33 @@ package com.ehrblockchain.patient.model;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 
 @Embeddable
 public class Insurance {
+    @Size(max = 100)
+    @Column(name = "provider_name")
     private String providerName;
+
+    @Size(max = 50)
+    @Column(name = "policy_number")
     private String policyNumber;
+
+    @Size(max = 50)
+    @Column(name = "group_number")
     private String groupNumber;
+
+    @PastOrPresent()
+    @Column(name = "coverage_start_date")
     private LocalDate coverageStartDate;
+
+    @FutureOrPresent()
+    @Column(name = "coverage_end_date")
     private LocalDate coverageEndDate;
 
     public Insurance() {
@@ -28,36 +47,36 @@ public class Insurance {
         return providerName;
     }
 
-    public String getPolicyNumber() {
-        return policyNumber;
-    }
-
-    public String getGroupNumber() {
-        return groupNumber;
-    }
-
-    public LocalDate getCoverageStartDate() {
-        return coverageStartDate;
-    }
-
-    public LocalDate getCoverageEndDate() {
-        return coverageEndDate;
-    }
-
     public void setProviderName(String providerName) {
         this.providerName = providerName;
+    }
+
+    public String getPolicyNumber() {
+        return policyNumber;
     }
 
     public void setPolicyNumber(String policyNumber) {
         this.policyNumber = policyNumber;
     }
 
+    public String getGroupNumber() {
+        return groupNumber;
+    }
+
     public void setGroupNumber(String groupNumber) {
         this.groupNumber = groupNumber;
     }
 
+    public LocalDate getCoverageStartDate() {
+        return coverageStartDate;
+    }
+
     public void setCoverageStartDate(LocalDate coverageStartDate) {
         this.coverageStartDate = coverageStartDate;
+    }
+
+    public LocalDate getCoverageEndDate() {
+        return coverageEndDate;
     }
 
     public void setCoverageEndDate(LocalDate coverageEndDate) {

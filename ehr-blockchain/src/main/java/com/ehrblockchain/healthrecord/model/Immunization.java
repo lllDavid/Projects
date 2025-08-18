@@ -1,9 +1,12 @@
 package com.ehrblockchain.healthrecord.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+import jakarta.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "immunizations")
@@ -11,8 +14,13 @@ public class Immunization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Size(max = 255)
     private String vaccineName;
+
     private LocalDate dateAdministered;
+
+    @Size(max = 255)
     private String provider;
 
     @ManyToOne(fetch = FetchType.LAZY)
