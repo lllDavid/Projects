@@ -1,21 +1,20 @@
 package com.ehrblockchain.patient.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
-import jakarta.persistence.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ehrblockchain.patient.dto.PatientUpdateDTO;
+import com.ehrblockchain.exception.EmailAlreadyExistsException;
+import com.ehrblockchain.exception.PatientNotFoundException;
+
+import com.ehrblockchain.patient.mapper.PatientMapper;
 import com.ehrblockchain.patient.model.Patient;
 import com.ehrblockchain.patient.repository.PatientRepository;
 import com.ehrblockchain.patient.dto.PatientCreateDTO;
-import com.ehrblockchain.patient.mapper.PatientMapper;
 import com.ehrblockchain.patient.dto.PatientDTO;
-
+import com.ehrblockchain.patient.dto.PatientUpdateDTO;
 
 @Service
 public class PatientService {
@@ -31,7 +30,7 @@ public class PatientService {
     @Transactional
     public PatientDTO savePatient(Patient patient) {
         patientRepository.findByEmail(patient.getEmail()).ifPresent(p -> {
-            throw new RuntimeException("Email already exists");
+            throw new EmailAlreadyExistsException(patient.getEmail());
         });
         Patient savedPatient = patientRepository.save(patient);
 
@@ -48,7 +47,7 @@ public class PatientService {
     @Transactional
     public PatientDTO updatePatient(Long id, PatientUpdateDTO updateDTO) {
         Patient existingPatient = patientRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Patient not found with id: " + id));
+                .orElseThrow(() -> new PatientNotFoundException(id));
 
         patientMapper.updateFromDto(updateDTO, existingPatient);
         patientMapper.updateNestedEntitiesFromDto(updateDTO, existingPatient);
@@ -69,12 +68,16 @@ public class PatientService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<PatientDTO> getPatientById(Long patientId) {
-        return patientRepository.findById(patientId).map(patientMapper::toDto);
+    public PatientDTO getPatientById(Long patientId) {
+        return patientRepository.findById(patientId)
+                .map(patientMapper::toDto)
+                .orElseThrow(() -> new PatientNotFoundException(patientId));
     }
 
     @Transactional(readOnly = true)
-    public Optional<PatientDTO> getPatientByEmail(String email) {
-        return patientRepository.findByEmail(email).map(patientMapper::toDto);
+    public PatientDTO getPatientByEmail(String email) {
+        return patientRepository.findByEmail(email)
+                .map(patientMapper::toDto)
+                .orElseThrow(() -> new PatientNotFoundException(email));
     }
 }

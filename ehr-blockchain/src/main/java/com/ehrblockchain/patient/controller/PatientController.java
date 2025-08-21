@@ -2,9 +2,9 @@ package com.ehrblockchain.patient.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 import com.ehrblockchain.patient.service.PatientService;
 import com.ehrblockchain.patient.dto.PatientUpdateDTO;
@@ -23,15 +23,13 @@ public class PatientController {
 
     @GetMapping
     public ResponseEntity<List<PatientDTO>> getAllPatients() {
-        List<PatientDTO> patients = patientService.getAllPatients();
-        return ResponseEntity.ok(patients);
+        return ResponseEntity.ok(patientService.getAllPatients());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PatientDTO> getPatientById(@PathVariable Long id) {
-        return patientService.getPatientById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        PatientDTO patient = patientService.getPatientById(id);
+        return ResponseEntity.ok(patient);
     }
 
     @PostMapping

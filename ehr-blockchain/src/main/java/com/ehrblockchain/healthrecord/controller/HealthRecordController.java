@@ -7,7 +7,6 @@ import com.ehrblockchain.healthrecord.dto.HealthRecordUpdateDTO;
 import com.ehrblockchain.healthrecord.service.HealthRecordService;
 import com.ehrblockchain.healthrecord.dto.HealthRecordDTO;
 
-
 @RestController
 @RequestMapping("/patients/{patientId}/healthrecord")
 public class HealthRecordController {
@@ -20,28 +19,20 @@ public class HealthRecordController {
 
     @GetMapping
     public ResponseEntity<HealthRecordDTO> getHealthRecordById(@PathVariable Long patientId) {
-        return healthRecordService.getHealthRecordById(patientId)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        HealthRecordDTO healthRecord = healthRecordService.getHealthRecordById(patientId);
+        return ResponseEntity.ok(healthRecord);
     }
 
     @PatchMapping
-    public ResponseEntity<HealthRecordDTO> updateHealthRecord(@PathVariable Long patientId, @RequestBody HealthRecordUpdateDTO updateDto) {
-        try {
-            HealthRecordDTO updatedHealthRecord = healthRecordService.updateHealthRecord(patientId, updateDto);
-            return ResponseEntity.ok(updatedHealthRecord);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<HealthRecordDTO> updateHealthRecord(@PathVariable Long patientId,
+                                                              @RequestBody HealthRecordUpdateDTO updateDto) {
+        HealthRecordDTO updatedHealthRecord = healthRecordService.updateHealthRecord(patientId, updateDto);
+        return ResponseEntity.ok(updatedHealthRecord);
     }
 
     @DeleteMapping
     public ResponseEntity<Void> deleteHealthRecord(@PathVariable Long patientId) {
-        try {
-            healthRecordService.deleteHealthRecord(patientId);
-            return ResponseEntity.noContent().build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        healthRecordService.deleteHealthRecord(patientId);
+        return ResponseEntity.noContent().build();
     }
 }
