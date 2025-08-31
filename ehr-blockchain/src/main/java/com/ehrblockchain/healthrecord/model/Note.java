@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import com.ehrblockchain.security.encryption.ColumnEncryptionConverter;
+
 @Entity
 @Table(name = "notes")
 public class Note {
@@ -15,6 +17,7 @@ public class Note {
 
     @Size(max = 2000)
     @Column(name = "content", nullable = false)
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)

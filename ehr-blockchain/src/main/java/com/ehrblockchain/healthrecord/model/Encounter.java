@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import com.ehrblockchain.security.encryption.ColumnEncryptionConverter;
+
 @Entity
 @Table(name = "encounters")
 public class Encounter {
@@ -19,9 +21,11 @@ public class Encounter {
     private LocalDate encounterDate;
 
     @Size(max = 255)
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String provider;
 
     @Size(max = 1000)
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String reason;
 
     @ManyToOne(fetch = FetchType.LAZY)

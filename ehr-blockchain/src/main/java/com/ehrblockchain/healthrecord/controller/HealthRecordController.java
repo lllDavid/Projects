@@ -1,6 +1,7 @@
 package com.ehrblockchain.healthrecord.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.ehrblockchain.healthrecord.dto.HealthRecordUpdateDTO;
@@ -17,12 +18,14 @@ public class HealthRecordController {
         this.healthRecordService = healthRecordService;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTION', 'NURSE')")
     @GetMapping
     public ResponseEntity<HealthRecordDTO> getHealthRecordById(@PathVariable Long patientId) {
         HealthRecordDTO healthRecord = healthRecordService.getHealthRecordById(patientId);
         return ResponseEntity.ok(healthRecord);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR', 'NURSE')")
     @PatchMapping
     public ResponseEntity<HealthRecordDTO> updateHealthRecord(@PathVariable Long patientId,
                                                               @RequestBody HealthRecordUpdateDTO updateDto) {
@@ -30,6 +33,7 @@ public class HealthRecordController {
         return ResponseEntity.ok(updatedHealthRecord);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping
     public ResponseEntity<Void> deleteHealthRecord(@PathVariable Long patientId) {
         healthRecordService.deleteHealthRecord(patientId);

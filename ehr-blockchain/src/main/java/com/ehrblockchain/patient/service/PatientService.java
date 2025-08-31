@@ -8,13 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ehrblockchain.exception.EmailAlreadyExistsException;
 import com.ehrblockchain.exception.PatientNotFoundException;
-
 import com.ehrblockchain.patient.mapper.PatientMapper;
 import com.ehrblockchain.patient.model.Patient;
 import com.ehrblockchain.patient.repository.PatientRepository;
 import com.ehrblockchain.patient.dto.PatientCreateDTO;
 import com.ehrblockchain.patient.dto.PatientDTO;
 import com.ehrblockchain.patient.dto.PatientUpdateDTO;
+import com.ehrblockchain.healthrecord.model.HealthRecord;
 
 @Service
 public class PatientService {
@@ -41,6 +41,11 @@ public class PatientService {
     public PatientDTO createPatient(PatientCreateDTO createDTO) {
         Patient patient = patientMapper.toEntity(createDTO);
 
+        if (createDTO.getHealthRecord() == null) {
+            HealthRecord hr = new HealthRecord();
+            patient.setHealthRecord(hr);
+        }
+
         return savePatient(patient);
     }
 
@@ -48,6 +53,12 @@ public class PatientService {
     public PatientDTO updatePatient(Long id, PatientUpdateDTO updateDTO) {
         Patient existingPatient = patientRepository.findById(id)
                 .orElseThrow(() -> new PatientNotFoundException(id));
+
+        patientRepository.findByEmail(updateDTO.getEmail())
+                .filter(p -> !p.getId().equals(existingPatient.getId()))
+                .ifPresent(p -> {
+                    throw new EmailAlreadyExistsException(updateDTO.getEmail());
+                });
 
         patientMapper.updateFromDto(updateDTO, existingPatient);
         patientMapper.updateNestedEntitiesFromDto(updateDTO, existingPatient);

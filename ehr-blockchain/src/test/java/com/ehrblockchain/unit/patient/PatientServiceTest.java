@@ -3,7 +3,6 @@ package com.ehrblockchain.unit.patient;
 import java.util.List;
 import java.util.Optional;
 
-import com.ehrblockchain.patient.service.PatientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,6 +24,7 @@ import com.ehrblockchain.patient.model.Patient;
 import com.ehrblockchain.exception.EmailAlreadyExistsException;
 import com.ehrblockchain.exception.PatientNotFoundException;
 import com.ehrblockchain.fixtures.fixtures;
+import com.ehrblockchain.patient.service.PatientService;
 
 @ExtendWith(MockitoExtension.class)
 class PatientServiceTest {

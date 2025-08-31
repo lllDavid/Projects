@@ -3,24 +3,30 @@ package com.ehrblockchain.patient.model;
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Embeddable;
 
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 
+import com.ehrblockchain.security.encryption.ColumnEncryptionConverter;
+
 @Embeddable
 public class Insurance {
     @Size(max = 100)
     @Column(name = "provider_name")
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String providerName;
 
-    @Size(max = 50)
+    @Size(max = 100)
     @Column(name = "policy_number")
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String policyNumber;
 
-    @Size(max = 50)
+    @Size(max = 100)
     @Column(name = "group_number")
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String groupNumber;
 
     @PastOrPresent()

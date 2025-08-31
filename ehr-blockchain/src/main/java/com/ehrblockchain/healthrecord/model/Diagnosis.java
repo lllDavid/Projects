@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import com.ehrblockchain.security.encryption.ColumnEncryptionConverter;
+
 @Entity
 @Table(name = "diagnoses")
 public class Diagnosis {
@@ -15,13 +17,16 @@ public class Diagnosis {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 20)
+    @Size(max = 100)
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String code;
 
     @Size(max = 255)
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String description;
 
-    @Size(max = 20)
+    @Size(max = 100)
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String severity;
 
     @Column(name = "diagnosed_date")

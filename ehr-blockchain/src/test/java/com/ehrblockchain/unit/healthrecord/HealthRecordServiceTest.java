@@ -2,7 +2,6 @@ package com.ehrblockchain.unit.healthrecord;
 
 import java.util.Optional;
 
-import com.ehrblockchain.healthrecord.service.HealthRecordService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,6 +24,7 @@ import com.ehrblockchain.healthrecord.repository.HealthRecordRepository;
 import com.ehrblockchain.patient.model.Patient;
 import com.ehrblockchain.patient.repository.PatientRepository;
 import com.ehrblockchain.fixtures.fixtures;
+import com.ehrblockchain.healthrecord.service.HealthRecordService;
 
 @ExtendWith(MockitoExtension.class)
 class HealthRecordServiceTest {

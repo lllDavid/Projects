@@ -8,17 +8,23 @@ import jakarta.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import com.ehrblockchain.security.encryption.ColumnEncryptionConverter;
+
 @Entity
 @Table(name = "procedures")
 public class Procedure {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String procedureName;
+
     private LocalDate procedureDate;
 
     @Size(max = 1000)
     @Column(name = "procedure_notes")
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String notes;
 
     @ManyToOne(fetch = FetchType.LAZY)

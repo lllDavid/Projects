@@ -5,6 +5,12 @@ import java.util.ArrayList;
 
 import org.springframework.test.util.ReflectionTestUtils;
 
+import com.ehrblockchain.security.role.RoleEnum;
+import com.ehrblockchain.security.role.model.Role;
+import com.ehrblockchain.user.dto.UserCreateDTO;
+import com.ehrblockchain.user.dto.UserDTO;
+import com.ehrblockchain.user.dto.UserUpdateDTO;
+import com.ehrblockchain.user.model.User;
 import com.ehrblockchain.healthrecord.dto.HealthRecordCreateDTO;
 import com.ehrblockchain.healthrecord.dto.HealthRecordDTO;
 import com.ehrblockchain.healthrecord.dto.HealthRecordUpdateDTO;
@@ -24,6 +30,9 @@ public class fixtures {
     public static final Double DEFAULT_WEIGHT = 75.0;
     public static final LocalDate DEFAULT_DOB = LocalDate.of(1990, 1, 1);
     public static final String DEFAULT_EMERGENCY_CONTACT = "Jane Doe";
+    public static final String DEFAULT_USER_PASSWORD = "password";
+    public static final RoleEnum DEFAULT_ROLE = RoleEnum.PATIENT;
+    public static final Long DEFAULT_PATIENT_ID = 1L;
 
     public static HealthRecord createDefaultHealthRecord() {
         HealthRecord record = new HealthRecord(
@@ -216,5 +225,53 @@ public class fixtures {
         updateDTO.setAddress(createDefaultAddressDTO());
         updateDTO.setInsurance(createDefaultInsuranceDTO());
         return updateDTO;
+    }
+
+    public static Role createDefaultRole() {
+        Role role = new Role();
+        role.setName(DEFAULT_ROLE);
+        ReflectionTestUtils.setField(role, "id", 1);
+        return role;
+    }
+
+    public static User createDefaultUser() {
+        User user = new User(
+                "John",
+                "Doe",
+                "john.doe@example.com",
+                DEFAULT_USER_PASSWORD,
+                createDefaultRole()
+        );
+        ReflectionTestUtils.setField(user, "id", 1L);
+        return user;
+    }
+
+    public static UserDTO createDefaultUserDTO() {
+        User user = createDefaultUser();
+        return new UserDTO(
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getRole().getName().name(),
+                DEFAULT_PATIENT_ID
+        );
+    }
+
+    public static UserCreateDTO createDefaultUserCreateDTO() {
+        UserCreateDTO dto = new UserCreateDTO();
+        dto.setFirstName("John");
+        dto.setLastName("Doe");
+        dto.setEmail("john.doe@example.com");
+        dto.setPassword(DEFAULT_USER_PASSWORD);
+        return dto;
+    }
+
+    public static UserUpdateDTO createDefaultUserUpdateDTO() {
+        UserUpdateDTO dto = new UserUpdateDTO();
+        dto.setFirstName("UpdatedFirstName");
+        dto.setLastName("UpdatedLastName");
+        dto.setEmail("updated@example.com");
+        dto.setPassword("newpassword123");
+        return dto;
     }
 }

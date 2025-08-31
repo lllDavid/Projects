@@ -36,7 +36,7 @@ public class HealthRecord {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "record_date", nullable = false)
+    @Column(name = "record_date")
     private LocalDate recordDate;
 
     @OneToMany(mappedBy = "healthRecord", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -281,7 +281,7 @@ public class HealthRecord {
     @Override
     public String toString() {
         return "HealthRecord{" +
-                ", patientId=" + (patient != null ? patient.getId() : null) +
+                "patientId=" + (patient != null ? patient.getId() : null) +
                 ", recordDate=" + recordDate +
                 ", diagnoses=" + diagnoses +
                 ", treatmentPlans=" + treatmentPlans +

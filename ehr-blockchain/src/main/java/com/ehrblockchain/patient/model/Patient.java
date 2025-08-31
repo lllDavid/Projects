@@ -1,12 +1,18 @@
 package com.ehrblockchain.patient.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 
 import jakarta.validation.constraints.*;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.ehrblockchain.healthrecord.model.HealthRecord;
+import com.ehrblockchain.user.model.User;
+import com.ehrblockchain.security.encryption.ColumnEncryptionConverter;
 
 @Entity
 @Table(name = "patients",
@@ -22,20 +28,34 @@ public class Patient {
     @JoinColumn(name = "ehr_id", referencedColumnName = "id")
     private HealthRecord healthRecord;
 
-    @Size(max = 50)
+    @OneToOne(mappedBy = "patient", fetch = FetchType.LAZY)
+    private User user;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @Size(max = 100)
     @Column(name = "first_name")
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String firstName;
 
-    @Size(max = 50)
+    @Size(max = 100)
     @Column(name = "last_name")
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String lastName;
 
     @Past
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
-    @Size(max = 20)
+    @Size(max = 100)
     @Column(name = "gender")
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String gender;
 
     @Min(0)
@@ -51,11 +71,13 @@ public class Patient {
     // Matches one of the blood types A, B, AB, or O followed by either a - or +
     @Pattern(regexp = "^(A|B|AB|O)[-+]$")
     @Column(name = "blood_type")
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String bloodType;
 
     // Matches a phone number of 7–15 digits, optionally starting with a +
     @Pattern(regexp = "\\+?[0-9]{7,15}")
     @Column(name = "phone_number")
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String phoneNumber;
 
     @Email
@@ -63,8 +85,9 @@ public class Patient {
     @Column(name = "email", unique = true)
     private String email;
 
-    @Size(max = 50)
+    @Size(max = 100)
     @Column(name = "emergency_contact")
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String emergencyContact;
 
     @Embedded
@@ -207,10 +230,26 @@ public class Patient {
         this.bloodType = bloodType;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     @Override
     public String toString() {
         return "Patient{" +
-                ", firstName='" + firstName + '\'' +
+                "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", gender='" + gender + '\'' +
@@ -222,6 +261,8 @@ public class Patient {
                 ", address=" + address +
                 ", insurance=" + insurance +
                 ", bloodType='" + bloodType + '\'' +
+                ", createdAt=" + (createdAt != null ? createdAt.toString() : null) +
+                ", updatedAt=" + (updatedAt != null ? updatedAt.toString() : null) +
                 '}';
     }
 }

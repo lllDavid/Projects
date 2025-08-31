@@ -1,30 +1,38 @@
 package com.ehrblockchain.patient.model;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Embeddable;
 
 import jakarta.validation.constraints.Size;
+
+import com.ehrblockchain.security.encryption.ColumnEncryptionConverter;
 
 @Embeddable
 public class Address {
     @Size(max = 100)
     @Column(name = "street")
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String street;
 
-    @Size(max = 50)
+    @Size(max = 100)
     @Column(name = "city")
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String city;
 
-    @Size(max = 50)
+    @Size(max = 100)
     @Column(name = "state")
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String state;
 
     // Implement regex pattern as needed
     @Column(name = "postal_code")
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String postalCode;
 
-    @Size(max = 50)
+    @Size(max = 100)
     @Column(name = "country")
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String country;
 
     public Address() {

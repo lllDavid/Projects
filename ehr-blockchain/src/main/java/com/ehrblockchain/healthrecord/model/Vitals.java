@@ -6,6 +6,8 @@ import jakarta.validation.constraints.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import com.ehrblockchain.security.encryption.ColumnEncryptionConverter;
+
 @Entity
 @Table(name = "vitals")
 public class Vitals {
@@ -13,8 +15,8 @@ public class Vitals {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 20)
-    @Column(name = "blood_pressure", length = 20)
+    @Size(max = 200)
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String bloodPressure;
 
     @DecimalMin(value = "25.0")

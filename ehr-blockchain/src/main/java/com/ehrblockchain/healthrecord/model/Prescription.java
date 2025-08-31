@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import com.ehrblockchain.security.encryption.ColumnEncryptionConverter;
+
 @Entity
 @Table(name = "prescriptions")
 public class Prescription {
@@ -14,17 +16,20 @@ public class Prescription {
     private Long id;
 
     @Size(max = 255)
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String drugName;
 
     @Size(max = 100)
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String dosage;
 
     @Size(max = 100)
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String frequency;
 
     @Size(max = 100)
+    @Convert(converter = ColumnEncryptionConverter.class)
     private String duration;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
