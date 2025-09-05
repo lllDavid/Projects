@@ -32,7 +32,7 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUserDTO);
     }
 
-    @PostMapping("/authenticate")
+    @PostMapping("/login")
     public ResponseEntity<?> authorize(@RequestBody LoginRequest request) {
         return ResponseEntity.ok(authService.authenticateAndGenerateToken(request.email(), request.password()));
     }

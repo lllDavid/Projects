@@ -25,6 +25,8 @@ import com.ehrblockchain.patient.model.Patient;
 import com.ehrblockchain.patient.repository.PatientRepository;
 import com.ehrblockchain.fixtures.fixtures;
 import com.ehrblockchain.healthrecord.service.HealthRecordService;
+import com.ehrblockchain.auth.service.AuthService;
+import com.ehrblockchain.blockchain.model.Blockchain;
 
 @ExtendWith(MockitoExtension.class)
 class HealthRecordServiceTest {
@@ -40,12 +42,23 @@ class HealthRecordServiceTest {
     @Mock
     private HealthRecordMapper healthRecordMapper;
 
+    @Mock
+    private AuthService authService;
+
+    @Mock
+    private Blockchain blockchain;
+
     private HealthRecordService underTest;
 
     @BeforeEach
     void setUp() {
         underTest = new HealthRecordService(
-                healthRecordRepository, patientRepository, mapperHelper, healthRecordMapper
+                healthRecordRepository,
+                patientRepository,
+                mapperHelper,
+                healthRecordMapper,
+                authService,
+                blockchain
         );
     }
 
@@ -122,14 +135,18 @@ class HealthRecordServiceTest {
     @Test
     void shouldDeleteHealthRecord() {
         Patient patient = fixtures.createDefaultPatient();
-        patient.setHealthRecord(fixtures.createDefaultHealthRecord());
+        HealthRecord record = fixtures.createDefaultHealthRecord();
+        patient.setHealthRecord(record);
+        HealthRecordDTO dto = fixtures.createDefaultHealthRecordDTO();
 
         when(patientRepository.findById(patient.getId())).thenReturn(Optional.of(patient));
+        when(healthRecordMapper.toDto(record)).thenReturn(dto);
 
         underTest.deleteHealthRecord(patient.getId());
 
         assertThat(patient.getHealthRecord()).isNull();
         verify(patientRepository).findById(patient.getId());
+        verify(healthRecordMapper).toDto(record);
     }
 
     @Test
@@ -260,9 +277,8 @@ class HealthRecordServiceTest {
         doNothing().when(mapperHelper).updateWithDto(updateDTO, record);
         when(healthRecordMapper.toDto(record)).thenReturn(null);
 
-        HealthRecordDTO result = underTest.updateHealthRecord(patient.getId(), updateDTO);
-
-        assertThat(result).isNull();
+        assertThrows(NullPointerException.class,
+                () -> underTest.updateHealthRecord(patient.getId(), updateDTO));
     }
 
     @Test

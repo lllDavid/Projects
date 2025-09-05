@@ -32,6 +32,7 @@ public class fixtures {
     public static final String DEFAULT_EMERGENCY_CONTACT = "Jane Doe";
     public static final String DEFAULT_USER_PASSWORD = "password";
     public static final RoleEnum DEFAULT_ROLE = RoleEnum.PATIENT;
+    public static final Long DEFAULT_USER_ID = 1L;
     public static final Long DEFAULT_PATIENT_ID = 1L;
 
     public static HealthRecord createDefaultHealthRecord() {
@@ -249,6 +250,7 @@ public class fixtures {
     public static UserDTO createDefaultUserDTO() {
         User user = createDefaultUser();
         return new UserDTO(
+                DEFAULT_USER_ID,
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
