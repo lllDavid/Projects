@@ -23,7 +23,7 @@ import com.ehrblockchain.patient.dto.PatientCreateDTO;
 import com.ehrblockchain.patient.model.Patient;
 import com.ehrblockchain.exception.EmailAlreadyExistsException;
 import com.ehrblockchain.exception.PatientNotFoundException;
-import com.ehrblockchain.fixtures.fixtures;
+import com.ehrblockchain.fixtures.UnitFixtures;
 import com.ehrblockchain.patient.service.PatientService;
 
 @ExtendWith(MockitoExtension.class)
@@ -43,8 +43,8 @@ class PatientServiceTest {
 
     @Test
     void shouldSavePatient() {
-        Patient patient = fixtures.createDefaultPatient();
-        PatientDTO patientDTO = fixtures.createDefaultPatientDTO();
+        Patient patient = UnitFixtures.createDefaultPatient();
+        PatientDTO patientDTO = UnitFixtures.createDefaultPatientDTO();
 
         when(patientRepository.findByEmail(patient.getEmail())).thenReturn(Optional.empty());
         when(patientRepository.save(patient)).thenReturn(patient);
@@ -62,9 +62,9 @@ class PatientServiceTest {
 
     @Test
     void shouldCreatePatient() {
-        PatientCreateDTO createDTO = fixtures.createDefaultPatientCreateDTO();
-        Patient patient = fixtures.createDefaultPatient();
-        PatientDTO patientDTO = fixtures.createDefaultPatientDTO();
+        PatientCreateDTO createDTO = UnitFixtures.createDefaultPatientCreateDTO();
+        Patient patient = UnitFixtures.createDefaultPatient();
+        PatientDTO patientDTO = UnitFixtures.createDefaultPatientDTO();
 
         when(patientMapper.toEntity(createDTO)).thenReturn(patient);
         when(patientRepository.findByEmail(patient.getEmail())).thenReturn(Optional.empty());
@@ -84,9 +84,9 @@ class PatientServiceTest {
 
     @Test
     void shouldUpdatePatient() {
-        Patient existingPatient = fixtures.createDefaultPatient();
-        PatientUpdateDTO updateDTO = fixtures.createDefaultPatientUpdateDTO();
-        PatientDTO updatedPatientDTO = fixtures.createDefaultPatientDTO();
+        Patient existingPatient = UnitFixtures.createDefaultPatient();
+        PatientUpdateDTO updateDTO = UnitFixtures.createDefaultPatientUpdateDTO();
+        PatientDTO updatedPatientDTO = UnitFixtures.createDefaultPatientDTO();
 
         when(patientRepository.findById(existingPatient.getId())).thenReturn(Optional.of(existingPatient));
         doAnswer(invocation -> {
@@ -123,12 +123,12 @@ class PatientServiceTest {
 
     @Test
     void shouldGetAllPatients() {
-        List<Patient> patients = List.of(fixtures.createDefaultPatient());
-        List<PatientDTO> patientDTOs = List.of(fixtures.createDefaultPatientDTO());
+        List<Patient> patients = List.of(UnitFixtures.createDefaultPatient());
+        List<PatientDTO> patientDTOs = List.of(UnitFixtures.createDefaultPatientDTO());
 
         when(patientRepository.findAll()).thenReturn(patients);
         when(patientMapper.toDto(any(Patient.class)))
-                .thenAnswer(invocation -> fixtures.createDefaultPatientDTO());
+                .thenAnswer(invocation -> UnitFixtures.createDefaultPatientDTO());
 
         List<PatientDTO> result = underTest.getAllPatients();
 
@@ -144,13 +144,13 @@ class PatientServiceTest {
     void shouldGetPatientById() {
         Long patientId = 1L;
 
-        when(patientRepository.findById(patientId)).thenReturn(Optional.of(fixtures.createDefaultPatient()));
-        when(patientMapper.toDto(any(Patient.class))).thenReturn(fixtures.createDefaultPatientDTO());
+        when(patientRepository.findById(patientId)).thenReturn(Optional.of(UnitFixtures.createDefaultPatient()));
+        when(patientMapper.toDto(any(Patient.class))).thenReturn(UnitFixtures.createDefaultPatientDTO());
 
         PatientDTO result = underTest.getPatientById(patientId);
 
         assertThat(result).isNotNull();
-        assertThat(result).usingRecursiveComparison().isEqualTo(fixtures.createDefaultPatientDTO());
+        assertThat(result).usingRecursiveComparison().isEqualTo(UnitFixtures.createDefaultPatientDTO());
 
         verify(patientRepository).findById(patientId);
         verify(patientMapper).toDto(any(Patient.class));
@@ -159,8 +159,8 @@ class PatientServiceTest {
     @Test
     void shouldGetPatientByEmail() {
         String email = "test@example.com";
-        Patient patient = fixtures.createDefaultPatient();
-        PatientDTO patientDTO = fixtures.createDefaultPatientDTO();
+        Patient patient = UnitFixtures.createDefaultPatient();
+        PatientDTO patientDTO = UnitFixtures.createDefaultPatientDTO();
 
         when(patientRepository.findByEmail(email)).thenReturn(Optional.of(patient));
         when(patientMapper.toDto(patient)).thenReturn(patientDTO);
@@ -176,7 +176,7 @@ class PatientServiceTest {
 
     @Test
     void shouldThrowWhenSavingPatientIfEmailExists() {
-        Patient patient = fixtures.createDefaultPatient();
+        Patient patient = UnitFixtures.createDefaultPatient();
 
         when(patientRepository.findByEmail(patient.getEmail())).thenReturn(Optional.of(patient));
 
@@ -189,8 +189,8 @@ class PatientServiceTest {
 
     @Test
     void shouldThrowWhenCreatingPatientIfEmailExists() {
-        PatientCreateDTO createDTO = fixtures.createDefaultPatientCreateDTO();
-        Patient patient = fixtures.createDefaultPatient();
+        PatientCreateDTO createDTO = UnitFixtures.createDefaultPatientCreateDTO();
+        Patient patient = UnitFixtures.createDefaultPatient();
 
         when(patientMapper.toEntity(createDTO)).thenReturn(patient);
         when(patientRepository.findByEmail(patient.getEmail())).thenReturn(Optional.of(patient));
@@ -206,7 +206,7 @@ class PatientServiceTest {
     @Test
     void shouldThrowWhenUpdatingPatientIfNotFound() {
         Long patientId = 1L;
-        PatientUpdateDTO updateDTO = fixtures.createDefaultPatientUpdateDTO();
+        PatientUpdateDTO updateDTO = UnitFixtures.createDefaultPatientUpdateDTO();
 
         when(patientRepository.findById(patientId)).thenReturn(Optional.empty());
 
@@ -221,8 +221,8 @@ class PatientServiceTest {
 
     @Test
     void shouldPropagateWhenMapperThrowsOnUpdate() {
-        Patient existingPatient = fixtures.createDefaultPatient();
-        PatientUpdateDTO updateDTO = fixtures.createDefaultPatientUpdateDTO();
+        Patient existingPatient = UnitFixtures.createDefaultPatient();
+        PatientUpdateDTO updateDTO = UnitFixtures.createDefaultPatientUpdateDTO();
 
         when(patientRepository.findById(existingPatient.getId())).thenReturn(Optional.of(existingPatient));
         doThrow(new RuntimeException("mapper failure")).when(patientMapper).updateFromDto(updateDTO, existingPatient);
@@ -247,7 +247,7 @@ class PatientServiceTest {
 
     @Test
     void shouldPropagateWhenMapperThrowsOnGetAll() {
-        List<Patient> patients = List.of(fixtures.createDefaultPatient());
+        List<Patient> patients = List.of(UnitFixtures.createDefaultPatient());
 
         when(patientRepository.findAll()).thenReturn(patients);
         when(patientMapper.toDto(any(Patient.class))).thenThrow(new RuntimeException("map fail"));

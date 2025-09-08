@@ -40,13 +40,12 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserCreateDTO userCreateDTO) {
-        System.out.println("Controller called with password: " + userCreateDTO.getPassword());
         UserDTO savedUserDTO = userService.createUser(userCreateDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUserDTO);
     }
 
-    @PostMapping("/elevated")
     @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/create-elevated")
     public ResponseEntity<UserDTO> createElevatedUser(
             @Valid @RequestBody UserCreateDTO createDTO,
             @RequestParam RoleEnum role) {
@@ -56,7 +55,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PatchMapping("/{id}/patient")
+    @PatchMapping("/{id}/link-patient")
     public ResponseEntity<UserDTO> linkUserToPatient(
             @PathVariable Long id,
             @RequestParam Long patientId) {

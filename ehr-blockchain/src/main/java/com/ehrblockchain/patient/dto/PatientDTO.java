@@ -3,6 +3,7 @@ package com.ehrblockchain.patient.dto;
 import java.time.LocalDate;
 
 public record PatientDTO(
+        Long id,
         String firstName,
         String lastName,
         LocalDate dateOfBirth,

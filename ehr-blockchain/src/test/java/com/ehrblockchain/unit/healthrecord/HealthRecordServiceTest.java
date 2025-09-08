@@ -23,7 +23,7 @@ import com.ehrblockchain.healthrecord.model.HealthRecord;
 import com.ehrblockchain.healthrecord.repository.HealthRecordRepository;
 import com.ehrblockchain.patient.model.Patient;
 import com.ehrblockchain.patient.repository.PatientRepository;
-import com.ehrblockchain.fixtures.fixtures;
+import com.ehrblockchain.fixtures.UnitFixtures;
 import com.ehrblockchain.healthrecord.service.HealthRecordService;
 import com.ehrblockchain.auth.service.AuthService;
 import com.ehrblockchain.blockchain.model.Blockchain;
@@ -64,9 +64,9 @@ class HealthRecordServiceTest {
 
     @Test
     void shouldGetHealthRecordById() {
-        Patient patient = fixtures.createDefaultPatient();
+        Patient patient = UnitFixtures.createDefaultPatient();
         HealthRecord existingRecord = patient.getHealthRecord();
-        HealthRecordDTO dto = fixtures.createDefaultHealthRecordDTO();
+        HealthRecordDTO dto = UnitFixtures.createDefaultHealthRecordDTO();
 
         when(patientRepository.findById(patient.getId())).thenReturn(Optional.of(patient));
         when(healthRecordRepository.findById(existingRecord.getId())).thenReturn(Optional.of(existingRecord));
@@ -95,12 +95,12 @@ class HealthRecordServiceTest {
 
     @Test
     void shouldUpdateHealthRecord() {
-        Patient patient = fixtures.createDefaultPatient();
-        HealthRecord existingRecord = fixtures.createDefaultHealthRecord();
+        Patient patient = UnitFixtures.createDefaultPatient();
+        HealthRecord existingRecord = UnitFixtures.createDefaultHealthRecord();
         patient.setHealthRecord(existingRecord);
 
         HealthRecordUpdateDTO updateDTO = new HealthRecordUpdateDTO();
-        HealthRecordDTO resultDTO = fixtures.createDefaultHealthRecordDTO();
+        HealthRecordDTO resultDTO = UnitFixtures.createDefaultHealthRecordDTO();
 
         when(patientRepository.findById(patient.getId())).thenReturn(Optional.of(patient));
         when(healthRecordRepository.findById(existingRecord.getId()))
@@ -134,10 +134,10 @@ class HealthRecordServiceTest {
 
     @Test
     void shouldDeleteHealthRecord() {
-        Patient patient = fixtures.createDefaultPatient();
-        HealthRecord record = fixtures.createDefaultHealthRecord();
+        Patient patient = UnitFixtures.createDefaultPatient();
+        HealthRecord record = UnitFixtures.createDefaultHealthRecord();
         patient.setHealthRecord(record);
-        HealthRecordDTO dto = fixtures.createDefaultHealthRecordDTO();
+        HealthRecordDTO dto = UnitFixtures.createDefaultHealthRecordDTO();
 
         when(patientRepository.findById(patient.getId())).thenReturn(Optional.of(patient));
         when(healthRecordMapper.toDto(record)).thenReturn(dto);
@@ -151,7 +151,7 @@ class HealthRecordServiceTest {
 
     @Test
     void shouldThrowWhenDeletingNonExistentHealthRecord() {
-        Patient patient = fixtures.createDefaultPatient();
+        Patient patient = UnitFixtures.createDefaultPatient();
         patient.setHealthRecord(null);
 
         when(patientRepository.findById(patient.getId())).thenReturn(Optional.of(patient));
@@ -162,7 +162,7 @@ class HealthRecordServiceTest {
 
     @Test
     void shouldThrowWhenHealthRecordNotFoundOnGet() {
-        Patient patient = fixtures.createDefaultPatient();
+        Patient patient = UnitFixtures.createDefaultPatient();
         Long recordId = 1L;
 
         when(patientRepository.findById(patient.getId())).thenReturn(Optional.of(patient));
@@ -178,12 +178,12 @@ class HealthRecordServiceTest {
 
     @Test
     void shouldUpdateHealthRecordAndPersistChanges() {
-        Patient patient = fixtures.createDefaultPatient();
-        HealthRecord record = fixtures.createDefaultHealthRecord();
+        Patient patient = UnitFixtures.createDefaultPatient();
+        HealthRecord record = UnitFixtures.createDefaultHealthRecord();
         patient.setHealthRecord(record);
 
         HealthRecordUpdateDTO updateDTO = new HealthRecordUpdateDTO();
-        HealthRecordDTO resultDTO = fixtures.createDefaultHealthRecordDTO();
+        HealthRecordDTO resultDTO = UnitFixtures.createDefaultHealthRecordDTO();
 
         when(patientRepository.findById(patient.getId())).thenReturn(Optional.of(patient));
         when(healthRecordRepository.findById(record.getId())).thenReturn(Optional.of(record));
@@ -199,9 +199,9 @@ class HealthRecordServiceTest {
 
     @Test
     void shouldThrowWhenHealthRecordMissingOnUpdate() {
-        Patient patient = fixtures.createDefaultPatient();
+        Patient patient = UnitFixtures.createDefaultPatient();
         HealthRecordUpdateDTO updateDTO = new HealthRecordUpdateDTO();
-        HealthRecord record = fixtures.createDefaultHealthRecord();
+        HealthRecord record = UnitFixtures.createDefaultHealthRecord();
         patient.setHealthRecord(record);
 
         when(patientRepository.findById(patient.getId())).thenReturn(Optional.of(patient));
@@ -224,8 +224,8 @@ class HealthRecordServiceTest {
 
     @Test
     void shouldThrowWhenUpdateDTOIsNull() {
-        Patient patient = fixtures.createDefaultPatient();
-        HealthRecord record = fixtures.createDefaultHealthRecord();
+        Patient patient = UnitFixtures.createDefaultPatient();
+        HealthRecord record = UnitFixtures.createDefaultHealthRecord();
         patient.setHealthRecord(record);
 
         when(patientRepository.findById(patient.getId())).thenReturn(Optional.of(patient));
@@ -238,8 +238,8 @@ class HealthRecordServiceTest {
 
     @Test
     void shouldMapEntityToDtoCorrectly() {
-        HealthRecord record = fixtures.createDefaultHealthRecord();
-        HealthRecordDTO dto = fixtures.createDefaultHealthRecordDTO();
+        HealthRecord record = UnitFixtures.createDefaultHealthRecord();
+        HealthRecordDTO dto = UnitFixtures.createDefaultHealthRecordDTO();
 
         when(healthRecordMapper.toDto(record)).thenReturn(dto);
 
@@ -251,8 +251,8 @@ class HealthRecordServiceTest {
 
     @Test
     void shouldNotUpdateWhenMapperHelperThrows() {
-        Patient patient = fixtures.createDefaultPatient();
-        HealthRecord record = fixtures.createDefaultHealthRecord();
+        Patient patient = UnitFixtures.createDefaultPatient();
+        HealthRecord record = UnitFixtures.createDefaultHealthRecord();
         patient.setHealthRecord(record);
 
         HealthRecordUpdateDTO updateDTO = new HealthRecordUpdateDTO();
@@ -266,8 +266,8 @@ class HealthRecordServiceTest {
 
     @Test
     void shouldThrowWhenMapperReturnsNullDto() {
-        Patient patient = fixtures.createDefaultPatient();
-        HealthRecord record = fixtures.createDefaultHealthRecord();
+        Patient patient = UnitFixtures.createDefaultPatient();
+        HealthRecord record = UnitFixtures.createDefaultHealthRecord();
         patient.setHealthRecord(record);
 
         HealthRecordUpdateDTO updateDTO = new HealthRecordUpdateDTO();
@@ -283,7 +283,7 @@ class HealthRecordServiceTest {
 
     @Test
     void shouldNotInteractWithMapperWhenNoHealthRecordToDelete() {
-        Patient patient = fixtures.createDefaultPatient();
+        Patient patient = UnitFixtures.createDefaultPatient();
         patient.setHealthRecord(null);
 
         when(patientRepository.findById(patient.getId())).thenReturn(Optional.of(patient));

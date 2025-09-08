@@ -16,7 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import static com.ehrblockchain.fixtures.fixtures.DEFAULT_ROLE;
+import static com.ehrblockchain.fixtures.UnitFixtures.DEFAULT_ROLE;
 
 import com.ehrblockchain.patient.repository.PatientRepository;
 import com.ehrblockchain.user.mapper.UserMapper;
@@ -30,7 +30,7 @@ import com.ehrblockchain.security.role.repository.RoleRepository;
 import com.ehrblockchain.exception.EmailAlreadyExistsException;
 import com.ehrblockchain.exception.UserNotFoundException;
 import com.ehrblockchain.security.role.RoleEnum;
-import com.ehrblockchain.fixtures.fixtures;
+import com.ehrblockchain.fixtures.UnitFixtures;
 import com.ehrblockchain.user.service.UserService;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -65,8 +65,8 @@ class UserServiceTest {
 
     @Test
     void shouldSaveUser() {
-        User user = fixtures.createDefaultUser();
-        UserDTO userDTO = fixtures.createDefaultUserDTO();
+        User user = UnitFixtures.createDefaultUser();
+        UserDTO userDTO = UnitFixtures.createDefaultUserDTO();
 
         when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.empty());
         when(userRepository.save(user)).thenReturn(user);
@@ -84,10 +84,10 @@ class UserServiceTest {
 
     @Test
     void shouldCreateUser() {
-        UserCreateDTO createDTO = fixtures.createDefaultUserCreateDTO();
-        User user = fixtures.createDefaultUser();
-        UserDTO userDTO = fixtures.createDefaultUserDTO();
-        Role role = fixtures.createDefaultRole();
+        UserCreateDTO createDTO = UnitFixtures.createDefaultUserCreateDTO();
+        User user = UnitFixtures.createDefaultUser();
+        UserDTO userDTO = UnitFixtures.createDefaultUserDTO();
+        Role role = UnitFixtures.createDefaultRole();
 
         when(userMapper.toEntity(createDTO)).thenReturn(user);
         when(roleRepository.findByName(DEFAULT_ROLE)).thenReturn(Optional.of(role));
@@ -110,9 +110,9 @@ class UserServiceTest {
 
     @Test
     void shouldUpdateUser() {
-        User existingUser = fixtures.createDefaultUser();
-        UserUpdateDTO updateDTO = fixtures.createDefaultUserUpdateDTO();
-        UserDTO updatedUserDTO = fixtures.createDefaultUserDTO();
+        User existingUser = UnitFixtures.createDefaultUser();
+        UserUpdateDTO updateDTO = UnitFixtures.createDefaultUserUpdateDTO();
+        UserDTO updatedUserDTO = UnitFixtures.createDefaultUserDTO();
 
         when(userRepository.findById(existingUser.getId())).thenReturn(Optional.of(existingUser));
         doAnswer(invocation -> {
@@ -147,11 +147,11 @@ class UserServiceTest {
 
     @Test
     void shouldGetAllUsers() {
-        List<User> users = List.of(fixtures.createDefaultUser());
-        List<UserDTO> userDTOs = List.of(fixtures.createDefaultUserDTO());
+        List<User> users = List.of(UnitFixtures.createDefaultUser());
+        List<UserDTO> userDTOs = List.of(UnitFixtures.createDefaultUserDTO());
 
         when(userRepository.findAll()).thenReturn(users);
-        when(userMapper.toDto(any(User.class))).thenAnswer(invocation -> fixtures.createDefaultUserDTO());
+        when(userMapper.toDto(any(User.class))).thenAnswer(invocation -> UnitFixtures.createDefaultUserDTO());
 
         List<UserDTO> result = underTest.getAllUsers();
 
@@ -167,13 +167,13 @@ class UserServiceTest {
     void shouldGetUserById() {
         Long userId = 1L;
 
-        when(userRepository.findById(userId)).thenReturn(Optional.of(fixtures.createDefaultUser()));
-        when(userMapper.toDto(any(User.class))).thenReturn(fixtures.createDefaultUserDTO());
+        when(userRepository.findById(userId)).thenReturn(Optional.of(UnitFixtures.createDefaultUser()));
+        when(userMapper.toDto(any(User.class))).thenReturn(UnitFixtures.createDefaultUserDTO());
 
         UserDTO result = underTest.getUserById(userId);
 
         assertThat(result).isNotNull();
-        assertThat(result).usingRecursiveComparison().isEqualTo(fixtures.createDefaultUserDTO());
+        assertThat(result).usingRecursiveComparison().isEqualTo(UnitFixtures.createDefaultUserDTO());
 
         verify(userRepository).findById(userId);
         verify(userMapper).toDto(any(User.class));
@@ -182,8 +182,8 @@ class UserServiceTest {
     @Test
     void shouldGetUserByEmail() {
         String email = "test@example.com";
-        User user = fixtures.createDefaultUser();
-        UserDTO userDTO = fixtures.createDefaultUserDTO();
+        User user = UnitFixtures.createDefaultUser();
+        UserDTO userDTO = UnitFixtures.createDefaultUserDTO();
 
         when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
         when(userMapper.toDto(user)).thenReturn(userDTO);
@@ -199,7 +199,7 @@ class UserServiceTest {
 
     @Test
     void shouldThrowWhenSavingUserIfEmailExists() {
-        User user = fixtures.createDefaultUser();
+        User user = UnitFixtures.createDefaultUser();
 
         when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
 
@@ -212,9 +212,9 @@ class UserServiceTest {
 
     @Test
     void shouldThrowWhenCreatingUserIfEmailExists() {
-        UserCreateDTO createDTO = fixtures.createDefaultUserCreateDTO();
-        User user = fixtures.createDefaultUser();
-        Role role = fixtures.createDefaultRole();
+        UserCreateDTO createDTO = UnitFixtures.createDefaultUserCreateDTO();
+        User user = UnitFixtures.createDefaultUser();
+        Role role = UnitFixtures.createDefaultRole();
         when(roleRepository.findByName(RoleEnum.PATIENT))
                 .thenReturn(Optional.of(role));
 
@@ -233,7 +233,7 @@ class UserServiceTest {
     @Test
     void shouldThrowWhenUpdatingUserIfNotFound() {
         Long userId = 1L;
-        UserUpdateDTO updateDTO = fixtures.createDefaultUserUpdateDTO();
+        UserUpdateDTO updateDTO = UnitFixtures.createDefaultUserUpdateDTO();
 
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
@@ -246,8 +246,8 @@ class UserServiceTest {
 
     @Test
     void shouldPropagateWhenMapperThrowsOnUpdate() {
-        User existingUser = fixtures.createDefaultUser();
-        UserUpdateDTO updateDTO = fixtures.createDefaultUserUpdateDTO();
+        User existingUser = UnitFixtures.createDefaultUser();
+        UserUpdateDTO updateDTO = UnitFixtures.createDefaultUserUpdateDTO();
 
         when(userRepository.findById(existingUser.getId())).thenReturn(Optional.of(existingUser));
         doThrow(new RuntimeException("mapper failure")).when(userMapper).updateFromDto(updateDTO, existingUser);
@@ -272,7 +272,7 @@ class UserServiceTest {
 
     @Test
     void shouldPropagateWhenMapperThrowsOnGetAll() {
-        List<User> users = List.of(fixtures.createDefaultUser());
+        List<User> users = List.of(UnitFixtures.createDefaultUser());
 
         when(userRepository.findAll()).thenReturn(users);
         when(userMapper.toDto(any(User.class))).thenThrow(new RuntimeException("map fail"));

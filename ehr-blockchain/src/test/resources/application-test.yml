@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ehr_test
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+app:
+  security:
+    authentication:
+      jwt:
+        base64-secret: ${JWT_SECRET}
+        token-validity-in-seconds: ${JWT_TOKEN_VALIDITY}
+  default:
+    user:
+      role: ADMIN
